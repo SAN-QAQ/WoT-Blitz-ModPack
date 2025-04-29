@@ -1,5 +1,0 @@
-1
-Flag_Event@2x.packed.webp
-360 648
-1
-1536 2048 360 648 0 0 0 frame0

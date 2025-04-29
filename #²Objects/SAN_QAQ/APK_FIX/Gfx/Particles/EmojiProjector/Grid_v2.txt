@@ -1,5 +1,0 @@
-1
-Grid_v2.packed.webp
-64 64
-1
-0 0 64 64 0 0 0 frame0

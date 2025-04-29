@@ -1,6 +1,0 @@
-Material:
-    Shader: ~res:/Materials.custom/shaders/shadow-box
-    RenderState:
-        blend: true
-    Passes:
-        2d:

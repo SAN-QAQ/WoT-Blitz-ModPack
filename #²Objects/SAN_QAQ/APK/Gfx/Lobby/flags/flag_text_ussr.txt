@@ -1,5 +1,0 @@
-1
-Flag_Text.packed.webp
-24 16
-1
-0 64 24 16 0 0 0 frame0

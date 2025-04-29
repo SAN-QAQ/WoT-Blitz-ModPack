@@ -1,5 +1,0 @@
-MaterialTemplate:
-    ULTRA : "~res:/Materials/PBR.material"
-    HIGH : "~res:/Materials/BlinnPhongAllQualities.material"
-    MEDIUM : "~res:/Materials/BlinnPhongAllQualities.material"
-    LOW : "~res:/Materials/BlinnPhongAllQualities.material"

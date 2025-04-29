@@ -1,5 +1,0 @@
-#if FLOWMAP
-	float scaledTime = globalTime * flowAnimSpeed;
-	float2 flowPhase = frac(float2(scaledTime, scaledTime + 0.5)) - const05List2;
-	output.flowData = float3(flowPhase * flowAnimOffset, abs(flowPhase.x) * 2.0);
-#endif

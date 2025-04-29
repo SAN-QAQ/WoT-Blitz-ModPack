@@ -1,5 +1,0 @@
-1
-Background.packed.webp
-1920 1080
-1
-0 0 1920 1080 0 0 0 frame0

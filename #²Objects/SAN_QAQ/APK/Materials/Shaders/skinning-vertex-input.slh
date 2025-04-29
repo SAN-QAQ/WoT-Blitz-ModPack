@@ -1,6 +1,0 @@
-#if SOFT_SKINNING
-	float4 indices : BLENDINDICES;
-	float4 weights : BLENDWEIGHT;
-#elif HARD_SKINNING
-	float index : BLENDINDICES;
-#endif

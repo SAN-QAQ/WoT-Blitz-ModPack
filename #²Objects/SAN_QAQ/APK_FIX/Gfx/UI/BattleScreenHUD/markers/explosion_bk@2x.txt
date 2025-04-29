@@ -1,5 +1,0 @@
-1
-explosion_bk_SAN_QAQ@2x.packed.webp
-80 80
-1
-0 0 80 80 0 1 0 frame0

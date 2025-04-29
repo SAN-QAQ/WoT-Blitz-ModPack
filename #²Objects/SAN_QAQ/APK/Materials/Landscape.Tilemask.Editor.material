@@ -1,7 +1,0 @@
-Material:
-    Layers: [ OpaqueRenderLayer ]
-    Shader: ~res:/Materials/Shaders/Landscape/tilemask-editor
-    RenderState:
-        depthFunc: CMP_LESS
-    Passes:
-        2d:

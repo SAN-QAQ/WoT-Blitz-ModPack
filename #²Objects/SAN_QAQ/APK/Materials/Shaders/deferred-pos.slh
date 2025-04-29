@@ -1,4 +1,0 @@
-float4 midPos = mul4Fast1(float3(projPos.xy, fetchedDepthValue * 2.0 - 1.0), invProjMatrix);
-float3 eyePos = midPos.xyz * (1.0 / midPos.w);
-float3 worldPos = mul3Fast1(eyePos, invViewMatrix);
-float3 localPos = mul3Fast1(worldPos, vecToMat(input.invWorldMatrix0, input.invWorldMatrix1, input.invWorldMatrix2));

@@ -1,4 +1,0 @@
-Material:
-    Passes:
-        EquirectangularToCubemap:
-            Shader: ~res:/Materials/Shaders/Utilities/equirectangular-to-cubemap

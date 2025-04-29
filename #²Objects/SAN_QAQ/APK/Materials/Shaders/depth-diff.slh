@@ -1,3 +1,0 @@
-float2 mulTemp = projPos.x * invProjMatrix[0].zw + (projPos.y * invProjMatrix[1].zw + invProjMatrix[3].zw);
-float4 depthPosition = float4(invProjMatrix[2].zw * projPos.z + mulTemp, invProjMatrix[2].zw * (fetchedDepthValue * 2.0 - 1.0) + mulTemp);
-float distanceDifference = max(depthPosition.x * (1.0 / max(depthPosition.y, 0.0001)) - depthPosition.z * (1.0 / max(depthPosition.w, 0.0001)), 0.0);

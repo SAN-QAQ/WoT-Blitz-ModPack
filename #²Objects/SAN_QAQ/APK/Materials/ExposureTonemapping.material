@@ -1,4 +1,0 @@
-Material:
-    Passes:
-        Tonemap:
-            Shader: ~res:/Materials/Shaders/Utilities/exposure-tonemapping

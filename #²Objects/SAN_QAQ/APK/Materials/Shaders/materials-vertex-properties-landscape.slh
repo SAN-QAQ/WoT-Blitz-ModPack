@@ -1,5 +1,0 @@
-[auto][a] property float globalTime;
-[auto][a] property float3 cameraPosition;
-[auto][a] property float4x4 worldMatrix;
-[auto][a] property float4x4 worldViewMatrix;
-[auto][a] property float4x4 worldViewProjMatrix;

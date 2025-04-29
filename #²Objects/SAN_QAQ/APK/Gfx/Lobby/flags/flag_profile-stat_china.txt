@@ -1,5 +1,0 @@
-1
-Flag_Profile-Stat.packed.webp
-32 32
-1
-0 0 21 21 6 6 0 frame0

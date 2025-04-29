@@ -1,4 +1,0 @@
-Material:
-    Passes:
-        PrefilteredSpecularReflections:
-            Shader: ~res:/Materials/Shaders/Utilities/rough-specular

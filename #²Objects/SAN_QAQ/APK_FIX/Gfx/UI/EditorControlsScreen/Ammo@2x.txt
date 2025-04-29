@@ -1,5 +1,0 @@
-1
-Ammo@2x.packed.webp
-480 126
-1
-0 0 456 100 10 11 0 frame0

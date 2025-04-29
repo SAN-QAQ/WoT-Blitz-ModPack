@@ -1,5 +1,0 @@
-1
-Flag_Filter.packed.webp
-72 56
-1
-128 128 72 56 0 0 0 frame0

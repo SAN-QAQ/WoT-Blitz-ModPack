@@ -1,5 +1,0 @@
-1
-BlitzLogo_url@2x.packed.webp
-386 104
-1
-0 0 385 104 1 0 0 frame0

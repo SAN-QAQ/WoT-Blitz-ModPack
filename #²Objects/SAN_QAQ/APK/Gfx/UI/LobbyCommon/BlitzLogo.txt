@@ -1,5 +1,0 @@
-1
-BlitzLogo.packed.webp
-380 290
-1
-0 0 341 256 23 16 0 frame0

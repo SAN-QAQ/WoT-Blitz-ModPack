@@ -1,4 +1,0 @@
-Material:
-    Passes:
-        DiffuseConvolution:
-            Shader: ~res:/Materials/Shaders/Utilities/diffuse-convolution

@@ -1,5 +1,0 @@
-1
-tank_statistics.packed.webp
-960 720
-1
-0 0 960 720 0 0 0 frame0
