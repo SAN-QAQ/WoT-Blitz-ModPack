@@ -32,13 +32,14 @@
 <summary>什么是热更新?</summary>
 如果不需要下载新版本安装包，只需要进入游戏后下载资源的版本就是热更新
 </details>
+
 ##### 第一次安装
 
 1. 准备一个[mt管理器](https://mt2.cn/download/)或其他文件管理工具以访问`/storage/emulated/0/Android/data/`目录(有关该目录无法访问的问题请自行搜索)
 2. 如果需要保留游戏数据(如回放和已安装的模组)，请备份`/storage/emulated/0/Android/data/com.netease.wotb/`目录内的文件
 3. 卸载原先的游戏
 4. 安装模组版本的游戏
-5. 将`data.zip`的内容放入 `/storage/emulated/0/Android/data/com.netease.wotb/files/packs/`目录内(`data.zip`其实就是``./Objects/SAN_QAQ/DATA`目录内的文件)
+5. 将`data.zip`的内容放入 `/storage/emulated/0/Android/data/com.netease.wotb/files/packs/`目录内(`data.zip`其实就是`./Objects/SAN_QAQ/DATA`目录内的文件)
 6. 启动游戏检查模组是否生效
 
 ##### 安装更新
