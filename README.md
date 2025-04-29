@@ -1,6 +1,6 @@
 ### SAN_QAQ的坦克世界闪击战国服模组整合包
 
-<img src=".\QAQ.jpg" alt="SAN_QAQ" style="zoom: 50%;" />
+<img src="https://avatars.githubusercontent.com/u/88847568?v=4" alt="SAN_QAQ" style="zoom: 50%;" />
 
 ------
 
