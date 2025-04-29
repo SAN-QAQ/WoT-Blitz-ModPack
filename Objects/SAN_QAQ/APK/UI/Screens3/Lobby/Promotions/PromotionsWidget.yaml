@@ -1,0 +1,335 @@
+Header:
+    version: 159
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Paginator/Paginator.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "PromotionsWidget"
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Promotions/PromotionsWidgetInit.animation"
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "FixedSize"
+        UIDataParamsComponent:
+            params:
+            - ["ePromotionSize", "size", "ePromotionSize.Medium", "ePromotionSize.Large"]
+            - ["PromotionsGroup", "data", "null", "{ }"]
+            - ["int64", "serverTime", "0L", "0L"]
+            - ["bool", "debugMode", "false", "true"]
+            events:
+            - "PIGGY_BANK_STAGE_PROGRESS(int stuffDescr)"
+            - "PIGGY_BANK_SAVE_PROGRESS(int stuffDescr)"
+            - "ON_PROMOTION_CLICKED(int index)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "pageHeight", "when size == ePromotionSize.Small -> 72.000000, size == ePromotionSize.Medium -> 80.000000, 104.000000"]
+            - ["float", "pageWidth", "256.000000"]
+            - ["int", "leftIndex", "data.currentWidgetIndex"]
+            - ["int", "rightIndex", "data.currentWidgetIndex"]
+            - ["float", "leftPosition", "0.000000"]
+            - ["float", "rightPosition", "0.000000"]
+            - ["float", "leftProportion", "1.000000"]
+            - ["float", "rightProportion", "1.000000"]
+            - ["float", "slideShowTime", "5.000000"]
+            - ["float", "paginatorProgress", "1.000000"]
+            - ["bool", "pageChanging", "false"]
+            - ["bool", "swipeStarted", "false"]
+            - ["float", "lastPaginatorProgress", "paginatorProgress"]
+            - ["float", "startPaginatorProgress", "1.000000"]
+            - ["float", "tapOffsetThreshold", "2.000000"]
+            - ["int", "paginatorAnchor", "when size == ePromotionSize.Small -> 10, size == ePromotionSize.Medium -> 14, 16"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "pageCount", "data.promotions.Size()"]
+            - ["float", "farPosition", "-pageWidth * 2"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Promotions/PromotionsWidget.actions"
+        UIDataOnEventComponent0:
+            eventName: "GO_TO_NEXT"
+            modelFieldExpression: "data.currentWidgetIndex"
+            dataExpression: "when (data.currentWidgetIndex + 1) < pageCount -> (data.currentWidgetIndex + 1), 0"
+        UIDataOnEventComponent1:
+            eventName: "CHANGED_SELECTED_ITEM"
+            modelFieldExpression: "data.currentWidgetIndex"
+            dataExpression: "_event"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "data.currentWidgetIndex"
+            eventName: "START_SLIDE_SHOW"
+            eventData: "startPaginatorProgress"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "pageCount"
+            eventName: "OnPageCountChanged"
+    bindings:
+    - ["SizePolicy.horizontalValue", "pageWidth"]
+    - ["SizePolicy.verticalValue", "pageHeight"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        pivot: [0.000000, 0.000000]
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Common/Touch.style.yaml"
+        children:
+        -   class: "UIParticles"
+            name: "FullPiggy_Rays"
+            position: [132.000000, -8.000000]
+            scale: [1.580000, 1.440000]
+            input: false
+            effectPath: "~res:/3d/FX/UI/MoneyBoxRays.sc2"
+            components:
+                ScalePolicy:
+                    horizontalFormula: "1.58"
+                    verticalFormula: "parentSize.Y / 55.6"
+        -   class: "UIControl"
+            name: "Promotions"
+            input: false
+            classes: ""
+            components:
+                ClipContent:
+                    top: false
+                    bottom: false
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "size == ePromotionSize.Small"
+                    control: "PromotionsSmall"
+                UIChildComponent1:
+                    childType: "kControl"
+                    condition: "size == ePromotionSize.Medium"
+                    control: "PromotionsMedium"
+                UIChildComponent2:
+                    childType: "kControl"
+                    condition: "size == ePromotionSize.Large"
+                    control: "PromotionsLarge"
+        -   class: "UIControl"
+            name: "PaginatorContainer"
+            input: false
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: 8.000000
+                    bottomAnchorEnabled: true
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "8"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfLastChild"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 0.000000
+            bindings:
+            - ["visible", "data.promotions.Size() > 1"]
+            - ["Anchor.bottomAnchor", "paginatorAnchor"]
+            children:
+            -   prototype: "Paginator/Paginator"
+                name: "Paginator"
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    UIDataParamsComponent:
+                        args:
+                            "points": "data.promotionsIndices"
+                            "pointSize": "4"
+                            "PointCellWidth": "10"
+                            "PointCellHeight": "10"
+                            "selectedItem": "when data.currentWidgetIndex < data.promotions.Size() -> data.currentWidgetIndex, 0"
+                            "progressVisible": "true"
+                            "progress": "when swipeStarted -> lastPaginatorProgress, paginatorProgress"
+                            "invert": "true"
+        -   class: "UIParticles"
+            name: "FullPiggy_Glow"
+            position: [128.000000, 40.000000]
+            scale: [0.000000, 1.440000]
+            input: false
+            effectPath: "~res:/3d/FX/UI/MoneyBoxGlow.sc2"
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                ScalePolicy:
+                    horizontalFormula: "1.63"
+                    verticalFormula: "parentSize.Y / 55.6"
+        -   class: "UIParticles"
+            name: "PiggyFill_Gold"
+            position: [128.000000, -145.000000]
+            input: false
+            effectPath: "~res:/3d/FX/UI/GoldCoins.sc2"
+Slots:
+-   class: "UIControl"
+    name: "PromotionsMedium"
+    pivot: [0.500000, 0.500000]
+    classes: "touchable-self"
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            topAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "PercentOfMaxChild"
+        UIInputEventComponent:
+            onTouchUpInside: "WidgetClicked"
+        UISwipeComponent:
+            mode: "Page"
+            direction: "RightLeft"
+            swipeOffsetEvent: "SwipeOffset"
+            swipeOffsetEventData: "_leftIndex, _rightIndex, _leftPosition, _rightPosition, _leftProportion, _rightProportion, _isInertion"
+            swipeStartedEvent: "SwipeStarted"
+            swipeFinishedEvent: "SwipeFinished"
+            swipeCancelEvent: "SwipeCanceled"
+            pagesLooped: true
+            pageChangedEvent: "PageChanged"
+            pageChangedEventData: "_pageIndex"
+            pageChangingEvent: "PageChanging"
+            pageChangingEventData: "_pageIndex"
+        UIRepeatComponent:
+            control: "~res:/UI/Screens3/Lobby/Promotions/PromotionMedium.yaml"
+            dataContainer: "data.promotions"
+            args:
+                "promo": "_item"
+                "serverTime": "serverTime"
+                "debugMode": "debugMode"
+                "index": "_index"
+                "hidden": "_index != leftIndex and _index != rightIndex"
+                "point": "when _index == leftIndex -> leftPosition, (when _index == rightIndex -> rightPosition, farPosition)"
+                "width": "pageWidth"
+                "canAnimateProgress": "_index == data.currentWidgetIndex and not swipeStarted"
+            eventActions:
+            - ["START_FULL_PIGGY_EFFECTS", "StartFullPiggyEffects", ""]
+            - ["STOP_FULL_PIGGY_EFFECTS", "StopFullPiggyEffects", ""]
+            - ["SHOW_PIGGY_FILL_EFFECT", "ShowPiggyFillEffect", "_event.type"]
+            - ["ROTATION_FINISHED", "ROTATION_FINISHED", ""]
+            - ["PIGGY_BANK_STAGE_PROGRESS", "PIGGY_BANK_STAGE_PROGRESS", "_event.stuffDescr"]
+            - ["PIGGY_BANK_SAVE_PROGRESS", "PIGGY_BANK_SAVE_PROGRESS", "_event.stuffDescr"]
+            elementNameExpression: "\"Promotion\" + str(_index)"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Common/Touch.style.yaml"
+    bindings:
+    - ["UISwipeComponent.pageCount", "pageCount"]
+    - ["UISwipeComponent.currentPageIndex", "when data.currentWidgetIndex < pageCount -> data.currentWidgetIndex, 0"]
+-   class: "UIControl"
+    name: "PromotionsSmall"
+    pivot: [0.500000, 0.500000]
+    classes: "touchable-self"
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            topAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "PercentOfMaxChild"
+        UIInputEventComponent:
+            onTouchUpInside: "WidgetClicked"
+        UISwipeComponent:
+            mode: "Page"
+            direction: "RightLeft"
+            swipeOffsetEvent: "SwipeOffset"
+            swipeOffsetEventData: "_leftIndex, _rightIndex, _leftPosition, _rightPosition, _leftProportion, _rightProportion, _isInertion"
+            swipeStartedEvent: "SwipeStarted"
+            swipeFinishedEvent: "SwipeFinished"
+            swipeCancelEvent: "SwipeCanceled"
+            pagesLooped: true
+            pageChangedEvent: "PageChanged"
+            pageChangedEventData: "_pageIndex"
+            pageChangingEvent: "PageChanging"
+            pageChangingEventData: "_pageIndex"
+        UIRepeatComponent:
+            control: "~res:/UI/Screens3/Lobby/Promotions/PromotionSmall.yaml"
+            dataContainer: "data.promotions"
+            args:
+                "promo": "_item"
+                "serverTime": "serverTime"
+                "debugMode": "debugMode"
+                "index": "_index"
+                "hidden": "_index != leftIndex and _index != rightIndex"
+                "point": "when _index == leftIndex -> leftPosition, (when _index == rightIndex -> rightPosition, farPosition)"
+                "width": "pageWidth"
+                "canAnimateProgress": "_index == data.currentWidgetIndex and not swipeStarted"
+            eventActions:
+            - ["START_FULL_PIGGY_EFFECTS", "StartFullPiggyEffects", ""]
+            - ["STOP_FULL_PIGGY_EFFECTS", "StopFullPiggyEffects", ""]
+            - ["SHOW_PIGGY_FILL_EFFECT", "ShowPiggyFillEffect", "_event.type"]
+            - ["ROTATION_FINISHED", "ROTATION_FINISHED", ""]
+            - ["PIGGY_BANK_STAGE_PROGRESS", "PIGGY_BANK_STAGE_PROGRESS", "_event.stuffDescr"]
+            - ["PIGGY_BANK_SAVE_PROGRESS", "PIGGY_BANK_SAVE_PROGRESS", "_event.stuffDescr"]
+            elementNameExpression: "\"Promotion\" + str(_index)"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Common/Touch.style.yaml"
+    bindings:
+    - ["UISwipeComponent.pageCount", "pageCount"]
+    - ["UISwipeComponent.currentPageIndex", "when data.currentWidgetIndex < pageCount -> data.currentWidgetIndex, 0"]
+-   class: "UIControl"
+    name: "PromotionsLarge"
+    pivot: [0.500000, 0.500000]
+    classes: "touchable-self"
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            topAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "PercentOfMaxChild"
+        UIInputEventComponent:
+            onTouchUpInside: "WidgetClicked"
+        UISwipeComponent:
+            mode: "Page"
+            direction: "RightLeft"
+            swipeOffsetEvent: "SwipeOffset"
+            swipeOffsetEventData: "_leftIndex, _rightIndex, _leftPosition, _rightPosition, _leftProportion, _rightProportion, _isInertion"
+            swipeStartedEvent: "SwipeStarted"
+            swipeFinishedEvent: "SwipeFinished"
+            swipeCancelEvent: "SwipeCanceled"
+            pagesLooped: true
+            pageChangedEvent: "PageChanged"
+            pageChangedEventData: "_pageIndex"
+            pageChangingEvent: "PageChanging"
+            pageChangingEventData: "_pageIndex"
+        UIRepeatComponent:
+            control: "~res:/UI/Screens3/Lobby/Promotions/PromotionLarge.yaml"
+            dataContainer: "data.promotions"
+            args:
+                "promo": "_item"
+                "serverTime": "serverTime"
+                "debugMode": "debugMode"
+                "index": "_index"
+                "hidden": "_index != leftIndex and _index != rightIndex"
+                "point": "when _index == leftIndex -> leftPosition, (when _index == rightIndex -> rightPosition, farPosition)"
+                "width": "pageWidth"
+                "canAnimateProgress": "_index == data.currentWidgetIndex and not swipeStarted"
+            eventActions:
+            - ["START_FULL_PIGGY_EFFECTS", "StartFullPiggyEffects", ""]
+            - ["STOP_FULL_PIGGY_EFFECTS", "StopFullPiggyEffects", ""]
+            - ["SHOW_PIGGY_FILL_EFFECT", "ShowPiggyFillEffect", "_event.type"]
+            - ["ROTATION_FINISHED", "ROTATION_FINISHED", ""]
+            - ["PIGGY_BANK_STAGE_PROGRESS", "PIGGY_BANK_STAGE_PROGRESS", "_event.stuffDescr"]
+            - ["PIGGY_BANK_SAVE_PROGRESS", "PIGGY_BANK_SAVE_PROGRESS", "_event.stuffDescr"]
+            elementNameExpression: "\"Promotion\" + str(_index)"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Common/Touch.style.yaml"
+    bindings:
+    - ["UISwipeComponent.pageCount", "pageCount"]
+    - ["UISwipeComponent.currentPageIndex", "when data.currentWidgetIndex < pageCount -> data.currentWidgetIndex, 0"]

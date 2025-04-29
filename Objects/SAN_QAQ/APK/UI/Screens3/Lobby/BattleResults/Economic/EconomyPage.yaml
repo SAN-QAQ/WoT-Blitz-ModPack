@@ -1,0 +1,1025 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Common/HorizontalScrollBar.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "EconomyPage"
+    size: [367.000000, 530.000000]
+    input: false
+    components:
+        UIOpacityComponent:
+            opacity: 0.000000
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "FixedSize"
+        UISystemEventComponent:
+            onActivated: "EconomyPageInit"
+        UIDataParamsComponent:
+            params:
+            - ["TanksRankConfigurationModel", "rankConfig", "null", "{ }"]
+            - ["float", "contentSizeY", "0.000000", "690.000000"]
+            - ["bool", "canAnimated", "false", "false"]
+            - ["TutorialDataModel", "tutorialData", "null", "{ }"]
+            - ["bool", "canWatchAd", "false", "true"]
+            - ["bool", "isTutorialInProgress", "false", "false"]
+            - ["BattleResultsViewModel", "results", "null", "{ \"economics\" = { \"withPremium\" = false; \"boosterXp\" = 56; \"totalXp\" = { \"base\" = 567; \"premium\" = 768; }; \"tankProgress\" = { \"showProgressBarPart\" = true; \"isModuleAvailableForResearch\" = true; }; }; \"gameplayMode\" = eGameMode.Rating; \"rating\" = { \"leagueType\" = eLeague.SILVER; \"currentRating\" = 2345; \"difference\" = 45; \"state\" = eBattleRatingState.HAS_RATING; \"calibrationBattlesLeft\" = 2; }; \"tank\" = { \"tankRank\" = 0; }; }"]
+            - ["bool", "economyFirstShow", "false", "true"]
+            - ["bool", "isStartByEvent", "true", "false"]
+            events:
+            - "OpenModulePageForResearch"
+            - "BUY_PREMIUM"
+            - "ON_REWARD_CLICK"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "tankProgressOutOfLine", "results.economics.tankProgress.progressBarData.hasXp and results.economics.tankProgress.totalXp > (when not isNull(results.economics.tankProgress.bestModule) -> results.economics.tankProgress.bestModule.cost, (when not isNull(results.economics.tankProgress.bestVehicleModule) -> results.economics.tankProgress.bestVehicleModule.cost, 0))"]
+            - ["float", "currentScrollPosition", "0.000000"]
+            - ["float", "lastScrollOffset", "0.000000"]
+            - ["float", "animationTime", "0.750000"]
+            - ["bool", "economyFirstShowLocal", "economyFirstShow"]
+            - ["bool", "isPremium", "results.economics.withPremium"]
+            - ["int", "xpEndValue", "when isPremium -> results.economics.totalXp.premium, results.economics.totalXp.base"]
+            - ["int", "xpCurrentValue", "when economyFirstShowLocal -> 0, xpEndValue"]
+            - ["int", "creditsBaseValue", "results.economics.earnedCredits.base"]
+            - ["int", "creditsPremiumValue", "results.economics.earnedCredits.premium"]
+            - ["int", "creditsEndValue", "when isPremium -> creditsPremiumValue, creditsBaseValue"]
+            - ["int", "creditsCurrentValue", "when economyFirstShowLocal -> 0, creditsEndValue"]
+            - ["int", "creditsTotal", "when isPremium -> results.economics.creditsResult.premium, results.economics.creditsResult.base"]
+            - ["bool", "isResourcesVisible", "Size(results.economics.resources) > 0"]
+            - ["string", "tankNameColor", "when results.tank.info.isPremium -> \"yellow-lightning-text\", results.tank.info.isCollectible -> \"blue-rimmi-text\", results.tank.stats.isPremiumized -> \"yellow-submarine-text\", \"white-wild-sand-text\""]
+            - ["bool", "showVehicleInfoHolder", "false"]
+            - ["float", "xpAnimationTime", "when xpEndValue < 1 -> 0.000000, xpEndValue < 500 -> animationTime * 0.500000, xpEndValue < 2000 -> animationTime * 0.750000, animationTime"]
+            - ["float", "creditsAnimationTime", "when abs(creditsEndValue) < 1 -> 0.000000, abs(creditsEndValue) < 10000 -> animationTime * 0.500000, creditsEndValue < 1000000 -> animationTime * 0.750000, animationTime * 1.500000"]
+            - ["bool", "showPremXpBlock", "false"]
+            - ["bool", "showPremCreditsBlock", "false"]
+            - ["bool", "hasTankProgressBar", "results.tank.tankRank <= 0 and not ((isNull(results.economics.tankProgress.bestModule) or not empty(results.economics.tankProgress.bestModule.costType)) and isNull(results.economics.tankProgress.bestVehicleModule) and not results.tank.stats.isElite)"]
+            - ["bool", "isXpDetailInfoVisible", "hasTankProgressBar and economyFirstShowLocal"]
+            - ["bool", "canShowPremiumBlock", "not isPremium and not isTutorialInProgress"]
+            - ["int", "xpPremiumYSize", "when economyFirstShowLocal and hasTankProgressBar and canShowPremiumBlock and xpEndValue != 0 -> 0, 32"]
+            - ["int", "previousXp", "when isPremium -> results.economics.tankProgress.totalXp - results.economics.totalXp.premium, results.economics.tankProgress.totalXp - results.economics.totalXp.base"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "tankRank", "results.tank.tankRank"]
+            - ["eTankRankGrade", "tankRankGrade", "when rankConfig.grades.Contains(tankRank) -> rankConfig.grades[tankRank], eTankRankGrade.Common"]
+            - ["RankLevelInfo", "levelConfig", "when rankConfig.ranksInfo.Contains(results.tank.info.level) -> rankConfig.ranksInfo[results.tank.info.level], null"]
+            - ["RankInfo", "rankInfo", "when not isNull(levelConfig) and levelConfig.info.Contains(tankRank) -> levelConfig.info[tankRank], null"]
+            - ["RankInfo", "nextRankInfo", "when not isNull(levelConfig) and levelConfig.info.Contains(tankRank + 1) -> levelConfig.info[tankRank + 1], null"]
+            - ["int", "minRankPoints", "when not isNull(rankInfo) -> rankInfo.points, 0"]
+            - ["int", "maxRankPoints", "when not isNull(nextRankInfo) -> nextRankInfo.points, 0"]
+            - ["int", "tankRankPoints", "min(maxRankPoints, results.tank.tankRankPoints)"]
+            - ["int", "prevTankRankPoints", "min(maxRankPoints, results.tank.prevTankRankPoints)"]
+            - ["bool", "notFinalRank", "not isNull(nextRankInfo)"]
+            - ["int", "nextTankRank", "tankRank + 1"]
+            - ["eTankRankGrade", "nextTankRankGrade", "when rankConfig.grades.Contains(nextTankRank) -> rankConfig.grades[nextTankRank], eTankRankGrade.Common"]
+            - ["float", "infoPopupOffset", "30.000000"]
+            - ["string", "tankNameStyle", "(when screenWidth < 1280.000000 and contentSizeY < 1024.000000 -> \"t-content-h2 \", \"t-content-h1 \") + \"bold align-left\" + \" \" + tankNameColor"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/EconomyPage.actions"
+    bindings:
+    - ["SizePolicy.horizontalValue", "screenWidth"]
+    - ["SizePolicy.verticalValue", "contentSizeY - 160"]
+    children:
+    -   class: "UIControl"
+        name: "LeftContent"
+        position: [0.000000, 0.000000]
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout: {}
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["SizePolicy.horizontalValue", "screenWidth / 2"]
+        children:
+        -   class: "UIControl"
+            name: "Spacer"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "when notchOffsets.left != 0 ->  notchOffsets.left + 16, (when screenWidth > 1280 and contentSizeY > 1024 -> 80, 16)"
+        -   class: "UIControl"
+            name: "Content"
+            position: [16.000000, 0.000000]
+            size: [480.000000, 493.800018]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "CurrentTankBlock"
+                input: false
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "Formula"
+                        verticalFormula: "min(contentSizeY*0.63, 560)"
+                children:
+                -   class: "UIControl"
+                    name: "TankInfoContent"
+                    input: false
+                    components:
+                        Background:
+                            usePostProcessedSprite: true
+                        UIPostProcessTextureComponent0:
+                            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                            needClearAlphaAfterRender: true
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent1:
+                            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent2:
+                            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIRoundedCornersComponent:
+                            radius: "8"
+                        LinearLayout:
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "max(parent-32, 448)"
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "TankRankWrapper"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 110.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 110.000000
+                        bindings:
+                        - ["visible", "results.tank.tankRank > 0"]
+                        children:
+                        -   class: "UIControl"
+                            name: "RankHolder"
+                            scale: [0.500000, 0.500000]
+                            pivot: [0.500000, 0.500000]
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfMaxChild"
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIChildComponent0:
+                                    condition: "results.tank.tankRank > 0"
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Inventory/TankProgress/TankRankIcon.yaml"
+                                    args:
+                                        "rank": "results.tank.tankRank"
+                                        "grade": "tankRankGrade"
+                    -   class: "UIControl"
+                        name: "TankNameContent"
+                        input: false
+                        components:
+                            Anchor:
+                                vCenterAnchorEnabled: true
+                            LinearLayout:
+                                orientation: "TopDown"
+                                spacing: 8.000000
+                                skipInvisible: false
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIControl"
+                            name: "VehicleInfoHolder"
+                            input: false
+                            components:
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfFirstChild"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 32.000000
+                                UIChildComponent0:
+                                    condition: "showVehicleInfoHolder"
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Vehicle/VehicleInfo.yaml"
+                                    args:
+                                        "class": "results.tank.info.tankClass"
+                                        "level": "results.tank.info.level"
+                                        "type": "when results.tank.info.isPremium -> eVehicleDescriptionType.PREMIUM, results.tank.info.isCollectible -> eVehicleDescriptionType.COLLECTIBLE, results.tank.stats.isPremiumized -> eVehicleDescriptionType.PREMIUMISED, eVehicleDescriptionType.NORMAL"
+                                        "elite": "results.tank.stats.isElite"
+                                        "size": "eVehicleInfoSize.medium"
+                        -   class: "UIControl"
+                            name: "TankName"
+                            input: false
+                            refreshStylesOnInteract: false
+                            components:
+                                UITextComponent:
+                                    multiline: "MULTILINE_ENABLED"
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfContent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            bindings:
+                            - ["classes", "tankNameStyle"]
+                            - ["UITextComponent.text", "localize(results.tank.nameWithCamo)"]
+            -   class: "UIControl"
+                name: "RewardResources"
+                position: [0.000000, 365.800018]
+                size: [200.000000, 128.000000]
+                input: false
+                components:
+                    Background:
+                        usePostProcessedSprite: true
+                    UIPostProcessTextureComponent0:
+                        materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                        needClearAlphaAfterRender: true
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent1:
+                        materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent2:
+                        materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIRoundedCornersComponent:
+                        radius: "8"
+                    Anchor:
+                        leftAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 8.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                bindings:
+                - ["visible", "isResourcesVisible"]
+                - ["Anchor.bottomAnchor", "when contentSizeY > 1024 -> 64, 16"]
+                children:
+                -   class: "UIControl"
+                    name: "RewardTitle"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    classes: "t-caps bold white-wild-sand-text align-left"
+                    refreshStylesOnInteract: false
+                    components:
+                        UIOpacityComponent:
+                            opacity: 0.000000
+                        UITextComponent: {}
+                        Anchor:
+                            leftAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 250.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 16.000000
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "capitalize(localize(\"#battle_results:Economic/ReceivedItems\"))"]
+                -   class: "UIScrollView"
+                    name: "UIScrollView"
+                    size: [32.000000, 32.000000]
+                    autoUpdate: true
+                    components:
+                        ClipContent:
+                            top: false
+                            bottom: false
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIScrollViewContainer"
+                        name: "scrollContainerControl"
+                        scrollDirection: "kHorizontal"
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfMaxChild"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UILayoutEventComponent:
+                                positionChangedEvent: "CHANGE_SCROLL_POSITION"
+                                positionChangedEventData: "_position.X"
+                        children:
+                        -   class: "UIControl"
+                            name: "RewardResourcesHolder"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                    topAnchorEnabled: true
+                                    topAnchor: 0.000000
+                                LinearLayout:
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    verticalPolicy: "PercentOfFirstChild"
+                                UIRepeatComponent:
+                                    control: "~res:/UI/Screens3/Lobby/BattleResults/Common/RewardWrapper.yaml"
+                                    dataContainer: "results.economics.resources"
+                                    args:
+                                        "attachId": "\"economy_page_reward_\" + str(_index)"
+                                        "isFirstShow": "economyFirstShowLocal"
+                                        "resource": "_item"
+                                        "id": "_index"
+                                        "animationStartDelay": "when Size(results.economics.resources) > 4 -> float(_index * (animationTime / 4)), float(_index * (animationTime / 5))"
+                                    eventActions:
+                                    - ["ON_REWARD_CLICK", "ON_REWARD_CLICK_IN_ECONOMY_PAGE", "_event.id"]
+                            bindings:
+                            - ["SizePolicy.horizontalValue", "(Size(results.economics.resources) * 94) - 8"]
+                        -   class: "UIControl"
+                            name: "ScrollTargetForward"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                Anchor:
+                                    rightAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 0.000000
+                                    verticalPolicy: "PercentOfParent"
+                    -   prototype: "HorizontalScrollBar/HorizontalScrollBar"
+                        name: "HorizontalScrollBar"
+                        components:
+                            UIOpacityComponent: {}
+                            Anchor:
+                                bottomAnchor: -8.000000
+                            UIScrollBarComponent:
+                                delegate: ".."
+                        bindings:
+                        - ["UIOpacityComponent.opacity", "when economyFirstShowLocal -> 0, 1"]
+    -   class: "UIControl"
+        name: "RightContent"
+        position: [480.000000, 118.000000]
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                verticalPolicy: "Formula"
+                verticalFormula: "min(contentSizeY*0.63, 560)"
+        bindings:
+        - ["SizePolicy.horizontalValue", "screenWidth / 2"]
+        children:
+        -   class: "UIControl"
+            name: "ContentWrapper"
+            size: [432.000000, 380.000000]
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "8"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    topAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                    skipInvisible: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 432.000000
+                    verticalPolicy: "PercentOfChildrenSum"
+            bindings:
+            - ["Anchor.hCenterAnchor", "when contentSizeY > 880 -> -64, 0"]
+            - ["LinearLayout.spacing", "when contentSizeY > 880 -> 64, 32"]
+            children:
+            -   class: "UIControl"
+                name: "XpBlock"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 300.000000
+                        verticalPolicy: "PercentOfFirstChild"
+                children:
+                -   class: "UIControl"
+                    name: "XpInfoBlock"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        Anchor:
+                            leftAnchorEnabled: true
+                            topAnchorEnabled: true
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 2.000000
+                        SizePolicy:
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "XpBonusFactorBlockWrapper"
+                        size: [32.000000, 24.000000]
+                        input: false
+                        children:
+                        -   class: "UIControl"
+                            name: "XpBonusFactorBlock"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                LinearLayout:
+                                    spacing: 4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 24.000000
+                            children:
+                            -   class: "UIControl"
+                                name: "XpBonusFactorLabel"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                classes: "white-wild-sand-text bold align-left t-caps"
+                                refreshStylesOnInteract: false
+                                components:
+                                    UIOpacityComponent:
+                                        opacity: 0.000000
+                                    UITextComponent: {}
+                                    Anchor:
+                                        leftAnchorEnabled: true
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"#battle_results:Economic/Experience/ExperienceTitle\"))"]
+                            -   class: "UIControl"
+                                name: "XpBonusFactorHolder"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    UIOpacityComponent:
+                                        opacity: 0.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfFirstChild"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                    UIChildComponent0:
+                                        condition: "int(results.economics.xpFactor) > 1 and results.economics.totalXp.base > 0"
+                                        prototypePath: "~res:/UI/Screens3/Lobby/Common/BonusFactor.yaml"
+                                        args:
+                                            "size": "eBonusFactorSize.kNormal"
+                                            "factor": "int(results.economics.xpFactor)"
+                                bindings:
+                                - ["visible", "int(results.economics.xpFactor) > 1 and results.economics.totalXp.base > 0"]
+                    -   class: "UIControl"
+                        name: "XpCurrencyWrapper"
+                        size: [32.000000, 56.000000]
+                        input: false
+                        children:
+                        -   class: "UIControl"
+                            name: "XpCurrency"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                UIOpacityComponent:
+                                    opacity: 0.000000
+                                LinearLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 56.000000
+                            bindings:
+                            - ["LinearLayout.spacing", "when hasTankProgressBar and isNull(results.economics.tankProgress.bestModule) and isNull(results.economics.tankProgress.bestVehicleModule) -> 6, 0"]
+                            children:
+                            -   class: "UIControl"
+                                name: "XpCurrencyValue"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    UITextComponent:
+                                        fontPath: "~res:/Fonts/HelveticaNeueWorld-75Bold.ttf"
+                                        fontSize: 50.000000
+                                        lineHeight: 56.000000
+                                        baseLine: 9.000000
+                                        letterSpacing: 0.630000
+                                    UIShadowComponent:
+                                        blurType: "Gauss"
+                                        color: [1.000000, 0.164706, 0.000000, 1.000000]
+                                        indent: 16
+                                        canBeDelayed: true
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "PercentOfContent"
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(xpCurrentValue)"]
+                                - ["UITextComponent.color", "when isPremium -> hsb(37, 40, 90), hsb(0, 0, 96)"]
+                                - ["UIShadowComponent.textureScale", "when isPremium -> 1, 0"]
+                            -   class: "UIControl"
+                                name: "XpCurrencyIcon"
+                                position: [177.000000, 4.000000]
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    Background:
+                                        drawType: "DRAW_SCALE_TO_RECT"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 48.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 48.000000
+                                bindings:
+                                - ["Background.sprite", "when hasTankProgressBar and isNull(results.economics.tankProgress.bestModule) and isNull(results.economics.tankProgress.bestVehicleModule) -> \"~res:/Gfx/Lobby/currency/currency_elite-xp_xl\", \"~res:/Gfx/Lobby/currency/currency_battle-xp_xl\""]
+                    -   class: "UIControl"
+                        name: "XpPremiumWrapper"
+                        input: false
+                        components:
+                            SizePolicy:
+                                verticalPolicy: "FixedSize"
+                        bindings:
+                        - ["visible", "showPremXpBlock"]
+                        - ["SizePolicy.verticalValue", "xpPremiumYSize"]
+                        children:
+                        -   class: "UIControl"
+                            name: "XpPremium"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                UIAttachLayoutMasterComponent:
+                                    attachId: "BUY_PREMIUM_BUTTON"
+                                UIChildComponent0:
+                                    condition: "showPremXpBlock"
+                                    prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/PremiumBlock.yaml"
+                                    args:
+                                        "canAnimated": "canAnimated"
+                                        "buttonText": "localize(\"#battle_results:Economic/GetPremiumButton\")"
+                                        "isFirstShow": "economyFirstShowLocal"
+                                        "value": "results.economics.totalXp.premium - results.economics.totalXp.base"
+                                    eventActions:
+                                    - ["END_PREMIUM_BLOCK_ANIMATION", "END_PREMIUM_BLOCK_ANIMATION", ""]
+                                    - ["ON_CLICK_BUTTON", "BUY_PREMIUM", ""]
+                                UILayerComponent: {}
+                                UIShadowHoleComponent: {}
+                            bindings:
+                            - ["visible", "showPremXpBlock"]
+                            - ["UILayerComponent.layer", "tutorialData.currentHint == eTutorialHint.kBuyPremium"]
+                            - ["UIShadowHoleComponent.isEnabled", "tutorialData.currentHint == eTutorialHint.kBuyPremium"]
+                    -   class: "UIControl"
+                        name: "RankProgressHolder"
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 0.000000
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 432.000000
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIChildComponent0:
+                                condition: "results.tank.tankRank > 0 and notFinalRank"
+                                prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/TankRankProgress.yaml"
+                                args:
+                                    "isFirstShow": "economyFirstShowLocal and xpEndValue > 0"
+                                    "maxRankPoints": "maxRankPoints"
+                                    "minRankPoints": "minRankPoints"
+                                    "prevRankPoints": "prevTankRankPoints"
+                                    "rankPoints": "tankRankPoints"
+                                    "rankGrade": "nextTankRankGrade"
+                                    "rank": "nextTankRank"
+                                    "parentWidth": "432.000000"
+                                eventActions:
+                                - ["EndRankProgressAnimation", "EndRankProgressAnimation", ""]
+                        bindings:
+                        - ["visible", "results.tank.tankRank > 0 and not isNull(nextRankInfo)"]
+                    -   class: "UIControl"
+                        name: "TankProgressHolder"
+                        position: [0.000000, 116.000000]
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 0.000000
+                            Anchor:
+                                leftAnchorEnabled: true
+                                topAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 432.000000
+                                verticalPolicy: "PercentOfFirstChild"
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/TankProgress.yaml"
+                                args:
+                                    "gameModeFromBattleResults": "results.gameplayMode"
+                                    "isTutorialInProgress": "isTutorialInProgress"
+                                    "moduleInfoData": "results.tank.info"
+                                    "moduleStatData": "results.tank.stats"
+                                    "isFirstShow": "economyFirstShowLocal"
+                                    "isPremium": "isPremium"
+                                    "model": "results.economics.tankProgress"
+                                    "previousXp": "previousXp"
+                                    "battleXp": "results.economics.totalXp.base - results.economics.boosterXp"
+                                    "boosterXp": "results.economics.boosterXp"
+                                    "premXp": "results.economics.totalXp.premium - results.economics.totalXp.base"
+                                eventActions:
+                                - ["OpenModulePageForResearch", "OpenModulePageForResearch", ""]
+                        bindings:
+                        - ["visible", "hasTankProgressBar and not results.economics.tankProgress.badData and results.gameplayMode != eGameMode.Training"]
+            -   class: "UIControl"
+                name: "XpDetailInfo"
+                input: false
+                components:
+                    LinearLayout:
+                        orientation: "TopDown"
+                        skipInvisible: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 432.000000
+                        verticalPolicy: "PercentOfChildrenSum"
+                bindings:
+                - ["visible", "isXpDetailInfoVisible"]
+                children:
+                -   class: "UIControl"
+                    name: "TotalXpBaseWrapper"
+                    size: [432.000000, 50.000000]
+                    input: false
+                    bindings:
+                    - ["visible", "results.economics.totalXp.base - results.economics.boosterXp > 0"]
+                    children:
+                    -   class: "UIControl"
+                        name: "TotalXpBaseHolder"
+                        size: [432.000000, 50.000000]
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 0.000000
+                            Anchor:
+                                topAnchorEnabled: true
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/EconomyRow.yaml"
+                                args:
+                                    "isSeparatorVisible": "false"
+                                    "iconSprite": "\"~res:/Gfx/Lobby/icons/icon_exp_m\""
+                                    "nameParam": "\"boosters/Impact/BattleXP\""
+                                    "data": "results.economics.totalXp.base - results.economics.boosterXp"
+                                    "bonusFactor": "int(results.economics.xpFactor)"
+                -   class: "UIControl"
+                    name: "BoosterXpWrapper"
+                    size: [432.000000, 50.000000]
+                    input: false
+                    bindings:
+                    - ["visible", "results.economics.boosterXp > 0"]
+                    children:
+                    -   class: "UIControl"
+                        name: "BoosterXpHolder"
+                        size: [432.000000, 50.000000]
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 0.000000
+                            Anchor:
+                                topAnchorEnabled: true
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/EconomyRow.yaml"
+                                args:
+                                    "isSeparatorVisible": "true"
+                                    "iconSprite": "\"~res:/Gfx/Lobby/icons/icon_booster_m\""
+                                    "nameParam": "\"#battle_results:Overlay/Statistics/Experience/XpBooster\""
+                                    "data": "results.economics.boosterXp"
+                -   class: "UIControl"
+                    name: "TotalXpPremiumWrapper"
+                    size: [432.000000, 50.000000]
+                    input: false
+                    bindings:
+                    - ["visible", "isPremium"]
+                    children:
+                    -   class: "UIControl"
+                        name: "TotalXpPremiumHolder"
+                        size: [432.000000, 50.000000]
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 0.000000
+                            Anchor:
+                                topAnchorEnabled: true
+                                topAnchor: 100.000000
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/EconomyRow.yaml"
+                                args:
+                                    "isPremium": "true"
+                                    "iconSprite": "\"~res:/Gfx/Lobby/icons/icon_premium_account_colored_m\""
+                                    "isSeparatorVisible": "true"
+                                    "nameParam": "\"battleType/Header/PremiumAccount\""
+                                    "data": "results.economics.totalXp.premium - results.economics.totalXp.base"
+            -   class: "UIControl"
+                name: "CreditsBlock"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 300.000000
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "CreditsInfoBlock"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 2.000000
+                        SizePolicy:
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "CreditsBonusFactorBlockWrapper"
+                        size: [32.000000, 24.000000]
+                        input: false
+                        children:
+                        -   class: "UIControl"
+                            name: "CreditsBonusFactorBlock"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                LinearLayout:
+                                    spacing: 4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 24.000000
+                            children:
+                            -   class: "UIControl"
+                                name: "CreditsBonusFactorLabel"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                classes: "white-wild-sand-text bold align-left t-caps"
+                                refreshStylesOnInteract: false
+                                components:
+                                    UIOpacityComponent:
+                                        opacity: 0.000000
+                                    UITextComponent: {}
+                                    Anchor:
+                                        leftAnchorEnabled: true
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"#battle_results:Economic/Credits/CreditsTitle\"))"]
+                            -   class: "UIControl"
+                                name: "CreditsBonusFactorHolder"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    UIOpacityComponent:
+                                        opacity: 0.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfFirstChild"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                    UIChildComponent0:
+                                        condition: "int(results.economics.creditsFactor) > 1 and results.economics.earnedCredits.base > 0"
+                                        prototypePath: "~res:/UI/Screens3/Lobby/Common/BonusFactor.yaml"
+                                        args:
+                                            "type": "eBonusFactor.kCredits"
+                                            "size": "eBonusFactorSize.kNormal"
+                                            "factor": "int(results.economics.creditsFactor)"
+                                bindings:
+                                - ["visible", "int(results.economics.creditsFactor) > 1 and results.economics.earnedCredits.base > 0"]
+                    -   class: "UIControl"
+                        name: "CreditsCurrencyWrapper"
+                        size: [32.000000, 56.000000]
+                        input: false
+                        children:
+                        -   class: "UIControl"
+                            name: "CreditsCurrency"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                UIOpacityComponent:
+                                    opacity: 0.000000
+                                LinearLayout:
+                                    spacing: 4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 56.000000
+                            children:
+                            -   class: "UIControl"
+                                name: "CreditsCurrencyValue"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    UITextComponent:
+                                        fontPath: "~res:/Fonts/HelveticaNeueWorld-75Bold.ttf"
+                                        fontSize: 50.000000
+                                        lineHeight: 56.000000
+                                        baseLine: 9.000000
+                                        letterSpacing: 0.630000
+                                        colorInheritType: "COLOR_IGNORE_PARENT"
+                                    UIShadowComponent:
+                                        blurType: "Gauss"
+                                        color: [1.000000, 0.164706, 0.000000, 1.000000]
+                                        indent: 16
+                                        canBeDelayed: true
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "PercentOfContent"
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(creditsCurrentValue)"]
+                                - ["UITextComponent.color", "when isPremium -> hsb(37, 40, 90), hsb(0, 0, 96)"]
+                                - ["UIShadowComponent.textureScale", "when isPremium -> 1, 0"]
+                            -   class: "UIControl"
+                                name: "CreditsCurrencyIcon"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    Background:
+                                        drawType: "DRAW_SCALE_TO_RECT"
+                                        sprite: "~res:/Gfx/Lobby/currency/currency_silver_l"
+                                    UIOpacityComponent:
+                                        opacity: 0.000000
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 48.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 48.000000
+                    -   class: "UIControl"
+                        name: "CreditsPremium"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            UIAttachLayoutMasterComponent: {}
+                            UIChildComponent0:
+                                condition: "showPremCreditsBlock"
+                                prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/PremiumBlock.yaml"
+                                args:
+                                    "canAnimated": "canAnimated"
+                                    "buttonText": "localize(\"#battle_results:Economic/GetPremiumButton\")"
+                                    "isFirstShow": "economyFirstShowLocal"
+                                    "value": "results.economics.creditsResult.premium - results.economics.creditsResult.base"
+                                eventActions:
+                                - ["END_PREMIUM_BLOCK_ANIMATION", "END_PREMIUM_BLOCK_ANIMATION", ""]
+                                - ["ON_CLICK_BUTTON", "BUY_PREMIUM", ""]
+                            UILayerComponent: {}
+                            UIShadowHoleComponent: {}
+                        bindings:
+                        - ["visible", "showPremCreditsBlock"]
+                        - ["UIAttachLayoutMasterComponent.attachId", "when showPremXpBlock -> \"\", \"BUY_PREMIUM_BUTTON\""]
+                        - ["UILayerComponent.layer", "tutorialData.currentHint == eTutorialHint.kBuyPremium"]
+                        - ["UIShadowHoleComponent.isEnabled", "tutorialData.currentHint == eTutorialHint.kBuyPremium"]
+            -   class: "UIControl"
+                name: "TotalCreditsBlock"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 432.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 52.000000
+                children:
+                -   class: "UIControl"
+                    name: "TotalCredits"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        UIOpacityComponent:
+                            opacity: 0.000000
+                        SizePolicy:
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 52.000000
+                    children:
+                    -   class: "UIControl"
+                        name: "Label"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        classes: "white-wild-sand-text bold align-left t-caps"
+                        refreshStylesOnInteract: false
+                        components:
+                            UITextComponent: {}
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 200.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 16.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "capitalize(localize(\"#battle_results:Economic/Credits/TotalCredits\"))"]
+                    -   class: "UIControl"
+                        name: "TotalValue"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 0.000000
+                            Anchor:
+                                bottomAnchorEnabled: true
+                                bottomAnchor: 0.000000
+                            LinearLayout:
+                                spacing: 4.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfFirstChild"
+                        children:
+                        -   class: "UIControl"
+                            name: "Plus"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            classes: "t-content-h4 bold white-wild-sand-text"
+                            components:
+                                UITextComponent:
+                                    text: "+"
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                    vCenterAnchor: -1.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfContent"
+                                    verticalPolicy: "PercentOfContent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            bindings:
+                            - ["visible", "creditsTotal > 0"]
+                        -   class: "UIControl"
+                            name: "TotalValueWrapper"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                LinearLayout:
+                                    spacing: 4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfFirstChild"
+                                    verticalPolicy: "PercentOfFirstChild"
+                                UIChildComponent0:
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/CurrencyPrivateWithMinus.yaml"
+                                    args:
+                                        "forceFullValue": "true"
+                                        "currencySize": "eCurrencySize.H4_BOLD"
+                                        "quantity": "creditsTotal"
+                                        "type": "ResourceType.credits"
+                -   class: "UIControl"
+                    name: "VideoAd"
+                    position: [216.000000, 0.000000]
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        UIOpacityComponent:
+                            opacity: 0.000000
+                        Anchor:
+                            leftAnchorEnabled: true
+                            leftAnchor: 210.000000
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UIChildComponent0:
+                            condition: "canWatchAd"
+                            prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Economic/BattleResultAds.yaml"
+                            args:
+                                "isBigBlock": "false"
+                                "economics": "results.economics"
+                            eventActions:
+                            - ["PLAY_VIDEO_AD", "ON_CLICK_VIDEO_AD", ""]

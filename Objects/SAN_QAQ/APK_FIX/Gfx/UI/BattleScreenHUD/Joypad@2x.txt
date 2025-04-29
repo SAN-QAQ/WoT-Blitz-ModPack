@@ -1,0 +1,8 @@
+1
+Joypad_SAN_QAQ@2x.packed.webp
+388 360
+4
+0 0 360 360 14 0 0 frame0
+0 818 206 206 91 77 0 frame1
+980 0 44 40 172 160 0 frame2
+984 988 40 36 174 162 0 frame3

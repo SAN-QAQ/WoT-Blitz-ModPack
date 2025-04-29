@@ -1,0 +1,17 @@
+modules:
+    "#vehicle:T95":
+        position: [3, 2]
+    "#vehicleGun:_90mm_AT_Gun_T15E2":
+        position: [1, 1]
+    "#vehicleGun:_105mm_AT_Gun_T5E1":
+        position: [2, 1]
+    "#vehicleGun:_120mm_AT_Gun_T53":
+        position: [3, 1]
+    "#vehicleEngine:Ford_GAF":
+        position: [1, 2]
+    "#vehicleEngine:Ford_GAFM2":
+        position: [2, 2]
+    "#vehicleChassis:Chassis_T28":
+        position: [1, 3]
+    "#vehicleChassis:Chassis_T28_2":
+        position: [2, 3]

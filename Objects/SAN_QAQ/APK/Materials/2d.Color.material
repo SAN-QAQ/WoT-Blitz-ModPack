@@ -1,0 +1,7 @@
+Material:
+    Shader: ~res:/Materials/Shaders/2d/2d
+    RenderState:
+        blend: true
+        depthFunc: CMP_LESS
+    Passes:
+        2d:

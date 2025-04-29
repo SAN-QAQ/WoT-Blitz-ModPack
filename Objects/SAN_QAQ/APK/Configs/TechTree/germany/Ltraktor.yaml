@@ -1,0 +1,17 @@
+modules:
+    "#vehicle:PzII":
+        position: [4, 1]
+    "#vehicle:Pz35t":
+        position: [4, 3]
+    "#vehicleGun:_37mm_KwK_L46":
+        position: [1, 1]
+    "#vehicleGun:_20mm_Breda":
+        position: [3, 2]
+    "#vehicleTurret:Swedish_Bofors":
+        position: [1, 2]
+    "#vehicleTurret:Verbesserteturm":
+        position: [2, 2]
+    "#vehicleEngine:Maybach_NL38TR":
+        position: [1, 3]
+    "#vehicleChassis:LeichtertaktorkettenB":
+        position: [1, 4]

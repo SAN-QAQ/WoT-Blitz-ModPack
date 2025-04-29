@@ -1,0 +1,15 @@
+Material:
+    Layers: [ DebugRenderLayer ]
+    Shader: ~res:/Materials/Shaders/DebugDraw/debugdraw
+    RenderState:
+        depthTest: true
+        cullMode: FACE_BACK
+        depthFunc: CMP_LESS
+    Passes:
+        Forward:
+        ForwardWithDepthOnly:
+        ReflectionRefraction:
+        DepthOnly:
+            enabled: false
+        ShadowMap:
+            enabled: false

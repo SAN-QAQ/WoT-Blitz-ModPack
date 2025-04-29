@@ -1,0 +1,6 @@
+Material:
+    Shader: ~res:/Materials/Shaders/2d/alpha-fill
+    RenderState:
+        depthFunc: CMP_LESS
+    Passes:
+        2d:

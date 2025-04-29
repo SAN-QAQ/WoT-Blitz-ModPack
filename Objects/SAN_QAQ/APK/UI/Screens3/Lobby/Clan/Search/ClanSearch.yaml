@@ -1,0 +1,481 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Common/TextField.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ClanSearch"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "LeftToRight"
+            safeAreaPaddingInset: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalMin: 960.000000
+            verticalPolicy: "PercentOfParent"
+            verticalMin: 640.000000
+        UIDataParamsComponent:
+            params:
+            - ["bool", "searchOptChecked", "false", "false"]
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["float", "initScrollPosition", "0", "0"]
+            - ["ClanSearchModel", "model", "null", "{ }"]
+            events:
+            - "OnSearchOptCheck"
+            - "SelectLanguageClicked"
+            - "LoadMoreClicked"
+            - "ScrollPositionChanged"
+            - "SwitchSortType(eClanListSortMode type)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "isSearchHasAlreadyBeenDone", "false"]
+            - ["string", "emptyTitle", "when not app.netease.neteaseAvailable -> localize(\"Clans/Search/Empty/Title\"), localize(\"Clans/Search/Empty/China/Title\")"]
+            - ["string", "startSearchTitle", "when not app.netease.neteaseAvailable -> localize(\"Clans/Search/EnterNameOrTag\"), localize(\"Clans/Search/China/EnterID\")"]
+            - ["string", "obscenePattern", "\"***\""]
+            - ["string", "obsceneTitle", "localize(\"chat/ObsceneLangFilter/InappropriateText\")"]
+            - ["bool", "isChina", "app.netease.neteaseAvailable"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "foundClansNumber", "when model.useSearchedClans -> model.searchedPage.totalClanNumber, model.recommendedPage.totalClanNumber"]
+            - ["vector<ClanShortInfo>", "clans", "when model.useSearchedClans -> model.searchedPage.clans, model.recommendedPage.clans"]
+            - ["bool", "isInitLoading", "clans.Size() == 0 and model.loadingInProgress"]
+            - ["bool", "isObsceneText", "model.searchString == obscenePattern"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Clan/Search/ClanSearch.actions"
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        size: [960.000000, 640.000000]
+        pivot: [0.500000, 0.500000]
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_SCALE_TO_RECT"
+                sprite: "~res:/Gfx/Lobby/backgrounds/key-art/key-art_clan-1"
+                align: []
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "content / 0.75"
+                verticalPolicy: "PercentOfContent"
+            ScalePolicy:
+                horizontalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+                verticalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+    -   class: "UIControl"
+        name: "Blur"
+        input: false
+        components:
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/BlurAndFade.yaml"
+                args:
+                    "fadeOpacity": "0.500000"
+                    "blurOpacity": "0.000000"
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+                padding: "0; 24"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Header"
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 160.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            children:
+            -   prototype: "BlurModified/BlurModified"
+                name: "TopBlock"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIControl"
+                    name: "Back"
+                    input: false
+                    components:
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            horizontalValue: 100.000000
+                            verticalPolicy: "PercentOfMaxChild"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Common/BackButton.yaml"
+                            eventActions:
+                            - ["ON_CLICK_BUTTON", "BACK_EVENT", ""]
+                -   class: "UIControl"
+                    name: "Panel"
+                    input: false
+                    classes: "regular t-headline color=white-wild-sand-text"
+                    components:
+                        UITextComponent:
+                            align: ["HCENTER", "VCENTER"]
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "parent"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"Clans/Search/Title\")"]
+            -   class: "UIControl"
+                name: "BottomBlock"
+                input: false
+                components:
+                    Background:
+                        usePostProcessedSprite: true
+                    UIPostProcessTextureComponent0:
+                        materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                        needClearAlphaAfterRender: true
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent1:
+                        materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent2:
+                        materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIRoundedCornersComponent:
+                        radius: "4"
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 832.000000
+                        verticalPolicy: "PercentOfParent"
+                bindings:
+                - ["LinearLayout.spacing", "when model.useSearchedClans -> 8, 16"]
+                children:
+                -   prototype: "TextField/TextField"
+                    name: "TextField"
+                    components:
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        UIDataParamsComponent:
+                            args:
+                                "additionalContent": "SearchAdditionalContent"
+                                "canCleaned": "true"
+                                "isLastEdit": "true"
+                                "keyboardType": "eKeyboardType.KEYBOARD_TYPE_DEFAULT"
+                                "maxLength": "25"
+                                "placeholderText": "when not app.netease.neteaseAvailable -> localize(\"Clans/Search/EditDefaultText\"), localize(\"Clans/Search/China/EditDefaultText\")"
+                                "text": "model.searchString"
+                                "textFieldType": "eTextFieldType.Search"
+                                "isVisible": "true"
+                            eventActions:
+                            - ["EDIT_ENDED", "EDIT_ENDED", "_event"]
+                        UIDataLocalBindingsComponent:
+                            data:
+                            - ["bool", "showClean", "canCleaned and (not fieldText.empty() and (not showValidate or validatedWithError))"]
+                            - ["bool", "rightIconIsVisible", "showClean or showValidate"]
+                            - ["string", "rightIconImage", "when showClean -> \"~res:/Gfx/Lobby/icons/icon_cancel_s\", (when showValidate -> (when validatedWithError -> \"\", \"~res:/Gfx/Lobby/icons/icon_tick_m\"), \"\")"]
+                            - ["string", "rightIconStyle", "when showClean -> \"white-wild-sand-50-bg\", (when showValidate -> (when validatedWithError -> \"red-red-bg\", \"green-la-palma-bg\"), \"\")"]
+                            - ["bool", "isMultiline", "textFieldType == eTextFieldType.Multiline"]
+                    children:
+                    -   path: "Content/Center/UITextField"
+                        returnKeyType: "RETURN_KEY_SEARCH"
+                -   prototype: "TextField/TextField"
+                    name: "TextFieldFilter"
+                    components:
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        UIDataParamsComponent:
+                            args:
+                                "additionalContent": "SearchAdditionalContent"
+                                "canCleaned": "true"
+                                "isLastEdit": "true"
+                                "keyboardType": "eKeyboardType.KEYBOARD_TYPE_NUMBER_PAD"
+                                "maxLength": "25"
+                                "placeholderText": "when not app.netease.neteaseAvailable -> localize(\"Clans/Search/EditDefaultText\"), localize(\"Clans/Search/China/EditDefaultText\")"
+                                "text": "model.searchString"
+                                "textFieldType": "eTextFieldType.Search"
+                                "isVisible": "false"
+                            eventActions:
+                            - ["EDIT_ENDED", "EDIT_ENDED", "_event"]
+                        UIDataLocalBindingsComponent:
+                            data:
+                            - ["bool", "showClean", "canCleaned and (not fieldText.empty() and (not showValidate or validatedWithError))"]
+                            - ["bool", "rightIconIsVisible", "showClean or showValidate"]
+                            - ["string", "rightIconImage", "when showClean -> \"~res:/Gfx/Lobby/icons/icon_cancel_s\", (when showValidate -> (when validatedWithError -> \"\", \"~res:/Gfx/Lobby/icons/icon_tick_m\"), \"\")"]
+                            - ["string", "rightIconStyle", "when showClean -> \"white-wild-sand-50-bg\", (when showValidate -> (when validatedWithError -> \"red-red-bg\", \"green-la-palma-bg\"), \"\")"]
+                            - ["bool", "isMultiline", "textFieldType == eTextFieldType.Multiline"]
+                    children:
+                    -   path: "Content/Center/UITextField"
+                        returnKeyType: "RETURN_KEY_SEARCH"
+                        components:
+                            UITextPatternComponent0:
+                                regularExpression: "NUMBER"
+                -   class: "UIControl"
+                    name: "ButtonBlock"
+                    input: false
+                    components:
+                        Anchor:
+                            rightAnchorEnabled: true
+                        LinearLayout:
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfChildrenSum"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["visible", "model.useSearchedClans or not app.netease.neteaseAvailable"]
+                    children:
+                    -   class: "UIControl"
+                        name: "CancelSearchButton"
+                        input: false
+                        components:
+                            Anchor:
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfChildrenSum"
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/Common/Button/TextIconButton.yaml"
+                                args:
+                                    "enabled": "true"
+                                    "type": "eButtonType.NO_BG"
+                                    "caption": "capitalize(localize(\"Clans/Search/CancelSearchButton\"))"
+                                    "bgIsVisible": "false"
+                                eventActions:
+                                - ["ON_CLICK_BUTTON", "OnCancelSearchClicked", ""]
+                        bindings:
+                        - ["visible", "model.useSearchedClans"]
+                    -   class: "UIControl"
+                        name: "SelectLanguageButton"
+                        size: [205.000000, 48.000000]
+                        input: false
+                        components:
+                            Anchor:
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfMaxChild"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                                args:
+                                    "isCapitalize": "true"
+                                    "size": "eButtonSize.NORMAL"
+                                    "type": "eButtonType.OPTIONAL_LIGHT"
+                                    "caption": "when model.selectedLanguageCount == 0 -> localize(\"Clans/Search/SelectLanguage\"), localize(\"Clans/Search/SelectedLanguages\", { \"count\" = model.selectedLanguageCount; })"
+                                eventActions:
+                                - ["ON_CLICK_BUTTON", "SelectLanguageClicked", ""]
+                        bindings:
+                        - ["visible", "not app.netease.neteaseAvailable"]
+        -   class: "UIControl"
+            name: "Content"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildAnimatedSwitchingComponent:
+                    switchPolicy: "kAfterRemovingAnimation"
+                UIChildComponent0:
+                    condition: "isInitLoading"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Clan/Search/ClanLoader.yaml"
+                UIChildComponent1:
+                    condition: "not isInitLoading and not model.useSearchedClans and not Empty(clans)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Clan/Search/ClanList.yaml"
+                    args:
+                        "isChina": "app.netease.neteaseAvailable"
+                        "sortMode": "model.recommendedPage.sortMode"
+                        "inverseSort": "model.recommendedPage.inverseSort"
+                        "loadMoreVisible": "model.recommendedPage.loadMoreVisible"
+                        "isLoadingInProgress": "model.loadingInProgress"
+                        "clans": "clans"
+                        "initScrollPosition": "initScrollPosition"
+                        "useSearchedClans": "model.useSearchedClans"
+                    eventActions:
+                    - ["ScrollPositionChanged", "ScrollPositionChanged", "_event.pos"]
+                    - ["SwitchSortType", "SwitchSortType", "_event.type"]
+                UIChildComponent2:
+                    condition: "not isInitLoading and model.useSearchedClans and not Empty(clans)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Clan/Search/ClanList.yaml"
+                    args:
+                        "isChina": "app.netease.neteaseAvailable"
+                        "inverseSort": "model.searchedPage.inverseSort"
+                        "sortMode": "model.searchedPage.sortMode"
+                        "loadMoreVisible": "model.searchedPage.loadMoreVisible and not app.netease.neteaseAvailable"
+                        "isLoadingInProgress": "model.loadingInProgress"
+                        "clans": "clans"
+                        "initScrollPosition": "initScrollPosition"
+                        "useSearchedClans": "model.useSearchedClans"
+                    eventActions:
+                    - ["ScrollPositionChanged", "ScrollPositionChanged", "_event.pos"]
+                    - ["SwitchSortType", "SwitchSortType", "_event.type"]
+                UIChildComponent3:
+                    childType: "kControl"
+                    condition: "not isInitLoading and Empty(clans)"
+                    control: "Empty"
+            children:
+            -   class: "UIControl"
+                name: "Control"
+                visible: false
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 832.000000
+                        verticalPolicy: "PercentOfFirstChild"
+                children:
+                -   class: "UIControl"
+                    name: "checkOptions"
+                    size: [200.000000, 40.000000]
+                    input: false
+                    components:
+                        Anchor:
+                            leftAnchorEnabled: true
+                            hCenterAnchorEnabled: false
+                            rightAnchorEnabled: false
+                            rightAnchor: 0.000000
+                        LinearLayout:
+                            orientation: "LeftToRight"
+                            spacing: 5.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfChildrenSum"
+                            horizontalValue: 110.000000
+                            horizontalFormula: "parent-200"
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 40.000000
+                        UIAttachLayoutMasterComponent:
+                            attachId: "CLANS_SEARCHOPTION_ID"
+                    children:
+                    -   class: "UIControl"
+                        name: "CheckBox"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfFirstChild"
+                                verticalPolicy: "PercentOfParent"
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Common/CheckBox.yaml"
+                                args:
+                                    "attractAttention": "false"
+                                    "isActive": "searchOptChecked"
+                                    "soundStyle": "\"button-checkbox-sound\""
+                                eventActions:
+                                - ["CHECK_PRESSED", "OnSearchOptCheck", ""]
+                    -   class: "UIControl"
+                        name: "Text"
+                        input: false
+                        components:
+                            UITextComponent:
+                                letterSpacing: 0.100000
+                                color: [0.960784, 0.960784, 0.960784, 1.000000]
+                                colorInheritType: "COLOR_IGNORE_PARENT"
+                                fitting: "FITTING_REDUCE"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfParent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["classes", "\"regular t-body  color=white-wild-sand-text\""]
+                        - ["UITextComponent.text", "localize(\"Clans/Search/ReqiredOption\")"]
+Slots:
+-   class: "UIControl"
+    name: "Empty"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+            dynamicPadding: true
+            spacing: 8.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "Title"
+        input: false
+        classes: "t-headline bold white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "when not isSearchHasAlreadyBeenDone -> startSearchTitle, isObsceneText -> obsceneTitle, emptyTitle"]
+    -   class: "UIControl"
+        name: "Subtitle"
+        input: false
+        classes: "t-body regular white-wild-sand-70-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "isSearchHasAlreadyBeenDone"]
+        - ["UITextComponent.text", "when not app.netease.neteaseAvailable -> localize(\"Clans/Search/Empty/Subtitle\"), localize(\"Clans/Search/Empty/China/Subtitle\")"]
+-   class: "UIControl"
+    name: "SearchAdditionalContent"
+    input: false
+    components:
+        Anchor:
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfChildrenSum"
+        UIChildComponent0:
+            childType: "kControl"
+            control: "FoundClans"
+-   class: "UIControl"
+    name: "FoundClans"
+    input: false
+    classes: "t-body regular white-wild-sand-50-text"
+    components:
+        UITextComponent: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfContent"
+            verticalPolicy: "PercentOfContent"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    bindings:
+    - ["UITextComponent.text", "localize(\"Clans/Search/FoundClansNumber\", { \"number\" = foundClansNumber; })"]

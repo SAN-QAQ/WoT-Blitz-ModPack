@@ -1,0 +1,378 @@
+Header:
+    version: 155
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Hangar/SquadPanel/SquadListHeader.yaml"
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+- "~res:/UI/Screens3/Lobby/Common/ButtonNoBlur.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "SquadPanel"
+    size: [348.000000, 492.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Common/SubPanelStart.animation;_FINISH,~res:/UI/Screens3/Lobby/Common/SubPanelFinish.animation"
+        UIOpacityComponent: {}
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["SquadMembers", "squadMembers", "{ }", "{ \"friendsVector\" = [ { \"name\" = \"FriendName1\"; \"tag\" = \"testTag\"; }; { \"name\" = \"FriendName2\"; \"tag\" = \"testTag2\"; }; ]; \"invitesVector\" = [ { \"name\" = \"FriendName3\"; \"tag\" = \"WGTag\"; \"inviteReceive\" = true; }; ]; }"]
+            events:
+            - "ON_AVATAR_CLICKED"
+            - "ON_SQUAD_CLICKED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "panelWidth", "348"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "invitesCount", "squadMembers.invitesVector.Size()"]
+            - ["int", "friendCount", "squadMembers.friendsVector.Size()"]
+            writeAllowed: false
+        UIDataOnEventComponent0:
+            eventName: "ON_CLICK_INVITE_LIST"
+            modelFieldExpression: "squadMembers.inviteListVisible"
+            dataExpression: "not squadMembers.inviteListVisible"
+        UIDataOnEventComponent1:
+            eventName: "ON_CLICK_FRIEND_LIST"
+            modelFieldExpression: "squadMembers.friendListVisible"
+            dataExpression: "not squadMembers.friendListVisible"
+    bindings:
+    - ["SizePolicy.horizontalValue", "panelWidth"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        size: [348.000000, 1000.000000]
+        input: false
+        components:
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Bg"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background: {}
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "parent + 88"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   prototype: "BlurModified/BlurModified"
+                name: "Blur"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "bgStyle": "\"black-50-bg\""
+        -   class: "UIControl"
+            name: "PanelContentWrapper"
+            size: [348.000000, 32.000000]
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 88.000000
+                UIOpacityComponent: {}
+                LinearLayout:
+                    orientation: "TopDown"
+                    padding: "0;16"
+                    spacing: 16.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Content"
+                position: [0.000000, 0.000000]
+                size: [316.000000, 848.000000]
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIScrollView"
+                    name: "UIScrollView"
+                    size: [32.000000, 32.000000]
+                    autoUpdate: true
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   class: "UIScrollViewContainer"
+                        name: "scrollContainerControl"
+                        components:
+                            LinearLayout:
+                                orientation: "TopDown"
+                                spacing: 32.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIControl"
+                            name: "Header"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                    leftAnchor: 16.000000
+                                    rightAnchorEnabled: true
+                                    rightAnchor: 16.000000
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    padding: "32; 0"
+                                    spacing: 16.000000
+                                SizePolicy:
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                input: false
+                                classes: "t-headline regular white-wild-sand-text"
+                                components:
+                                    UITextComponent:
+                                        text: "hangar/PlatoonPanel/Header/Platoon"
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                            -   class: "UIControl"
+                                name: "SearchFieldArea"
+                                size: [316.000000, 48.000000]
+                                visible: false
+                                input: false
+                                components:
+                                    Background:
+                                        drawType: "DRAW_FILL"
+                                        color: [1.000000, 1.000000, 1.000000, 0.100000]
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 48.000000
+                                children:
+                                -   class: "UITextField"
+                                    name: "UITextField"
+                                    position: [4.000000, 8.000000]
+                                    size: [32.000000, 32.000000]
+                                    classes: "text-field-2"
+                                    components:
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                            leftAnchor: 4.000000
+                                            rightAnchorEnabled: true
+                                            rightAnchor: 4.000000
+                                        UIInputEventComponent:
+                                            onValueChanged: "ON_VALUE_CHANGED"
+                                            onValueChangedData: "_text"
+                                            onEditingFinished: "ON_EDITING_FINISHED"
+                                            onEditingFinishedData: "_text"
+                                        Focus:
+                                            state: "Enabled"
+                                        StyleSheet:
+                                            inheritsStylesFromParent: true
+                                            styles: "~res:/UI/Screens3/FontsForTextField.style.yaml"
+                        -   class: "UIControl"
+                            name: "InvitesList"
+                            input: false
+                            components:
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            bindings:
+                            - ["visible", "invitesCount > 0"]
+                            children:
+                            -   prototype: "SquadListHeader/SquadListHeader"
+                                name: "Header"
+                                components:
+                                    UIDataParamsComponent:
+                                        args:
+                                            "counterVisible": "true"
+                                            "emptySection": "true"
+                                            "size": "invitesCount"
+                                            "expanded": "squadMembers.inviteListVisible"
+                                            "visible": "invitesCount > 0"
+                                        eventActions:
+                                        - ["ON_CLICK_BUTTON", "", ""]
+                                children:
+                                -   path: "Content/TitleWrapper/Title"
+                                    position: [0.000000, 4.000000]
+                                    components:
+                                        UITextComponent:
+                                            text: "hangar/PlatoonPanel/PlatoonInvitations"
+                                -   path: "Content/TitleWrapper/Counter/Value"
+                                    position: [8.000000, 4.000000]
+                                -   path: "Content/Subtitle"
+                                    components:
+                                        UITextComponent:
+                                            text: "hangar/PlatoonPanel/AcceptInvitation"
+                                -   path: "ExpandButton/TapArea"
+                                    components:
+                                        UIInputEventComponent:
+                                            onTouchUpInside: "ON_CLICK_INVITE_LIST"
+                                    children: []
+                            -   class: "UIControl"
+                                name: "List"
+                                position: [0.000000, 56.000000]
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                    UIRepeatComponent:
+                                        control: "~res:/UI/Screens3/Lobby/Hangar/SquadPanel/SquadListCell.yaml"
+                                        dataContainer: "squadMembers.invitesVector"
+                                        args:
+                                            "lastChild": "_index < squadMembers.invitesVector.Size() - 1"
+                                            "player": "squadMembers.invitesVector[_index]"
+                                        eventActions:
+                                        - ["ON_AVATAR_CLICKED", "ON_AVATAR_CLICKED", "_event"]
+                                        - ["ON_SQUAD_CLICKED", "ON_SQUAD_CLICKED", "_event"]
+                                bindings:
+                                - ["visible", "squadMembers.inviteListVisible"]
+                        -   class: "UIControl"
+                            name: "FriendsList"
+                            position: [0.000000, 240.000000]
+                            input: false
+                            components:
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   prototype: "SquadListHeader/SquadListHeader"
+                                name: "Header"
+                                components:
+                                    UIDataParamsComponent:
+                                        args:
+                                            "emptySection": "not squadMembers.friendsVector.Empty()"
+                                            "size": "friendCount"
+                                            "expanded": "squadMembers.friendListVisible"
+                                            "visible": "not squadMembers.friendsVector.Empty()"
+                                        eventActions:
+                                        - ["ON_EXPAND_PRESSED", "ON_CLICK_FRIEND_LIST", ""]
+                                children:
+                                -   path: "Content/TitleWrapper/Title"
+                                    components:
+                                        UITextComponent:
+                                            text: "hangar/PlatoonPanel/FriendsOnline"
+                                -   path: "Content/Subtitle"
+                                    position: [0.000000, 24.000000]
+                                    components:
+                                        UITextComponent:
+                                            text: "hangar/PlatoonPanel/SendInvitation"
+                                -   path: "ExpandButton"
+                                    components:
+                                        UIInputEventComponent: {}
+                                    children: []
+                            -   class: "UIControl"
+                                name: "List"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                    UIRepeatComponent:
+                                        control: "~res:/UI/Screens3/Lobby/Hangar/SquadPanel/SquadListCell.yaml"
+                                        dataContainer: "squadMembers.friendsVector"
+                                        args:
+                                            "lastChild": "_index < squadMembers.friendsVector.Size() - 1"
+                                            "player": "squadMembers.friendsVector[_index]"
+                                        eventActions:
+                                        - ["ON_AVATAR_CLICKED", "ON_AVATAR_CLICKED", "_event"]
+                                        - ["ON_SQUAD_CLICKED", "ON_SQUAD_CLICKED", "_event"]
+                                bindings:
+                                - ["visible", "squadMembers.friendListVisible"]
+                        -   class: "UIControl"
+                            name: "SearchResultsList"
+                            position: [0.000000, 688.000000]
+                            visible: false
+                            input: false
+                            components:
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   prototype: "SquadListHeader/SquadListHeader"
+                                name: "Header"
+                                children:
+                                -   path: "Content/TitleWrapper/Title"
+                                    components:
+                                        UITextComponent:
+                                            text: "РЕЗУЛЬТАТЫ ПОИСКА"
+                                -   path: "ExpandButton"
+                                    bindings:
+                                    - ["visible", "visible"]
+                                    children: []
+                            -   class: "UIControl"
+                                name: "List"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfParent"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                -   prototype: "VerticalScrollBar/VerticalScrollBar"
+                    name: "VerticalScrollBar"
+                    components:
+                        Anchor:
+                            rightAnchorEnabled: true
+                            topAnchorEnabled: true
+                            bottomAnchorEnabled: true
+                        IgnoreLayout: {}
+                        ScrollBarDelegate:
+                            delegate: "../UIScrollView"
+            -   prototype: "ButtonNoBlur/Button"
+                name: "ButtonOptionalLight"
+                position: [0.000000, 359.000000]
+                size: [316.000000, 48.000000]
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    UIDataParamsComponent:
+                        args:
+                            "locked": "false"
+                            "caption": "\"hangar/PlatoonPanel/SearchButton\""
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "true"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "SQUAD_SEARCH", ""]
+    -   class: "UIControl"
+        name: "SubMenuSeparator"
+        input: false
+        classes: "white-wild-sand-10-bg"
+        components:
+            Background: {}
+            Anchor:
+                leftAnchorEnabled: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 1.000000
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"

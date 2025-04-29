@@ -1,0 +1,1167 @@
+Header:
+    version: 152
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/PlayerName.yaml"
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+- "~res:/UI/Screens3/Lobby/Profile/Common/ShortProfileTableCell.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ShortProfileOverlay"
+    size: [1454.000000, 640.000000]
+    input: true
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["string", "profileBackground", "\"\"", "\"\""]
+            - ["ProfileViewModel", "profile", "null", "{ }"]
+            - ["ShortProfileViewModel", "shortProfile", "null", "{ }"]
+            events:
+            - "OnShowAvatarInfo"
+            - "OnCopyNickname"
+            - "OnShowFullProfile"
+            - "OnClickReportsButton"
+            - "OnShowMaxDamage"
+            - "OnShowRating"
+            - "OnShowCounterInfo(int counterId)"
+            - "OnShowAchievementInfo"
+            - "OnShowRibbonInfo"
+            - "BACK_EVENT"
+            - "OVERLAY_OPEN_FINISH"
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "counterItemWidth", "96.000000"]
+            - ["int", "contentWidth", "832"]
+            - ["int", "contentPadding", "64"]
+            - ["int", "counterViewWidth", "0"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["color", "stripBgEndColor", "when shortProfile.battleResult == BattleResult.WIN -> hsba(210, 44, 70, 0.000000), shortProfile.battleResult == BattleResult.LOSE -> hsba(7, 50, 50, 0.000000), hsba(0, 0, 35, 0.000000)"]
+            - ["color", "stripBgStartColor", "when shortProfile.battleResult == BattleResult.WIN -> hsba(210, 44, 70, 0.800000), shortProfile.battleResult == BattleResult.LOSE -> hsba(7, 50, 50, 0.800000), hsba(0, 0, 35, 0.800000)"]
+            - ["color", "stripDecorationEndColor", "when shortProfile.battleResult == BattleResult.WIN -> hsba(205, 25, 95, 0.000000), shortProfile.battleResult == BattleResult.LOSE -> hsba(10, 70, 65, 0.000000), hsba(0, 0, 50, 0.000000)"]
+            - ["color", "stripDecorationStartColor", "when shortProfile.battleResult == BattleResult.WIN -> hsba(205, 25, 95, 1.000000), shortProfile.battleResult == BattleResult.LOSE -> hsba(10, 70, 65, 1.000000), hsba(0, 0, 50, 1.000000)"]
+            - ["float", "winrate", "when isNull(profile.dossier) -> 0.000000, round(profile.dossier.winsRate * 100.000000) * 0.010000"]
+            - ["string", "winrateColor", "when winrate >= 90.000000 -> \"red-red-text\", winrate >= 80.000000 -> \"gold-shining-text\", winrate >= 70.000000 -> \"purple-zhuk-text\", winrate >= 60.000000 -> \"blue-rimmi-text\", winrate >= 50.000000 -> \"green-zmilly-text\", \"white-wild-sand-text\""]
+            - ["BattleResult", "battleResult", "shortProfile.battleResult"]
+            - ["eArenaGameplayType", "gameType", "shortProfile.arenaGameplayType"]
+            - ["bool", "hasMedals", "not Empty(shortProfile.medals.leftMedals) or not Empty(shortProfile.medals.rightMedals) or not Empty(shortProfile.medals.epicMedals) or not Empty(shortProfile.medals.leftRibbons) or not Empty(shortProfile.medals.rightRibbons)"]
+            - ["VehicleDataModel", "tankModel", "shortProfile.tankModel"]
+            - ["int", "vehicleId", "tankModel.tankDescriptor.rawDescr"]
+            - ["BattleStatistics", "stats", "shortProfile.battleResultsStatistics"]
+            - ["int", "totalBattlesCount", "when isNull(profile.dossier) -> 0, profile.dossier.battlesCount + profile.dossier.tournamentBattlesCount + profile.dossier.ratingBattlesCount"]
+            - ["float", "winRate", "when isNull(profile.dossier) -> 0.000000, profile.dossier.winsRate"]
+            - ["float", "avgDamage", "when isNull(profile.dossier) -> 0.000000, profile.dossier.avgDamage"]
+            - ["int", "maxDamage", "when isNull(profile.dossier) -> 0, profile.dossier.maxDamage"]
+            - ["bool", "showCounterSection", "isNull(shortProfile.tankDossier) or session.rankConfig.countersInfo.vehicles.Contains(vehicleId)"]
+        UIChildComponent0:
+            prototypePath: "~res:/UI/Screens3/Lobby/Common/Overlay/Overlay.yaml"
+            args:
+                "popoverContent": "PopoverContent"
+                "content": "Content"
+                "footerContent": "Footer"
+                "wasPushed": "true"
+                "isFooterVisible": "not empty(shortProfile.battleResultsStatistics.killedBy.playerName)"
+                "customBgURL": "profileBackground"
+                "hasCustomBg": "not profileBackground.empty()"
+                "scaleBg": "true"
+            eventActions:
+            - ["OVERLAY_OPEN_FINISH", "OVERLAY_OPEN_FINISH", ""]
+            - ["BACK_EVENT", "BACK_EVENT", ""]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Profile/ShortProfileOverlay.actions"
+        UIDataOnEventComponent0:
+            eventName: "OnContentResized"
+            modelFieldExpression: "contentWidth"
+            dataExpression: "int(_event)"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "counterViewWidth"
+            eventName: "InitCounters"
+Slots:
+-   class: "UIControl"
+    name: "Content"
+    size: [1000.000000, 2720.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfChildrenSum"
+        UILayoutEventComponent:
+            sizeChangedEvent: "OnContentResized"
+            sizeChangedEventData: "_size.X"
+    children:
+    -   class: "UIControl"
+        name: "TopBlock"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "8"
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "parent - 128"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "Vehicle"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Vehicle/Vehicle.yaml"
+                    args:
+                        "rankConfig": "session.rankConfig"
+                        "rank": "shortProfile.tankRank"
+                        "clickable": "false"
+                        "vehicleDataModel": "tankModel"
+                        "tankStats": "shortProfile.tankStats"
+                        "isSelected": "false"
+                        "bgColorStyle": "\"\""
+        -   class: "UIControl"
+            name: "Separator"
+            input: false
+            classes: "white-wild-sand-25-bg"
+            components:
+                Background: {}
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 1.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 60.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "PlayerInfo"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Profile/ShortProfilePlayerInfo.yaml"
+                    args:
+                        "profile": "profile"
+                        "isInteractive": "not isGamepad"
+                    eventActions:
+                    - ["ON_TOUCH_UP", "OnCopyNickname", ""]
+        -   class: "UIControl"
+            name: "ActionButtons"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 4.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   prototype: "Button/Button"
+                name: "ShowProfile"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 227.000000
+                    UIDataParamsComponent:
+                        args:
+                            "locked": "false"
+                            "caption": "localize(\"profile/Button/GoToProfile\")"
+                            "type": "eButtonType.POSITIVE"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "true"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "OnShowFullProfile", ""]
+            -   class: "UIControl"
+                name: "ReportIcon"
+                input: false
+                components:
+                    UIOpacityComponent: {}
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 48.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 48.000000
+                    UIAttachLayoutMasterComponent:
+                        attachId: "reportsIcon"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "sound": "eButtonSound.OPEN"
+                            "image": "\"~res:/Gfx/Lobby/icons/icon_attention_s\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "OnClickReportsButton", ""]
+                bindings:
+                - ["visible", "shortProfile.reportData.reportAvailability != eReportAvailability.Unavailable"]
+                - ["UIOpacityComponent.opacity", "when shortProfile.reportData.reportAvailability == eReportAvailability.Available -> 1, 0.500000"]
+    -   class: "UIControl"
+        name: "Spacer1"
+        input: false
+        components:
+            SizePolicy:
+                verticalPolicy: "FixedSize"
+                verticalValue: 28.000000
+    -   class: "UIControl"
+        name: "StatsBlock"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "8"
+            Anchor:
+                rightAnchorEnabled: true
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "parent - 64"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "BaseStats"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 34.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "Column1"
+                input: false
+                components:
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 18.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "Battles"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Profile/Common/ShortProfileStatCell.yaml"
+                            args:
+                                "header": "\"profile/Brief/TotalBattles\""
+                                "value": "str1000Separated(totalBattlesCount)"
+                -   class: "UIControl"
+                    name: "AverageDamage"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Profile/Common/ShortProfileStatCell.yaml"
+                            args:
+                                "header": "\"shortProfile/averageDamage\""
+                                "value": "str1000Separated(int(round(avgDamage)))"
+            -   class: "UIControl"
+                name: "Column2"
+                input: false
+                components:
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 18.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "WinRate"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Profile/Common/ShortProfileStatCell.yaml"
+                            args:
+                                "header": "\"profile/Brief/TotalVictories\""
+                                "value": "percent(winRate, 2)"
+                                "valueColor": "winrateColor"
+                -   class: "UIControl"
+                    name: "MaxDamage"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIAttachLayoutMasterComponent:
+                            attachId: "MaxDamage"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Profile/Common/ShortProfileStatCell.yaml"
+                            args:
+                                "header": "\"shortProfile/maxDamage\""
+                                "value": "str1000Separated(when isNull(profile.dossier) -> 0, profile.dossier.maxDamage)"
+                                "interactive": "true"
+                            eventActions:
+                            - ["OnStatTouch", "OnShowMaxDamage", ""]
+        -   class: "UIControl"
+            name: "RatingButton"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Profile/Common/ShortProfileRatingButton.yaml"
+                    args:
+                        "rating": "profile.rating"
+                    eventActions:
+                    - ["OnButtonClicked", "OnShowRating", ""]
+        -   class: "UIControl"
+            name: "Counters"
+            input: false
+            components:
+                ClipContent:
+                    right: false
+                LinearLayout:
+                    spacing: 24.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "Separator"
+                input: false
+                classes: "white-wild-sand-25-bg"
+                components:
+                    Background: {}
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 1.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 60.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["visible", "shortProfile.unlockedCounterIds.Size() * counterItemWidth > counterViewWidth"]
+            -   class: "UIControl"
+                name: "CountersBlock"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "shortProfile.isLoadingDossier"
+                        control: "VehicleDossierLoading"
+                    UIChildComponent1:
+                        childType: "kControl"
+                        condition: "not isNull(shortProfile.tankDossier) and session.rankConfig.countersInfo.vehicles.Contains(vehicleId)"
+                        control: "VehicleCountersWrapper"
+    -   class: "UIControl"
+        name: "Spacer2"
+        input: false
+        components:
+            SizePolicy:
+                verticalPolicy: "FixedSize"
+                verticalValue: 32.000000
+    -   class: "UIControl"
+        name: "CurrentBattleBlockTitle"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "4"
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "parent - 128"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "LeftLine"
+            input: false
+            classes: "white-wild-sand-25-bg"
+            components:
+                Background: {}
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 1.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Label"
+            input: false
+            classes: "t-overline bold white-wild-sand-text"
+            components:
+                UITextComponent: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "capitalize(localize(\"shortProfile/currentBattleStats\"))"]
+        -   class: "UIControl"
+            name: "RightLine"
+            input: false
+            classes: "white-wild-sand-25-bg"
+            components:
+                Background: {}
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 1.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Spacer1"
+        input: false
+        components:
+            SizePolicy:
+                verticalPolicy: "FixedSize"
+                verticalValue: 16.000000
+    -   class: "UIControl"
+        name: "MedalsWrapper"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "8"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 104.000000
+        bindings:
+        - ["visible", "hasMedals"]
+        children:
+        -   class: "UIControl"
+            name: "Strip"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 104.000000
+            children:
+            -   class: "UIControl"
+                name: "Bg"
+                input: false
+                components:
+                    UIOpacityComponent:
+                        opacity: 1.000000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 104.000000
+                children:
+                -   class: "UIControl"
+                    name: "Left"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                        UIGradientComponent:
+                            orientation: "RightToLeft"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["UIGradientComponent.startColor", "stripBgStartColor"]
+                    - ["UIGradientComponent.finishColor", "stripBgEndColor"]
+                -   class: "UIControl"
+                    name: "Right"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                        UIGradientComponent:
+                            orientation: "LeftToRight"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["UIGradientComponent.startColor", "stripBgStartColor"]
+                    - ["UIGradientComponent.finishColor", "stripBgEndColor"]
+            -   class: "UIControl"
+                name: "Center"
+                pivot: [0.500000, 1.000000]
+                input: false
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_TO_RECT"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_radial-half_horizontal"
+                    UIOpacityComponent:
+                        opacity: 0.350000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 40.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 80.000000
+                bindings:
+                - ["Background.color", "hsb(188, 50, 100)"]
+            -   class: "UIControl"
+                name: "DecorationTop"
+                input: false
+                components:
+                    UIOpacityComponent:
+                        opacity: 0.300000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        topAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 2.000000
+                children:
+                -   class: "UIControl"
+                    name: "Left"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                        UIGradientComponent:
+                            orientation: "RightToLeft"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["UIGradientComponent.startColor", "stripDecorationStartColor"]
+                    - ["UIGradientComponent.finishColor", "stripDecorationEndColor"]
+                -   class: "UIControl"
+                    name: "Right"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                        UIGradientComponent:
+                            orientation: "LeftToRight"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["UIGradientComponent.startColor", "stripDecorationStartColor"]
+                    - ["UIGradientComponent.finishColor", "stripDecorationEndColor"]
+            -   class: "UIControl"
+                name: "DecorationBottom"
+                input: false
+                components:
+                    UIOpacityComponent:
+                        opacity: 0.700000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 2.000000
+                children:
+                -   class: "UIControl"
+                    name: "Left"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                        UIGradientComponent:
+                            orientation: "RightToLeft"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["UIGradientComponent.startColor", "stripDecorationStartColor"]
+                    - ["UIGradientComponent.finishColor", "stripDecorationEndColor"]
+                -   class: "UIControl"
+                    name: "Right"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                        UIGradientComponent:
+                            orientation: "LeftToRight"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    bindings:
+                    - ["UIGradientComponent.startColor", "stripDecorationStartColor"]
+                    - ["UIGradientComponent.finishColor", "stripDecorationEndColor"]
+                -   class: "UIControl"
+                    name: "Center"
+                    input: false
+                    components:
+                        UIOpacityComponent:
+                            opacity: 0.600000
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        LinearLayout: {}
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            horizontalValue: 40.000000
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   class: "UIControl"
+                        name: "Left"
+                        input: false
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                            UIGradientComponent:
+                                startColor: [1.000000, 1.000000, 1.000000, 1.000000]
+                                finishColor: [1.000000, 1.000000, 1.000000, 0.000000]
+                                orientation: "RightToLeft"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfParent"
+                    -   class: "UIControl"
+                        name: "Right"
+                        input: false
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                            UIGradientComponent:
+                                startColor: [1.000000, 1.000000, 1.000000, 1.000000]
+                                finishColor: [1.000000, 1.000000, 1.000000, 0.000000]
+                                orientation: "LeftToRight"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfParent"
+        -   class: "UIControl"
+            name: "Medals"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 88.000000
+                UIChildComponent0:
+                    condition: "hasMedals"
+                    prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Personal/AnimatedMedalContainer.yaml"
+                    args:
+                        "showMedals": "true"
+                        "isFirstShow": "false"
+                        "data": "shortProfile.medals"
+                        "width": "contentWidth"
+                        "clipContent": "false"
+                    eventActions:
+                    - ["ON_ACHIEVEMENT_PRESSED", "OnShowAchievementInfo", "_event"]
+                    - ["ON_RIBBON_PRESSED", "OnShowRibbonInfo", "_event"]
+    -   class: "UIControl"
+        name: "Spacer2"
+        input: false
+        components:
+            SizePolicy:
+                verticalPolicy: "FixedSize"
+                verticalValue: 32.000000
+        bindings:
+        - ["visible", "hasMedals"]
+    -   class: "UIControl"
+        name: "Stats"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "8"
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                padding: "16"
+                spacing: 8.000000
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "parent - 128"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "LeftColumn"
+            position: [15.000000, 0.000000]
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    horizontalValue: 100.000000
+                    verticalPolicy: "Formula"
+                    verticalFormula: "max(parent, childrenSum)"
+            children:
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "Shots"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/Shots\")"
+                            "value": "str1000Separated(stats.shotsFired)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "DamageDealt"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/DamageDealt\")"
+                            "value": "str1000Separated(stats.damageDealt)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "Hits"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/HitsAndPierced\")"
+                            "value": "str1000Separated(stats.piercingHits) + \" / \" + str1000Separated(stats.hits)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "VehiclesCount"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/DamagedAndKills\")"
+                            "value": "str1000Separated(stats.vehiclesDamaged) + \" / \" + str1000Separated(stats.vehiclesDestroyed)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "AssistDamage"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/DamageAssisted\")"
+                            "value": "str1000Separated(stats.assistDamage)"
+                            "showBottomSeparator": "false"
+        -   class: "UIControl"
+            name: "RightColumn"
+            position: [461.000000, 0.000000]
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    horizontalValue: 100.000000
+                    verticalPolicy: "Formula"
+                    verticalFormula: "max(parent, childrenSum)"
+            children:
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "ReceivedHits"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/ShotsReceived\")"
+                            "value": "str1000Separated(stats.receivedHits)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "ReceivedPiercingHits"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/PiercedReceived\")"
+                            "value": "str1000Separated(stats.receivedPiercingHits)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "ReceivedHitsNoDmg"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "true"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/NoDamageShotsReceived\")"
+                            "value": "str1000Separated(stats.receivedNoDmgHits)"
+                            "showBottomSeparator": "true"
+            -   class: "UIControl"
+                name: "Spacer"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "CapturePoints"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "gameType == eArenaGameplayType.domination"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/ScoreEarned\")"
+                            "value": "str1000Separated(stats.capturePoints)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "DroppedCapturePoints"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "gameType == eArenaGameplayType.domination"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/ScoreDetracted\")"
+                            "value": "str1000Separated(stats.defendingPoints)"
+                            "showBottomSeparator": "false"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "SupremacyPointsEarned"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "separatorStyle": "\"white-wild-sand-15-bg\""
+                            "visible": "gameType == eArenaGameplayType.supremacy"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/ScoreEarned\")"
+                            "value": "str1000Separated(stats.supremacyPointsEarned)"
+                            "showBottomSeparator": "true"
+            -   prototype: "ShortProfileTableCell/ShortProfileTableCell"
+                name: "SupremacyPointsStolen"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "titleStyle": "\"t-body regular white-wild-sand-50-text\""
+                            "visible": "gameType == eArenaGameplayType.supremacy"
+                            "name": "localize(\"#battle_results:DetailsPage/StatisticPage/ScoreDetracted\")"
+                            "value": "str1000Separated(stats.supremacyPointsStolen)"
+                            "showBottomSeparator": "false"
+-   class: "UIControl"
+    name: "Footer"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "when parent < 1200 -> 800, 1040"
+            verticalPolicy: "FixedSize"
+            verticalValue: 48.000000
+    children:
+    -   class: "UIControl"
+        name: "Info"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "4"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                spacing: 5.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "Caption"
+            input: false
+            classes: "t-body regular color=white-wild-sand-50-text"
+            components:
+                UITextComponent: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(\"shortProfile/Footer/Destroyer\") + \" \" + localize(\"#common:Symbol/Rhombus\")"]
+        -   prototype: "PlayerName/PlayerName"
+            name: "PlayerName"
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    orientation: "LeftToRight"
+                UIDataParamsComponent:
+                    args:
+                        "playerNameSize": "ePlayerSize.kNormal"
+                        "clanTag": "stats.killedBy.playerClan"
+                        "playerName": "stats.killedBy.playerName"
+-   class: "UIControl"
+    name: "VehicleDossierLoading"
+    size: [300.000000, 124.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 124.000000
+    children:
+    -   class: "UIControl"
+        name: "Loader"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "parent - 64"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/Loaders/LoaderCircle.yaml"
+-   class: "UIControl"
+    name: "VehicleCountersWrapper"
+    size: [300.000000, 124.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "RightToLeft"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIScrollView"
+        name: "VehicleCountersScrollView"
+        size: [100.000000, 124.000000]
+        autoUpdate: true
+        components:
+            ClipContent:
+                left: false
+                right: false
+            Anchor:
+                rightAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "min(parentRest, firstChild)"
+                verticalPolicy: "PercentOfMaxChild"
+            UILayoutEventComponent:
+                sizeChangedEvent: "OnCountersScrollViewWidthChanged"
+                sizeChangedEventData: "_size.X"
+        children:
+        -   class: "UIScrollViewContainer"
+            name: "scrollContainerControl"
+            scrollDirection: "kHorizontal"
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UILayoutEventComponent:
+                    positionChangedEvent: "UpdateCountersVisibility"
+                    positionChangedEventData: "_parentSize.X, _position.X"
+            children:
+            -   class: "UIControl"
+                name: "VehicleCounters"
+                input: false
+                components:
+                    LinearLayout:
+                        padding: "0; 64"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Profile/ShortProfileTankCounter.yaml"
+                        dataContainer: "shortProfile.unlockedCounterIds"
+                        args:
+                            "indexInScrollableContainer": "_index"
+                            "counterId": "_item"
+                            "state": "shortProfile.tankDossier.rankState"
+                            "countersInfo": "session.rankConfig.countersInfo"
+                            "vehicleId": "vehicleId"
+                        eventActions:
+                        - ["OnCounterClicked", "OnShowCounterInfo", "_item"]
+-   class: "UIControl"
+    name: "PopoverContent"
+    input: false
+    components:
+        Anchor: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 60.000000
+    children:
+    -   class: "UIControl"
+        name: "PopoverContainer"
+        visible: true
+        input: false
+        exclusiveInput: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: false
+                bottomAnchorEnabled: true
+                bottomAnchor: 16.000000
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Popover.yaml"
+                args:
+                    "popoverText": "localize(\"Notification_copy_nickname\")"
+                    "popoverTextStyle": "\"t-body regular white-wild-sand-text\""

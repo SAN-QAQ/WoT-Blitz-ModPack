@@ -1,0 +1,496 @@
+Header:
+    version: 151
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/ProgressBar.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "BattlePassTask"
+    size: [500.000000, 124.000000]
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/TaskJournal/Animations/BattlePassTaskInit.animation"
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalValue: 528.000000
+            horizontalFormula: "min(max(parent / 2 - 8, 396), 528)"
+            verticalPolicy: "FixedSize"
+            verticalValue: 124.000000
+        UIAttachLayoutMasterComponent: {}
+        UIInputEventComponent:
+            onTouchUpInside: "BP_TASK_CLICKED"
+            onTouchUpInsideData: "task.slotId"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "weekSelected", "false", "false"]
+            - ["bool", "progressAnimation", "false", "false"]
+            - ["bool", "unlockWeekAnimationInProgress", "false", "false"]
+            - ["bool", "showPremiumQuestUnlock", "false", "true"]
+            - ["bool", "refreshMode", "false", "false"]
+            - ["bool", "isActive", "true", "true"]
+            - ["int", "index", "0", "0"]
+            - ["TaskJournalTaskView", "task", "null", "{ \"title\" = localize(\"missionJournal/battlePass/topDamage_end_1\"); \"isQuestLocked\" = false; \"totalProgress\" = 6; \"oldProgress\" = 6; \"currentProgress\" = 5; \"stageTaken\" = 0; \"filter\" = { \"vehicleNations\" = [ eNation.USSR; ]; \"vehicleTypes\" = [ eTankClass.TANK_CLASS_MEDIUM; ]; }; }"]
+            events:
+            - "AnimateQuestUnlockFinished"
+            - "BP_TASK_CLICKED(string slotId)"
+            - "StageCollected"
+            - "REFRESH_QUEST(string slotId)"
+            - "ON_INCOMPLETED_STAGE_CLICKED(string masterId)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "isInited", "false"]
+            - ["bool", "isReplaceAnimation", "false"]
+            - ["int", "activeStageUpperBound", "upperBound(task.stageNeededProgress, task.currentProgress)"]
+            - ["int", "displayingStageUpperBound", "upperBound(task.stageNeededProgress, task.oldProgress)"]
+            - ["int", "activeStageIndex", "when activeStageUpperBound == -1 -> task.stageNeededProgress.Size() - 1, activeStageUpperBound"]
+            - ["int", "displayingStageIndex", "when displayingStageUpperBound == -1 -> task.stageNeededProgress.Size() - 1, displayingStageUpperBound"]
+            - ["float", "delayPerTask", "0.135000"]
+            - ["float", "delayPerStage", "0.135000"]
+            - ["int", "animationStageTaken", "task.stageTaken"]
+            - ["int", "animationIterator", "0"]
+            - ["float", "opacityActive", "1.000000"]
+            - ["float", "opacityTaken", "0.7500000"]
+            - ["float", "opacityInactiveStage", "0.500000"]
+            - ["float", "opacityInactive", "0.500000"]
+            - ["bool", "isTaken", "animationStageTaken == task.stageNeededProgress.Size()"]
+            - ["float", "displayingProgress", "when isTaken -> float(task.currentProgress), float(task.oldProgress)"]
+            - ["float", "opacity", "when not isActive -> opacityInactive, isTaken -> opacityTaken, opacityActive"]
+            - ["float", "stagesOpacity", "when not isActive -> opacityInactiveStage, isTaken -> opacityTaken, opacityActive"]
+            - ["float", "takenIconOpacity", "when isTaken -> 1.000000, 0.000000"]
+            - ["bool", "stagesVisability", "not isTaken"]
+            - ["bool", "takenIconVisability", "isTaken"]
+            - ["float", "effectScaleY", "-2.200000"]
+            - ["bool", "showBlinkEffect", "false"]
+            - ["bool", "refreshButtonVisibility", "false"]
+            - ["float", "refreshButtonOpacity", "0.000000"]
+            - ["bool", "refreshButtonEnabled", "false"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isPremiumVisible", "task.isQuestLocked"]
+            - ["bool", "isFilterVisible", "task.filter.gameplayTypes.Size() > 0 or task.filter.vehicleNations.Size() > 0 or task.filter.vehicleTypes.Size() > 0"]
+            - ["bool", "needScaleFor3Row", "isPremiumVisible or isFilterVisible"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/TaskJournal/Animations/BattlePassTask.actions"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "isActive"
+            eventName: "ActiveChanged"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "refreshMode"
+            ifExpression: "not task.isQuestLocked and not isTaken"
+            eventName: "RefreshModeChanged"
+        UIEventOnDataComponent2:
+            watchedDataExpression: "task.currentProgress"
+            ifExpression: "task.currentProgress == 0"
+            eventName: "OnQuestReplaced"
+    bindings:
+    - ["input", "isActive and not isReplaceAnimation"]
+    - ["UIAttachLayoutMasterComponent.attachId", "when task.isPremiumQuest -> \"BPWP_PREMIUM_TASK\", \"\""]
+    children:
+    -   class: "UIControl"
+        name: "Bg"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            ClipContent: {}
+            Anchor: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 100.000000
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        children:
+        -   class: "UIControl"
+            name: "LeftGradient"
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/UI/TaskJournal/Basic/BZ_Back"
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 4.000000
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 72.000000
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Lobby/TaskJournal/TaskJournalTask.style.yaml"
+            bindings:
+            - ["classes", "task.group"]
+        -   class: "UIControl"
+            name: "LeftType"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_FILL"
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 4.000000
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Lobby/TaskJournal/TaskJournalTask.style.yaml"
+            bindings:
+            - ["classes", "task.group"]
+    -   class: "UIControl"
+        name: "Content"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            UIOpacityComponent: {}
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["UIOpacityComponent.opacity", "opacity"]
+        children:
+        -   class: "UIControl"
+            name: "Main"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                    padding: "8"
+                    spacing: 10.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Info"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    LinearLayout:
+                        dynamicPadding: true
+                        spacing: 8.000000
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "parent - 32"
+                        verticalPolicy: "PercentOfParent"
+                bindings:
+                - ["LinearLayout.orientation", "when isPremiumVisible -> eOrientation.BottomUp, eOrientation.TopDown"]
+                children:
+                -   class: "UIControl"
+                    name: "TextWrapper"
+                    input: false
+                    components:
+                        Anchor:
+                            leftAnchorEnabled: true
+                        LinearLayout:
+                            dynamicPadding: true
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "parent - 86"
+                            verticalPolicy: "PercentOfParent"
+                        UIChildComponent0:
+                            condition: "isFilterVisible"
+                            prototypePath: "~res:/UI/Screens3/Lobby/TaskJournal/BattlePass/BattlePassTaskFilter.yaml"
+                            args:
+                                "filter": "task.filter"
+                        UIChildComponent1:
+                            childType: "kControl"
+                            condition: "task.isQuestLocked"
+                            control: "PremiumPass"
+                    bindings:
+                    - ["LinearLayout.orientation", "when isPremiumVisible -> eOrientation.BottomUp, eOrientation.TopDown"]
+                    children:
+                    -   class: "UIControl"
+                        name: "TextHolder"
+                        input: false
+                        components:
+                            Anchor:
+                                leftAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "Formula"
+                                verticalFormula: "min(parentRest, firstChild)"
+                            UIChildComponent0:
+                                childType: "kControl"
+                                condition: "needScaleFor3Row"
+                                control: "TextScaled"
+                            UIChildComponent1:
+                                childType: "kControl"
+                                condition: "not needScaleFor3Row"
+                                control: "TextNormal"
+                -   class: "UIControl"
+                    name: "Status"
+                    input: false
+                    components:
+                        Anchor:
+                            rightAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UIChildComponent0:
+                            childType: "kControl"
+                            condition: "takenIconVisability"
+                            control: "TakenIcon"
+                        UIChildComponent1:
+                            childType: "kControl"
+                            condition: "refreshButtonVisibility"
+                            control: "RefreshButton"
+                    children:
+                    -   class: "UIControl"
+                        name: "Stages"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            UIOpacityComponent: {}
+                            Anchor:
+                                rightAnchorEnabled: true
+                                rightAnchor: -10.000000
+                                vCenterAnchorEnabled: true
+                            LinearLayout:
+                                dynamicPadding: true
+                                spacing: -4.000000
+                            IgnoreLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 100.000000
+                                verticalPolicy: "Formula"
+                                verticalFormula: "maxChild + 32"
+                            UIAttachLayoutMasterComponent: {}
+                            UIRepeatComponent:
+                                control: "~res:/UI/Screens3/Lobby/TaskJournal/BattlePass/BattlePassTaskStage.yaml"
+                                dataContainer: "task.stageNeededProgress"
+                                args:
+                                    "weekSelected": "weekSelected"
+                                    "progressAnimation": "progressAnimation"
+                                    "isLastStage": "_index == (Size(task.stageNeededProgress) - 1)"
+                                    "unlockWeekAnimationInProgress": "unlockWeekAnimationInProgress"
+                                    "showPremiumQuestUnlock": "showPremiumQuestUnlock and task.isPremiumQuest"
+                                    "masterId": "\"stage_\" + task.slotId + \"_\" + str(_index)"
+                                    "isReadyToTake": "when isInited -> (displayingStageIndex > _index or (displayingStageIndex == _index and displayingProgress >= task.stageNeededProgress[_index])), displayingProgress >= task.stageNeededProgress[_index]"
+                                    "isTaken": "_index < task.stageTaken"
+                                    "isLocked": "task.isQuestLocked"
+                                eventActions:
+                                - ["AnimateQuestUnlockFinished", "AnimateQuestUnlockFinished", ""]
+                                - ["ON_STAGE_READY_TO_TAKE", "ON_TASK_STAGE_READY_TO_TAKE", "task.slotId, _index"]
+                                - ["OnStageTakeAnimationEnded", "OnStageTakeAnimationEnded", ""]
+                                - ["ON_INCOMPLETED_STAGE_CLICKED", "ON_INCOMPLETED_STAGE_CLICKED", "_event.masterId"]
+                                elementNameExpression: "\"Stage_\" + str(_index)"
+                        bindings:
+                        - ["visible", "stagesVisability"]
+                        - ["UIOpacityComponent.ignoreParentOpacity", "when isReplaceAnimation -> false, true"]
+                        - ["UIOpacityComponent.opacity", "stagesOpacity"]
+                        - ["UIAttachLayoutMasterComponent.attachId", "when index == 0 -> \"BPWP_TASK_STAGES\", \"\""]
+            -   class: "UIControl"
+                name: "Progress"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "parent - 32"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 16.000000
+                children:
+                -   prototype: "ProgressBar/ProgressBar"
+                    name: "ProgressBar"
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        UIDataParamsComponent:
+                            args:
+                                "showGradient": "true"
+                                "progressColor": "when task.isPremiumQuest -> \"orange-orange-peel-bg\", \"blue-curious-blue-bg\""
+                                "value": "int(displayingProgress * 100)"
+                                "maximum": "task.stageNeededProgress[displayingStageIndex] * 100"
+                    children:
+                    -   path: "Gradient"
+                        classes: "white-wild-sand-25-bg"
+                -   class: "UIControl"
+                    name: "ProgressText"
+                    input: false
+                    classes: "t-caption bold color=white-wild-sand-text"
+                    components:
+                        UITextComponent:
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                            align: ["LEFT", "VCENTER"]
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(int(displayingProgress)) + \" / \" + str1000Separated(task.stageNeededProgress[displayingStageIndex])"]
+    -   class: "UIControl"
+        name: "EffectContainer"
+        input: false
+        components:
+            ClipContent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "EffectWrapper"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "showBlinkEffect"
+                    control: "GlowActivate"
+Slots:
+-   class: "UIControl"
+    name: "TextScaled"
+    input: false
+    components:
+        RichContent:
+            baseClasses: "t-subtitle regular color=white-wild-sand-text"
+        RichContentAliases0:
+            aliases:
+            - ["stage_progress", "<control control=\"~res:/UI/Screens3/Lobby/TaskJournal/BattlePass/BattlePassTaskValue.yaml\" args1=\"stages=task.stageNeededProgress\" args2=\"displayingStageIndex=displayingStageIndex\"/>"]
+            - ["white_bold", "<span class=\"t-subtitle bold color=white-wild-sand-text\" />"]
+            - ["orange", "<span class=\"t-subtitle regular color=orange-orange-peel-text\" />"]
+            - ["yellow_bold", "<span class=\"t-subtitle bold color=yellow-lightning-text\" />"]
+        Anchor:
+            leftAnchorEnabled: true
+            topAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "max(min(childrenSum * 0.65, 1.15 * parentRest), parentRest)"
+            verticalPolicy: "PercentOfChildrenSum"
+        ScalePolicy:
+            horizontalFormula: "min(1.0, parentSize.X / size.X)"
+            verticalFormula: "min(1.0, parentSize.X / size.X)"
+        FlowLayout:
+            hSpacing: 4.000000
+            vSpacing: -4.000000
+            useRtl: true
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    bindings:
+    - ["RichContent.text", "localize(task.title, { \"stage_progress\" = \"<stage_progress/>\"; })"]
+-   class: "UIControl"
+    name: "TextNormal"
+    input: false
+    components:
+        RichContent:
+            baseClasses: "t-subtitle regular color=white-wild-sand-text"
+        RichContentAliases0:
+            aliases:
+            - ["stage_progress", "<control control=\"~res:/UI/Screens3/Lobby/TaskJournal/BattlePass/BattlePassTaskValue.yaml\" args1=\"stages=task.stageNeededProgress\" args2=\"displayingStageIndex=displayingStageIndex\"/>"]
+            - ["white_bold", "<span class=\"t-subtitle bold color=white-wild-sand-text\" />"]
+            - ["orange", "<span class=\"t-subtitle regular color=orange-orange-peel-text\" />"]
+            - ["yellow_bold", "<span class=\"t-subtitle bold color=yellow-lightning-text\" />"]
+        Anchor:
+            leftAnchorEnabled: true
+            topAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfChildrenSum"
+        FlowLayout:
+            hSpacing: 4.000000
+            vSpacing: -4.000000
+            useRtl: true
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    bindings:
+    - ["RichContent.text", "localize(task.title, { \"stage_progress\" = \"<stage_progress/>\"; })"]
+-   class: "UIParticles"
+    name: "GlowActivate"
+    position: [548.000000, 222.000000]
+    scale: [6.000000, 5.500000]
+    effectPath: "~res:/3d/FX/UI/BP_Progression_v2/NewWeekBlink.sc2"
+    autoStart: true
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+-   class: "UIControl"
+    name: "PremiumPass"
+    input: false
+    classes: "t-caps bold yellow-lightning-text"
+    components:
+        UITextComponent:
+            align: ["LEFT", "HCENTER", "VCENTER"]
+            useRtlAlign: "USE_BY_SYSTEM"
+        UIShadowComponent:
+            blurType: "Gauss"
+            color: [1.000000, 0.164706, 0.000000, 0.800000]
+            indent: 2
+            canBeDelayed: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfContent"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml"
+    bindings:
+    - ["visible", "task.isQuestLocked"]
+    - ["UITextComponent.text", "capitalize(localize(\"missionJournal/battlePass/needsPaidBattlePass\"))"]
+-   class: "UIControl"
+    name: "TakenIcon"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        Background:
+            sprite: "~res:/Gfx/Lobby/icons/icon_tick_xl"
+        UIOpacityComponent: {}
+        Anchor:
+            rightAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        IgnoreLayout: {}
+    bindings:
+    - ["visible", "takenIconVisability"]
+    - ["UIOpacityComponent.ignoreParentOpacity", "isActive"]
+    - ["UIOpacityComponent.opacity", "takenIconOpacity"]
+-   class: "UIControl"
+    name: "RefreshButton"
+    input: false
+    components:
+        UIOpacityComponent: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfChildrenSum"
+        UIChildComponent0:
+            prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+            args:
+                "inputDisabled": "not refreshButtonEnabled"
+                "image": "\"~res:/Gfx/Lobby/icons/icon_angled-arrow\""
+                "isBgVisible": "true"
+                "type": "eButtonType.OPTIONAL_DARK"
+            eventActions:
+            - ["ON_CLICK_BUTTON", "REFRESH_QUEST", "task.slotId"]
+    bindings:
+    - ["visible", "refreshButtonVisibility"]
+    - ["UIOpacityComponent.opacity", "refreshButtonOpacity"]

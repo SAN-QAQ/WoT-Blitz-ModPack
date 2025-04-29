@@ -1,0 +1,37 @@
+Header:
+    version: 151
+Prototypes:
+-   class: "UIControl"
+    name: "ClanLeaderboardWinrateScore"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 64.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 20.000000
+        UIDataParamsComponent:
+            params:
+            - ["ClanMember", "member", "null", "{ }"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["float", "winRate", "when not isNull(member) -> member.winRate * 100.000000, 0.000000"]
+            - ["string", "textColor", "when winRate >= 90.000000 -> \"red-red-text\", winRate >= 80.000000 -> \"gold-shining-text\", winRate >= 70.000000 -> \"purple-zhuk-text\", winRate >= 60.000000 -> \"blue-rimmi-text\", winRate >= 50.000000 -> \"green-zmilly-text\", \"white-wild-sand-text\""]
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Score"
+        input: false
+        components:
+            UITextComponent: {}
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+                vCenterAnchor: 1.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["classes", "\"t-caption bold white-wild-sand-text\""]
+        - ["UITextComponent.text", "percent(winRate, 2)"]

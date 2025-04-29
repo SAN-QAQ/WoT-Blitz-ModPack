@@ -1,0 +1,47 @@
+[material][a] property float2 floraWaveDurationPushTrail;
+[material][a] property float4 floraWavesAmplitude;
+[material][a] property float4 floraWavesDamping;
+[material][a] property float4 floraWavesDuration;
+[material][a] property float4 floraWavesMaxRadius;
+[material][a] property float4 floraWavesSpeed;
+[material][a] property float4x4 floraWavesCenterRadius;
+
+__forceinline float3 getSingleWaveAnim(float3 worldPos, float3 waveDDS, float4 waveAMD, float4 waveCR)
+{
+	float2 wavePTD = waveAMD.zw * waveDDS.y;
+	float2 wavePTDInv = 1.0 / wavePTD;
+	float3 waveDR = worldPos - waveCR.xyz;
+	float waveDS = length(waveDR);
+	waveDR *= 1.0 / waveDS;
+
+	float waveDT = (waveCR.w - waveDS) * (1.0 / waveDDS.z);
+	float waveTR = (waveDT - wavePTD.x) * wavePTDInv.y;
+	float wavePS = waveDT * wavePTDInv.x;
+
+	float wavePHA = lerp(waveTR * _PI_25 + _PI_05, wavePS * _PI_05, 1.0 - step(1.0, wavePS));
+	float waveWAVE = sin(wavePHA) * saturate(-waveDDS.x * waveDS + 1.0) * (-waveAMD.x * min(1.0, waveTR) + waveAMD.x);
+
+	waveDR.z *= saturate(waveDR.z) * step(0.0, waveWAVE);
+
+	return waveDR * waveWAVE * step(waveDS, min(waveCR.w, waveAMD.y));
+}
+
+__forceinline float3 getWaveAnim(float3 worldPos)
+{
+	float3 result = const0List3;
+	const float3 waveDDS[4];
+	const float4 waveAMD[4];
+	const float4 waveCR[4];
+
+	[unroll]
+	for (int i = 0; i < 4; ++i)
+	{
+		waveDDS[i] = float3(floraWavesDamping[i], floraWavesDuration[i], floraWavesSpeed[i]);
+		waveAMD[i] = float4(floraWavesAmplitude[i], floraWavesMaxRadius[i], floraWaveDurationPushTrail);
+		waveCR[i] = floraWavesCenterRadius[i];
+
+		result += getSingleWaveAnim(worldPos, waveDDS[i], waveAMD[i], waveCR[i]);
+	}
+
+	return result;
+}

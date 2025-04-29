@@ -1,0 +1,274 @@
+Header:
+    version: 151
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ClanTournamentsTab"
+    size: [800.000000, 600.000000]
+    input: false
+    components:
+        UIOpacityComponent: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["ClanProfileViewModel", "model", "null", "{ }"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        size: [960.000000, 100.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 80.000000
+                horizontalMin: 800.000000
+                horizontalMax: 1080.000000
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                childType: "kControl"
+                condition: "model.tournamentsInfo.state == eClanLoadingState.Loaded and (isNull(model.clanInfo.clan) or model.tournamentsInfo.records.Empty())"
+                control: "EmptyData"
+            UIChildComponent1:
+                childType: "kControl"
+                condition: "model.tournamentsInfo.state == eClanLoadingState.Loaded and not model.tournamentsInfo.records.Empty()"
+                control: "Data"
+Slots:
+-   class: "UIControl"
+    name: "EmptyData"
+    size: [800.000000, 600.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "Container"
+        size: [160.000000, 210.000000]
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                needDepth: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "4"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+                vCenterAnchor: -64.000000
+            LinearLayout:
+                orientation: "TopDown"
+                padding: "20.000000"
+                spacing: -12.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "Image"
+            position: [0.000000, 20.000000]
+            size: [160.000000, 160.000000]
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_PROPORTIONAL"
+                    sprite: "~res:/Gfx/Lobby/icons/icon_tournaments_l"
+                Anchor:
+                    hCenterAnchorEnabled: true
+        -   class: "UIControl"
+            name: "Text"
+            input: false
+            classes: "t-overline bold color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "capitalize(localize(\"tournaments/TournamentList/Clan/EmptyList\"))"]
+-   class: "UIControl"
+    name: "Data"
+    size: [800.000000, 600.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "ListHeader"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+            LinearLayout:
+                padding: "20;20"
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 99.000000
+                horizontalMin: 780.000000
+                horizontalMax: 1080.000000
+                verticalPolicy: "FixedSize"
+                verticalValue: 40.000000
+        children:
+        -   class: "UIControl"
+            name: "TournamentName"
+            input: false
+            classes: "t-caption regular color=white-wild-sand-50-text"
+            components:
+                UITextComponent:
+                    text: "#clans:TournamentScreen/Table/Tournament"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    align: ["LEFT", "VCENTER"]
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 220.000000
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "TeamInfo"
+            input: false
+            classes: "t-caption regular color=white-wild-sand-50-text"
+            components:
+                UITextComponent:
+                    text: "#clans:TournamentScreen/Table/Team"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    align: ["LEFT", "VCENTER"]
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 200.000000
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "TournamentDate"
+            input: false
+            classes: "t-caption regular color=white-wild-sand-50-text"
+            components:
+                UITextComponent:
+                    text: "#clans:TournamentScreen/Table/End"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    align: ["LEFT", "VCENTER"]
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 100.000000
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "ListContainer"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIScrollView"
+            name: "ScrollArea"
+            position: [0.000000, 35.000000]
+            size: [857.000000, 427.000000]
+            autoUpdate: true
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    rightAnchor: 8.000000
+                    topAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIScrollViewContainer"
+                name: "scrollContainerControl"
+                scrollDirection: "kVertical"
+                components:
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 4.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Clan/Profile/ClanTournamentRecord.yaml"
+                        dataContainer: "model.tournamentsInfo.records"
+                        args:
+                            "clan": "model.clanInfo.clan"
+                            "record": "_item"
+                        eventActions:
+                        - ["ON_CLICK_RECORD", "ON_CLICK_RECORD", "_index"]
+                        loadingPolicy: "Lazy"
+                        loadingDistance: 400.000000
+                        unloadingDistance: 200.000000
+        -   prototype: "VerticalScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                ScrollBarDelegate:
+                    delegate: "../ScrollArea"
+    -   class: "UIControl"
+        name: "LoadMoreSection"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+        bindings:
+        - ["visible", "model.tournamentsInfo.isUnloadedRecordsExists"]
+        children:
+        -   prototype: "Button/Button"
+            name: "LoadButton"
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                UIDataParamsComponent:
+                    args:
+                        "size": "eButtonSize.NORMAL"
+                        "type": "eButtonType.POSITIVE"
+                        "enabled": "model.tournamentsInfo.state != eClanLoadingState.Loading"
+                        "caption": "\"Clans/Tournament/LoadMoreButton\""
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_CLICK_LOAD_MORE", ""]

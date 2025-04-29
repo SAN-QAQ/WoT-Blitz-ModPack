@@ -1,0 +1,111 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/france-F_AMX-12BP"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/france-F_AMX-12BP"
+    blitzModelPath: "Tanks/France/F_AMX-12BP.sc2"
+    collisionMesh: "CollisionMeshes/france-F_AMX-12BP.sc2"
+    smokeEffectPath: "FX/Exhausts/cent.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/lt"
+    engineSoundNPC: "tanks/npc/engine/de/lt"
+    chassisSoundPC: "tanks/pc/treads/lt"
+    chassisSoundNPC: "tanks/npc/treads/lt"
+textureTransform: {}
+treadParameters:
+    forceManualWidth: false
+    manualWidth: 1.047944
+    forceManualSpace: false
+    manualSpace: 1.000000
+    texturePath: "~res:/3d/Tanks/Common/images/German_01_tread.tex"
+gunRecoil:
+    gun_01:
+        enabled: true
+        durationForward: 0.900000
+        durationBackward: 0.050000
+        distance: 0.400000
+maskSlice:
+    gun_01:
+        enabled: false
+        planePosition: [0.000671, 1.612044, 0.000287]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 2.899303
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAAI/C9Ty4HgU+AQAAAI/C9Ty4HgU+AAAAAI/C9Ty4HgU+AQAAAI/C9Ty4HgU+AQAAAI/C9Ty4HgU+AQAAAI/C9Ty4HgU+AQAAAI/C9Ty4HgU+\f"
+    leftTrackChains:
+        00: "tJXAvwDAsjkBAAAAPo48vz/GsjkBAAAAAJ8HvCzMsjkBAAAA+G42PwnSsjkBAAAAmha5PwDYsjkBAAAAcqfCP8RcwTsBAAAAf2nUP6OhIT0AAAAA8hLiP5y/cT0AAAAAunH3P+CItz0AAAAAUscBQLwjEj4AAAAAxtUHQAiDSD4AAAAAjR0SQFwliD4BAAAAdP4YQCV7uD4BAAAAICwdQGH47T4BAAAAm+MeQCOMHz8BAAAA1F0cQIYoQj8BAAAAXdoVQDxFYj8BAAAAu4wMQKoqdD8BAAAARukCQJhHdD8BAAAAOvX3Pxaecj8AAAAA6BfqP5T0cD8AAAAAljrcPxJLbz8AAAAARF3OP5ChbT8AAAAA8n/APw74az8AAAAAoKKyP4xOaj8AAAAATsWkPwqlaD8AAAAAYSOWP0DvZD8BAAAAGceNP2uNZD8BAAAAsFp2P4SoYz8AAAAADKBaPwL/YT8AAAAAaOU+P4BVYD8AAAAAxCojP/6rXj8AAAAAIHAHP3wCXT8AAAAA+GrXPvtYWz8AAAAAsPWfPnmvWT8AAAAA0ABRPvcFWD8AAAAAgCzEPXVcVj8AAAAAAEVNvPOyVD8AAAAAwH33vXEJUz8AAAAAcKlqvu9fUT8AAAAAAMqsvm22Tz8AAAAASD/kvusMTj8AAAAASNoNv2ljTD8AAAAA7JQpv+e5Sj8AAAAAkE9Fv2UQST8AAAAANAphv+NmRz8AAAAA2MR8v2G9RT8AAAAAvj+Mv98TRD8AAAAAEB2av11qQj8AAAAAYvqnv9vAQD8AAAAAqM/Av7jGPT8BAAAAjpDXv+JGMT8BAAAAUuPov1wQDj8BAAAAQmTvv2PDvD4BAAAAPt7ovzhlOj4BAAAAdnzXv7BMQz0BAAAA\f"
+    rightTrackChains:
+        00: "tJXAvwDAsjkBAAAAPo48vz/GsjkBAAAAAJ8HvCzMsjkBAAAA+G42PwnSsjkBAAAAmha5PwDYsjkBAAAAcqfCP8RcwTsBAAAAf2nUP6OhIT0AAAAA8hLiP5y/cT0AAAAAunH3P+CItz0AAAAAUscBQLwjEj4AAAAAxtUHQAiDSD4AAAAAjR0SQFwliD4BAAAAdP4YQCV7uD4BAAAAICwdQGH47T4BAAAAm+MeQCOMHz8BAAAA1F0cQIYoQj8BAAAAXdoVQDxFYj8BAAAAu4wMQKoqdD8BAAAARukCQOv/cj8BAAAAOvX3Pxaecj8AAAAA6BfqP5T0cD8AAAAAljrcPxJLbz8AAAAARF3OP5ChbT8AAAAA8n/APw74az8AAAAAoKKyP4xOaj8AAAAATsWkPwqlaD8AAAAAYSOWP0DvZD8BAAAAGceNP2uNZD8BAAAAsFp2P4SoYz8AAAAADKBaPwL/YT8AAAAAaOU+P4BVYD8AAAAAxCojP/6rXj8AAAAAIHAHP3wCXT8AAAAA+GrXPvtYWz8AAAAAsPWfPnmvWT8AAAAA0ABRPvcFWD8AAAAAgCzEPXVcVj8AAAAAAEVNvPOyVD8AAAAAwH33vXEJUz8AAAAAcKlqvu9fUT8AAAAAAMqsvm22Tz8AAAAASD/kvusMTj8AAAAASNoNv2ljTD8AAAAA7JQpv+e5Sj8AAAAAkE9Fv2UQST8AAAAANAphv+NmRz8AAAAA2MR8v2G9RT8AAAAAvj+Mv98TRD8AAAAAEB2av11qQj8AAAAAYvqnv9vAQD8AAAAAqM/Av7jGPT8BAAAAjpDXv+JGMT8BAAAAUuPov1wQDj8BAAAAQmTvv2PDvD4BAAAAPt7ovzhlOj4BAAAAdnzXv7BMQz0BAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: true
+        upperMin: 0.123456
+        upperFactor: 0.139737
+        frontFactor: 0.277777
+        backFactor: 0.250000
+        lengthPower: 0.500000
+        speed: 1.000000
+    trackLayingInfo:
+        bendingFactor: 0.744000
+        lengthPower: 0.920000
+        pointCountPower: 0.918000
+        pressurePower: 0.260000
+        primaryPower: 0.670000
+shadowDecal:
+    texturePath: "~res:/3d/Tanks/Common/DecalShadow/Decal_Shadow.tex"
+    scale: [2.660773, 5.081497, 1.600000]
+    offset: [0.000000, -0.016612, 0.299618]
+    blendingType: "Alphablend"
+    fogBehaviour: "Inherited"
+chassis:
+    textureScale: 1.492046
+detachedTurret:
+    cylinderPos: [0.000000, 0.000000, -0.065000]
+    cylinderXYScale: 0.704000
+    cylinderZScale: 0.267605
+    turret_01:
+        shouldClipGun: true
+        clippingPlaneZPos: 1.180000
+        textureScaleFactor: 0.591549
+mechanics: [{name: "LTCamo"}]
+armorScale:
+    hull:
+        pushNormalsScale: true
+        armorScale: [0.0113, 0.0155, 0.0197]
+    turret_01:
+        pushNormalsScale: true
+        armorScale: [0.0056, 0.0183, 0.0169]
+    gun_01:
+        pushNormalsScale: true
+        armorScale: [0.0155, 0.0211, 0.0169]
+collision:
+    hull:
+        points: [-0.001070, -0.000019, 0.000351]
+        bbox: 
+            min: [-1.036270, -1.837690, 0.308609]
+            max: [1.030330, 2.385870, 1.369910]
+        averageThickness: 
+            turret_01: 44.860203
+    chassis:
+        points: [0.000000, 0.000001, -0.000107]
+        bbox: 
+            min: [-1.064313, -1.870247, 0.000234]
+            max: [1.064313, 2.479643, 0.954110]
+    turret_01:
+        points: [-0.000068, 0.398676, -1.184378]
+        bbox: 
+            min: [-0.822250, -0.817774, -0.008238]
+            max: [0.822260, 0.912725, 0.485352]
+    gun_01:
+        points: [-0.000010, 0.324449, -1.689187]
+        bbox: 
+            min: [-0.732447, -1.424375, -1.106609]
+            max: [0.836523, 3.228665, 0.434281]

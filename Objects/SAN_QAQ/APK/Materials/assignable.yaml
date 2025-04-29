@@ -1,0 +1,54 @@
+-
+ name: "Decal"
+ path: Decal.material
+-
+ name: "Detail"
+ path: Detail.material
+-
+ name: "Detail [Q]"
+ path: DetailAllQualities.material
+-
+ name: "SpeedTree"
+ path: SpeedTree.material
+-
+ name: "SpeedTree Spherical Lit [Q]"
+ path: SpeedTree.SphericalLit.material
+-
+ name: "Spherical Lit [Q]"
+ path: SphericalLit.material
+-
+ name: "Textured"
+ path: Textured.material
+-
+ name: "Textured Lightmap"
+ path: TextureLightmap.material
+-
+ name: "BlinnPhong [Q]"
+ path: BlinnPhongAllQualities.material
+-
+ name: "VertexColor"
+ path: VertexColor.material
+-
+ name: "Skyobject"
+ path: Skyobject.material
+-
+ name: "Landscape [Q]"
+ path: TileMaskAllQualities.material
+-
+ name: "Water [Q]"
+ path: WaterAllQualities.material
+-
+ name: "Standard SpeedTree"
+ path: StandardSpeedTreeAllQualities.material
+-
+ name: "Standard"
+ path: StandardAllQualities.material
+-
+ name: "Standard Lightmap"
+ path: StandardLightmapAllQualities.material
+-
+ name: "Standard Landscape"
+ path: StandardLandscapeAllQualities.material
+-
+ name: "Simple Color"
+ path: SimpleColor.material

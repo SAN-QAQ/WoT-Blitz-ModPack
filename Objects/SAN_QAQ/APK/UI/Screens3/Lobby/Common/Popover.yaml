@@ -1,0 +1,187 @@
+Header:
+    version: 134
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Popover"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "PercentOfMaxChild"
+        UIDataParamsComponent:
+            params:
+            - ["string", "buttonCaption", "\"\"", "\"ПОДРОБНЕЕ\""]
+            - ["eButtonType", "buttonType", "eButtonType.NO_BG", "eButtonType.NO_BG"]
+            - ["bool", "isShowButton", "false", "true"]
+            - ["string", "popoverText", "localize(\"Текст поповера находится тут\")", "localize(\"Текст поповера находится тут\")"]
+            - ["string", "popoverTextStyle", "\"\"", "\"\""]
+            events:
+            - "ON_POPOVER_BUTTON_CLICKED"
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/Popover.actions"
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            UIOpacityComponent:
+                opacity: 0.000000
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "lastChild + 64"
+                verticalPolicy: "Formula"
+                verticalFormula: "lastChild + 20"
+        children:
+        -   class: "UIControl"
+            name: "Background"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                children:
+                -   prototype: "BlurModified/BlurModified"
+                    name: "Blur"
+                    components:
+                        args:
+                            "roundCorner": "\"28\""
+        -   class: "UIControl"
+            name: "InvisibleWrapper"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Anchor:
+                    enabled: true
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "Text"
+                input: false
+                components:
+                    UITextComponent:
+                        perPixelAccuracyType: "PER_PIXEL_ACCURACY_FORCED"
+                        multiline: "MULTILINE_ENABLED"
+                        fitting: "FITTING_POINTS"
+                        useRtlAlign: "USE_BY_SYSTEM"
+                    Anchor:
+                        enabled: true
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                        vCenterAnchor: -1.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        horizontalMax: 512.000000
+                        verticalPolicy: "PercentOfContent"
+                        verticalMax: 40.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["visible", "not isShowButton"]
+                - ["UITextComponent.text", "popoverText"]
+                - ["classes", "when popoverTextStyle != \"\" -> popoverTextStyle, \"t-caption regular white-wild-sand-50-text\""]
+            -   class: "UIControl"
+                name: "LinearWrapper"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    LinearLayout:
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "isShowButton"]
+                children:
+                -   class: "UIControl"
+                    name: "Text"
+                    input: false
+                    classes: "t-body regular white-wild-sand-text"
+                    components:
+                        UITextComponent:
+                            perPixelAccuracyType: "PER_PIXEL_ACCURACY_FORCED"
+                            multiline: "MULTILINE_ENABLED"
+                            align: ["LEFT", "VCENTER"]
+                            useRtlAlign: "USE_BY_SYSTEM"
+                        Anchor:
+                            enabled: true
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            horizontalMax: 621.000000
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "popoverText"]
+                -   class: "UIControl"
+                    name: "Spacer"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 8.000000
+                            verticalPolicy: "PercentOfParent"
+                -   prototype: "Button/Button"
+                    name: "Button"
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 132.000000
+                        UIDataParamsComponent:
+                            args:
+                                "type": "buttonType"
+                                "size": "eButtonSize.SMALL"
+                                "caption": "buttonCaption"
+                                "rightContent": "ExternalLinkIcon"
+                                "captionColor": "eButtonCaptionColor.WHITE"
+                            eventActions:
+                            - ["ON_CLICK_BUTTON", "ON_POPOVER_BUTTON_CLICKED", ""]
+                    children:
+                    -   path: "TapArea/Content/CaptionWrapper/Caption"
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                horizontalFormula: ""
+Slots:
+-   class: "UIControl"
+    name: "ExternalLinkIcon"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        Background:
+            sprite: "~res:/Gfx/Lobby/icons/icon_external-link"
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+            vCenterAnchor: 1.000000
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 8.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 8.000000

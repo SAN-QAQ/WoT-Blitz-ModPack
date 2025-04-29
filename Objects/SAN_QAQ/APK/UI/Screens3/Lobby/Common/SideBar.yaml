@@ -1,0 +1,165 @@
+Header:
+    version: 157
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/BackButton.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Sidebar"
+    size: [88.000000, 808.000000]
+    input: false
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+        FocusGroup: {}
+        UIDataParamsComponent:
+            params:
+            - ["int", "rightSeparatorWidth", "0", "0"]
+            - ["string", "bgStyle", "\"black-15-bg\"", "\"black-15-bg\""]
+            - ["bool", "isBackVisible", "true", "true"]
+            - ["int", "backButtonLayer", "0", "0"]
+            - ["control", "content", "null", "ExampleContent"]
+            - ["bool", "isBackButtonHasSounds", "true", "true"]
+            events:
+            - "ON_CLICK_BACK"
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        input: false
+        components:
+            Background: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   prototype: "BlurModified/BlurModified"
+            name: "Blur"
+            components:
+                UIDataParamsComponent:
+                    args:
+                        "bgStyle": "bgStyle"
+    -   class: "UIControl"
+        name: "SafeAreaInsetLeft"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                childType: "kPrototype"
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Sidebar/SideBarSafeArea.yaml"
+    -   class: "UIControl"
+        name: "Content"
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 88.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Top"
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "RightToLeft"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 48.000000
+            bindings:
+            - ["visible", "isBackVisible"]
+            children:
+            -   prototype: "BackButton/BackButton"
+                name: "BackButton"
+                components:
+                    UIAttachLayoutMasterComponent:
+                        attachId: "BACK"
+                    UIDataParamsComponent:
+                        args:
+                            "isEmitSounds": "isBackButtonHasSounds"
+                            "tutorialLayer": "backButtonLayer"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_CLICK_BACK", ""]
+                    UIIdentifierComponent:
+                        id: "sidebar_back_button"
+        -   class: "UIControl"
+            name: "ContentWrapper"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIScrollView"
+                name: "ScrollArea"
+                autoUpdate: true
+                centerContent: true
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIScrollViewContainer"
+                    name: "Content"
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 24.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UIChildComponent0:
+                            childType: "kControl"
+                            control: "content"
+    -   class: "UIControl"
+        name: "Separator"
+        input: false
+        classes: "white-wild-sand-10-bg"
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+            Anchor:
+                rightAnchorEnabled: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["SizePolicy.horizontalValue", "rightSeparatorWidth"]
+Slots:
+-   class: "UIControl"
+    name: "ExampleContent"
+    size: [60.000000, 8600.000000]
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_FILL"
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "FixedSize"
+            verticalValue: 8600.000000
+    children:
+    -   class: "UIControl"
+        name: "Label"
+        input: false
+        classes: "t-button bold color=black-text"
+        components:
+            UITextComponent:
+                text: "example \n content"
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                multiline: "MULTILINE_ENABLED"
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"

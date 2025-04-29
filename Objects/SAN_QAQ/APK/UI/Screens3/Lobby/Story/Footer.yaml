@@ -1,0 +1,373 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Blur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Footer"
+    size: [960.000000, 80.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfLastChild"
+        UIDataParamsComponent:
+            params:
+            - ["StoryStepModel", "bonusStep", "null", "{ }"]
+            - ["string", "bundleTitle", "\"\"", "\"bundleTitle\""]
+            - ["string", "extendedBundleTitle", "\"\"", "\"extendedBundleTitle\""]
+            - ["bool", "isBonusFinished", "false", "false"]
+            - ["bool", "isBundleObtained", "false", "false"]
+            - ["Story", "story", "null", "{ }"]
+            - ["StatsDataModel", "statsData", "null", "{ }"]
+            - ["StoryBattlePass", "battlePass", "null", "null"]
+            - ["StoryStepModel", "selectedStep", "null", "{ }"]
+            events:
+            - "OPEN_EXCHANGE_DIALOG"
+            - "BUY_QUEST_BOOSTER"
+            - "BUY_GOLD_STEP"
+            - "OPEN_REWARD_INFO"
+            - "OPEN_TASK_JOURNAL(eTaskJournalTab tab)"
+            - "OPEN_BATTLEPASS"
+            - "FOOTER_LOCKED_BUTTON_PRESSED"
+            - "FOOTER_COMPLETE_BUTTON_PRESSED(bool isChest)"
+            - "FOOTER_INFO_BUTTON_PRESSED"
+            - "TO_STORE_DIALOG(eRequiredResource requiredResource)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "buyBundleTipDescription", "\"event/lockStage/hint\""]
+            - ["map<string,bool>", "useDynamicBlur", "{ \"2022-BLACK\" = true; \"HALLOWEEN2022\" = true; \"2023-SRR6\" = true; \"2023-SRR5\" = true; \"2023-BTTU\" = true; }"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isReady", "not isNull(selectedStep) and selectedStep.net.price.Empty() and not selectedStep.isFinished"]
+            - ["bool", "isRequiredProxyForBuyout", "not isNull(selectedStep) and selectedStep.canBuy and not selectedStep.leftProxyForBuyout.Empty()"]
+            - ["VehicleResource", "vehicle", "when not isNull(selectedStep) -> selectedStep.rewards[0].vehicle, null"]
+    children:
+    -   prototype: "Blur/Blur"
+        name: "Blur"
+        components:
+            UIPostProcessTextureComponent0:
+                needClear: true
+        bindings:
+        - ["visible", "when story.name == \"2024-SHERI\" or story.name == \"2023-SHERI\" or story.name == \"season_6\" -> false, true"]
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/Footer.yaml"
+                args:
+                    "content": "FooterContent"
+                    "desktopStyle": "\"\""
+                    "leftPaddingStyle": "\"padding only-notch-padding\""
+                    "bgOpacity": "1.000000"
+                    "blurOpacity": "0.000000"
+                    "blurScale": "0.000000"
+Slots:
+-   class: "UIControl"
+    name: "FooterContent"
+    size: [928.000000, 48.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "LeftContent"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+            LinearLayout:
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "InfoButton"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButtonNoBlur.yaml"
+                    args:
+                        "image": "\"~res:/Gfx/Lobby/icons/icon_info_xs\""
+                        "imageOpacity": "0.750000"
+                        "sound": "eButtonSound.OPEN"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "FOOTER_INFO_BUTTON_PRESSED", ""]
+        -   class: "UIControl"
+            name: "AdditionalContent"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "story.name == \"2024-PARTY\" or story.name == \"2024-PARTY3\""
+                    control: "AFTER2024"
+                UIChildComponent1:
+                    childType: "kControl"
+                    condition: "story.name == \"clan_event_2022\""
+                    control: "ClanEvent2022"
+                UIChildComponent2:
+                    childType: "kControl"
+                    condition: "story.name == \"2024-10BD\" or story.name == \"2024-VILLA\" or story.name == \"2025-NYBP\""
+                    control: "BD10"
+                UIChildComponent3:
+                    childType: "kControl"
+                    condition: "not isNull(selectedStep) and selectedStep.groupName == \"roll\""
+                    control: "RollHint"
+                UIChildComponent4:
+                    childType: "kControl"
+                    condition: "story.name == \"2024-HALLOWEEN\" or story.name == \"2024-NEWBIEBP\" or story.name == \"2025-BPLIKE\""
+                    control: "BD10"
+    -   class: "UIControl"
+        name: "RightContent"
+        position: [477.000000, 0.000000]
+        size: [451.000000, 48.000000]
+        input: false
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            LinearLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "Space"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 20.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 20.000000
+        -   class: "UIControl"
+            name: "RightRect"
+            position: [200.000000, 0.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    condition: "(not isNull(selectedStep) and not selectedStep.isFinished) or (not isNull(battlePass) and battlePass.isRequired and battlePass.isSelected) or (not isNull(selectedStep) and not selectedStep.stepWithBonusGroupName.empty() and not isBonusFinished)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Story/FooterContent.yaml"
+                    args:
+                        "bonusStep": "bonusStep"
+                        "showDescription": "not isNull(selectedStep) and not selectedStep.stepWithBonusGroupName.empty() and not isBundleObtained and selectedStep.isInChain"
+                        "buyBundleTipDescription": "buyBundleTipDescription"
+                        "extendedBundleTitle": "extendedBundleTitle"
+                        "bundleTitle": "bundleTitle"
+                        "isBundleObtained": "isBundleObtained"
+                        "story": "story"
+                        "statsData": "statsData"
+                        "battlePass": "battlePass"
+                        "selectedStep": "selectedStep"
+                    eventActions:
+                    - ["OPEN_STORE", "OPEN_STORE", "_event.eventShop"]
+                    - ["OPEN_EXCHANGE_DIALOG", "OPEN_EXCHANGE_DIALOG", ""]
+                    - ["BUY_QUEST_BOOSTER", "BUY_QUEST_BOOSTER", ""]
+                    - ["BUY_GOLD_STEP", "BUY_GOLD_STEP", ""]
+                    - ["OPEN_BATTLEPASS", "OPEN_BATTLEPASS", ""]
+                    - ["ON_LOCKED_BUTTON_PRESSED", "FOOTER_LOCKED_BUTTON_PRESSED", ""]
+                    - ["TO_STORE_DIALOG", "TO_STORE_DIALOG", "_event.requiredResource"]
+                    - ["ON_COMPLETE_BUTTON_PRESSED", "FOOTER_COMPLETE_BUTTON_PRESSED", "_event.isChest"]
+-   class: "UIControl"
+    name: "AFTER2024"
+    size: [64.000000, 48.000000]
+    input: false
+    components:
+        LinearLayout:
+            spacing: 16.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "ShopButton"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                args:
+                    "image": "when story.name == \"2024-PARTY\" -> \"~res:/Gfx/Lobby/events/2024-PARTY/key_xs\", story.name == \"2024-PARTY3\" -> \"~res:/Gfx/Lobby/events/2024-PARTY3/key_xs\", \"~res:/Gfx/Lobby/events/2024-PARTY/key_xs\""
+                    "imageOpacity": "0.750000"
+                    "sound": "eButtonSound.OPEN"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "OPEN_SHOP_SECTION", "when story.resources.strings.Contains(\"shop.category\") -> story.resources.strings[\"shop.category\"], \"\", false"]
+    -   class: "UIControl"
+        name: "Hint"
+        input: false
+        classes: "t-body regular white-wild-sand-50-text"
+        components:
+            UITextComponent:
+                multiline: "MULTILINE_ENABLED"
+                align: ["LEFT", "VCENTER"]
+                useRtlAlign: "USE_BY_SYSTEM"
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                horizontalMax: 400.000000
+                verticalPolicy: "Formula"
+                verticalFormula: "min(parent, content)"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "when story.resources.strings.Contains(\"shop.hint\") -> localize(story.resources.strings[\"shop.hint\"]), \"\""]
+-   class: "UIControl"
+    name: "ClanEvent2022"
+    size: [556.000000, 48.000000]
+    input: false
+    components:
+        LinearLayout:
+            spacing: 16.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "TaskJournalButton"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Button/TextIconButtonNoBlur.yaml"
+                args:
+                    "icon": "\"~res:/Gfx/Lobby/icons/icon_task-journal_s\""
+                    "caption": "localize(\"BattlePass/Quests/Button\")"
+                    "sound": "eButtonSound.OK"
+                    "enabled": "true"
+                    "type": "eButtonType.OPTIONAL_LIGHT"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "OPEN_TASK_JOURNAL", "eTaskJournalTab.Clan"]
+    -   class: "UIControl"
+        name: "RewardInfoButton"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButtonNoBlur.yaml"
+                args:
+                    "image": "\"~res:/Gfx/Lobby/icons/icon_eye_s\""
+                    "imageOpacity": "0.750000"
+                    "sound": "eButtonSound.OPEN"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "OPEN_REWARD_INFO", ""]
+    -   class: "UIControl"
+        name: "RequiredProxyHint"
+        input: false
+        components:
+            RichContent:
+                baseClasses: "t-body regular white-wild-sand-50-text"
+            RichContentAliases0:
+                aliases:
+                - ["proxies_icon", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Story/FooterCurrenciesIcons.yaml\" args1=\"currenciesMap=selectedStep.net.price\"/>"]
+                - ["proxies", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Story/FooterCurrencies.yaml\" args1=\"canAfford=true\" args2=\"currenciesVector=[]\" args3=\"currenciesMap=selectedStep.requiredProxyForBuyout\"/>"]
+                - ["vehicle", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Story/FooterTankInfo.yaml\" args1=\"vehicle=vehicle\"/>"]
+                - ["bonus", "<span class=\"t-subtitle bold white-wild-sand-text\"/>"]
+                - ["credits", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Common/Resource/CurrencyAdapter.yaml\" args1=\"forceHideValue=true\" args2=\"resource=credits\"/>"]
+                - ["gold", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Common/Resource/CurrencyAdapter.yaml\" args1=\"forceHideValue=true\" args2=\"resource=gold\"/>"]
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 320.000000
+                verticalPolicy: "PercentOfChildrenSum"
+            FlowLayout:
+                alignment: "Left"
+                hSpacing: 4.000000
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["visible", "isRequiredProxyForBuyout and story.stage.type == eStageType.PROCESS"]
+        - ["RichContent.text", "when isRequiredProxyForBuyout -> localize(\"template_event/footer_hint/steps\"), \"\""]
+-   class: "UIControl"
+    name: "BD10"
+    size: [156.000000, 48.000000]
+    input: false
+    components:
+        LinearLayout:
+            spacing: 16.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "TaskJournalButton"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Button/TextIconButtonNoBlur.yaml"
+                args:
+                    "icon": "\"~res:/Gfx/Lobby/icons/icon_task-journal_s\""
+                    "caption": "localize(\"BattlePass/Quests/Button\")"
+                    "sound": "eButtonSound.OK"
+                    "enabled": "true"
+                    "type": "eButtonType.OPTIONAL_LIGHT"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "OPEN_TASK_JOURNAL", "eTaskJournalTab.Personal"]
+-   class: "UIControl"
+    name: "RollHint"
+    size: [400.000000, 48.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfFirstChild"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "Hint"
+        input: false
+        classes: "t-body regular white-wild-sand-50-text"
+        components:
+            UITextComponent:
+                multiline: "MULTILINE_ENABLED"
+                align: ["LEFT", "VCENTER"]
+                useRtlAlign: "USE_BY_SYSTEM"
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                horizontalMax: 400.000000
+                verticalPolicy: "Formula"
+                verticalFormula: "min(parent, content)"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "when story.name == \"2024-BTS\" -> localize(\"2024-BTS/Footer/Hint/Roll\"), localize(\"2023-NY/Footer/Hint/Roll\")"]

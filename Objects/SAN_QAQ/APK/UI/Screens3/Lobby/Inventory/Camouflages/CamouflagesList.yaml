@@ -1,0 +1,105 @@
+Header:
+    version: 149
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+- "~res:/UI/Screens3/Common/HorizontalScrollBar.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "List"
+    size: [288.000000, 600.000000]
+    input: false
+    components:
+        Anchor:
+            topAnchorEnabled: true
+        LinearLayout:
+            padding: "12"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["TanksRankConfigurationModel", "rankConfig", "null", "{ }"]
+            - ["bool", "isSpacerVisible", "true", "true"]
+            - ["int", "currentItem", "0", "0"]
+            - ["int", "selectedItem", "0", "0"]
+            - ["CamouflagesSlotGroup", "slotGroup", "null", "{ }"]
+            events:
+            - "ON_CAMO_CLICKED"
+    children:
+    -   class: "UIControl"
+        name: "Bg"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Background: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   prototype: "BlurModified/BlurModified"
+            name: "Blur"
+            components:
+                UIDataParamsComponent:
+                    args:
+                        "bgStyle": "\"black-50-bg\""
+    -   class: "UIControl"
+        name: "VerticalScrollView"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet: {}
+        children:
+        -   class: "UIScrollView"
+            name: "ScrollArea"
+            position: [20.000000, 0.000000]
+            size: [309.000000, 407.000000]
+            autoUpdate: true
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIScrollViewContainer"
+                name: "scrollContainerControl"
+                components:
+                    Anchor:
+                        leftAnchorEnabled: false
+                        rightAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                        padding: "24"
+                        dynamicPadding: true
+                        skipInvisible: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Inventory/Camouflages/CamouflagesGroup.yaml"
+                        dataContainer: "slotGroup.camoGroups"
+                        args:
+                            "rankConfig": "rankConfig"
+                            "isSpacerVisible": "when (_index + 1) != Size(slotGroup.camoGroups) -> true, false"
+                            "currentItem": "currentItem"
+                            "selectedItem": "selectedItem"
+                            "group": "slotGroup.camoGroups[_index]"
+                        eventActions:
+                        - ["ON_CAMO_CLICKED", "ON_CAMO_CLICKED", "_event"]
+        -   prototype: "VerticalScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: -12.000000
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                ScrollBarDelegate:
+                    delegate: "../ScrollArea"

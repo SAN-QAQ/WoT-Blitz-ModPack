@@ -1,0 +1,5 @@
+MaterialTemplate:
+    ULTRA: "~res:/Materials/PBR.material"
+    HIGH : "~res:/Materials/Textured.material"
+    MEDIUM: "~res:/Materials/Textured.material"
+    LOW: "~res:/Materials/Textured.material"

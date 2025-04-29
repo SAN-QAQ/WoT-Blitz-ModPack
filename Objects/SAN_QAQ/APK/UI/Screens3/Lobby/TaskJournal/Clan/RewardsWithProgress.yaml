@@ -1,0 +1,515 @@
+Header:
+    version: 150
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Resource/Currency.yaml"
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+- "~res:/UI/Screens3/Common/Loaders/LoadingStatus.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "RewardsWithProgress"
+    size: [800.000000, 194.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/TaskJournal/Animations/ClanProgress.animation;AnimateClanProgress,~res:/UI/Screens3/Lobby/TaskJournal/Animations/ClanProgress.animation"
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "max(parent, firstChild)"
+            verticalPolicy: "PercentOfChildrenSum"
+        UIDataParamsComponent:
+            params:
+            - ["eClanTasksProgressState", "progressState", "eClanTasksProgressState.Unknown", "eClanTasksProgressState.Loading"]
+            - ["bool", "isWeekChangingOutAnimation", "false", "false"]
+            - ["bool", "isWeekChangingInAnimation", "false", "false"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["TaskJournalCache", "cache", "null", "{ }"]
+            - ["ClanTasksWeekData", "weekData", "null", "{ \"clanCurrentTaskProxy\" = { \"quantity\" = 701; }; \"periodEndTime\" = 1L; }"]
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "isAnimationInProgress", "false"]
+            - ["int", "animationRewardIndex", "0"]
+            - ["float", "animationRewardProgress", "0.000000"]
+            - ["int", "animationTargetRewardIndex", "0"]
+            - ["int", "animationTargetRewardProgress", "0"]
+            - ["float", "basicAnimationTime", "0.500000"]
+            - ["float", "animationTime", "0.000000"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isNeededTasksCompleted", "weekData.tasksCompleted >= weekData.tasksNeeded"]
+            - ["bool", "timeFinished", "session.serverTime >= weekData.periodEndTime"]
+            - ["bool", "receiveRewardAllowed", "isNeededTasksCompleted and timeFinished"]
+            - ["bool", "needAnimation", "cache.lastClanRewardIndex < weekData.currentRewardIndex or (cache.lastClanRewardIndex == weekData.currentRewardIndex and cache.lastClanRewardProgress < weekData.clanCurrentTaskProxy.quantity)"]
+            - ["int", "completedRewards", "when weekData.currentRewardIndex + 1 < weekData.rewards.Size() -> weekData.currentRewardIndex, weekData.clanTotalProxy.quantity < weekData.clanCurrentTaskProxyNeeded.quantity -> weekData.currentRewardIndex, weekData.currentRewardIndex + 1"]
+            - ["string", "infoText", "when not timeFinished -> localize(\"clanMissions/missionScreen/clanAchievement\"), isNeededTasksCompleted -> localize(\"clanMissions/missionScreen/completedMissions\", { \"completed\" = str(completedRewards); \"total\" = str(weekData.rewards.Size()); }), localize(\"clanMissions/missionScreen/notEnoughMissions\")"]
+        UIEventOnDataComponent0:
+            watchedDataExpression: "weekData.clanTotalProxy.quantity"
+            ifExpression: "isAnimationInProgress == false and needAnimation"
+            eventName: "AnimateClanProgress"
+    children:
+    -   class: "UIControl"
+        name: "Rewards"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                spacing: 1.000000
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "max(parent, childrenSum)"
+                verticalPolicy: "FixedSize"
+                verticalValue: 130.000000
+            UIAttachLayoutMasterComponent:
+                attachId: "CLAN_TASKS_REWARDS"
+            UIRepeatComponent:
+                control: "~res:/UI/Screens3/Lobby/TaskJournal/Clan/RewardCell.yaml"
+                dataContainer: "weekData.rewards"
+                args:
+                    "forceHideEffects": "isWeekChangingOutAnimation"
+                    "state": "when _index > cache.lastClanRewardIndex -> eClanRewardState.Closed, _index == cache.lastClanRewardIndex and cache.lastClanRewardProgress < _item.proxyNeeded -> eClanRewardState.InProgress, receiveRewardAllowed -> eClanRewardState.CanBeTaken, timeFinished -> eClanRewardState.CannotBeTaken, eClanRewardState.Completed"
+                    "progress": "when _index < cache.lastClanRewardIndex -> _item.proxyNeeded, _index == cache.lastClanRewardIndex -> cache.lastClanRewardProgress, 0"
+                    "rewardInfo": "_item"
+                    "attachId": "\"reward_\" + str(_index)"
+                eventActions:
+                - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_index"]
+                elementNameExpression: "\"ClanReward\" + str(_index)"
+        children:
+        -   class: "UIControl"
+            name: "Progress"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Anchor:
+                    bottomAnchorEnabled: true
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 4.000000
+                UILayerComponent:
+                    layer: 1
+            bindings:
+            - ["SizePolicy.horizontalValue", "100.000000 * (animationRewardIndex + float(animationRewardProgress) / weekData.rewards[animationRewardIndex].proxyNeeded) / weekData.rewards.Size()"]
+            children:
+            -   class: "UIParticles"
+                name: "Particle"
+                pivot: [1.000000, 0.500000]
+                input: false
+                effectPath: "~res:/3d/FX/UI/Progress_bar_fire.sc2"
+                autoStart: true
+                components:
+                    Anchor:
+                        rightAnchorEnabled: true
+                        rightAnchor: 10.000000
+                        vCenterAnchorEnabled: true
+                        vCenterAnchor: -1.000000
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 40.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 10.000000
+                bindings:
+                - ["visible", "isAnimationInProgress"]
+    -   class: "UIControl"
+        name: "BottomPart"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 64.000000
+        children:
+        -   class: "UIControl"
+            name: "Background"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "LeftPart"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                ClipContent: {}
+                Anchor:
+                    leftAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 12.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    horizontalMax: 600.000000
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "ClanIconWithSpacer"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "isNull(session.clanInfo.clan) == false"]
+                children:
+                -   class: "UIControl"
+                    name: "Spacer"
+                    position: [140.000000, 0.000000]
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 12.000000
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "ClanIcon"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_SCALE_PROPORTIONAL"
+                        UIUrlImageComponent: {}
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 48.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 48.000000
+                    bindings:
+                    - ["UIUrlImageComponent.imageUrl", "when not isNull(session.clanInfo.clan) -> session.clanInfo.clan.emblem.url, \"\""]
+            -   class: "UIControl"
+                name: "Text"
+                input: false
+                components:
+                    RichContent:
+                        baseClasses: "t-headline regular color=white-wild-sand-text"
+                    RichContentAliases0:
+                        aliases:
+                        - ["orange", "<span class=\"t-headline regular color=orange-orange-peel-text\" />"]
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    LinearLayout:
+                        spacing: 5.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["RichContent.text", "infoText"]
+            -   class: "UIControl"
+                name: "ResourceStatusContainer"
+                input: false
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    LinearLayout:
+                        spacing: 4.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "not timeFinished"]
+                children:
+                -   class: "UIControl"
+                    name: "WeeklyProgressAmount"
+                    input: false
+                    classes: "t-headline regular color=white-wild-sand-text"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(weekData.clanTotalProxy.quantity)"]
+                -   class: "UIControl"
+                    name: "Separator"
+                    input: false
+                    classes: "t-headline regular color=white-wild-sand-text"
+                    components:
+                        UITextComponent:
+                            text: "/"
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                            vCenterAnchor: 1.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                -   class: "UIControl"
+                    name: "WeeklyProgressNeeded"
+                    input: false
+                    classes: "t-headline regular color=white-wild-sand-text"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(weekData.clanCurrentTaskProxyNeeded.quantity)"]
+                -   prototype: "Currency/Currency"
+                    name: "NeededAmount"
+                    components:
+                        UIDataParamsComponent:
+                            args:
+                                "attachId": "\"CLAN_TASKS_PROXY_COUNTER\""
+                                "hideValue": "true"
+                                "resource": "weekData.clanCurrentTaskProxy"
+                                "hideGrade": "true"
+                                "currencySize": "eCurrencySize.HUGE_REGULAR"
+            -   class: "UIControl"
+                name: "LoadingInfo"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "Spacer"
+                    size: [16.000000, 16.000000]
+                    input: false
+                -   prototype: "LoadingStatus/LoadingStatus"
+                    name: "LoadingStatus"
+                    components:
+                        SizePolicy:
+                            horizontalMax: 175.000000
+                        UIDataParamsComponent:
+                            args:
+                                "errorText": "\"Error\""
+                                "isLoading": "progressState == eClanTasksProgressState.Loading"
+                                "isError": "progressState == eClanTasksProgressState.Error"
+        -   class: "UIControl"
+            name: "RightPart"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 24.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "TasksAmount"
+                size: [32.000000, 32.000000]
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIAttachLayoutMasterComponent:
+                        attachId: "CLAN_TASKS_REQUIRED_QUESTS"
+                    UIInputEventComponent:
+                        onTouchUpInside: "ON_TASKS_CLICKED"
+                bindings:
+                - ["visible", "not isNeededTasksCompleted"]
+                children:
+                -   class: "UIControl"
+                    name: "icon"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_ALIGNED"
+                            sprite: "~res:/Gfx/Lobby/icons/icon_task-journal_s"
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 24.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 24.000000
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["classes", "when timeFinished -> \"orange-orange-peel-bg\", \"white-wild-sand-50-bg\""]
+                -   class: "UIControl"
+                    name: "Spacer_3"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 6.000000
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "DailyProgressAmount"
+                    input: false
+                    components:
+                        UITextComponent:
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["classes", "when timeFinished -> \"t-body bold color=orange-orange-peel-text\", \"t-body bold color=white-wild-sand-50-text\""]
+                    - ["UITextComponent.text", "weekData.tasksCompleted"]
+                -   class: "UIControl"
+                    name: "Spacer_1"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 3.000000
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "DailySeparator"
+                    input: false
+                    components:
+                        UITextComponent:
+                            text: "/"
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["classes", "when timeFinished -> \"t-body bold color=orange-orange-peel-text\", \"t-body bold color=white-wild-sand-50-text\""]
+                -   class: "UIControl"
+                    name: "Spacer_2"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 3.000000
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "DailyProgressTotal"
+                    input: false
+                    components:
+                        UITextComponent:
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["classes", "when timeFinished -> \"t-body bold color=orange-orange-peel-text\", \"t-body bold color=white-wild-sand-50-text\""]
+                    - ["UITextComponent.text", "weekData.tasksNeeded"]
+            -   class: "UIControl"
+                name: "Timer"
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIAttachLayoutMasterComponent:
+                        attachId: "TASK_JOURNAL_CLAN_TIMER"
+                    UIInputEventComponent:
+                        onTouchUpInside: "ON_TIMER_CLICKED"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Timer.yaml"
+                        args:
+                            "colorStyle": "\"white-wild-sand-50\""
+                            "serverTime": "session.serverTime"
+                            "time": "weekData.periodEndTime"
+                bindings:
+                - ["visible", "isNeededTasksCompleted and not timeFinished"]
+            -   class: "UIControl"
+                name: "ButtonWithSpacer"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   prototype: "Button/Button"
+                    name: "Button"
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 180.000000
+                        UIAttachLayoutMasterComponent:
+                            attachId: "CLAN_TASKS_CLAIM_REWARDS"
+                        UIInputEventComponent:
+                            onTouchUpInside: "CLAN_APPLY_REWARDS_PRESSED"
+                        UIDataParamsComponent:
+                            args:
+                                "locked": "not timeFinished or isWeekChangingOutAnimation or isWeekChangingInAnimation"
+                                "caption": "when timeFinished and (not isNeededTasksCompleted or completedRewards == 0) -> \"clanMissions/missionScreen/tryNewWeek\", \"clanMissions/missionScreen/claimReward/button\""
+                                "type": "when timeFinished and not isNeededTasksCompleted -> eButtonType.ALTERNATIVE, eButtonType.POSITIVE"
+                                "size": "eButtonSize.NORMAL"
+                                "sound": "eButtonSound.OK"
+                                "enabled": "true"
+                                "iconPath": "\"\""
+                            eventActions:
+                            - ["ON_CLICK_BUTTON", "CLAN_APPLY_REWARDS_PRESSED", ""]
+                    children:
+                    -   path: "TapArea/Content/CaptionWrapper"
+                        components:
+                            LinearLayout:
+                                spacing: 4.000000
+                        children: []
+                    -   path: "TapArea/Content/CaptionWrapper/Lock"
+                        components:
+                            UITextureComponent: {}
+                        bindings:
+                        - ["UITextureComponent.spritePath", "iconPath"]
+                -   class: "UIControl"
+                    name: "Spacer"
+                    position: [140.000000, 0.000000]
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 8.000000
+                            verticalPolicy: "PercentOfParent"

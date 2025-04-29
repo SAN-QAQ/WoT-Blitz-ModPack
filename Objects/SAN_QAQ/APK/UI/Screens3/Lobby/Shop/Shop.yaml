@@ -1,0 +1,1158 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Shop"
+    size: [2000.000000, 1050.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Shop/ShopInitialization.animation"
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+        UILayoutEventComponent:
+            sizeChangedEvent: "ShopSizeChanged"
+            sizeChangedEventData: "_size.Y"
+        ModalInput: {}
+        UIVirtualActionEventComponent0:
+            virtualKeyAction: "Escape"
+            keyDownEvent: "BACK_ACTION"
+        UIVirtualActionEventComponent1:
+            virtualKeyAction: "Extra2"
+            keyDownEvent: "SHOW_DETAILS"
+            keyDownEventData: "when smallScreen -> 3, 4"
+        UIVirtualActionEventComponent2:
+            virtualKeyAction: "ActionUp"
+            keyDownEvent: "OnMoveUp"
+        UIVirtualActionEventComponent3:
+            virtualKeyAction: "ActionDown"
+            keyDownEvent: "OnMoveDown"
+        UIVirtualActionEventComponent4:
+            virtualKeyAction: "ActionLeft"
+            keyDownEvent: "OnMoveLeft"
+        UIVirtualActionEventComponent5:
+            virtualKeyAction: "ActionRight"
+            keyDownEvent: "OnMoveRight"
+        UIVirtualActionEventComponent6:
+            virtualKeyAction: "BasePrevious"
+            keyDownEvent: "OnPreviousSection"
+        UIVirtualActionEventComponent7:
+            virtualKeyAction: "BaseNext"
+            keyDownEvent: "OnNextSection"
+        UIShortcutEventComponent:
+            shortcuts: "BACK_ACTION,Escape;BACK_ACTION,Back;TOGGLE_DEBUG,SHIFT+D"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "premShopVisible", "false", "true"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["ShopViewModel", "view", "null", "{ }"]
+            - ["ShopData", "shop", "null", "{ }"]
+            - ["bool", "nintendoSwitch", "false", "true"]
+            - ["ResourceModel", "blackTicket", "{ \"type\" = ResourceType.stuff; \"icon\" = \"~res:/Gfx/UI/StorageItemIcons/TopUp2017/black_ticket\"; }", "{ \"type\" = ResourceType.stuff; \"icon\" = \"~res:/Gfx/UI/StorageItemIcons/TopUp2017/black_ticket\"; \"quantity\" = 99999; }"]
+            - ["bool", "arabicLocalization", "false", "false"]
+            events:
+            - "ON_PREM_SHOP_CLICKED"
+            - "PIGGY_BANK_STAGE_PROGRESS(int stuffDescr)"
+            - "PIGGY_BANK_SAVE_PROGRESS(int stuffDescr)"
+            - "INITIALIZATION_FINISHED"
+            - "SHOW_DETAILS"
+            - "SECTION_POSITION_CHANGED"
+            - "ON_CHINA_WARNING_SHOW"
+            - "ON_CHEST_CLICKED(int id)"
+            - "ON_SLIDER_CLICKED(int productId, int sliderId)"
+            - "ON_PRODUCT_CLICKED(int id)"
+            - "ON_CHAIN_CLICKED(int id)"
+            - "SHOW_BUYOUT_TANKS"
+            - "DEV_BUY_PRODUCT(int id)"
+            - "GO_TO_SECTION(int id)"
+            - "GO_TO_GROUP(int id)"
+            - "GO_TO_PRODUCT(int id)"
+            - "BACK_EVENT"
+            - "SELECT_PRODUCT"
+            - "ON_PRODUCT_SHOWN(int productId)"
+            - "ON_SLIDER_SHOWN(int sliderId)"
+            - "SIDEBAR_SCROLLING_START"
+            - "ON_AD_SHOWN(ePlaySite playSite)"
+            - "ON_AD_CLICKED(ePlaySite playSite)"
+            - "ON_SHOP_GRID_CHANGED(bool smallSize)"
+            - "ON_CAMO_CLICKED(int id)"
+            - "ON_BLACK_TICKET_CLICKED"
+            - "ON_CAMO_PRODUCT_SHOWN(int id)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "initScrollPos", "when not isNull(view) -> view.scrollPos, 0"]
+            - ["bool", "initializationEnded", "false"]
+            - ["int", "contentWidth", "1104"]
+            - ["float", "scrollViewBottomOffset", "0.000000"]
+            - ["float", "scrollViewTopOffset", "0.000000"]
+            - ["bool", "debugMode", "false"]
+            - ["int", "scrollPos", "0"]
+            - ["int", "currentSection", "when not isNull(view) -> view.selectedSectionIndex, 0"]
+            - ["float", "shopYSize", "0.000000"]
+            - ["bool", "selectionAnimationInProgress", "false"]
+            - ["float", "shortScroll", "0.600000"]
+            - ["float", "longScroll", "1.200000"]
+            - ["float", "shortBarScroll", "0.400000"]
+            - ["float", "longBarScroll", "0.700000"]
+            - ["int", "heightDiff", "500"]
+            - ["int", "sectionsDiff", "1"]
+            - ["bool", "isChina", "when not isNull(app) -> app.netease.neteaseAvailable, false"]
+            - ["int", "maxFirstShowProducts", "10"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "smallScreen", "contentWidth < 1104"]
+            - ["int", "sectionUpperBound", "when not isNull(view) -> upperBound(view.sectionSizes, scrollPos), 0"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Shop/Shop.actions"
+        UIDataOnEventComponent0:
+            eventName: "HEIGHT_DECREASE"
+            modelFieldExpression: "heightDiff"
+            dataExpression: "heightDiff - 50"
+        UIDataOnEventComponent1:
+            eventName: "SECTIONS_INCREASE"
+            modelFieldExpression: "sectionsDiff"
+            dataExpression: "sectionsDiff + 1"
+        UIDataOnEventComponent2:
+            eventName: "SECTIONS_DECREASE"
+            modelFieldExpression: "sectionsDiff"
+            dataExpression: "sectionsDiff - 1"
+        UIDataOnEventComponent3:
+            eventName: "SHORT_BAR_DECREASE"
+            modelFieldExpression: "shortBarScroll"
+            dataExpression: "shortBarScroll - 0.100000"
+        UIDataOnEventComponent4:
+            eventName: "SHORT_BAR_INCREASE"
+            modelFieldExpression: "shortBarScroll"
+            dataExpression: "shortBarScroll + 0.100000"
+        UIDataOnEventComponent5:
+            eventName: "LONG_BAR_DECREASE"
+            modelFieldExpression: "longBarScroll"
+            dataExpression: "longBarScroll - 0.100000"
+        UIDataOnEventComponent6:
+            eventName: "LONG_BAR_INCREASE"
+            modelFieldExpression: "longBarScroll"
+            dataExpression: "longBarScroll + 0.100000"
+        UIDataOnEventComponent7:
+            eventName: "LONG_INCSREASE"
+            modelFieldExpression: "longScroll"
+            dataExpression: "longScroll + 0.100000"
+        UIDataOnEventComponent8:
+            eventName: "LONG_DECSREASE"
+            modelFieldExpression: "longScroll"
+            dataExpression: "longScroll - 0.100000"
+        UIDataOnEventComponent9:
+            eventName: "SHORT_INCSREASE"
+            modelFieldExpression: "shortScroll"
+            dataExpression: "shortScroll + 0.100000"
+        UIDataOnEventComponent10:
+            eventName: "TOGGLE_DEBUG"
+            modelFieldExpression: "debugMode"
+            dataExpression: "not debugMode"
+        UIDataOnEventComponent11:
+            eventName: "ShopSizeChanged"
+            modelFieldExpression: "shopYSize"
+            dataExpression: "_event"
+        UIDataOnEventComponent12:
+            eventName: "SHORT_DECSREASE"
+            modelFieldExpression: "shortScroll"
+            dataExpression: "shortScroll - 0.100000"
+        UIDataOnEventComponent13:
+            eventName: "HEIGHT_INCREASE"
+            modelFieldExpression: "heightDiff"
+            dataExpression: "heightDiff + 50"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "scrollPos"
+            eventName: "UpdateCurrentSection"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "smallScreen"
+            eventName: "ON_SHOP_GRID_CHANGED"
+            eventData: "smallScreen"
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+            UIUrlImageComponent:
+                checkUpdate: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["UIUrlImageComponent.imageUrl", "when not isNull(view) -> view.backgroundUrl, \"\""]
+        children:
+        -   class: "UIParticles"
+            name: "Particle"
+            position: [1454.000000, 881.000000]
+            size: [32.000000, 32.000000]
+            pivot: [0.500000, 0.500000]
+            angle: -60.000000
+            input: false
+            effectPath: "~res:/3d/FX/UI/Shop/shop-2-0/light_ray.sc2"
+            autoStart: true
+    -   class: "UIControl"
+        name: "ContentWrapper"
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "BaseHeader"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    condition: "not isNull(session) and not isNull(lobby)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Headers/BaseHeader.yaml"
+                    args:
+                        "isBackButtonHasSounds": "false"
+                        "session": "session"
+                        "bgStyle": "\"\""
+                        "lobby": "lobby"
+                        "leftContent": "ShopHeader"
+                        "showBackButton": "true"
+                        "isFullScreen": "true"
+                        "statsPanelAdditionalContent": "BlacketPanel"
+                        "showShopButton": "false"
+                    eventActions:
+                    - ["PREMIUM_INFO_EVENT", "PREMIUM_INFO_EVENT", ""]
+                    - ["SHOP_BUTTON", "SHOP_BUTTON", "_event.requiredResource"]
+                    - ["BACK_EVENT", "BACK_ACTION", ""]
+        -   class: "UIControl"
+            name: "Content"
+            input: false
+            components:
+                LinearLayout:
+                    spacing: 30.000000
+                    dynamicSpacing: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "SideBar"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfParent"
+                    UIChildComponent0:
+                        condition: "not isNull(shop) and not shop.sections.Empty() and not isNull(lobby)"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Shop/SideBar.yaml"
+                        args:
+                            "lobby": "lobby"
+                            "session": "session"
+                            "enabled": "not selectionAnimationInProgress"
+                            "shop": "shop"
+                        eventActions:
+                        - ["ON_SECTION_SELECTED", "SelectSection", "_event, true"]
+            -   class: "UIScrollView"
+                name: "UIScrollView"
+                refreshStylesOnInteract: false
+                autoUpdate: true
+                components:
+                    ClipContent:
+                        left: false
+                        right: false
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    UILayoutEventComponent:
+                        sizeChangedEvent: "ShopScrollSizeChanged"
+                        sizeChangedEventData: "_absolutePosition.Y, _size.Y"
+                children:
+                -   class: "UIScrollViewContainer"
+                    name: "scrollContainerControl"
+                    refreshStylesOnInteract: false
+                    scrollDirection: "kVertical"
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UILayoutEventComponent:
+                            positionChangedEvent: "ScrollPositionChanged"
+                            positionChangedEventData: "_position.Y"
+                            sizeChangedEvent: "CONTENT_RESIZED"
+                            sizeChangedEventData: "int(_size.X)"
+                    bindings:
+                    - ["input", "not selectionAnimationInProgress"]
+                    children:
+                    -   class: "UIControl"
+                        name: "SectionsHolder"
+                        refreshStylesOnInteract: false
+                        components:
+                            UIOpacityComponent: {}
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIChildComponent0:
+                                childType: "kControl"
+                                condition: "isNull(shop) or isNull(lobby) or isNull(session) or isNull(view) or isNull(app)"
+                                control: "Empty"
+                            UIChildComponent1:
+                                childType: "kControl"
+                                condition: "not shop.sections.Empty()"
+                                control: "SectionsHolder"
+                            UIChildComponent2:
+                                childType: "kControl"
+                                control: "EmptyShop"
+            -   prototype: "VerticalScrollBar/VerticalScrollBar"
+                name: "VerticalScrollBar"
+                components:
+                    Anchor:
+                        rightAnchorEnabled: true
+                        rightAnchor: 4.000000
+                        topAnchorEnabled: true
+                        topAnchor: 32.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 32.000000
+                    IgnoreLayout: {}
+                    UIScrollBarComponent:
+                        delegate: "../UIScrollView"
+            -   class: "UIControl"
+                name: "SpacingDummy"
+                input: false
+    -   class: "UIControl"
+        name: "NavigationPanel"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "isGamepad"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/NavigationPanel.yaml"
+                args:
+                    "content": "NavigationPanel"
+Slots:
+-   class: "UIControl"
+    name: "ShopHeader"
+    size: [300.000000, 20.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "ShopName"
+        input: false
+        classes: "t-subtitle regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 16.000000
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "localize(\"Shop/Title\")"]
+    -   class: "UIControl"
+        name: "NeteaseWarning"
+        input: true
+        classes: "t-caption regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfParent"
+            UIAttachLayoutMasterComponent:
+                attachId: "CHINA_SHOP_WARNING_ID"
+            UIInputEventComponent:
+                onTouchUpInside: "ON_CHINA_WARNING_SHOW"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "app.netease.neteaseAvailable"]
+        - ["UITextComponent.text", "localize(\"ChinaShopWarning/Header\")"]
+-   class: "UIControl"
+    name: "NavigationPanel"
+    input: false
+    components:
+        LinearLayout:
+            spacing: 24.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "Back"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Lobby/Back\""
+                    "icon": "eNintendoSwitchControls.B"
+    -   class: "UIControl"
+        name: "SelectSection"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconsWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Shop/SelectSection\""
+                    "nsControls": "[ eNintendoSwitchControls.LeftShoulder; eNintendoSwitchControls.RightShoulder; ]"
+    -   class: "UIControl"
+        name: "SelectItem"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Shop/SelectItem\""
+                    "icon": "eNintendoSwitchControls.AllArrows"
+    -   class: "UIControl"
+        name: "Information"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Shop/Info\""
+                    "icon": "eNintendoSwitchControls.Y"
+-   class: "UIControl"
+    name: "SectionsHolder"
+    refreshStylesOnInteract: true
+    components:
+        UIOpacityComponent: {}
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+            padding: "32"
+            spacing: 60.000000
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "maxChild + 32"
+            verticalPolicy: "PercentOfChildrenSum"
+        UIRepeatComponent:
+            control: "~res:/UI/Screens3/Lobby/Shop/ShopSection.yaml"
+            dataContainer: "shop.sections"
+            args:
+                "isChina": "app.netease.neteaseAvailable"
+                "premShopBannerUrl": "when premShopVisible and _index == 0 and (app.constants.wgc or app.constants.appWotBlitz) -> view.premShopBannerUrl, \"\""
+                "badges": "when lobby.shopBadges.sections.Contains(_item.id) -> lobby.shopBadges.sections[_item.id], null"
+                "initializationEnded": "initializationEnded"
+                "isAtLeastMediumDevice": "view.isAtLeastMediumDevice"
+                "shopScrollBottomOffset": "scrollViewBottomOffset"
+                "shopScrollTopOffset": "scrollViewTopOffset"
+                "chestsData": "shop.chestsData"
+                "showAllProducts": "when _item.children.Size() > 0 and not isNull(_item.children[0].camouflage) -> view.showAllCamo, true"
+                "section": "_item"
+                "session": "session"
+                "arabicLocalization": "arabicLocalization"
+                "debugMode": "app.constants.developerUI and debugMode"
+                "smallScreen": "smallScreen"
+                "selected": "isGamepad and view.selectedSectionIndex == _index"
+                "selectedItemIndex": "view.selectedItemIndex"
+                "selectedSubItemIndex": "view.selectedSubItemIndex"
+                "newSliders": "view.newSliders"
+                "firstShowAnimationAllowed": "view.newProductsCount < maxFirstShowProducts"
+            eventActions:
+            - ["ON_LOAD_PRODUCTS", "OnLoadProducts", ""]
+            - ["ON_PREM_SHOP_CLICKED", "ON_PREM_SHOP_CLICKED", ""]
+            - ["PIGGY_BANK_SAVE_PROGRESS", "PIGGY_BANK_SAVE_PROGRESS", "_event.stuffDescr"]
+            - ["PIGGY_BANK_STAGE_PROGRESS", "PIGGY_BANK_STAGE_PROGRESS", "_event.stuffDescr"]
+            - ["ON_SELECT_PRODUCT", "SELECT_PRODUCT", "_index, _event.itemIndex"]
+            - ["SECTION_POSITION_CHANGED", "SECTION_POSITION_CHANGED", "_index, _event"]
+            - ["ON_CHEST_CLICKED", "ON_CHEST_CLICKED", "_event.id"]
+            - ["ON_PRODUCT_CLICKED", "ON_PRODUCT_CLICKED", "_event.id"]
+            - ["ON_CHAIN_CLICKED", "ON_CHAIN_CLICKED", "_event.id"]
+            - ["ON_SLIDER_CLICKED", "ON_SLIDER_CLICKED", "_event.productId, _event.sliderId"]
+            - ["SHOW_BUYOUT_TANKS", "SHOW_BUYOUT_TANKS", ""]
+            - ["DEV_BUY_PRODUCT", "DEV_BUY_PRODUCT", "_event.id"]
+            - ["GO_TO_SECTION", "GO_TO_SECTION", "_event.id"]
+            - ["GO_TO_GROUP", "GO_TO_GROUP", "_event.id"]
+            - ["GO_TO_PRODUCT", "GO_TO_PRODUCT", "_event.id"]
+            - ["ON_PRODUCT_SHOWN", "ON_PRODUCT_SHOWN", "_event.id"]
+            - ["ON_SLIDER_SHOWN", "ON_SLIDER_SHOWN", "_event.id"]
+            - ["ON_AD_SHOWN", "ON_AD_SHOWN", "_event.playSite"]
+            - ["ON_AD_CLICKED", "ON_AD_CLICKED", "_event.playSite"]
+            - ["ON_CAMO_CLICKED", "ON_CAMO_CLICKED", "_event.id"]
+            - ["ON_CAMO_PRODUCT_SHOWN", "ON_CAMO_PRODUCT_SHOWN", "_event.id"]
+-   class: "UIControl"
+    name: "EmptyShop"
+    input: false
+    refreshStylesOnInteract: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+            padding: "32"
+            spacing: 60.000000
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "PercentOfChildrenSum"
+    bindings:
+    - ["SizePolicy.horizontalValue", "when smallScreen -> 792, 1104"]
+    children:
+    -   class: "UIControl"
+        name: "Label"
+        input: false
+        classes: "t-title bold color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                text: "GGMErrors/EmptyTabs"
+                colorInheritType: "COLOR_IGNORE_PARENT"
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Holder"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+            FlowLayout:
+                hDynamicPadding: true
+                hSpacing: 48.000000
+                vSpacing: 16.000000
+        children:
+        -   class: "UIControl"
+            name: "Chests"
+            refreshStylesOnInteract: false
+            components:
+                UIOpacityComponent: {}
+                LinearLayout:
+                    spacing: 48.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIRepeatComponent:
+                    control: "~res:/UI/Screens3/Lobby/Chests/DailyChestSlot.yaml"
+                    dataContainer: "shop.chests"
+                    args:
+                        "initializationEnded": "initializationEnded"
+                        "isAtLeastMediumDevice": "view.isAtLeastMediumDevice"
+                        "shopScrollBottomOffset": "scrollViewBottomOffset"
+                        "shopScrollTopOffset": "scrollViewTopOffset"
+                        "dailyChestsCommon": "shop.chestsData"
+                        "dailyChest": "_item"
+                        "serverTime": "session.serverTime"
+                        "arabicLocalization": "arabicLocalization"
+                        "smallScreen": "smallScreen"
+                        "debugMode": "app.constants.developerUI and debugMode"
+                        "selected": "isGamepad and view.selectedSectionIndex == _index"
+                    eventActions:
+                    - ["ON_CHEST_CLICKED", "ON_CHEST_CLICKED", "_event"]
+                UIIdentifierComponent:
+                    id: "empty_shop_chests"
+        -   class: "UIControl"
+            name: "AdChest"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    condition: "session.serverConfig.advertising.shopChest.enabled and lobby.advertising.adsSupported"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Advertising/ShopAdvertisingChest.yaml"
+                    args:
+                        "initializationEnded": "initializationEnded"
+                        "shopScrollTopOffset": "scrollViewTopOffset"
+                        "shopScrollBottomOffset": "scrollViewBottomOffset"
+                        "session": "session"
+                        "chestState": "lobby.advertising.shopChest"
+                    eventActions:
+                    - ["ON_AD_SHOWN", "ON_AD_SHOWN", "ePlaySite.ShopChest"]
+                    - ["ON_AD_CLICKED", "ON_AD_CLICKED", "ePlaySite.ShopChest"]
+            bindings:
+            - ["visible", "session.serverConfig.advertising.shopChest.enabled and lobby.advertising.adsSupported"]
+-   class: "UIControl"
+    name: "Empty"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "FixedSize"
+    bindings:
+    - ["SizePolicy.horizontalValue", "when smallScreen -> 792, 1104"]
+-   class: "UIControl"
+    name: "dev"
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            padding: "30"
+            spacing: 30.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "FixedSize"
+            verticalValue: 70.000000
+    children:
+    -   class: "UIControl"
+        name: "Control1"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "defaultScroll"
+            input: false
+            classes: "t-caps regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    text: "short scroll time"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Control"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "-"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "SHORT_DECSREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "value_1"
+                input: false
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "str(shortScroll, 2)"]
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "+"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "SHORT_INCSREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Control1"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "defaultScroll"
+            input: false
+            classes: "t-caps regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    text: "long scroll time"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Control"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "-"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "LONG_DECSREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "value_1"
+                input: false
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "str(longScroll, 2)"]
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "+"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "LONG_INCSREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Control1"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "defaultScroll"
+            input: false
+            classes: "t-caps regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    text: "short sidebar time"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Control"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "-"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "SHORT_BAR_DECREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "value_1"
+                input: false
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "str(shortBarScroll, 2)"]
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "+"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "SHORT_BAR_INCREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Control1"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "defaultScroll"
+            input: false
+            classes: "t-caps regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    text: "long sidebar time"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Control"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "-"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "LONG_BAR_DECREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "value_1"
+                input: false
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "str(longBarScroll, 2)"]
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "+"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "LONG_BAR_INCREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Control1"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "defaultScroll"
+            input: false
+            classes: "t-caps regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    text: "sections dif"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Control"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "-"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "SECTIONS_DECREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "value_1"
+                input: false
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "str(sectionsDiff)"]
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "+"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "SECTIONS_INCREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Control1_1"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "defaultScroll"
+            input: false
+            classes: "t-caps regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    text: "heightDiff"
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Control"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "-"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "HEIGHT_DECREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "value_1"
+                input: false
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "str(heightDiff)"]
+            -   class: "UIControl"
+                name: "defaultScroll_1"
+                input: true
+                classes: "t-headline bold color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "+"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 32.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "HEIGHT_INCREASE"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+-   class: "UIControl"
+    name: "BlacketPanel"
+    input: false
+    components:
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+        UIChildComponent0:
+            condition: "isChina"
+            prototypePath: "~res:/UI/Screens3/Lobby/StatsInfoPanelItem.yaml"
+            args:
+                "resource": "blackTicket"
+            eventActions:
+            - ["ON_STATS_ITEM_PRESSED", "ON_BLACK_TICKET_CLICKED", ""]
+

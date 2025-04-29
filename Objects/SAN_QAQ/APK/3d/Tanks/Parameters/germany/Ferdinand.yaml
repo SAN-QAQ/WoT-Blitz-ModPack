@@ -1,0 +1,120 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/germany-Ferdinand"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/germany-Ferdinand"
+    blitzModelPath: "Tanks/German/Ferdinand.sc2"
+    collisionMesh: "CollisionMeshes/germany-Ferdinand.sc2"
+    smokeEffectPath: "FX/Exhausts/null.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/ht"
+    engineSoundNPC: "tanks/npc/engine/de/ht"
+    chassisSoundPC: "tanks/pc/treads/ht"
+    chassisSoundNPC: "tanks/npc/treads/ht"
+    customEffects:
+        hull:
+            HP_Track_Exhaus_01: "FX/Exhausts/left-down-front45.sc2"
+            HP_Track_Exhaus_02: "FX/Exhausts/right-down-front45.sc2"
+textureTransform: {}
+gunRecoil:
+    gun_01:
+        enabled: true
+        durationForward: 1.000000
+        durationBackward: 0.050000
+        distance: 0.600000
+    gun_02:
+        enabled: true
+        durationForward: 1.000000
+        durationBackward: 0.050000
+        distance: 0.521739
+    gun_03:
+        enabled: false
+        durationForward: 0.404493
+        durationBackward: 0.100000
+        distance: 0.360869
+maskSlice:
+    gun_01:
+        enabled: true
+        planePosition: [-0.000709, 1.333330, -0.002925]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_02:
+        enabled: true
+        planePosition: [-0.000736, 1.866663, -0.000858]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_03:
+        enabled: true
+        planePosition: [0.009299, 1.253330, -0.001636]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 3.144211
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 0.800000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAALgeBT64HgU+AQAAALgeBT64HgU+AQAAALgeBT64HgU+AQAAALgeBT64HgU+AQAAALgeBT64HgU+AQAAALgeBT64HgU+AQAAALgeBT64HgU+AAAAALgeBT64HgU+\f"
+    leftTrackChain: "3Cj6vwAAAAABAAAAqBOevwAAAAABAAAAIJK3vgAAAAABAAAA0LiwPgAAAAABAAAAXm6cPwAAAAABAAAAzfv3P28SA7sBAAAARc4BQDwftTsBAAAASWUTQE5w9j0AAAAAQE4dQP64Qz4AAAAANjcnQOochj4AAAAALCAxQFZdqj4AAAAASOA+QBjz3T4BAAAAM/lEQNDyBz8BAAAA9bxIQIJ3Jz8BAAAAMpZJQH5TUT8BAAAAll1GQO5LeT8BAAAAcHo+QFHbjT8BAAAAsIsyQDpSlj8BAAAAoAUnQID9lT8BAAAAKlwjQFk9lj8AAAAAYPgVQFnZlT8AAAAAjxMLQJVUlT8AAAAAvi4AQNDPlD8AAAAA2pPqPwtLlD8AAAAAOcrUP0bGkz8AAAAAmAC/P4FBkz8AAAAA9japP728kj8AAAAAVG2TP/g3kj8AAAAAZkd7PzOzkT8AAAAAJLRPP24ukT8AAAAA4CAkP6qpkD8AAAAAOBvxPuUkkD8AAAAAuPSZPiCgjz8AAAAAYJwFPlsbjz8AAAAAwMIivZaWjj8AAAAAwP1WvtIRjj8AAAAAaKXCvg2NjT8AAAAA9OUMv0gIjT8AAAAAOHk4v4ODjD8AAAAAfAxkv77+iz8AAAAA3s+Hv/p5iz8AAAAAgJmdvzX1ij8AAAAAImOzv3Bwij8AAAAAwizJv6vriT8AAAAAZvbev+ZmiT8AAAAABsD0vyLiiD8AAAAA00QFwF1diD8AAAAApSkQwJjYhz8AAAAAdQ4bwNNThz8AAAAAR/MlwA7Phj8BAAAAwksxwMhEhj8BAAAAEms5wLLxgD8BAAAACkpAwHl3az8BAAAAl+FEwM7GTD8BAAAAOX5GwM7RKj8BAAAAEVhFwNAQCz8BAAAAoWdBwO722j4BAAAAyhY8wPIVqz4BAAAAXYo0wJK6gD4BAAAAbxUqwPpnUD4AAAAAgaAfwNBaHz4AAAAAkysVwE6b3D0AAAAAWCkDwMSWvjsBAAAA\f"
+    rightTrackChain: "GF74vwAAAAABAAAAqhOevwAAAAABAAAANJK3vgAAAAABAAAA2LiwPgAAAAABAAAAZm6cPwAAAAABAAAA2374P6abRLsBAAAASqMCQKAtZzsBAAAASmUTQFRw9j0AAAAAQE4dQP64Qz4AAAAANjcnQOgchj4AAAAALSAxQFJdqj4AAAAAsRs+QO/B1T4BAAAA+hlFQDIuBz8BAAAA9bxIQH13Jz8BAAAAMpZJQHpTUT8BAAAAll1GQOlLeT8BAAAA85A/QIQQjD8BAAAAe4M2QMXplD8BAAAAtuAoQFmhlj8BAAAAeL4jQB5elj8AAAAAX/gVQFrZlT8AAAAAjhMLQJVUlT8AAAAAvi4AQNHPlD8AAAAA2pPqPwxLlD8AAAAAOMrUP0jGkz8AAAAAlwC/P4NBkz8AAAAA9TapP7+8kj8AAAAAU22TP/o3kj8AAAAAZEd7PzazkT8AAAAAILRPP3EukT8AAAAA3CAkP6ypkD8AAAAAMBvxPugkkD8AAAAAsPSZPiOgjz8AAAAAUJwFPl8bjz8AAAAAAMMivZqWjj8AAAAA0P1WvtYRjj8AAAAAcKXCvhGNjT8AAAAA+OUMv00IjT8AAAAAPHk4v4iDjD8AAAAAgAxkv8T+iz8AAAAA4s+Hv/95iz8AAAAAhJmdvzr1ij8AAAAAJmOzv3Zwij8AAAAAxizJv7HriT8AAAAAavbev+1miT8AAAAACsD0vyjiiD8AAAAA1UQFwGRdiD8AAAAApykQwJ/Yhz8AAAAAdw4bwNtThz8AAAAASfMlwBbPhj8BAAAAwksxwNBEhj8BAAAAEms5wLLxgD8BAAAACkpAwHx3az8BAAAAl+FEwNLGTD8BAAAAOX5GwNbRKj8BAAAAEVhFwNUQCz8BAAAAoWdBwPb22j4BAAAAyhY8wPgVqz4BAAAAXYo0wJK6gD4BAAAAbxUqwPpnUD4AAAAAgaAfwNBaHz4AAAAAkysVwEyb3D0AAAAAPCMCwPgPADwBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: false
+        upperMin: 0.469135
+        upperFactor: 0.397379
+        frontFactor: 0.333333
+        backFactor: 0.250000
+        lengthPower: 0.500000
+        speed: 0.900000
+    trackLayingInfo:
+        bendingFactor: 0.744000
+        lengthPower: 0.920000
+        pointCountPower: 0.918000
+        pressurePower: 0.260000
+        primaryPower: 0.670000
+chassis:
+    textureScale:  -0.660000 
+collision:
+    hull:
+        points: [-0.000002, 0.146581, -1.084667]
+        bbox: 
+            min: [-1.476038, -3.152542, -0.619893]
+            max: [1.475010, 3.270064, 1.724641]
+        averageThickness: 
+            turret_01: 108.039894
+    chassis:
+        points: [0.006467, 0.003234, 0.000001]
+        bbox: 
+            min: [-1.682259, -3.122687, -0.000000]
+            max: [1.682259, 3.209491, 1.187247]
+    turret_01:
+        points: [0.000000, 0.000000, 0.000000]
+        bbox: 
+            min: [0.0, 0.0, 0.0]
+            max: [0.0, 0.0, 0.0]
+    gun_01:
+        points: [0.001321, 0.095436, -2.155521]
+        bbox: 
+            min: [-0.451607, -0.480713, -0.286209]
+            max: [0.447546, 4.427306, 0.430530]
+    gun_02:
+        points: [-0.000835, 0.090556, -2.140432]
+        bbox: 
+            min: [-0.451607, -0.480713, -0.286209]
+            max: [0.447546, 4.769836, 0.430530]
+    gun_03:
+        points: [-0.002991, 0.128665, -2.141511]
+        bbox: 
+            min: [-0.512285, -0.480713, -0.305688]
+            max: [0.533571, 5.024969, 0.451948]

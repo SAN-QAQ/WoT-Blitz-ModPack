@@ -1,0 +1,5 @@
+1
+clan_artwork@2x.packed.webp
+2400 1800
+1
+0 0 2400 1800 0 0 0 frame0

@@ -1,0 +1,397 @@
+Header:
+    version: 144
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Subscription/SubscriptionBlur.yaml"
+- "~res:/UI/Screens3/Common/KeyArtPrototype.yaml"
+- "~res:/UI/Screens3/Tutorial/Higlight.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "SubscriptionScreen"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Subscription/SubscriptionScreenInitialization.animation"
+        ClipContent: {}
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        UIDataParamsComponent:
+            params:
+            - ["SubscriptionViewModel", "subscription", "null", "{ }"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            events:
+            - "ON_REWARD_CLICKED(ResourceDetailed resource, string attachId)"
+            - "BEGIN_GATHERING_ANIMATION"
+            - "END_GATHERING_ANIMATION"
+            - "CLOSE_SCREEN"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "offsetControl", "8"]
+            - ["int", "offsetControlDelta", "4"]
+            - ["int", "stageControlWidth", "150"]
+            - ["int", "stagesSpacing", "8"]
+            - ["bool", "forceReward", "false"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["string", "title", "when lobby.subscription.finished -> localize(\"subscription/rewardScreen/subscriptionFinished\"), localize(lobby.subscription.name)"]
+            - ["int64", "subscriptionTimeLeft", "lobby.subscription.subscriptionEnd - session.serverTime"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Subscription/SubscriptionScreen.actions"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "lobby.subscription.currentStageIndex"
+            eventName: "ScrollToCurrentStage"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "subscription.currentStageIndex"
+            ifExpression: "forceReward"
+            eventName: "StopForcingRewardPickup"
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                bottomAnchorEnabled: true
+        children:
+        -   class: "UIControl"
+            name: "Image"
+            input: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "subscription.background.empty()"
+                    control: "KeyArt"
+                UIChildComponent1:
+                    childType: "kControl"
+                    control: "ImageUrl"
+        -   class: "UIControl"
+            name: "BlurWrapper"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            bindings:
+            - ["visible", "not subscription.hideBlur"]
+            children:
+            -   prototype: "SubscriptionBlur/SubscriptionBlur"
+                name: "SubscriptionBlur"
+        -   class: "UIControl"
+            name: "Dark"
+            input: false
+            classes: "black-50-bg"
+            components:
+                Background:
+                    drawType: "DRAW_FILL"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            ClipContent:
+                enabled: false
+            Anchor:
+                vCenterAnchorEnabled: true
+                vCenterAnchor: 12.000000
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 40.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "DescriptionWrapper"
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 6.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfChildrenSum"
+            children:
+            -   class: "UIControl"
+                name: "Name"
+                input: false
+                classes: "t-title bold white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        fitting: "FITTING_POINTS"
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 96.000000
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "title"]
+            -   class: "UIControl"
+                name: "ExpiryPeriod"
+                input: false
+                classes: "t-headline regular white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                bindings:
+                - ["visible", "subscriptionTimeLeft > 0L"]
+                - ["UITextComponent.text", "localize(\"subscription/rewardScreen/expiryPeriod\") + \" \" + timeDiffShort(subscriptionTimeLeft)"]
+        -   class: "UIControl"
+            name: "HorizontalScrollView"
+            input: false
+            refreshStylesOnInteract: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                    vCenterAnchor: 66.000000
+                SizePolicy:
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIScrollView"
+                name: "StagesScrollView"
+                refreshStylesOnInteract: false
+                autoUpdate: true
+                components:
+                    ClipContent:
+                        enabled: false
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        topAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 150.000000
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIScrollViewContainer"
+                    name: "scrollContainerControl"
+                    refreshStylesOnInteract: false
+                    components:
+                        Background:
+                            usePostProcessedSprite: true
+                        UIPostProcessTextureComponent0:
+                            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                            needClearAlphaAfterRender: true
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent1:
+                            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent2:
+                            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIRoundedCornersComponent:
+                            radius: "8"
+                        LinearLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfChildrenSum + 16"
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "PeriodsList"
+                        input: false
+                        refreshStylesOnInteract: false
+                        components:
+                            LinearLayout:
+                                spacing: 8.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIRepeatComponent:
+                                control: "~res:/UI/Screens3/Lobby/Subscription/SubscriptionStageNoBlur.yaml"
+                                dataContainer: "subscription.stages"
+                                args:
+                                    "attachId": "subscription.name + \"_\" + str(_index)"
+                                    "index": "_index"
+                                    "stage": "_item"
+                                    "serverTime": "session.serverTime"
+                                    "time": "lobby.subscription.nextRewardTime"
+                                    "subscriptionFinished": "lobby.subscription.finished"
+                                    "maxRewards": "subscription.maxRewardsNumber"
+                                    "layer": "when forceReward and _index == subscription.currentStageIndex -> 1, 0"
+                                eventActions:
+                                - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_event.resource, _event.attachId"]
+                                - ["BEGIN_GATHERING_ANIMATION", "BEGIN_GATHERING_ANIMATION", ""]
+                                - ["END_GATHERING_ANIMATION", "OnGatheringAnimationFinished", ""]
+    -   class: "UIControl"
+        name: "Shadows"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Left"
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.500000
+                UITextureComponent:
+                    spritePath: "~res:/Gfx/UI/Hangar/BlackGradTile.psd"
+                    drawType: "DRAW_STRETCH_BOTH"
+                    spriteModification: ["FLIP_HORIZONTAL"]
+                Anchor:
+                    leftAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 120.000000
+        -   class: "UIControl"
+            name: "Left2"
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.300000
+                UITextureComponent:
+                    spritePath: "~res:/Gfx/UI/Hangar/BlackGradTile.psd"
+                    drawType: "DRAW_STRETCH_BOTH"
+                    spriteModification: ["FLIP_HORIZONTAL"]
+                Anchor:
+                    leftAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 40.000000
+        -   class: "UIControl"
+            name: "Right"
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.500000
+                UITextureComponent:
+                    spritePath: "~res:/Gfx/UI/Hangar/BlackGradTile.psd"
+                    drawType: "DRAW_STRETCH_BOTH"
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 120.000000
+        -   class: "UIControl"
+            name: "Right2"
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.300000
+                UITextureComponent:
+                    spritePath: "~res:/Gfx/UI/Hangar/BlackGradTile.psd"
+                    drawType: "DRAW_STRETCH_BOTH"
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 40.000000
+    -   class: "UIControl"
+        name: "CloseButton"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 8.000000
+                topAnchorEnabled: true
+                topAnchor: 8.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIAnchorSafeAreaComponent:
+                leftSafeInset: "INSET"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                args:
+                    "locked": "false"
+                    "visible": "true"
+                    "isBgVisible": "false"
+                    "image": "\"~res:/Gfx/Lobby/icons/icon_cross_m.psd\""
+                    "type": "eButtonType.OPTIONAL_LIGHT"
+                    "sound": "eButtonSound.CLOSE"
+                    "enabled": "true"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "CLOSE_SCREEN", ""]
+    -   class: "UIControl"
+        name: "ForceRewardLayer"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                childType: "kControl"
+                condition: "forceReward"
+                control: "ForceReward"
+Slots:
+-   prototype: "KeyArtPrototype/KeyArt"
+    name: "KeyArt"
+-   class: "UIControl"
+    name: "ImageUrl"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+        UIUrlImageComponent:
+            imageLoadedEvent: "OnImageLoaded"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    bindings:
+    - ["UIUrlImageComponent.imageUrl", "subscription.background"]
+-   class: "UIControl"
+    name: "ForceReward"
+    size: [300.000000, 300.000000]
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIInputEventComponent:
+            onTouchUpInside: "HintStage"
+    children:
+    -   prototype: "Higlight/Higlight"
+        name: "Highlight"
+        components:
+            UIDataParamsComponent:
+                args:
+                    "holeOffset": "eTutorialOffsetType.kSmall"
+                    "viewState": "when forceReward -> eTutorialViewState.kRunning, eTutorialViewState.kPaused"
+                    "hasAngles": "true"
+                    "attachId": "\"STAGE_\" + str(subscription.currentStageIndex)"

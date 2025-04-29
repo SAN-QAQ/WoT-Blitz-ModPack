@@ -1,0 +1,35 @@
+Header:
+    version: "92"
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/TreeArrows/ArrowLine.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Lines"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 216.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 96.000000
+    children:
+    -   prototype: "ArrowLine/Line"
+        name: "RightHLine"
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+                rightAnchor: 0.500000
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalValue: 19.500000
+    -   prototype: "ArrowLine/Line"
+        name: "VR0"
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+                rightAnchor: -0.500000
+                bottomAnchorEnabled: true
+            SizePolicy:
+                verticalPolicy: "PercentOfParent"
+                verticalValue: 50.000000

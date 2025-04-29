@@ -1,0 +1,291 @@
+Header:
+    version: 161
+Prototypes:
+-   class: "UIControl"
+    name: "Slave"
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Common/TooltipShow.animation;_FINISH,~res:/UI/Screens3/Common/TooltipHide.animation;ANIMATE_POPUP_ON_HIDE,~res:/UI/Screens3/Common/TooltipHide.animation"
+        UIOpacityComponent: {}
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "maxChild + 32"
+            verticalPolicy: "Formula"
+            verticalFormula: "maxChild + 32"
+        UIAttachLayoutSmartSlaveComponent: {}
+        UIDataParamsComponent:
+            params:
+            - ["TanksRankConfigurationModel", "rankConfig", "null", "{ }"]
+            - ["bool", "turnOffChestPreview", "false", "false"]
+            - ["control", "content", "null", "null"]
+            - ["int", "offset", "0", "0"]
+            - ["bool", "isAlignLeft", "true", "true"]
+            - ["string", "additionalContentTitle", "\"\"", "\"Медаль за отвагу\""]
+            - ["string", "additionalContentText", "\"\"", "\"Присваевается игроку за мастерство\Lвладения боевой машиной. \LДля получения награды необходимо заработать больше опыта за бой, чем средний максимальный опыт за неделю у 99% игроков на данной технике\""]
+            - ["string", "colorClass", "\"color=white-wild-sand-text\"", "\"color=white-wild-sand-text\""]
+            - ["ePositionAlign", "slaveAlign", "ePositionAlign.Default", "ePositionAlign.Top"]
+            - ["string", "masterId", "\"MASTER\"", "\"MASTER\""]
+            - ["RewardPopupModel", "resourcesModel", "null", "{ \"resources\" = [ { \"resource\" = { \"type\" = ResourceType.slots; \"basic\" = { \"quantity\" = 2000000; }; \"stuff\" = null; }; }; { }; ]; }"]
+            - ["eCurrentScreen", "currentScreen", "eCurrentScreen.kUnknown", "eCurrentScreen.kStory"]
+            events:
+            - "FINISH_HIDE_POPUP_ANIMATION"
+            - "POPUP_ON_CLOSE_ACTION"
+            - "ON_CLICK_BUTTON(int resourceIndex)"
+            - "ON_ACTION(int resourceIndex)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "selectedSide", "\"\""]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["string", "alignStyle", "when isAlignLeft -> \" text-align-left\", \" text-align-center\""]
+            - ["string", "textStyle", "\"t-subtitle regular \" + colorClass + alignStyle"]
+            - ["string", "titleStyle", "\"t-subtitle bold \" + colorClass + alignStyle"]
+        UIDataOnEventComponent0:
+            eventName: "SELECTED_SIDE"
+            modelFieldExpression: "selectedSide"
+            dataExpression: "_event"
+    bindings:
+    - ["UIAttachLayoutSmartSlaveComponent.attachId", "masterId"]
+    - ["UIAttachLayoutSmartSlaveComponent.slaveAlign", "slaveAlign"]
+    children:
+    -   class: "UIControl"
+        name: "ContentWrapper"
+        size: [32.000000, 32.000000]
+        input: false
+        classes: "gray-cape-cod-bg"
+        components:
+            Background:
+                drawType: "DRAW_STRETCH_BOTH"
+                sprite: "~res:/Gfx/UI/CommonUIElements/square_BigAngle.psd"
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                leftRightStretchCap: 8.000000
+                topBottomStretchCap: 8.000000
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 16.000000
+                rightAnchorEnabled: true
+                rightAnchor: 16.000000
+                topAnchorEnabled: true
+                topAnchor: 16.000000
+                bottomAnchorEnabled: true
+                bottomAnchor: 16.000000
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 0.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["LinearLayout.padding", "when not isNull(content) or not empty(additionalContentTitle) or not empty(additionalContentText) -> \"0;16\", \"0;0\""]
+        children:
+        -   class: "UIControl"
+            name: "MainContent"
+            size: [32.000000, 32.000000]
+            input: false
+            classes: ""
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                    padding: "16"
+                    spacing: 8.000000
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "max(parent, maxChild)"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIRepeatComponent:
+                    control: "~res:/UI/Screens3/Common/PopupMenuResourceContent.yaml"
+                    dataContainer: "resourcesModel.resources"
+                    args:
+                        "rankConfig": "rankConfig"
+                        "turnOffChestPreview": "turnOffChestPreview"
+                        "isAlignLeft": "isAlignLeft"
+                        "popupResource": "_item"
+                        "showImageAndQuantity": "Size(resourcesModel.resources) > 1"
+                        "currentScreen": "currentScreen"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_CLICK_BUTTON", "_index"]
+                    - ["ON_ACTION", "ON_ACTION", "_index"]
+        -   class: "UIControl"
+            name: "AdditionalContent"
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "max(parent, maxChild + 32)"
+                    verticalPolicy: "PercentOfChildrenSum"
+            bindings:
+            - ["visible", "not isNull(content) or not empty(additionalContentTitle) or not empty(additionalContentText)"]
+            children:
+            -   class: "UIControl"
+                name: "Content"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "isNull(content) and (not empty(additionalContentTitle) or not empty(additionalContentText))"
+                        control: "DefaultContent"
+                    UIChildComponent1:
+                        childType: "kControl"
+                        condition: "not isNull(content)"
+                        control: "content"
+    -   class: "UIControl"
+        name: "ArrowBottom"
+        input: false
+        classes: "gray-cape-cod-bg"
+        components:
+            Background:
+                drawType: "DRAW_ALIGNED"
+                sprite: "~res:/Gfx/Lobby/backgrounds/bg_triangle_8.psd"
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                align: []
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "Formula"
+                verticalFormula: "content+16"
+            UIAttachLayoutSlaveComponent:
+                masterAlign: "BottomCenter"
+                slaveAlign: "TopCenter"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "selectedSide == \"bottom\""]
+        - ["UIAttachLayoutSlaveComponent.attachId", "masterId"]
+    -   class: "UIControl"
+        name: "ArrowTop"
+        input: false
+        classes: "gray-cape-cod-bg"
+        components:
+            Background:
+                drawType: "DRAW_ALIGNED"
+                sprite: "~res:/Gfx/Lobby/backgrounds/bg_triangle_8.psd"
+                spriteModification: ["FLIP_VERTICAL"]
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                align: []
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "Formula"
+                verticalFormula: "content+16"
+            UIAttachLayoutSlaveComponent:
+                masterAlign: "TopCenter"
+                slaveAlign: "BottomCenter"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "selectedSide == \"top\""]
+        - ["UIAttachLayoutSlaveComponent.attachId", "masterId"]
+    -   class: "UIControl"
+        name: "ArrowRight"
+        pivot: [0.500000, 0.500000]
+        angle: 90.000000
+        input: false
+        classes: "gray-cape-cod-bg"
+        components:
+            Background:
+                drawType: "DRAW_ALIGNED"
+                sprite: "~res:/Gfx/Lobby/backgrounds/bg_triangle_8.psd"
+                spriteModification: ["FLIP_VERTICAL"]
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                align: []
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "content+10"
+                verticalPolicy: "PercentOfContent"
+            UIAttachLayoutSlaveComponent:
+                masterAlign: "RightCenter"
+                slaveAlign: "LeftCenter"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "selectedSide == \"right\""]
+        - ["UIAttachLayoutSlaveComponent.attachId", "masterId"]
+    -   class: "UIControl"
+        name: "ArrowLeft"
+        pivot: [0.500000, 0.500000]
+        angle: -90.000000
+        input: false
+        classes: "gray-cape-cod-bg"
+        components:
+            Background:
+                drawType: "DRAW_ALIGNED"
+                sprite: "~res:/Gfx/Lobby/backgrounds/bg_triangle_8.psd"
+                spriteModification: ["FLIP_VERTICAL"]
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                align: []
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "content+10"
+                verticalPolicy: "PercentOfContent"
+            UIAttachLayoutSlaveComponent:
+                masterAlign: "LeftCenter"
+                slaveAlign: "RightCenter"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "selectedSide == \"left\""]
+        - ["UIAttachLayoutSlaveComponent.attachId", "masterId"]
+Slots:
+-   class: "UIControl"
+    name: "DefaultContent"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+            spacing: 8.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "PercentOfChildrenSum"
+    children:
+    -   class: "UIControl"
+        name: "Title"
+        input: false
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                multiline: "MULTILINE_ENABLED"
+                useRtlAlign: "USE_BY_SYSTEM"
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Common/PopupMenu.style.yaml"
+        bindings:
+        - ["visible", "additionalContentTitle != \"\""]
+        - ["classes", "titleStyle"]
+        - ["UITextComponent.text", "additionalContentTitle"]
+    -   class: "UIControl"
+        name: "Text"
+        input: false
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                multiline: "MULTILINE_ENABLED"
+                useRtlAlign: "USE_BY_SYSTEM"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+                useRtl: true
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "min(content, 368)"
+                verticalPolicy: "PercentOfContent"
+                verticalFormula: "when parent == 0 -> content, parent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Common/PopupMenu.style.yaml"
+        bindings:
+        - ["classes", "textStyle"]
+        - ["UITextComponent.text", "additionalContentText"]

@@ -1,0 +1,50 @@
+Header:
+    version: 155
+Prototypes:
+-   class: "UIControl"
+    name: "MarkTerrainTankName"
+    size: [32.000000, 32.000000]
+    input: false
+    classes: "mark send-from=from-ally mark-type=attack-mark"
+    components:
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "lastChild+16"
+            verticalPolicy: "FixedSize"
+            verticalValue: 14.000000
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Battle/MarksTerrain/MarkTerrainTankName.style.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        position: [0.000000, 0.000000]
+        size: [60.000000, 24.000000]
+        input: false
+        classes: "tank-bg-color"
+        components:
+            Background:
+                drawType: "DRAW_SCALE_TO_RECT"
+            UIOpacityComponent:
+                opacity: 0.700000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 14.000000
+    -   class: "UIControl"
+        name: "TankName"
+        position: [3.000000, 0.000000]
+        size: [60.000000, 24.000000]
+        input: false
+        classes: "tank-text-color"
+        components:
+            UITextComponent:
+                text: "T110E3"
+                fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                fontSize: 11.000000
+                align: ["RIGHT", "VCENTER"]
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"

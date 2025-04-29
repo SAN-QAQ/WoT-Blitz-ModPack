@@ -1,0 +1,92 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/british-Valentine"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/british-Valentine"
+    blitzModelPath: "Tanks/GB/Valentine.sc2"
+    collisionMesh: "CollisionMeshes/uk-GB04_Valentine.sc2"
+    smokeEffectPath: "FX/Exhausts/left.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/uk/lt"
+    engineSoundNPC: "tanks/npc/engine/uk/lt"
+    chassisSoundPC: "tanks/pc/treads/lt"
+    chassisSoundNPC: "tanks/npc/treads/lt"
+textureTransform: {}
+treadParameters:
+    forceManualWidth: true
+    manualWidth: 0.438355
+    forceManualSpace: false
+    manualSpace: 0.978200
+    texturePath: "~res:/3d/Tanks/Common/images/GB_01_tread.tex"
+gunRecoil:
+    gun_05:
+        enabled: true
+        durationForward: 0.595504
+        durationBackward: 0.050000
+        distance: 0.269565
+maskSlice:
+    gun_05:
+        enabled: true
+        planePosition: [-0.000107, 0.453330, -0.009964]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 2.947643
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAAArXoz0K16M9AQAAAArXoz0K16M9AQAAAArXoz0K16M9AQAAAArXoz0K16M9AQAAAArXoz0K16M9AQAAAArXoz0K16M9AQAAAArXoz0K16M9AAAAAArXoz0K16M9AAAAAArXoz0K16M9AAAAAArXoz0K16M9AAAAAArXoz0K16M9\f"
+    leftTrackChain: "OunDvwAAAAABAAAAWgpxvwAAAAABAAAAoMPRvgAAAAABAAAAgJPZPgAAAAABAAAALO11PwAAAAABAAAAOunDPwAAAAABAAAAqyLOPwZRHTwBAAAA0M/rPwhSmj0AAAAAMjP9P3YQ+j0AAAAASksHQHLnLD4AAAAA/PwPQKnGXD4AAAAArK4YQPBShj4AAAAAqYMoQFHpsT4BAAAAVvIwQIaw9T4BAAAAzt4zQAsqKD8BAAAA3e0wQFFxWD8BAAAABYsoQCSAdT8BAAAAtDkcQKnYgD8BAAAA+wcTQH7/gD8AAAAAQtYJQFMmgT8AAAAAiaQAQChNgT8AAAAAoeXuP/5zgT8AAAAAL4LcP9OagT8AAAAAvh7KP6jBgT8AAAAATLu3P33ogT8AAAAA2lelP1IPgj8AAAAALZaIP2EVgj8BAAAAB1F+P3Ibgj8BAAAACltcP9GDgj8AAAAAJpQ3P6eqgj8AAAAAQs0SP3zRgj8AAAAAwAzcPlH4gj8AAAAA+H6SPiYfgz8AAAAAXYNGPTYlgz8BAAAAPj6dvIEKgz8BAAAAwFQUvqWTgz8AAAAAKLiTvnu6gz8AAAAA8EXdvlDhgz8AAAAA2GkTvyUIhD8AAAAAvDA4v/ouhD8AAAAAoPdcv89VhD8AAAAACdV6v/I0gz8BAAAAabeGvz8agz8BAAAAJqalv07KhD8AAAAAmAm4vyTxhD8AAAAACG3Kv/kXhT8AAAAAfNDcv84+hT8AAAAA7DPvv6NlhT8AAAAAsMsAwHiMhT8AAAAAWvUMwNe/hT8BAAAApU8YwHnlgD8BAAAAKhwhwKOzXz8BAAAA1qgkwEa7MT8BAAAAO6khwGHAAT8BAAAAGqgYwOrGwD4BAAAAjWgQwF1GoD4AAAAAASkIwKGLfz4AAAAA6NL/v4iKPj4AAAAAzlPvv9wS+z0AAAAAgDnOv6h1ezwBAAAA\f"
+    rightTrackChain: "OunDvwAAAAABAAAAWgpxvwAAAAABAAAApMPRvgAAAAABAAAAgJPZPgAAAAABAAAALO11PwAAAAABAAAAOunDPwAAAAABAAAAbkPOP9QY+TsBAAAA0M/rPwhSmj0AAAAAMjP9P3YQ+j0AAAAASksHQHLnLD4AAAAA/PwPQKnGXD4AAAAAB2kiQHvsnz4AAAAAbaQoQFHpsT4BAAAAVvIwQIaw9T4BAAAAzt4zQAsqKD8BAAAA3e0wQFFxWD8BAAAACYsoQCSAdT8BAAAAtDkcQKnYgD8BAAAA+wcTQH7/gD8AAAAAQtYJQFMmgT8AAAAAiaQAQChNgT8AAAAAoeXuP/5zgT8AAAAAL4LcP9OagT8AAAAAvh7KP6jBgT8AAAAATLu3P33ogT8AAAAA2lelP1IPgj8AAAAAe/iIP+1Wgj8BAAAAoBV/Pzc8gj8BAAAACltcP9GDgj8AAAAAJpQ3P6eqgj8AAAAAQs0SP3zRgj8AAAAAwAzcPlH4gj8AAAAA+H6SPiYfgz8AAAAAaC9jPdI/gj8BAAAAWMxHvB8lgj8BAAAAwFQUvqWTgz8AAAAAKLiTvnu6gz8AAAAA8EXdvlDhgz8AAAAA2GkTvyUIhD8AAAAAvDA4v/ouhD8AAAAArE92v0lqgj8BAAAAfRKEvxuRgj8BAAAAtEKTv3mjhD8AAAAAJqalv07KhD8AAAAAmAm4vyTxhD8AAAAACG3Kv/kXhT8AAAAAfNDcv84+hT8AAAAA7DPvv6NlhT8AAAAAsMsAwHiMhT8AAAAAWvUMwNe/hT8BAAAApU8YwHnlgD8BAAAAKhwhwKOzXz8BAAAA1qgkwEa7MT8BAAAAO6khwGHAAT8BAAAAnL4ZwPxJwT4BAAAAIAISwDVrpj4AAAAAASkIwKGLfz4AAAAA6NL/v4iKPj4AAAAAzlPvv9wS+z0AAAAAZ7bNv6x1ezwBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: false
+        upperMin: 0.139918
+        upperFactor: 0.170306
+        frontFactor: 0.354701
+        backFactor: 0.313559
+        lengthPower: 0.500000
+        speed: 1.000000
+    trackLayingInfo:
+        bendingFactor: 0.744000
+        lengthPower: 0.920000
+        pointCountPower: 0.918000
+        pressurePower: 0.260000
+        primaryPower: 0.670000
+chassis:
+    textureScale: -1.130000
+detachedTurret:
+    cylinderPos: [0.000000, 0.000000, 0.866000]
+    cylinderXYScale: 0.655000
+    turret_02:
+        shouldClipGun: false
+        clippingPlaneZPos: 1.394320
+        textureScaleFactor: 0.634000
+mechanics: [{name: "LTCamo"}]
+collision:
+    hull:
+        points: [0.002971, 0.001978, -0.905704]
+        bbox: 
+            min: [-0.941016, -2.451531, -0.479381]
+            max: [0.922158, 2.725366, 0.568502]
+        averageThickness: 
+            turret_02: 52.509830
+    chassis:
+        points: [-0.008797, -0.002282, 0.013590]
+        bbox: 
+            min: [-1.286361, -2.563353, -0.000000]
+            max: [1.271917, 2.800180, 1.072096]
+    turret_02:
+        points: [0.007388, -0.683921, -1.394320]
+        bbox: 
+            min: [-0.807240, -1.151467, -0.569562]
+            max: [0.782025, 1.007163, 0.715799]
+    gun_05:
+        points: [0.007696, -1.427962, -1.634076]
+        bbox: 
+            min: [-0.169807, -0.693570, -0.142332]
+            max: [0.160381, 1.829384, 0.342537]

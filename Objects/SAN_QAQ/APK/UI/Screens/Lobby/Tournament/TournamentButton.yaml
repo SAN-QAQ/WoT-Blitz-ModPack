@@ -1,0 +1,53 @@
+Header:
+    version: 157
+Prototypes:
+-   class: "UIControl"
+    name: "Button"
+    size: [222.000000, 50.000000]
+    classes: "button"
+    components:
+        Background:
+            usePostProcessedSprite: true
+        UIPostProcessTextureComponent0:
+            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+            needClearAlphaAfterRender: true
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent1:
+            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent2:
+            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIRoundedCornersComponent:
+            radius: "8"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 50.000000
+        Sound: {}
+        StyleSheet:
+            styles: "~res:/UI/Screens3/ButtonSound.style.yaml;~res:/UI/Screens/Fonts.yaml;~res:/UI/Styles/ButtonStyle.yaml"
+    children:
+    -   class: "UIStaticText"
+        name: "Caption"
+        size: [222.000000, 51.000000]
+        classes: "header3 text-color-white"
+        components:
+            UITextComponent:
+                text: "Header1"
+                colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                topAnchor: -1.000000
+                bottomAnchorEnabled: true

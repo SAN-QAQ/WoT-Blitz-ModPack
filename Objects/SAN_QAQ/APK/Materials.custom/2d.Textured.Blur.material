@@ -1,0 +1,7 @@
+Material:
+    Shader: ~res:/Materials.custom/shaders/blur
+    UniqueDefines: [ VBLUR ]
+    RenderState:
+        blend: true
+    Passes:
+        2d:

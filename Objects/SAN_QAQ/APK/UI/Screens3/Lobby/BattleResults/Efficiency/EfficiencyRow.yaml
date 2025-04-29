@@ -1,0 +1,682 @@
+Header:
+    version: 144
+Prototypes:
+-   class: "UIControl"
+    name: "EfficiencyRow"
+    size: [800.000000, 174.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+            topAnchorEnabled: true
+        LinearLayout:
+            orientation: "LeftToRight"
+            dynamicPadding: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfFirstChild"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "isLineVisible", "true", "true"]
+            - ["VehInteractionData", "vehInteractionData", "null", "{ \"damage_dealt\" = 3456; \"damage_assisted_track\" = 234; \"damage_assisted_radio\" = 45; \"hits\" = 4; \"vehicle\" = { \"tankDescriptor\" = { \"rawDescr\" = 0; }; \"technicalName\" = \"tank\"; \"name\" = \"tank1\"; \"shortName\" = \"tank2\"; \"smallIconPath\" = \"\"; \"bigIconPath\" = \"\"; \"shopIconPath\" = \"\"; \"nation\" = eNation.JAPAN; \"level\" = 1; \"tankClass\" = eTankClass.TANK_CLASS_MEDIUM; \"isCollectible\" = false; \"isPremium\" = false; \"isTestTank\" = false; \"consumableSlots\" = 0; \"provisionSlots\" = 0; \"isInShop\" = true; }; \"spotted\" = 1; \"deathReason\" = ATTACK_REASONS.FIRE; \"destroyedPartsContainer\" = { eDestroyedParts.engine_destroyed = 3; eDestroyedParts.echassis_destroyed = 3; eDestroyedParts.ammobay_crit = 3; eDestroyedParts.ammobay_destroyed = 3; eDestroyedParts.fueltank_crit = 3; eDestroyedParts.driver = 1; eDestroyedParts.gunner = 2; eDestroyedParts.loader = 2; }; }"]
+    children:
+    -   class: "UIControl"
+        name: "ContentWrapper"
+        size: [960.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                dynamicSpacing: true
+                skipInvisible: false
+                useRtl: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "TankAndPlayer"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "0;0;8;8;"
+                Anchor: {}
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 8.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfChildrenSum"
+            children:
+            -   class: "UIControl"
+                name: "Vehicle"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    UIOpacityComponent:
+                        opacity: 0.750000
+                    Anchor:
+                        leftAnchorEnabled: true
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Vehicle/Vehicle.yaml"
+                        args:
+                            "id": "0"
+                            "tankStats": "{ \"isElite\" = false; \"isBonusActive\" = false; \"isPremiumized\" = false; \"isBirthday\" = false; }"
+                            "clickable": "false"
+                            "vehicleDataModel": "vehInteractionData.vehicle"
+            -   class: "UIControl"
+                name: "Player"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        useRtl: true
+                    LinearLayout:
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/PlayerNameCanFitting.yaml"
+                        args:
+                            "clanTagStyle": "\"regular white-wild-sand-50-text \""
+                            "playerNameStyle": "\"regular white-wild-sand-50-text \""
+                            "playerName": "vehInteractionData.playerName.playerName"
+                            "clanTag": "vehInteractionData.playerName.playerClan"
+        -   class: "UIControl"
+            name: "Stats"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "8"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    topAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 12.000000
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "when parent < 850 ->312, 412"
+                    verticalPolicy: "PercentOfChildrenSum"
+            children:
+            -   class: "UIControl"
+                name: "Lamp"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        useRtl: true
+                    LinearLayout:
+                        spacing: 8.000000
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfFirstChild"
+                bindings:
+                - ["visible", "vehInteractionData.spotted"]
+                children:
+                -   class: "UIControl"
+                    name: "Title"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    classes: "t-body regular white-wild-sand-text align-left"
+                    components:
+                        UITextComponent:
+                            multiline: "MULTILINE_ENABLED"
+                            align: ["LEFT", "VCENTER"]
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/Detected\")"]
+                -   class: "UIControl"
+                    name: "Icon"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    classes: "orange-orange-peel-bg"
+                    components:
+                        Background:
+                            drawType: "DRAW_SCALE_TO_RECT"
+                            sprite: "~res:/Gfx/Lobby/icons/icon_lamp_s"
+                        Anchor:
+                            leftAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 24.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 24.000000
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "Damage"
+                position: [0.000000, 0.000000]
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 8.000000
+                        dynamicSpacing: true
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "vehInteractionData.damage_dealt != 0"]
+                children:
+                -   class: "UIControl"
+                    name: "Title"
+                    input: false
+                    classes: "t-body regular white-wild-sand-text align-left"
+                    components:
+                        UITextComponent:
+                            multiline: "MULTILINE_ENABLED"
+                            align: ["LEFT", "VCENTER"]
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "min(parentRest, content)"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/Damage\")"]
+                -   class: "UIControl"
+                    name: "Value"
+                    input: false
+                    classes: "t-body bold color=white-wild-sand-text not-localize"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            topAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(vehInteractionData.damage_dealt)"]
+            -   class: "UIControl"
+                name: "Penetrtion"
+                position: [0.000000, 0.000000]
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 8.000000
+                        dynamicSpacing: true
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "vehInteractionData.hits != 0"]
+                children:
+                -   class: "UIControl"
+                    name: "Title"
+                    input: false
+                    classes: "t-body regular white-wild-sand-text align-left"
+                    components:
+                        UITextComponent:
+                            multiline: "MULTILINE_ENABLED"
+                            align: ["LEFT", "VCENTER"]
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "min(parentRest, content)"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/PenetrationTotal\")"]
+                -   class: "UIControl"
+                    name: "Value"
+                    input: false
+                    classes: "t-body bold color=white-wild-sand-text not-localize"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            topAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str(vehInteractionData.pierced) + \" / \" + str(vehInteractionData.hits)"]
+            -   class: "UIControl"
+                name: "Assist"
+                position: [0.000000, 0.000000]
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 8.000000
+                        dynamicSpacing: true
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "vehInteractionData.damage_assisted_track != 0 or vehInteractionData.damage_assisted_radio != 0"]
+                children:
+                -   class: "UIControl"
+                    name: "Title"
+                    input: false
+                    classes: "t-body regular white-wild-sand-text align-left"
+                    components:
+                        UITextComponent:
+                            multiline: "MULTILINE_ENABLED"
+                            align: ["LEFT", "VCENTER"]
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "min(parentRest, content)"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/Assist\")"]
+                -   class: "UIControl"
+                    name: "Value"
+                    input: false
+                    classes: "t-body bold color=white-wild-sand-text not-localize"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            topAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(vehInteractionData.damage_assisted_radio + vehInteractionData.damage_assisted_track)"]
+            -   class: "UIControl"
+                name: "AssistScout"
+                position: [0.000000, 0.000000]
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 8.000000
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "vehInteractionData.damage_assisted_radio != 0"]
+                children:
+                -   class: "UIControl"
+                    name: "TitleContainer"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            spacing: 12.000000
+                            useRtl: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "EnumerationIcon"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        classes: "white-wild-sand-50-bg"
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                            UIRoundedCornersComponent:
+                                radius: "50"
+                            Anchor:
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 4.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 4.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                    -   class: "UIControl"
+                        name: "Title"
+                        input: false
+                        classes: "t-body regular white-wild-sand-50-text align-left"
+                        components:
+                            UITextComponent:
+                                multiline: "MULTILINE_ENABLED"
+                                align: ["LEFT", "VCENTER"]
+                                useRtlAlign: "USE_BY_SYSTEM"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfContent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/Assist/Scout\")"]
+                -   class: "UIControl"
+                    name: "Value"
+                    input: false
+                    classes: "t-body bold color=white-wild-sand-50-text not-localize"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            topAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(vehInteractionData.damage_assisted_radio)"]
+            -   class: "UIControl"
+                name: "AssistTrack"
+                position: [0.000000, 0.000000]
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 8.000000
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "vehInteractionData.damage_assisted_track != 0"]
+                children:
+                -   class: "UIControl"
+                    name: "TitleContainer"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            spacing: 12.000000
+                            useRtl: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "EnumerationIcon"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        classes: "white-wild-sand-50-bg"
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                            UIRoundedCornersComponent:
+                                radius: "50"
+                            Anchor:
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 4.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 4.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                    -   class: "UIControl"
+                        name: "Title"
+                        input: false
+                        classes: "t-body regular white-wild-sand-50-text align-left"
+                        components:
+                            UITextComponent:
+                                multiline: "MULTILINE_ENABLED"
+                                align: ["LEFT", "VCENTER"]
+                                useRtlAlign: "USE_BY_SYSTEM"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfContent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/Assist/Track\")"]
+                -   class: "UIControl"
+                    name: "Value"
+                    input: false
+                    classes: "t-body bold color=white-wild-sand-50-text not-localize"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            topAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(vehInteractionData.damage_assisted_track)"]
+            -   class: "UIControl"
+                name: "Kill"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        useRtl: true
+                    LinearLayout:
+                        spacing: 8.000000
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfFirstChild"
+                bindings:
+                - ["visible", "vehInteractionData.deathReason == ATTACK_REASONS.ATTACK or vehInteractionData.deathReason == ATTACK_REASONS.RAMMING or vehInteractionData.deathReason == ATTACK_REASONS.FIRE"]
+                children:
+                -   class: "UIControl"
+                    name: "Title"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    classes: "t-body regular white-wild-sand-text align-left"
+                    components:
+                        UITextComponent:
+                            multiline: "MULTILINE_ENABLED"
+                            align: ["LEFT", "TOP"]
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/Destroy\")"]
+                -   class: "UIControl"
+                    name: "Icon"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    classes: "red-red-bg"
+                    components:
+                        Background:
+                            drawType: "DRAW_SCALE_TO_RECT"
+                            sprite: "~res:/Gfx/Lobby/icons/icon_destroyed-tank_s"
+                        Anchor:
+                            leftAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 32.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 32.000000
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "TypeModule"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "8"
+                Anchor:
+                    rightAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 16.000000
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 178.000000
+                    verticalPolicy: "PercentOfChildrenSum"
+            bindings:
+            - ["visible", "not Empty(vehInteractionData.destroyedPartsContainer)"]
+            children:
+            -   class: "UIControl"
+                name: "Title"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "t-body regular align-left"
+                components:
+                    UITextComponent:
+                        multiline: "MULTILINE_ENABLED"
+                        useRtlAlign: "USE_BY_SYSTEM"
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 178.000000
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                bindings:
+                - ["UITextComponent.text", "localize(\"#battle_results:Overlay/Efficiency/Modules\")"]
+            -   class: "UIControl"
+                name: "Modules"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    GridLayout:
+                        columnCount: 5
+                        columnWidth: 24.000000
+                        columnSpacing: 12.000000
+                        dynamicRowCalulation: "byControls"
+                        rowHeight: 24.000000
+                        rowSpacing: 8.000000
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/BattleResults/Efficiency/ModulCell.yaml"
+                        dataContainer: "vehInteractionData.destroyedPartsContainer"
+                        args:
+                            "colorStyle": "str(_key, eDestroyedParts, \"color\")"
+                            "quantity": "vehInteractionData.destroyedPartsContainer[_key]"
+                            "icon": "str(_key, eDestroyedParts, \"icon\")"
+        -   class: "UIControl"
+            name: "TopBoldLine"
+            input: false
+            classes: "white-wild-sand-15-bg"
+            components:
+                Background: {}
+                Anchor:
+                    bottomAnchorEnabled: true
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 1.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["visible", "isLineVisible"]
+            children:
+            -   class: "UIControl"
+                name: "Blur"
+                input: false
+                components:
+                    Background:
+                        usePostProcessedSprite: true
+                    UIPostProcessTextureComponent0:
+                        materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                        needClearAlphaAfterRender: true
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent1:
+                        materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent2:
+                        materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    Anchor:
+                        bottomAnchorEnabled: true
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 1.000000

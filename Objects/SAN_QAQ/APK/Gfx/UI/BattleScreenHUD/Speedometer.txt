@@ -1,0 +1,5 @@
+1
+Speedometer_SAN_QAQ.packed.webp
+60 60
+1
+0 0 60 60 0 0 0 frame0
