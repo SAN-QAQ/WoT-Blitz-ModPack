@@ -1,0 +1,120 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/british-GB92_FV217"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/british-GB92_FV217"
+    blitzModelPath: "Tanks/GB/GB92_FV217.sc2"
+    collisionMesh: "CollisionMeshes/uk-GB92_FV217.sc2"
+    smokeEffectPath: "FX/Exhausts/hullback.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/uk/ht"
+    engineSoundNPC: "tanks/npc/engine/uk/ht"
+    chassisSoundPC: "tanks/pc/treads/ht"
+    chassisSoundNPC: "tanks/npc/treads/ht"
+textureTransform:
+    gun_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.200000, 1.200000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    gun_01_mask:
+        shear: [0.000000, 0.000000]
+        scale: [1.200000, 1.200000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    hull:
+        shear: [0.000000, 0.000000]
+        scale: [1.200000, 1.200000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    turret_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.200000, 1.200000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+gunRecoil:
+    gun_01:
+        enabled: true
+        durationForward: 0.800000
+        durationBackward: 0.100000
+        distance: 0.360000
+maskSlice:
+    gun_01:
+        enabled: false
+        planePosition: [0.000001, 1.839997, -0.000019]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 3.111422
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAAPazFT3HH289AQAAAPazFT3HH289AAAAAPazFT3HH289AQAAAPazFT3HH289AQAAAPazFT3HH289AAAAAPazFT3HH289AQAAAPazFT3HH289AQAAAPazFT3HH289AAAAAPazFT3HH289AQAAAPazFT3HH289AQAAAPazFT3HH289AAAAAPazFT3HH289AQAAAPazFT3HH289AAAAAPazFT3HH289\f"
+    leftTrackChains:
+        00: "dhAgwL7WILsBAAAAwDHfv77WILsBAAAA9NaVv77WILsBAAAAeBPVvr7WILsBAAAAEEHfPr7WILsBAAAAnkqYP77WILsBAAAA9njfP77WILsBAAAAPwMgQL7WILsBAAAAf2klQBx+1jsBAAAAeEguQJDdlj0AAAAAMJw6QOtgGT4AAAAA6O9GQA5TZz4AAAAAoENTQJmimj4AAAAAvXpoQIK13T4BAAAAnnRzQEWQGT8BAAAAO5B4QOe5UD8BAAAA58h2QNW/iT8BAAAAgXFuQPIQoD8BAAAAFEVfQGtlsD8BAAAAu9dJQJBzsT8BAAAAaTA+QFAGrj8AAAAAqkswQKIHrT8AAAAAOMkiQKemqz8AAAAARzIXQOgkqj8AAAAAcnQKQFX/pz8BAAAAHSECQMoGqD8BAAAAvKPfP1c7qj8AAAAAomvBP09XqD8AAAAAl2ClP1CgqD8AAAAAsVuKP+KApz8AAAAAlNZaPwzQqD8BAAAAMd08P4LXqD8BAAAAdO7uPpRNqz8AAAAAmfmHPq0ZrD8AAAAAOdx7PXfZqj8AAAAAzk4evizAqj8AAAAAHBa1vnI+qT8AAAAACUcOv0uBqD8AAAAASzpLv9Depj8BAAAAsQhivw4Hpz8BAAAACyyXv6gUqD8AAAAApM6xv+k8qD8AAAAA/pHMv7CmqD8AAAAASdLmv7PvqD8AAAAAIXwGwHugqD8BAAAAExUNwMlAqD8BAAAAuEsjwNwBqD8AAAAA41ZGwIFdoz8BAAAAokJWwF/epD8BAAAACqlkwHxDmz8BAAAAYd5twBIJhD8BAAAAtutwwCEJUD8BAAAAUDtuwGEQGj8BAAAAE8tkwIVz2T4BAAAAU4FawI+/oj4BAAAAAbNNwOfzkj4AAAAAI3hBwH0jVD4AAAAART01wCxfAj4AAAAA5FQlwKoDDDwBAAAA\f"
+    rightTrackChains:
+        00: "dhAgwL7WILsBAAAAwDHfv77WILsBAAAA9NaVv77WILsBAAAAeBPVvr7WILsBAAAAEEHfPr7WILsBAAAAnkqYP77WILsBAAAA9njfP77WILsBAAAAPwMgQL7WILsBAAAAf2klQBx+1jsBAAAAeEguQJDdlj0AAAAAMJw6QOtgGT4AAAAA6O9GQA5TZz4AAAAAoENTQJmimj4AAAAAvXpoQIK13T4BAAAAnnRzQEWQGT8BAAAAO5B4QOe5UD8BAAAA58h2QNW/iT8BAAAAgXFuQPIQoD8BAAAAFEVfQGtlsD8BAAAAu9dJQJBzsT8BAAAAaTA+QFAGrj8AAAAAqkswQKIHrT8AAAAAOMkiQKemqz8AAAAARzIXQOgkqj8AAAAAcnQKQFX/pz8BAAAAHSECQMoGqD8BAAAAvKPfP1c7qj8AAAAAomvBP09XqD8AAAAAl2ClP1CgqD8AAAAAsVuKP+KApz8AAAAAlNZaPwzQqD8BAAAAMd08P4LXqD8BAAAAdO7uPpRNqz8AAAAAmfmHPq0ZrD8AAAAAOdx7PXfZqj8AAAAAzk4evizAqj8AAAAAHBa1vnI+qT8AAAAACUcOv0uBqD8AAAAASzpLv9Depj8BAAAAsQhivw4Hpz8BAAAACyyXv6gUqD8AAAAApM6xv+k8qD8AAAAA/pHMv7CmqD8AAAAASdLmv7PvqD8AAAAAIXwGwHugqD8BAAAAExUNwMlAqD8BAAAAuEsjwNwBqD8AAAAA41ZGwIFdoz8BAAAAokJWwF/epD8BAAAACqlkwHxDmz8BAAAAYd5twBIJhD8BAAAAtutwwCEJUD8BAAAAUDtuwGEQGj8BAAAAE8tkwIVz2T4BAAAAU4FawI+/oj4BAAAAAbNNwOfzkj4AAAAAI3hBwH0jVD4AAAAART01wCxfAj4AAAAA5FQlwKoDDDwBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: false
+        upperMin: 0.000000
+        upperFactor: 0.000000
+        frontFactor: 0.354700
+        backFactor: 0.254237
+        lengthPower: 0.680180
+        speed: 1.000000
+    trackLayingInfo:
+        bendingFactor: 1.000000
+        lengthPower: 1.400000
+        pointCountPower: 0.600000
+        pressurePower: 0.600000
+        primaryPower: 1.000000
+shadowDecal:
+    texturePath: "~res:/3d/Tanks/Common/DecalShadow/Decal_Shadow.tex"
+    scale: [4.796463, 8.419919, 1.600000]
+    offset: [0.000000, 0.004672, 0.506952]
+    blendingType: "Alphablend"
+    fogBehaviour: "Inherited"
+chassis:
+    textureScale: 0.725000
+armorScale:
+    gun_01:
+        pushNormalsScale: false
+        armorScale: [1.030000, 1.030000, 1.030000]
+    hull:
+        pushNormalsScale: true
+        armorScale: [0.020000, 0.020000, 0.020000]
+    turret_01:
+        pushNormalsScale: false
+        armorScale: [0.000000, 0.000000, 0.000000]
+collision:
+    chassis:
+        points: [0.000000, 0.000000, 0.000000]
+        bbox:
+            min: [-1.918587, -3.790876, 0.003043]
+            max: [1.918584, 3.894473, 1.418110]
+    gun_01:
+        points: [0.000001, -2.013509, -1.758110]
+        bbox:
+            min: [-0.358939, -2.207531, -0.358958]
+            max: [0.358938, 6.281920, 0.358919]
+    hull:
+        points: [-0.000000, -0.000000, 0.000000]
+        bbox:
+            min: [-1.992635, -3.619130, 0.519927]
+            max: [1.992635, 3.637667, 2.514756]
+        averageThickness:
+            turret_01: 178.907745
+    turret_01:
+        points: [0.000001, 2.026009, 1.758110]
+        bbox:
+            min: [0.000000, 0.000000, 0.000000]
+            max: [0.000000, 0.000000, 0.000000]

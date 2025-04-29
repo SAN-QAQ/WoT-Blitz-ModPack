@@ -1,0 +1,306 @@
+Header:
+    version: 160
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Overlay/OverlayBasic.yaml"
+- "~res:/UI/Screens3/Lobby/Common/RichText.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "TanksMechanicsOverlay"
+    size: [1024.000000, 768.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["TankParams", "tankParams", "null", "{ }"]
+            - ["eGameplayMechanics", "mechanic", "eGameplayMechanics.ImprovedDetection", "eGameplayMechanics.ATGM"]
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "NotDamageModulsImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/not-damage-moduls/bg_not-damage-moduls\""]
+            - ["string", "NotDamageModulsIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/not-damage-moduls/icon_not-damage-moduls_l\""]
+            - ["string", "NotDamageModulsTitle", "localize(\"TankMechanics/NotDamageModuls\")"]
+            - ["string", "NotDamageModulsDescription", "localize(\"TankMechanics/NotDamageModulsDescription\")"]
+            - ["string", "WithoutCrewImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/without-crew/bg_without-crew\""]
+            - ["string", "WithoutCrewIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/without-crew/icon_without-crew_l\""]
+            - ["string", "WithoutCrewTitle", "localize(\"TankMechanics/WithoutCrew\")"]
+            - ["string", "WithoutCrewDescription", "localize(\"TankMechanics/WithoutCrewDescription\")"]
+            - ["string", "DoubleShotImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/double-shot/bg_double-shot\""]
+            - ["string", "DoubleShotIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/double-shot/icon_double-shot_l\""]
+            - ["string", "DoubleShotTitle", "localize(\"TankMechanics/DoubleShot\")"]
+            - ["string", "DoubleShotDescription", "localize(\"TankMechanics/DoubleShotDescription\")"]
+            - ["string", "TripleShotImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/triple-shot/bg_triple-shot\""]
+            - ["string", "TripleShotIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/triple-shot/icon_triple-shot_l\""]
+            - ["string", "TripleShotTitle", "localize(\"TankMechanics/TripleShot\")"]
+            - ["string", "TripleShotDescription", "localize(\"TankMechanics/TripleShotDescription\")"]
+            - ["string", "LTCamoImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/lt-camo/bg_lt-camo\""]
+            - ["string", "LTCamoIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/lt-camo/icon_lt-camo_l\""]
+            - ["string", "LTCamoTitle", "localize(\"TankMechanics/LTCamo\")"]
+            - ["string", "LTCamoDescription", "localize(\"TankMechanics/LTCamoDescription\")"]
+            - ["string", "ATGMImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/atgm/bg_atgm\""]
+            - ["string", "ATGMIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/atgm/icon_atgm_l\""]
+            - ["string", "ATGMTitle", "localize(\"TankMechanics/ATGM\")"]
+            - ["string", "ATGMDescription", "localize(\"TankMechanics/ATGMDescription\")"]
+            - ["string", "ShotDispersionStabilizatorIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/shot-dispersion-stabilizator/icon_shot-dispersion-stabilizator_l\""]
+            - ["string", "ShotDispersionStabilizatorImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/shot-dispersion-stabilizator/bg_shot-dispersion-stabilizator\""]
+            - ["string", "ShotDispersionStabilizatorTitle", "localize(\"TankMechanics/ShotDispersionStabilizator\")"]
+            - ["string", "ShotDispersionStabilizatorDescription", "localize(\"TankMechanics/ShotDispersionStabilizatorDescription\")"]
+            - ["string", "DraculaTrackIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/dracula-track/icon_dracula_track_l\""]
+            - ["string", "DraculaTrackImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/dracula-track/bg_dracula_track\""]
+            - ["string", "DraculaTrackTitle", "localize(\"TankMechanics/DraculaTrack\")"]
+            - ["string", "DraculaTrackDescription", "localize(\"TankMechanics/DraculaTrackDescription\")"]
+            - ["string", "ReducedSpotDurationIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/reduced-spot-duration/icon_reduced-spot-duration_l\""]
+            - ["string", "ReducedSpotDurationImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/reduced-spot-duration/bg_reduced-spot-duration\""]
+            - ["string", "ReducedSpotDurationTitle", "localize(\"TankMechanics/ReducedSpotDuration\")"]
+            - ["string", "ReducedSpotDurationDescription", "localize(\"TankMechanics/ReducedSpotDurationDescription\")"]
+            - ["string", "ReserveAmmoIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/reserve-ammo/icon_reserve_shell_l\""]
+            - ["string", "ReserveAmmoImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/reserve-ammo/bg_tank-machanic_reserve_shell\""]
+            - ["string", "ReserveAmmoTitle", "localize(\"TankMechanics/ReserveAmmo\")"]
+            - ["string", "ReserveAmmoDescription", "localize(\"TankMechanics/ReserveAmmoDescription\")"]
+            - ["string", "DesertPowerIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/desert-power/icon_tank-machanic_desert-power_l\""]
+            - ["string", "DesertPowerImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/desert-power/bg_tank-machanic_desert-power\""]
+            - ["string", "DesertPowerTitle", "localize(\"TankMechanics/DesertPower\")"]
+            - ["string", "DesertPowerDescription", "localize(\"TankMechanics/DesertPowerDescription\")"]
+            - ["string", "InternalTrackIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/internal-track/icon_tank-machanic_internal-track_l\""]
+            - ["string", "InternalTrackImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/internal-track/bg_tank-machanic_internal-track\""]
+            - ["string", "InternalTrackTitle", "localize(\"TankMechanics/InternalTrack\")"]
+            - ["string", "InternalTrackDescription", "localize(\"TankMechanics/InternalTrackDescription\")"]
+            - ["string", "ImprovedDetectionIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/improved-detection/icon_tank-machanic_light_l\""]
+            - ["string", "ImprovedDetectionImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/improved-detection/bg_tank-machanic_light\""]
+            - ["string", "ImprovedDetectionTitle", "localize(\"TankMechanics/ImprovedDetection\")"]
+            - ["string", "ImprovedDetectionDescription", "localize(\"TankMechanics/ImprovedDetectionDescription\")"]
+            - ["string", "MovableArmorIcon", "\"~res:/Gfx/Lobby/icons/tank-mechanics/movable-armor/icon_movable-armor_l\""]
+            - ["string", "MovableArmorImage", "\"~res:/Gfx/Lobby/icons/tank-mechanics/movable-armor/bg_tank-machanic_movable-armor\""]
+            - ["string", "MovableArmorTitle", "localize(\"TankMechanics/MovableArmor\")"]
+            - ["string", "MovableArmorDescription", "localize(\"TankMechanics/MovableArmorDescription\")"]
+            - ["string", "descriptionKey", "when mechanic == eGameplayMechanics.ImprovedDetection -> ImprovedDetectionDescription, mechanic == eGameplayMechanics.MovableArmor -> MovableArmorDescription, mechanic == eGameplayMechanics.InternalTrack -> InternalTrackDescription, mechanic == eGameplayMechanics.DesertPower -> DesertPowerDescription, mechanic == eGameplayMechanics.ReserveAmmo -> ReserveAmmoDescription, mechanic == eGameplayMechanics.AlteredSpotDuration -> ReducedSpotDurationDescription, mechanic == eGameplayMechanics.ShotDispersionStabilizator -> ShotDispersionStabilizatorDescription, mechanic == eGameplayMechanics.DraculaTrack -> DraculaTrackDescription, mechanic == eGameplayMechanics.NotDamageModuls -> NotDamageModulsDescription, mechanic == eGameplayMechanics.WithoutCrew -> WithoutCrewDescription, mechanic == eGameplayMechanics.DoubleShot -> DoubleShotDescription, mechanic == eGameplayMechanics.TripleShot -> TripleShotDescription, mechanic == eGameplayMechanics.LTCamo -> LTCamoDescription, mechanic == eGameplayMechanics.ATGM -> ATGMDescription, \"\""]
+            - ["string", "titleKey", "when mechanic == eGameplayMechanics.ImprovedDetection -> ImprovedDetectionTitle, mechanic == eGameplayMechanics.MovableArmor -> MovableArmorTitle, mechanic == eGameplayMechanics.InternalTrack -> InternalTrackTitle, mechanic == eGameplayMechanics.DesertPower -> DesertPowerTitle, mechanic == eGameplayMechanics.ReserveAmmo -> ReserveAmmoTitle, mechanic == eGameplayMechanics.AlteredSpotDuration -> ReducedSpotDurationTitle, mechanic == eGameplayMechanics.ShotDispersionStabilizator -> ShotDispersionStabilizatorTitle, mechanic == eGameplayMechanics.DraculaTrack -> DraculaTrackTitle, mechanic == eGameplayMechanics.NotDamageModuls -> NotDamageModulsTitle, mechanic == eGameplayMechanics.WithoutCrew -> WithoutCrewTitle, mechanic == eGameplayMechanics.DoubleShot -> DoubleShotTitle, mechanic == eGameplayMechanics.TripleShot -> TripleShotTitle, mechanic == eGameplayMechanics.LTCamo -> LTCamoTitle, mechanic == eGameplayMechanics.ATGM -> ATGMTitle, \"\""]
+            - ["string", "imagePath", "when mechanic == eGameplayMechanics.ImprovedDetection -> ImprovedDetectionImage, mechanic == eGameplayMechanics.MovableArmor -> MovableArmorImage, mechanic == eGameplayMechanics.InternalTrack -> InternalTrackImage, mechanic == eGameplayMechanics.DesertPower -> DesertPowerImage, mechanic == eGameplayMechanics.ReserveAmmo -> ReserveAmmoImage, mechanic == eGameplayMechanics.AlteredSpotDuration -> ReducedSpotDurationImage, mechanic == eGameplayMechanics.ShotDispersionStabilizator -> ShotDispersionStabilizatorImage, mechanic == eGameplayMechanics.DraculaTrack -> DraculaTrackImage, mechanic == eGameplayMechanics.NotDamageModuls -> NotDamageModulsImage, mechanic == eGameplayMechanics.WithoutCrew -> WithoutCrewImage, mechanic == eGameplayMechanics.DoubleShot -> DoubleShotImage, mechanic == eGameplayMechanics.TripleShot -> TripleShotImage, mechanic == eGameplayMechanics.LTCamo -> LTCamoImage, mechanic == eGameplayMechanics.ATGM -> ATGMImage, \"\""]
+            - ["string", "iconPath", "when mechanic == eGameplayMechanics.ImprovedDetection -> ImprovedDetectionIcon, mechanic == eGameplayMechanics.MovableArmor -> MovableArmorIcon, mechanic == eGameplayMechanics.InternalTrack -> InternalTrackIcon, mechanic == eGameplayMechanics.DesertPower -> DesertPowerIcon, mechanic == eGameplayMechanics.ReserveAmmo -> ReserveAmmoIcon, mechanic == eGameplayMechanics.AlteredSpotDuration -> ReducedSpotDurationIcon, mechanic == eGameplayMechanics.ShotDispersionStabilizator -> ShotDispersionStabilizatorIcon, mechanic == eGameplayMechanics.DraculaTrack -> DraculaTrackIcon, mechanic == eGameplayMechanics.NotDamageModuls -> NotDamageModulsIcon, mechanic == eGameplayMechanics.WithoutCrew -> WithoutCrewIcon, mechanic == eGameplayMechanics.DoubleShot -> DoubleShotIcon, mechanic == eGameplayMechanics.TripleShot -> TripleShotIcon, mechanic == eGameplayMechanics.LTCamo -> LTCamoIcon, mechanic == eGameplayMechanics.ATGM -> ATGMIcon, \"\""]
+    children:
+    -   prototype: "OverlayBasic/OverlayBasic"
+        name: "OverlayBasic"
+        components:
+            UIDataParamsComponent:
+                args:
+                    "content": "OverlayContent"
+        children:
+        -   path: "Overlay/Content"
+            position: [0.000000, 80.000000]
+Slots:
+-   class: "UIControl"
+    name: "OverlayContent"
+    size: [960.000000, 576.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Common/TankMechanics/TankMechanicsOverlay.animation"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+            verticalMin: 576.000000
+    children:
+    -   class: "UIControl"
+        name: "Grid"
+        input: false
+        components:
+            Background:
+                sprite: "~res:/Gfx/Lobby/backgrounds/bg_grid"
+                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+            Anchor:
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                topAnchor: -80.000000
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+    -   class: "UIControl"
+        name: "MechanicImage"
+        input: false
+        components:
+            Background:
+                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+            Anchor:
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                topAnchor: -80.000000
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["Background.sprite", "imagePath"]
+    -   class: "UIControl"
+        name: "Fades"
+        position: [0.000000, 0.000000]
+        size: [720.000000, 432.000000]
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                vCenterAnchorEnabled: true
+                vCenterAnchor: -80.000000
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "FadeTop"
+            position: [28.000000, 8.000000]
+            input: false
+            classes: "grey-shark-90-bg"
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
+                    spriteModification: ["FLIP_VERTICAL"]
+                Anchor:
+                    leftAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    horizontalValue: 75.000000
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 50.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "FadeBottom"
+            position: [0.000000, 276.000000]
+            input: false
+            classes: "grey-shark-90-bg"
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
+                    spriteModification: []
+                Anchor:
+                    leftAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    horizontalValue: 75.000000
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 50.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Icon"
+        position: [24.000000, -16.000000]
+        input: false
+        components:
+            Background:
+                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+            UIOpacityComponent:
+                opacity: 0.500000
+            UIGradientComponent:
+                startColor: [0.960784, 0.960784, 0.960784, 0.698039]
+                finishColor: [0.960784, 0.960784, 0.960784, 0.000000]
+                orientation: "TopDown"
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 24.000000
+                topAnchorEnabled: true
+                topAnchor: -16.000000
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["Background.sprite", "iconPath"]
+    -   class: "UIControl"
+        name: "TextWrapper"
+        position: [110.000000, 136.000000]
+        size: [512.000000, 72.000000]
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "8"
+            UIOpacityComponent: {}
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 80.000000
+                topAnchorEnabled: true
+                topAnchor: 80.000000
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 32.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "Title"
+            input: false
+            classes: "t-content-h2 bold white-wild-sand-text"
+            components:
+                UITextComponent:
+                    multiline: "MULTILINE_ENABLED"
+                    align: ["LEFT", "TOP"]
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 500.000000
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "titleKey"]
+        -   class: "UIControl"
+            name: "Content"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 500.000000
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIChildComponent0:
+                    condition: "mechanic == eGameplayMechanics.DesertPower"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/TankMechanics/DesertPowerParamsTable.yaml"
+                    args:
+                        "tankParams": "tankParams"
+        -   prototype: "RichText/RichText"
+            name: "Description"
+            components:
+                Anchor:
+                    enabled: true
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "Ignore"
+                FlowLayout:
+                    useRtl: false
+                UIDataParamsComponent:
+                    args:
+                        "baseFontSize": "\"t-subtitle\""
+                        "baseFontStyle": "\"regular\""
+                        "baseFontColor": "\"white-wild-sand-50-text\""
+                        "key": "descriptionKey"
+                        "linkKey": "\"\""
+                        "resource1Model": "null"
+                        "resource2Model": "null"
+                        "resource3Model": "null"
+                        "resource4Model": "null"
+                        "customKeyProperty": "\"\""

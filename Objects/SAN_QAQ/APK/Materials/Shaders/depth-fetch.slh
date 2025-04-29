@@ -1,0 +1,6 @@
+try_enable
+{
+	retrieve_frag_depth
+}
+
+[auto][a] property float4x4 invProjMatrix;

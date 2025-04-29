@@ -1,0 +1,20 @@
+Material:
+    Layers: [ AfterOpaqueRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Default/skyobject-materials
+    UniqueDefines: [ MATERIAL_TEXTURE ]
+    ConsiderOnlyDefines: [ FLOWMAP, FORCE_2D_MODE, MATERIAL_TEXTURE, FLATCOLOR ]
+    RenderState:
+        depthTest: true
+        depthFunc: CMP_LEQUAL
+        cullMode: NONE
+    Passes:
+        ReflectionRefraction:
+            enabled: true
+        Forward:
+        DepthOnly:
+            enabled: false
+        ShadowMap:
+            enabled: false
+    Presets:
+        FlowMap:
+            UniqueDefines: [ FLOWMAP ]

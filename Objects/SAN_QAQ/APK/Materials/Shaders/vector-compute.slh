@@ -1,0 +1,3 @@
+float3 L = normalize(mul3Fast0(lightPosition0.xyz, invViewMatrix));
+float3 V = normalize(cameraPosition - input.worldPos);
+float3 H = normalize(L + V);

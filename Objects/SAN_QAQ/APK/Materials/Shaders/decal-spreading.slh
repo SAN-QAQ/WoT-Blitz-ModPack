@@ -1,0 +1,42 @@
+#ifndef PERLIN_NOISE_DEFINED
+	uniform sampler2D perlinNoise;
+
+	#define PERLIN_NOISE_DEFINED 1
+#endif
+
+[material][a] property float spreadingAxis = 1.0;
+[material][a] property float spreadingBorderSize = 0.5;
+[material][a] property float spreadingNoiseSize = 0.5;
+[material][a] property float spreadingProgress = 0.5;
+[material][a] property float spreadingStart = 0.5;
+[material][a] property float3 localBBoxMax = const1List3;
+[material][a] property float3 localBBoxMin = const0List3;
+[material][a] property float3 spreadingBorderColor = const1List3;
+
+float getSpreadNoise(float2 texCoord)
+{
+	const float noiseSample = tex2D(perlinNoise, texCoord).a;
+	const float borderSize = spreadingBorderSize * 0.5;
+
+	return smoothstep(noiseSample - borderSize, noiseSample + borderSize, spreadingBorderSize * spreadingProgress + (spreadingProgress - borderSize));
+}
+
+float getSpreadSpace(float3 localPos)
+{
+	int axis = int(spreadingAxis);
+	int componentU = intMod(axis + 1, 3);
+	int componentV = intMod(axis + 2, 3);
+
+	float3 localBBoxDelta = 1.0 / (localBBoxMax - localBBoxMin);
+	float3 relativePos = localPos * localBBoxDelta - localBBoxMin * localBBoxDelta;
+
+	float borderSize = spreadingBorderSize * localBBoxDelta[axis];
+	float noiseSize = spreadingNoiseSize * localBBoxDelta[axis];
+	float blendSize = borderSize + noiseSize;
+
+	float noiseSample = tex2D(perlinNoise, float2(spreadingProgress, spreadingProgress) * 2.0 + float2(localPos[componentU], localPos[componentV])).a + 0.5;
+	float result = abs(spreadingStart - relativePos[axis]) * (1.0 / max(spreadingStart, 1.0 - spreadingStart));
+	result = (-noiseSample * noiseSize + result) * (1.0 / (blendSize + 1.0)) + (blendSize * 0.5);
+
+	return smoothstep(-borderSize * 0.5 + result, borderSize * 0.5 + result, spreadingProgress);
+}

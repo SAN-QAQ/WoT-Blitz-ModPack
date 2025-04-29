@@ -1,0 +1,69 @@
+Header:
+    version: 127
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Blur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "BlurModified"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["string", "bgStyle", "\"null\"", "\"null\""]
+            - ["string", "roundCorner", "\"0\"", "\"0\""]
+            - ["float", "blurScale", "0.500000", "0.500000"]
+            - ["float", "blurOpacity", "1.000000", "1.000000"]
+            - ["float", "bgOpacity", "1.000000", "1.000000"]
+    children:
+    -   prototype: "Blur/Blur"
+        name: "Blur"
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            Background:
+                drawType: "DRAW_SCALE_TO_RECT"
+            UIOpacityComponent: {}
+            UIRoundedCornersComponent: {}
+            UIPostProcessTextureComponent0:
+                scale: {}
+                needDepth: true
+                renderRequestingType: "ALWAYS"
+            UIPostProcessTextureComponent1:
+                scale: {}
+                needDepth: true
+                renderRequestingType: "ALWAYS"
+            UIPostProcessTextureComponent2:
+                scale: {}
+                needDepth: true
+                renderRequestingType: "ALWAYS"
+            Update:
+                updateInvisible: true
+        bindings:
+        - ["UIOpacityComponent.opacity", "blurOpacity"]
+        - ["UIRoundedCornersComponent.radius", "roundCorner"]
+        - ["UIPostProcessTextureComponent0.scale", "blurScale"]
+        - ["UIPostProcessTextureComponent1.scale", "blurScale"]
+        - ["UIPostProcessTextureComponent2.scale", "blurScale"]
+    -   class: "UIControl"
+        name: "bgColor"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            Background: {}
+            UIOpacityComponent: {}
+            UIRoundedCornersComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["classes", "bgStyle"]
+        - ["UIOpacityComponent.opacity", "bgOpacity"]
+        - ["UIRoundedCornersComponent.radius", "roundCorner"]

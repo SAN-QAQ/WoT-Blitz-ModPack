@@ -1,0 +1,7 @@
+1
+FireButton_SAN_QAQ@2x.packed.webp
+200 200
+3
+0 0 152 152 25 25 0 frame0
+312 0 200 200 0 0 0 frame1
+0 352 160 160 20 20 0 frame2

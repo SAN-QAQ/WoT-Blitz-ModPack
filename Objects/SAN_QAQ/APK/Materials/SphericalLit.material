@@ -1,0 +1,83 @@
+Material:
+    Layers: [ OpaqueRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Default/spherical-lit-materials
+    UniqueDefines: [ MATERIAL_TEXTURE ]
+    IgnoreDefines: [ DEPTH_PREPASS_ENABLED ]
+    QualityDependentUniqueDefines:
+        ULTRA: [ SPHERICAL_HARMONICS_9 ]
+        HIGH: [ SPHERICAL_HARMONICS_9 ]
+        MEDIUM: [ SPHERICAL_HARMONICS_4 ]
+        LOW: []
+    RenderState:
+        depthTest: true
+        depthWrite: true
+        depthFunc: CMP_LESS
+        cullMode: FACE_BACK
+    Passes:
+        ReflectionRefraction:
+        Forward:
+        DepthOnly:
+            Shader: ~res:/Materials/Shaders/Depth/depth-prepass
+            ConsiderOnlyDefines: [ SOFT_SKINNING, HARD_SKINNING, WIND_ANIMATION, WAVE_ANIMATION ]
+        ShadowMap:
+            Shader: ~res:/Materials/Shaders/Depth/depth-prepass
+            ConsiderOnlyDefines: [ SOFT_SKINNING, HARD_SKINNING, WIND_ANIMATION, WAVE_ANIMATION ]
+    Presets:
+        VertexColor:
+            UniqueDefines: [ VERTEX_COLOR ]
+        AlphaTest:
+            Layers: [ AlphaTestRenderLayer ]
+            UniqueDefines: [ ALPHATEST ]
+            RenderState:
+                cullMode: NONE
+            Passes:
+                DepthOnly:
+                    enabled: false
+                ShadowMap:
+                    Shader: ~res:/Materials/Shaders/Depth/depth-alphatest
+                    ConsiderOnlyDefines: [ SOFT_SKINNING, HARD_SKINNING, WIND_ANIMATION, WAVE_ANIMATION, MATERIAL_TEXTURE, PBR_TEXTURE_SET, ALPHA_MASK, ALPHATEST, ALPHABLEND, ALPHATESTVALUE, VERTEX_COLOR, TEXTURE0_SHIFT_ENABLED, TEXTURE0_ANIMATION_SHIFT, PARTICLES_PERSPECTIVE_MAPPING, FORCE_2D_MODE, LOD_TRANSITION ]
+        AlphaBlend:
+            Layers: [ TransclucentRenderLayer ]
+            UniqueDefines: [ ALPHABLEND ]
+            RenderState:
+                blend: true
+                depthWrite: false
+                cullMode: NONE
+            Passes:
+                DepthOnly:
+                    enabled: false
+                ShadowMap:
+                    Shader: ~res:/Materials/Shaders/Depth/depth-alphatest
+                    ConsiderOnlyDefines: [ SOFT_SKINNING, HARD_SKINNING, WIND_ANIMATION, WAVE_ANIMATION, MATERIAL_TEXTURE, PBR_TEXTURE_SET, ALPHA_MASK, ALPHATEST, ALPHABLEND, ALPHATESTVALUE, VERTEX_COLOR, TEXTURE0_SHIFT_ENABLED, TEXTURE0_ANIMATION_SHIFT, PARTICLES_PERSPECTIVE_MAPPING, FORCE_2D_MODE, LOD_TRANSITION ]
+                    RenderState:
+                        blend: false
+                        depthWrite: true
+        SimpleColor:
+            Shader: ~res:/Materials/Shaders/Default/simple-color
+        LodTransition:
+            UniqueDefines: [ LOD_TRANSITION ]
+            Variations:
+                Opaque:
+                    Condition: "!AlphaBlend && !AlphaTest"
+                    Layers: [ AlphaTestRenderLayer ]
+                    UniqueDefines: [ ALPHATEST ]
+                    RenderState:
+                        cullMode: NONE
+                    Passes:
+                        DepthOnly:
+                            enabled: false
+                        ShadowMap:
+                            Shader: ~res:/Materials/Shaders/Depth/depth-alphatest
+                            ConsiderOnlyDefines: [ SOFT_SKINNING, HARD_SKINNING, WIND_ANIMATION, WAVE_ANIMATION, MATERIAL_TEXTURE, PBR_TEXTURE_SET, ALPHA_MASK, ALPHATEST, ALPHABLEND, ALPHATESTVALUE, VERTEX_COLOR, TEXTURE0_SHIFT_ENABLED, TEXTURE0_ANIMATION_SHIFT, PARTICLES_PERSPECTIVE_MAPPING, FORCE_2D_MODE, LOD_TRANSITION ]
+        DisableShadow:
+            Passes:
+                ShadowMap:
+                    enabled: false
+        DisableShadowRuntimeOnly:
+            Passes:
+                ShadowMap:
+                    enabled: false
+        DisableShadowTransition:
+            Passes:
+                ShadowMap:
+                    IgnoreDefines: [ LOD_TRANSITION ]

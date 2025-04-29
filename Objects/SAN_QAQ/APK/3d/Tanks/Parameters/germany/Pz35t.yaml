@@ -1,0 +1,109 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/germany-Pz35t"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/germany-Pz35t"
+    blitzModelPath: "Tanks/German/Pz35t.sc2"
+    collisionMesh: "CollisionMeshes/germany-Pz35t.sc2"
+    smokeEffectPath: "FX/Exhausts/hullback.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/lt"
+    engineSoundNPC: "tanks/npc/engine/de/lt"
+    chassisSoundPC: "tanks/pc/treads/lt"
+    chassisSoundNPC: "tanks/npc/treads/lt"
+textureTransform: {}
+gunRecoil:
+    gun_02:
+        enabled: true
+        durationForward: 0.450000
+        durationBackward: 0.050000
+        distance: 0.247826
+    gun_04:
+        enabled: true
+        durationForward: 0.404493
+        durationBackward: 0.050000
+        distance: 0.152173
+maskSlice:
+    gun_02:
+        enabled: true
+        planePosition: [0.000600, 0.373330, -0.059804]
+        planeNormal: [0.000000, 1.000000, -0.142858]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.050761
+        frustumConeAngleDegrees: 1.633627
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_04:
+        enabled: true
+        planePosition: [0.000600, 0.373330, -0.000712]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 2.800000
+hitMarks:
+    gun_02:
+        placementRestrictedZoneLength: 0.5
+    gun_04:
+        placementRestrictedZoneLength: 0.2
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAACnwVj1YJ4M9AAAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AQAAACnwVj1YJ4M9AAAAACnwVj1YJ4M9AAAAACnwVj1YJ4M9AAAAACnwVj1YJ4M9AAAAACnwVj1YJ4M9AAAAACnwVj1YJ4M9\f"
+    leftTrackChain: "hnHNv9JCibsBAAAATE/Gv3pMibsBAAAAeJ+Rv8+TibsBAAAAdAwqv9rlibsBAAAARLyCvrcsirsBAAAAHMaEPuiFirsBAAAAtMIrPzzNirsBAAAAlnqSP0cfi7sBAAAAwNHGPyRmi7sBAAAA9dbOPwBxi7sBAAAAeMHfP9ZlUD0AAAAA/KvwP+Yc2T0AAAAAAmUDQBLONz4BAAAA4IEHQHZ3cD4BAAAA1w0NQKa7sz4AAAAAmxAZQPlPFT8BAAAAnfMcQKEwMj8BAAAANE0eQAYBUD8BAAAA0vscQOiYaz8BAAAAWwYZQFWjgT8BAAAA2CgTQEWAiT8BAAAAhe0LQA3iiz8BAAAA7q0GQGu0iz8BAAAADD/zP4/9iT8AAAAADvHgP1ELiT8AAAAADqPOPxIZiD8AAAAAEFW8P9Mmhz8AAAAA0dGrP0YohD8BAAAAyAKkP6T6gz8BAAAAE2uFPxdQhD8AAAAAKDpmP9hdgz8AAAAAKp5BP5lrgj8AAAAALAIdP1p5gT8AAAAA34z7PnFsez8BAAAA5lbdPjyUez8BAAAA0Lg8PjxFfT8AAAAAQCMpPb9gez8AAAAAQE7QvUF8eT8AAAAAEJd6vsSXdz8AAAAAiIPGvkazdT8AAAAAHBccvyMzbz8BAAAAifAqv9/Xbj8BAAAAvBVRv80FcD8AAAAAvLF1v1Ahbj8AAAAA3CaNv9I8bD8AAAAAF6q9v1gEZz8BAAAAtD7Fv21qZj8BAAAAMWnSv6APXz8AAAAAIVDkv8ExVz8AAAAAEjf2v+NTTz8AAAAAAQ8EwAR2Rz8BAAAAOUMNwD1fPz8BAAAAG6ETwDieLj8BAAAA+u4XwIm9FD8BAAAAsW8ZwHNr7T4BAAAAx/IXwAG9sD4BAAAA36UTwBK/ej4BAAAA+10NwD+eNz4BAAAAPxoKwC1wID4AAAAA7Kj3vzuxxD0AAAAAaB/mvzTXXj0AAAAA\f"
+    rightTrackChain: "hnHNv9JCibsBAAAATE/Gv3pMibsBAAAAeJ+Rv8+TibsBAAAAdAwqv9rlibsBAAAARLyCvrcsirsBAAAAHMaEPuiFirsBAAAAtMIrPzzNirsBAAAAlnqSP0cfi7sBAAAAwNHGPyRmi7sBAAAA9dbOPwBxi7sBAAAAeMHfP9ZlUD0AAAAA/KvwP+Yc2T0AAAAAAmUDQBLONz4BAAAA4IEHQHZ3cD4BAAAA1w0NQKa7sz4AAAAAmxAZQPlPFT8BAAAAnfMcQKEwMj8BAAAANE0eQAYBUD8BAAAA0vscQOiYaz8BAAAAWwYZQFWjgT8BAAAA2CgTQEWAiT8BAAAAhe0LQA3iiz8BAAAA7q0GQGu0iz8BAAAADD/zP4/9iT8AAAAADvHgP1ELiT8AAAAADqPOPxIZiD8AAAAAEFW8P9Mmhz8AAAAA0dGrP0YohD8BAAAAyAKkP6T6gz8BAAAAE2uFPxdQhD8AAAAAKDpmP9hdgz8AAAAAKp5BP5lrgj8AAAAALAIdP1p5gT8AAAAA34z7PnFsez8BAAAA5lbdPjyUez8BAAAA0Lg8PjxFfT8AAAAAQCMpPb9gez8AAAAAQE7QvUF8eT8AAAAAEJd6vsSXdz8AAAAAiIPGvkazdT8AAAAAHBccvyMzbz8BAAAAifAqv9/Xbj8BAAAAvBVRv80FcD8AAAAAvLF1v1Ahbj8AAAAA3CaNv9I8bD8AAAAAF6q9v1gEZz8BAAAAtD7Fv21qZj8BAAAAMWnSv6APXz8AAAAAIVDkv8ExVz8AAAAAEjf2v+NTTz8AAAAAAQ8EwAR2Rz8BAAAAOUMNwD1fPz8BAAAAG6ETwDieLj8BAAAA+u4XwIm9FD8BAAAAsW8ZwHNr7T4BAAAAx/IXwAG9sD4BAAAA36UTwBK/ej4BAAAA+10NwD+eNz4BAAAAPxoKwC1wID4AAAAA7Kj3vzuxxD0AAAAAaB/mvzTXXj0AAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: false
+        upperMin: 0.065843
+        upperFactor: 0.196506
+        frontFactor: 0.158119
+        backFactor: 0.199152
+        lengthPower: 0.500000
+        speed: 1.000000
+    trackLayingInfo:
+        bendingFactor: 1.000000
+        lengthPower: 1.400000
+        pointCountPower: 0.600000
+        pressurePower: 0.600000
+        primaryPower: 1.000000
+chassis:
+    textureScale: -1.320000
+detachedTurret:
+    cylinderPos: [0.000000, 0.000000, 0.845000]
+    cylinderXYScale: 0.655000
+    turret_01:
+        shouldClipGun: false
+        clippingPlaneZPos: 1.457000
+        textureScaleFactor: 0.700000
+mechanics: [{name: "LTCamo"}]
+collision:
+    hull:
+        points: [0.000712, -0.003399, -0.900093]
+        bbox: 
+            min: [-0.745016, -2.197689, -0.547371]
+            max: [0.745016, 2.289730, 0.608594]
+        averageThickness: 
+            turret_01: 45.662983
+    chassis:
+        points: [-0.000126, -0.000251, 0.005033]
+        bbox: 
+            min: [-0.987423, -2.374195, -0.004255]
+            max: [0.989530, 2.473464, 1.092837]
+    turret_01:
+        points: [-0.000000, -0.350357, -1.453880]
+        bbox: 
+            min: [-0.669057, -0.915368, -0.280026]
+            max: [0.669057, 0.762068, 0.840003]
+    gun_02:
+        points: [0.000600, -0.893494, -1.758003]
+        bbox: 
+            min: [-0.109332, -0.304612, -0.208373]
+            max: [0.111492, 1.126086, 0.181563]
+    gun_04:
+        points: [0.000600, -0.893493, -1.758003]
+        bbox: 
+            min: [-0.109332, -0.304912, -0.209217]
+            max: [0.111492, 1.331825, 0.181563]

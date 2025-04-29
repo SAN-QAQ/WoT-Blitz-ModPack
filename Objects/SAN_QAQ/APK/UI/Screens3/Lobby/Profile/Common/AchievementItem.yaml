@@ -1,0 +1,280 @@
+Header:
+    version: 144
+Prototypes:
+-   class: "UIControl"
+    name: "AchievementItem"
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Profile/Common/RibbonAndMedals.animation"
+        UIOpacityComponent: {}
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "PercentOfMaxChild"
+        UIInputEventComponent:
+            onTouchUpInside: "ON_PRESSED"
+            onTouchUpInsideData: "achievement.name"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "hideCounter", "false", "false"]
+            - ["bool", "showBarForZeroProgress", "false", "false"]
+            - ["bool", "hideName", "false", "false"]
+            - ["int", "animationIndex", "0", "0"]
+            - ["float", "animationTime", "0.000000", "1.000000"]
+            - ["bool", "isAnimatedFirstShow", "false", "false"]
+            - ["bool", "isBattleResults", "false", "false"]
+            - ["bool", "visible", "true", "true"]
+            - ["bool", "showDescription", "true", "true"]
+            - ["bool", "singleAchievementMode", "false", "false"]
+            - ["AchievementViewModel", "achievement", "null", "{ \"maxProgress\" = 100000; \"currentProgress\" = 11657; }"]
+            - ["bool", "disableInput", "false", "false"]
+            - ["int", "indexInScrollableContainer", "0", "0"]
+            events:
+            - "ON_PRESSED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "hSize", "when isAnimatedFirstShow -> 0, when showDescription -> 144, 88"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["string", "achievementStyle", "\"achievement-item button-open-sound \" + (when isBattleResults -> \"battle-results\", \"default\")"]
+            - ["bool", "showCounter", "not hideCounter and (when singleAchievementMode -> achievement.isSeries and achievement.value > 1, when achievement.isSeries and achievement.rank == 0 -> false, (achievement.isSeries or not achievement.isBoolean and not achievement.isStep) and achievement.value > 0)"]
+            - ["bool", "showProgress", "(showBarForZeroProgress or (achievement.isStep and (achievement.currentProgress > 0 or achievement.rank > 1 or showBarForZeroProgress))) and achievement.maxProgress > 0"]
+            - ["int", "value", "achievement.value"]
+            - ["bool", "disabled", "(value == 0 or (achievement.isSeries and achievement.rank == 0)) and not singleAchievementMode"]
+            - ["string", "iconMaterial", "when disabled -> \"hue,0;saturation,0;value,0\", \"hue,0;saturation,1;value,0\""]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Profile/Common/AchievementItem.actions"
+        Sound: {}
+        UIIdentifierComponent:
+            id: "medal"
+            params:
+            - ["int", "count", "achievement.value"]
+            - ["bool", "serial", "achievement.isSeries"]
+            - ["string", "name", "achievement.name"]
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Lobby/Profile/Common/AchievementItem.style.yaml;~res:/UI/Screens3/ButtonSound.style.yaml"
+    bindings:
+    - ["visible", "visible"]
+    - ["input", "not disableInput"]
+    - ["classes", "achievementStyle"]
+    - ["SizePolicy.horizontalValue", "hSize"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        position: [44.000000, 44.000000]
+        pivot: [0.500000, 0.500000]
+        input: false
+        classes: "content-area"
+        components:
+            UIOpacityComponent: {}
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 8.000000
+            SizePolicy:
+                verticalPolicy: "PercentOfChildrenSum"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Lobby/Profile/Common/AchievementItem.style.yaml"
+        children:
+        -   class: "UIControl"
+            name: "Hover"
+            input: false
+            classes: "hover white-wild-sand-10-bg"
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_r1"
+                    leftRightStretchCap: 1.000000
+                    topBottomStretchCap: 1.000000
+                UIOpacityComponent: {}
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Lobby/Profile/Common/AchievementItem.style.yaml"
+        -   class: "UIControl"
+            name: "IconWrapper"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+            children:
+            -   class: "UIControl"
+                name: "Icon"
+                input: false
+                classes: "battle-results-hover"
+                components:
+                    UITextureComponent:
+                        materialPath: "~res:/Materials.custom/2d.Textured.Saturation.material"
+                        drawType: "DRAW_SCALE_TO_RECT"
+                    Anchor:
+                        topAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 88.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 88.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Lobby/Profile/Common/AchievementItem.style.yaml"
+                bindings:
+                - ["UITextureComponent.spritePath", "achievement.iconPath"]
+                - ["UITextureComponent.materialParams", "iconMaterial"]
+            -   class: "UIControl"
+                name: "Counter"
+                input: false
+                components:
+                    Anchor:
+                        rightAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "lastChild + 8"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 20.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["visible", "showCounter"]
+                children:
+                -   class: "UIControl"
+                    name: "Bg"
+                    input: false
+                    components:
+                        Background: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["classes", "when achievement.isSeries -> \"red-tamarillo-bg\", \"gray-cape-cod-bg\""]
+                -   class: "UIControl"
+                    name: "Text"
+                    input: false
+                    classes: "t-overline bold color=white-wild-sand-text not-localize"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str(value)"]
+        -   class: "UIControl"
+            name: "Description"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfChildrenSum"
+            bindings:
+            - ["visible", "not empty(achievement.title) and showDescription"]
+            children:
+            -   class: "UIControl"
+                name: "Name"
+                input: false
+                classes: "t-body regular color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        multiline: "MULTILINE_ENABLED"
+                        fitting: "FITTING_REDUCE"
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "parent - 8"
+                        verticalPolicy: "PercentOfContent"
+                        verticalMax: 80.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                bindings:
+                - ["visible", "not hideName"]
+                - ["UITextComponent.text", "achievement.title"]
+            -   class: "UIControl"
+                name: "Spacer"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 16.000000
+                bindings:
+                - ["visible", "not hideName"]
+            -   class: "UIControl"
+                name: "Progress"
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                bindings:
+                - ["visible", "showProgress"]
+                children:
+                -   class: "UIControl"
+                    name: "ProgressBarHolder"
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 72.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 4.000000
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Common/ProgressBar.yaml"
+                            args:
+                                "minimum": "0"
+                                "maximum": "achievement.maxProgress"
+                                "value": "achievement.currentProgress"
+                    bindings:
+                    - ["visible", "showProgress"]
+                -   class: "UIControl"
+                    name: "Spacer"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 4.000000
+                -   class: "UIControl"
+                    name: "Value"
+                    input: false
+                    classes: "t-caption regular color=white-wild-sand-50-text"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(achievement.currentProgress) + \" / \" + str1000Separated(achievement.maxProgress)"]
+                -   class: "UIControl"
+                    name: "Spacer_1"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 8.000000

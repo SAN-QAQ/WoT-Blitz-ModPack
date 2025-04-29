@@ -1,0 +1,10 @@
+Material:
+    Shader: ~res:/Materials/Shaders/2d/composit
+    RenderState:
+        blend: true
+        depthFunc: CMP_LESS
+    Passes:
+        2d:
+    Presets:
+        Clamp:
+            UniqueDefines: [ CLAMP ]

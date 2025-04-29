@@ -1,0 +1,41 @@
+Material:
+    Layers: [ OpaqueRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Default/simple-color
+    ConsiderOnlyDefines: [ SOFT_SKINNING, HARD_SKINNING, WIND_ANIMATION, WAVE_ANIMATION, VERTEX_FOG, FORCE_2D_MODE, ALPHABLEND, BLENDING, SIMPLE_COLOR_RECEIVED_SHADOW_ONLY, USE_SHADOW_MAP, SHADOW_CASCADES_COUNT, SHADOW_CASCADES_BLEND, SHADOW_PCF, FLATCOLOR, INSTANCED_CHAIN, VERTEX_DISPLACEMENT ]
+    RenderState:
+        depthTest: true
+        depthWrite: true
+        depthFunc: CMP_LESS
+        cullMode: FACE_BACK
+    Passes:
+        ReflectionRefraction:
+        Forward:
+        DepthOnly:
+            Shader: ~res:/Materials/Shaders/Depth/depth-prepass
+        ShadowMap:
+            Shader: ~res:/Materials/Shaders/Depth/depth-prepass
+    Presets:
+        AlphaBlend:
+            Layers: [ TransclucentRenderLayer ]
+            UniqueDefines: [ ALPHABLEND ]
+            RenderState:
+                blend: true
+                depthWrite: false
+            Passes:
+                DepthOnly:
+                    enabled: false
+                ShadowMap:
+                    Shader: ~res:/Materials/Shaders/Depth/depth-alphatest
+                    RenderState:
+                        blend: false
+                        depthWrite: true
+        ReceivedShadowOnly:
+            Layers: [ TransclucentRenderLayer ]
+            UniqueDefines: [ ALPHABLEND, SIMPLE_COLOR_RECEIVED_SHADOW_ONLY ]
+            RenderState:
+                blend: true
+            Passes:
+                DepthOnly:
+                    enabled: false
+                ShadowMap:
+                    enabled: false

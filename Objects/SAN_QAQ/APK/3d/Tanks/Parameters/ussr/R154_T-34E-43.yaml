@@ -1,0 +1,127 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/ussr-R154_T-34E-43"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/ussr-R154_T-34E-43"
+    blitzModelPath: "Tanks/USSR/R154_T-34E-43.sc2"
+    collisionMesh: "CollisionMeshes/ussr-R154_T-34E-43.sc2"
+    smokeEffectPath: "FX/Exhausts/cent.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/ussr/mt"
+    engineSoundNPC: "tanks/npc/engine/ussr/mt"
+    chassisSoundPC: "tanks/pc/treads/mt"
+    chassisSoundNPC: "tanks/npc/treads/mt"
+textureTransform:
+    gun_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.280000, 1.280000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    gun_01_mask:
+        shear: [0.000000, 0.000000]
+        scale: [1.280000, 1.280000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    hull:
+        shear: [0.000000, 0.000000]
+        scale: [1.280000, 1.280000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    turret_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.280000, 1.280000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+gunRecoil:
+    gun_01:
+        enabled: true
+        durationForward: 0.900000
+        durationBackward: 0.050000
+        distance: 0.400000
+maskSlice:
+    gun_01:
+        enabled: false
+        planePosition: [-0.008294, 1.156416, 0.049840]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 3.000000
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 0.851673
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAAAAAAAAAAAAAAQAAAHDbhz0GCug9AQAAAHDbhz0GCug9AQAAAHDbhz0GCug9AQAAAHDbhz0GCug9AQAAAHDbhz0GCug9AAAAAHDbhz0GCug9\f"
+    leftTrackChains:
+        00: "Ak/vv9Ecg7oBAAAAmh+Av3saL7QBAAAAaOsFvlAGt7IBAAAAKgpmP/IxHTQBAAAAHYPrPwAgoDQBAAAAh9n9P+hi5TsBAAAALYEEQMB4gj0AAAAA96QMQKt4Aj4AAAAAwMgUQPa0Qz4AAAAAiuwcQKF4gj4AAAAAVBAlQMcWoz4AAAAA8lguQFlKyD4BAAAA6jo1QI7jCz8BAAAA/uU0QDL3OD8BAAAAJeYtQNxSXj8BAAAAGwcjQCp9bD8BAAAAl+wZQGvFbD8BAAAAFNIQQKsNbT8AAAAAkLcHQOxVbT8AAAAAGDr9Py2ebT8BAAAAEQXrP23mbT8BAAAACtDYP64ubj8BAAAAApvGP+92bj8AAAAA+2W0Py+/bj8AAAAA9DCiP3AHbz8AAAAA7PuPP7FPbz8AAAAAyo17P/GXbz8BAAAAvCNXPzLgbz8BAAAArLkyP3MocD8AAAAAnk8OP7NwcD8AAAAAIMvTPvS4cD8AAAAAAPeKPjUBcT8AAAAAwEUEPnVJcT8AAAAAACdWvLaRcT8BAAAAsAofvvfZcT8BAAAAeFmYvjcicj8AAAAAkC3hvnhqcj8AAAAA2AAVv7mycj8AAAAA6Go5v/n6cj8AAAAA9NRdvzpDcz8AAAAAgh+Bv3uLcz8BAAAAilSTv7vTcz8AAAAAkomlv/wbdD8AAAAAmL63vz1kdD8AAAAAnvPJv32sdD8AAAAApijcv770dD8AAAAArl3uv/88dT8BAAAAW0kAwD+FdT8AAAAA32MJwIDNdT8AAAAAY34SwMEVdj8AAAAA55gbwAFedj8BAAAAbgkpwKzIdj8BAAAAwfQzwOMEbT8BAAAA7Ms8wNrOSD8BAAAAdKc/wMmRGz8BAAAA/XI8wDWF2j4BAAAAWIQ0wIElmj4BAAAA49wrwO2Jgz4AAAAAbjUjwLHcWT4AAAAA+Y0awIilLD4AAAAAhOYRwMDc/j0AAAAAEj8BwHhNrTsBAAAA\f"
+    rightTrackChains:
+        00: "Ak/vv9Ecg7oBAAAAmh+Av3saL7QBAAAAaOsFvlAGt7IBAAAAKgpmP/IxHTQBAAAAHYPrPwAgoDQBAAAAh9n9P+hi5TsBAAAALYEEQMB4gj0AAAAA96QMQKt4Aj4AAAAAwMgUQPa0Qz4AAAAAiuwcQKF4gj4AAAAAVBAlQMcWoz4AAAAA8lguQFlKyD4BAAAA6jo1QI7jCz8BAAAA/uU0QDL3OD8BAAAAJeYtQNxSXj8BAAAAGwcjQCp9bD8BAAAAl+wZQGvFbD8BAAAAFNIQQKsNbT8AAAAAkLcHQOxVbT8AAAAAGDr9Py2ebT8BAAAAEQXrP23mbT8BAAAACtDYP64ubj8BAAAAApvGP+92bj8AAAAA+2W0Py+/bj8AAAAA9DCiP3AHbz8AAAAA7PuPP7FPbz8AAAAAyo17P/GXbz8BAAAAvCNXPzLgbz8BAAAArLkyP3MocD8AAAAAnk8OP7NwcD8AAAAAIMvTPvS4cD8AAAAAAPeKPjUBcT8AAAAAwEUEPnVJcT8AAAAAACdWvLaRcT8BAAAAsAofvvfZcT8BAAAAeFmYvjcicj8AAAAAkC3hvnhqcj8AAAAA2AAVv7mycj8AAAAA6Go5v/n6cj8AAAAA9NRdvzpDcz8AAAAAgh+Bv3uLcz8BAAAAilSTv7vTcz8AAAAAkomlv/wbdD8AAAAAmL63vz1kdD8AAAAAnvPJv32sdD8AAAAApijcv770dD8AAAAArl3uv/88dT8BAAAAW0kAwD+FdT8AAAAA32MJwIDNdT8AAAAAY34SwMEVdj8AAAAA55gbwAFedj8BAAAAbgkpwKzIdj8BAAAAwfQzwOMEbT8BAAAA7Ms8wNrOSD8BAAAAdKc/wMmRGz8BAAAA/XI8wDWF2j4BAAAAWIQ0wIElmj4BAAAA49wrwO2Jgz4AAAAAbjUjwLHcWT4AAAAA+Y0awIilLD4AAAAAhOYRwMDc/j0AAAAAEj8BwHhNrTsBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: false
+        upperMin: 0.045267
+        upperFactor: 0.056768
+        frontFactor: 0.414529
+        backFactor: 0.305084
+        lengthPower: 0.486486
+        speed: 1.003717
+    trackLayingInfo:
+        bendingFactor: 0.744000
+        lengthPower: 0.920000
+        pointCountPower: 0.918000
+        pressurePower: 0.260000
+        primaryPower: 0.670000
+shadowDecal:
+    texturePath: "~res:/3d/Tanks/Common/DecalShadow/Decal_Shadow.tex"
+    scale: [3.649077, 6.444667, 1.600000]
+    offset: [0.000000, 0.022300, 0.385740]
+    blendingType: "Alphablend"
+    fogBehaviour: "Inherited"
+chassis:
+    textureScale:  0.742000 
+detachedTurret:
+    cylinderPos: [0.000000, 0.000000, -0.063383]
+    cylinderXYScale: 0.880280
+    turret_01:
+        shouldClipGun: false
+        clippingPlaneZPos: 1.548055
+        textureScaleFactor: 0.570420
+armorScale:
+    hull:
+        pushNormalsScale: true
+        armorScale: [0.0268, 0.0282, 0.0254]
+    turret_01:
+        pushNormalsScale: true
+        armorScale: [0.0282, 0.0282, 0.0211]
+    gun_01:
+        pushNormalsScale: true
+        armorScale: [0.0169, 0.0394, 0.0169]
+collision:
+    hull:
+        points: [0.000767, 0.000513, 0.002000]
+        bbox: 
+            min: [-1.537932, -2.935303, 0.310953]
+            max: [1.537924, 2.795417, 1.663660]
+        averageThickness: 
+            turret_01: 74.158752
+    chassis:
+        points: [0.000000, 0.000000, 0.000000]
+        bbox: 
+            min: [-1.459631, -2.994596, -0.000000]
+            max: [1.459631, 2.831721, 0.964000]
+    turret_01:
+        points: [0.000025, -0.519471, -1.546520]
+        bbox: 
+            min: [-1.025204, -1.405810, -0.397091]
+            max: [1.024021, 1.321655, 0.846907]
+    gun_01:
+        points: [0.000000, -1.186654, -1.901472]
+        bbox: 
+            min: [-0.265966, -0.138458, -0.288644]
+            max: [0.279753, 2.300332, 0.290747]

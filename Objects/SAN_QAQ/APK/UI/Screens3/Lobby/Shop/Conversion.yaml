@@ -1,0 +1,282 @@
+Header:
+    version: 141
+Prototypes:
+-   class: "UIControl"
+    name: "Conversion"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        ModalInput: {}
+        UIVirtualActionEventComponent0:
+            virtualKeyAction: "Escape"
+            keyUpEvent: "BACK_ACTION"
+        UIVirtualActionEventComponent1:
+            virtualKeyAction: "Extra1"
+            keyUpEvent: "ON_INFO_ACTION"
+        UIVirtualActionEventComponent2:
+            virtualKeyAction: "Extra2"
+            keyUpEvent: "ON_BUY_ACTION"
+        UIShortcutEventComponent:
+            shortcuts: "BACK_ACTION,Escape;BACK_ACTION,Back"
+        UIDataParamsComponent:
+            params:
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["ConversionViewModel", "model", "null", "{ }"]
+            events:
+            - "GO_TO_SHOP"
+            - "ON_CHINA_WARNING_SHOW"
+            - "ON_SELECT_TAB(eConversionTab tab)"
+            - "SHOP_BUTTON(eRequiredResource resource)"
+            - "PREMIUM_INFO_EVENT"
+            - "BACK_EVENT"
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "tabSprite", "\"~res:/Gfx/UI/SettingsScreen/over_button_tab_bar\""]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Shop/Conversion.actions"
+    children:
+    -   class: "UIControl"
+        name: "ContentWrapper"
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "BaseHeader"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Headers/BaseHeader.yaml"
+                    args:
+                        "isBackButtonHasSounds": "false"
+                        "session": "session"
+                        "bgStyle": "\"\""
+                        "lobby": "lobby"
+                        "leftContent": "ShopHeader"
+                        "showBackButton": "true"
+                        "isFullScreen": "true"
+                        "showShopButton": "false"
+                    eventActions:
+                    - ["PREMIUM_INFO_EVENT", "PREMIUM_INFO_EVENT", ""]
+                    - ["SHOP_BUTTON", "SHOP_BUTTON", "_event.requiredResource"]
+                    - ["BACK_EVENT", "BACK_EVENT", ""]
+        -   class: "UIControl"
+            name: "ConversionTabs"
+            input: false
+            classes: "tab-pane-bg"
+            components:
+                Background: {}
+                LinearLayout:
+                    padding: "4"
+                    safeAreaPaddingInset: true
+                    spacing: 2.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 74.000000
+                UISwitchBarComponent:
+                    onSelectElement: "ON_SELECT_TAB"
+                    onSelectElementData: "_selectedElement"
+                    onValueChanged: "TAB_SELECT"
+                    onValueChangedData: "_selectedElement"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Background.style.yaml"
+            bindings:
+            - ["UISwitchBarComponent.selectedElement", "model.tab"]
+            children:
+            -   class: "UIControl"
+                name: "CreditsConversion"
+                input: true
+                classes: "button-choose-sound"
+                components:
+                    UITextureComponent:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        leftRightStretchCap: 5.000000
+                        topBottomStretchCap: 5.000000
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 66.000000
+                    UISwitchBarElementComponent: {}
+                    Sound: {}
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/ButtonSound.style.yaml"
+                bindings:
+                - ["UITextureComponent.spritePath", "when model.tab == eConversionTab.Credits -> tabSprite, \"\""]
+                - ["UISwitchBarElementComponent.id", "eConversionTab.Credits"]
+                children:
+                -   class: "UIControl"
+                    name: "Text"
+                    input: false
+                    classes: "t-subtitle bold"
+                    components:
+                        UITextComponent:
+                            color: [0.619608, 0.721569, 0.800000, 1.000000]
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                            align: ["HCENTER", "VCENTER"]
+                        Anchor:
+                            leftAnchorEnabled: true
+                            rightAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"shop/GoldConversion\")"]
+            -   class: "UIControl"
+                name: "XpConversion"
+                input: true
+                classes: "button-choose-sound"
+                components:
+                    UITextureComponent:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        leftRightStretchCap: 5.000000
+                        topBottomStretchCap: 5.000000
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 66.000000
+                    UISwitchBarElementComponent: {}
+                    Sound: {}
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/ButtonSound.style.yaml"
+                bindings:
+                - ["UITextureComponent.spritePath", "when model.tab == eConversionTab.FreeXp -> tabSprite, \"\""]
+                - ["UISwitchBarElementComponent.id", "eConversionTab.FreeXp"]
+                children:
+                -   class: "UIControl"
+                    name: "Text"
+                    input: false
+                    classes: "t-subtitle bold"
+                    components:
+                        UITextComponent:
+                            color: [0.619608, 0.721569, 0.800000, 1.000000]
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                            align: ["HCENTER", "VCENTER"]
+                        Anchor:
+                            leftAnchorEnabled: true
+                            rightAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "localize(\"shop/XpTransfer\")"]
+        -   class: "UIControl"
+            name: "Content"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "NavigationPanel"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "isGamepad"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/NavigationPanel.yaml"
+                args:
+                    "content": "NavigationPanel"
+Slots:
+-   class: "UIControl"
+    name: "ShopHeader"
+    size: [630.000000, 20.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "ShopName"
+        input: false
+        classes: "t-subtitle regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 16.000000
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "localize(\"Shop/Title\")"]
+    -   class: "UIControl"
+        name: "NeteaseWarning"
+        input: true
+        classes: "t-caption regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            UIAttachLayoutMasterComponent:
+                attachId: "CHINA_SHOP_WARNING_ID"
+            UIInputEventComponent:
+                onTouchUpInside: "ON_CHINA_WARNING_SHOW"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "app.netease.neteaseAvailable"]
+        - ["UITextComponent.text", "localize(\"ChinaShopWarning/Header\")"]
+-   class: "UIControl"
+    name: "NavigationPanel"
+    input: false
+    components:
+        LinearLayout:
+            spacing: 24.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "Back"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Lobby/Back\""
+                    "icon": "eNintendoSwitchControls.B"

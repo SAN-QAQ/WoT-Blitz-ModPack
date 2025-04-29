@@ -1,0 +1,523 @@
+Header:
+    version: 151
+Prototypes:
+-   class: "UIControl"
+    name: "ClanSummaryTab"
+    size: [800.000000, 800.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Clan/Profile/ClanSummaryTab.animation"
+        UIOpacityComponent: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["ClanProfileViewModel", "model", "null", "{ }"]
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "leaderboardFarPosition", "-3000.000000"]
+            - ["float", "leaderboardLeftPosition", "0.000000"]
+            - ["float", "leaderboardRightPosition", "0.000000"]
+            - ["int", "leaderboardLeftIndex", "0"]
+            - ["int", "leaderboardRightIndex", "0"]
+            - ["float", "paginatorProgress", "1.000000"]
+            - ["float", "slideShowTime", "4.000000"]
+            - ["float", "startPaginatorProgress", "1.000000"]
+            - ["int", "pageCount", "3"]
+            - ["bool", "swipeStarted", "false"]
+            - ["float", "lastPaginatorProgress", "paginatorProgress"]
+            - ["bool", "isAnimationStopped", "false"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["Clan", "clan", "model.clanInfo.clan"]
+            - ["int", "membersCount", "when not isNull(clan) -> clan.membersInfo.count, 0"]
+            - ["float", "winRate", "when not isNull(clan) -> clan.membersInfo.avgWinRate * 100.000000, 0.000000"]
+            - ["int", "nextTab", "when int(model.selectedLeaderboard) < (pageCount - 1) -> int(model.selectedLeaderboard) + 1, 0"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Clan/Profile/ClanSummaryTab.actions"
+        UIDataOnEventComponent0:
+            eventName: "GO_TO_NEXT"
+            modelFieldExpression: "model.selectedLeaderboard"
+            dataExpression: "toEnum(nextTab, eClanProfileLeaderboard)"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "model.selectedLeaderboard"
+            eventName: "START_SLIDE_SHOW"
+            eventData: "startPaginatorProgress"
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+                vCenterAnchor: -20.000000
+            LinearLayout:
+                orientation: "TopDown"
+                dynamicPadding: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 80.000000
+                horizontalMin: 800.000000
+                horizontalMax: 1080.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Spacer_0"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                    verticalMin: 20.000000
+                    verticalMax: 40.000000
+        -   class: "UIControl"
+            name: "Statistic"
+            pivot: [0.500000, 1.000000]
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    needDepth: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "8"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 52.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 184.000000
+                ScalePolicy:
+                    horizontalFormula: "when parentSize.X >= 1832 -> 1.34, when parentSize.X >= 1352 -> 1.30, when parentSize.X >= 936 -> 1.20, 1"
+                    verticalFormula: "when parentSize.X >= 1832 -> 1.34, when parentSize.X >= 1352 -> 1.30, when parentSize.X >= 936 -> 1.20, 1"
+            children:
+            -   class: "UIControl"
+                name: "Members"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/ClanProfileStatisticItem.yaml"
+                        args:
+                            "horizontalShift": "-2"
+                            "isMembers": "true"
+                            "iconPath": "\"~res:/Gfx/Lobby/icons/icon_clans_l\""
+                            "description": "\"Clans/Profile/Statistics/Members\""
+                            "statTextStyle": "\"t-headline bold\""
+                            "statText": "str(membersCount)"
+            -   class: "UIControl"
+                name: "WinRate"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/ClanProfileStatisticItem.yaml"
+                        args:
+                            "iconPath": "\"~res:/Gfx/Lobby/icons/icon_victory_clan\""
+                            "description": "\"Clans/Profile/Statistics/WinRate\""
+                            "textColor": "when winRate >= 90.000000 -> \"red-red-text\", winRate >= 80.000000 -> \"gold-shining-text\", winRate >= 70.000000 -> \"purple-zhuk-text\", winRate >= 60.000000 -> \"blue-rimmi-text\", winRate >= 50.000000 -> \"green-zmilly-text\", \"white-wild-sand-text\""
+                            "statTextStyle": "\"t-headline bold\""
+                            "statText": "percent(winRate, 2)"
+            -   class: "UIControl"
+                name: "WeekReward"
+                classes: "button-open-sound"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 188.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 184.000000
+                    UIAttachLayoutMasterComponent:
+                        attachId: "CLAN_TASKS_INFO"
+                    UIInputEventComponent:
+                        onTouchUpInside: "SHOW_CLAN_TASKS_INFO"
+                    Sound: {}
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/ButtonSound.style.yaml"
+                children:
+                -   class: "UIControl"
+                    name: "Icon"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_SCALE_PROPORTIONAL"
+                            sprite: "~res:/Gfx/Lobby/icons/icon_resources_l"
+                        UIGradientComponent:
+                            startColor: [1.000000, 1.000000, 1.000000, 0.500000]
+                            finishColor: [1.000000, 1.000000, 1.000000, 0.000000]
+                            orientation: "TopDown"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            topAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 130.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 130.000000
+                -   class: "UIControl"
+                    name: "Level"
+                    size: [188.000000, 100.000000]
+                    input: false
+                    classes: "t-headline bold orange-orange-peel-text"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            hCenterAnchor: -2.000000
+                            vCenterAnchorEnabled: true
+                            vCenterAnchor: 10.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "when model.clanTasksPrevWeekRewardLevel > 0 -> roman(model.clanTasksPrevWeekRewardLevel), \"--\""]
+                -   class: "UIControl"
+                    name: "Description"
+                    position: [18.000000, 124.000000]
+                    input: false
+                    classes: "t-overline bold white-wild-sand-50-text"
+                    components:
+                        UITextComponent:
+                            multiline: "MULTILINE_ENABLED"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            bottomAnchorEnabled: true
+                            bottomAnchor: 20.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            horizontalValue: 80.000000
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "capitalize(localize(\"Clans/Profile/Statistics/ClanTasksReward\"))"]
+                -   class: "UIControl"
+                    name: "InfoButton"
+                    pivot: [0.500000, 0.500000]
+                    classes: "button-open-sound hoverable touchable-self"
+                    components:
+                        UITextureComponent:
+                            spritePath: "~res:/Gfx/Lobby/icons/icon_info_xs"
+                        Anchor:
+                            rightAnchorEnabled: true
+                            rightAnchor: 8.000000
+                            topAnchorEnabled: true
+                            topAnchor: 8.000000
+                            bottomAnchorEnabled: false
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 24.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 24.000000
+                        UIInputEventComponent:
+                            onTouchUpInside: "SHOW_CLAN_TASKS_INFO"
+                        Sound: {}
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/ButtonSound.style.yaml;~res:/UI/Screens3/Common/Hover.style.yaml;~res:/UI/Screens3/Common/Touch.style.yaml"
+                    children:
+                    -   class: "UIControl"
+                        name: "Hover"
+                        input: false
+                        classes: "white-wild-sand-10-bg hover"
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                            UIOpacityComponent: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfParent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Common/Hover.style.yaml"
+            -   class: "UIControl"
+                name: "AvgBattles"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/ClanProfileStatisticItem.yaml"
+                        args:
+                            "iconPath": "\"~res:/Gfx/Lobby/icons/icon_battles-clan_l\""
+                            "description": "\"Clans/Profile/Statistics/AvgBattles\""
+                            "statTextStyle": "\"t-headline bold\""
+                            "statText": "when not isNull(clan) -> str1000Separated(int(clan.membersInfo.avgBattles)), \"\""
+            -   class: "UIControl"
+                name: "SupplyLevel"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/ClanProfileStatisticItem.yaml"
+                        args:
+                            "horizontalShift": "-2"
+                            "isSupplyLvl": "true"
+                            "iconPath": "\"~res:/Gfx/Lobby/icons/icon_sale-supply_l\""
+                            "description": "\"Clans/Profile/Statistics/SupplyLevel\""
+                            "statTextStyle": "\"t-headline bold orange-orange-peel-text\""
+                            "statText": "when not isNull(clan) -> roman(max(1, clan.supplyInfo.level)), \"\""
+        -   class: "UIControl"
+            name: "Spacer"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                    verticalMax: 100.000000
+        -   class: "UIControl"
+            name: "DividerHolder"
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    needDepth: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "4"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/DividerWithCaption.yaml"
+                    args:
+                        "text": "capitalize(localize(\"Clans/Profile/Leaderboard/Header\"))"
+                        "style": "\"t-overline bold white-wild-sand-text\""
+        -   class: "UIControl"
+            name: "Spacer"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                    verticalMax: 25.000000
+        -   class: "UIControl"
+            name: "LeaderboardTabs"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                    padding: "-12"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 32.000000
+                UIChildComponent0:
+                    condition: ""
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Tabs/TextTabsBar.yaml"
+                    args:
+                        "bgStyle": "\"\""
+                        "info": "[ { \"text\" = localize(\"Clans/Profile/Leaderboard/WinRateTab\"); }; { \"text\" = localize(\"Clans/Profile/Leaderboard/RatingTab\"); }; { \"text\" = localize(\"Clans/Profile/Leaderboard/ClanTaskPointsTab\"); }; ]"
+                        "activeTab": "int(model.selectedLeaderboard)"
+                    eventActions:
+                    - ["ON_SELECT_TAB", "ON_CLAN_LEADERBOARD_TAB_SELECTED", "toEnum(_event, eClanProfileLeaderboard)"]
+        -   class: "UIControl"
+            name: "Spacer_2"
+            position: [0.000000, 366.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                    verticalMax: 60.000000
+        -   class: "UIControl"
+            name: "LeaderboardPages"
+            components:
+                ClipContent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    horizontalValue: 125.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 200.000000
+                UIInputEventComponent:
+                    onTouchDown: "SwipeStopped"
+                UISwipeComponent:
+                    mode: "Page"
+                    direction: "RightLeft"
+                    swipeOffsetEvent: "SwipeOffset"
+                    swipeOffsetEventData: "_leftIndex, _rightIndex, _leftPosition, _rightPosition, _leftProportion, _rightProportion, _isInertion"
+                    swipeStartedEvent: "SwipeStarted"
+                    swipeFinishedEvent: "SwipeFinished"
+                    swipeCancelEvent: "SwipeCanceled"
+                    pageCount: 3
+                    pageChangedEvent: "PageChanged"
+                    pageChangedEventData: "_pageIndex"
+                    pageChangingEvent: "PageChanging"
+                    pageChangingEventData: "_pageIndex"
+            bindings:
+            - ["UISwipeComponent.currentPageIndex", "int(model.selectedLeaderboard)"]
+            children:
+            -   class: "UIControl"
+                name: "WinRate"
+                visible: true
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 80.000000
+                        verticalPolicy: "PercentOfParent"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardPage.yaml"
+                        args:
+                            "score1": "when model.leaderboards[eClanProfileLeaderboard.WinRate].members.Size() > 0 -> model.leaderboards[eClanProfileLeaderboard.WinRate].members[0].winRate, 0.000000"
+                            "score2": "when model.leaderboards[eClanProfileLeaderboard.WinRate].members.Size() > 1 -> model.leaderboards[eClanProfileLeaderboard.WinRate].members[1].winRate, 0.000000"
+                            "score3": "when model.leaderboards[eClanProfileLeaderboard.WinRate].members.Size() > 2 -> model.leaderboards[eClanProfileLeaderboard.WinRate].members[2].winRate, 0.000000"
+                            "scoreMax": "1.000000"
+                            "position": "when 0 == leaderboardLeftIndex -> leaderboardLeftPosition, (when 0 == leaderboardRightIndex -> leaderboardRightPosition, leaderboardFarPosition)"
+                            "leaderboard": "model.leaderboards[eClanProfileLeaderboard.WinRate]"
+                            "rightControlPath": "\"~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardWinrateScore.yaml\""
+                            "session": "session"
+            -   class: "UIControl"
+                name: "Rating"
+                visible: true
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 80.000000
+                        verticalPolicy: "PercentOfParent"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardPage.yaml"
+                        args:
+                            "score1": "when model.leaderboards[eClanProfileLeaderboard.WinRate].members.Size() > 0 -> float(model.leaderboards[eClanProfileLeaderboard.WinRate].members[0].ratingInfo.currentRating), 0.000000"
+                            "score2": "when model.leaderboards[eClanProfileLeaderboard.WinRate].members.Size() > 1 -> float(model.leaderboards[eClanProfileLeaderboard.WinRate].members[1].ratingInfo.currentRating), 0.000000"
+                            "score3": "when model.leaderboards[eClanProfileLeaderboard.WinRate].members.Size() > 2 -> float(model.leaderboards[eClanProfileLeaderboard.WinRate].members[2].ratingInfo.currentRating), 0.000000"
+                            "scoreMax": "5000.000000"
+                            "position": "when 1 == leaderboardLeftIndex -> leaderboardLeftPosition, (when 1 == leaderboardRightIndex -> leaderboardRightPosition, leaderboardFarPosition)"
+                            "leaderboard": "model.leaderboards[eClanProfileLeaderboard.Rating]"
+                            "rightControlPath": "\"~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardRatingScore.yaml\""
+                            "session": "session"
+            -   class: "UIControl"
+                name: "ClanPoints"
+                visible: true
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 80.000000
+                        verticalPolicy: "PercentOfParent"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardPage.yaml"
+                        args:
+                            "score1": "when model.leaderboards[eClanProfileLeaderboard.ClanPoints].members.Size() > 0 -> float(model.leaderboards[eClanProfileLeaderboard.ClanPoints].members[0].clanPointsCurrentWeek), 0.000000"
+                            "score2": "when model.leaderboards[eClanProfileLeaderboard.ClanPoints].members.Size() > 1 -> float(model.leaderboards[eClanProfileLeaderboard.ClanPoints].members[1].clanPointsCurrentWeek), 0.000000"
+                            "score3": "when model.leaderboards[eClanProfileLeaderboard.ClanPoints].members.Size() > 2 -> float(model.leaderboards[eClanProfileLeaderboard.ClanPoints].members[2].clanPointsCurrentWeek), 0.000000"
+                            "scoreMax": "120.000000"
+                            "position": "when 2 == leaderboardLeftIndex -> leaderboardLeftPosition, (when 2 == leaderboardRightIndex -> leaderboardRightPosition, leaderboardFarPosition)"
+                            "leaderboard": "model.leaderboards[eClanProfileLeaderboard.ClanPoints]"
+                            "rightControlPath": "\"~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardTasksScore.yaml\""
+                            "session": "session"
+        -   class: "UIControl"
+            name: "Swiper"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIRoundedCornersComponent:
+                    radius: "8"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 33.000000
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Paginator/Paginator.yaml"
+                    args:
+                        "selectedItem": "int(model.selectedLeaderboard)"
+                        "points": "[ 0; 1; 2; ]"
+                        "progressVisible": "true"
+                        "progress": "when swipeStarted -> lastPaginatorProgress, paginatorProgress"
+                        "invert": "true"
+                        "progressSize": "18"
+                    eventActions:
+                    - ["CHANGED_SELECTED_ITEM", "ON_CLAN_LEADERBOARD_TAB_SELECTED", "toEnum(_event, eClanProfileLeaderboard)"]
+        -   class: "UIControl"
+            name: "Spacer_3"
+            position: [0.000000, 366.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                    verticalMax: 38.000000

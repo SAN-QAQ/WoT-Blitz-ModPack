@@ -1,0 +1,30 @@
+Header:
+    version: "92"
+Prototypes:
+-   class: "UIControl"
+    name: "Value"
+    input: false
+    components:
+        RichContent:
+            baseClasses: "t-body regular color=white-wild-sand-70-text"
+        RichContentAliases0:
+            aliases:
+            - ["text_white_bold", "<span class=\"t-body bold white-wild-sand-text\" />"]
+            - ["text2_white_bold", "<span class=\"t-body bold white-wild-sand-text\" />"]
+        Anchor:
+            hCenterAnchorEnabled: true
+            useRtl: false
+        FlowLayout:
+            hDynamicPadding: false
+            hSpacing: 4.000000
+            useRtl: false
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfContent"
+        UIDataParamsComponent:
+            params:
+            - ["string", "contentText", "\"\"", "\"Его многочисленные, убого тонкие по сравнению с остальным телом ножки беспомощно копошились у него перед глазами. «Что со мной случилось?\""]
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+    bindings:
+    - ["RichContent.text", "contentText"]

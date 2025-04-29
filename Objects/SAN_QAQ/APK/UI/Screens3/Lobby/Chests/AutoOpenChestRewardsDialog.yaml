@@ -1,0 +1,517 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Blur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ReceivedRewards"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/BattlePass/Animations/ReceivedRewards.animation"
+        LinearLayout:
+            orientation: "TopDown"
+            padding: "32"
+            spacing: 8.000000
+            dynamicSpacing: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalValue: 100.000000
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["vector<ResourceDetailed>", "chests", "[ ]", "[ { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.premium; }; { \"type\" = ResourceType.gold; }; { \"type\" = ResourceType.credits; }; { \"type\" = ResourceType.stuff; }; { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.vehicle; }; ]"]
+            - ["vector<ResourceDetailed>", "rewards", "[ ]", "[ { \"type\" = ResourceType.premium; }; { \"type\" = ResourceType.gold; }; { \"type\" = ResourceType.credits; }; { \"type\" = ResourceType.stuff; }; { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.vehicle; }; { \"type\" = ResourceType.vehicle; }; ]"]
+            - ["bool", "isFirstShown", "true", "true"]
+            events:
+            - "ON_REWARD_CLICKED(int rewardIndex)"
+        UIDataLocalBindingsComponent:
+            data:
+            - ["BattlePassResources", "emptyRewards", "{ }"]
+            - ["bool", "isFreeExists", "not Empty(chests)"]
+            - ["bool", "isPaidExists", "not Empty(rewards)"]
+            - ["int", "freeRewardsCount", "Size(chests)"]
+            - ["int", "paidRewardsCount", "Size(rewards)"]
+            - ["string", "rewardTitle", "\"\""]
+            - ["string", "rewardSubtitle", "localize(\"AUTO_OPEN_CHEST_ALL_REWARDS_WERE_RECEIVED\")"]
+            - ["string", "title", "localize(\"#common:Title/Congrats\")"]
+            - ["string", "subtitle", "localize(\"AUTO_OPEN_CHEST_ALL_CONTAINERS_WERE_OPENED\")"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/BattlePass/Animations/ScrollableRewardsContainer.actions"
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        position: [0.000000, 0.000001]
+        size: [1193.000000, 897.000000]
+        input: false
+        components:
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Image"
+            input: false
+            components:
+                UITextureComponent:
+                    spritePath: "~res:/Gfx/Lobby/backgrounds/auto_open_chest_bg"
+                    drawType: "DRAW_SCALE_TO_RECT"
+                    perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                ScalePolicy:
+                    horizontalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+                    verticalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+            bindings:
+            - ["UITextureComponent.spriteResource", "when app.constants.deviceType == eScreenSizeType.Large -> eResourceLoadingStrategy.PreferMaxResolution, eResourceLoadingStrategy.Base"]
+        -   prototype: "Blur/Blur"
+            name: "Blur"
+            visible: true
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_TO_RECT"
+                UIOpacityComponent:
+                    opacity: 0.500000
+                UIPostProcessTextureComponent0:
+                    scale: 0.250000
+                    needDepth: true
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent1:
+                    scale: 0.250000
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent2:
+                    scale: 0.250000
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                IgnoreLayout: {}
+        -   class: "UIControl"
+            name: "Effects"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            bindings:
+            - ["visible", "isFreeExists"]
+            children:
+            -   class: "UIParticles"
+                name: "ConfettiLeft"
+                position: [-57.000000, 977.000000]
+                size: [32.000000, 32.000000]
+                pivot: [0.500000, 0.500000]
+                input: false
+                effectPath: "~res:/3d/FX/UI/RewardScreen/Confetti2.sc2"
+                autoStart: true
+                startDelay: 0.300000
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        leftAnchor: -73.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: -225.000000
+                    IgnoreLayout: {}
+            -   class: "UIParticles"
+                name: "ConfettiRight"
+                position: [1122.000000, 977.000000]
+                size: [32.000000, 32.000000]
+                pivot: [0.500000, 0.500000]
+                input: false
+                effectPath: "~res:/3d/FX/UI/RewardScreen/Confetti.sc2"
+                autoStart: true
+                startDelay: 0.300000
+                components:
+                    Anchor:
+                        rightAnchorEnabled: true
+                        rightAnchor: -114.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: -225.000000
+                    IgnoreLayout: {}
+        -   class: "UIControl"
+            name: "Control"
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_FILL"
+                    color: [0.000000, 0.000000, 0.000000, 0.478431]
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "TopPart"
+        position: [357.000000, 32.000000]
+        size: [32.000000, 32.000000]
+        visible: true
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 4.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "Title"
+            input: false
+            classes: "t-title light"
+            components:
+                UITextComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["visible", "isFreeExists"]
+            - ["UITextComponent.text", "title"]
+        -   class: "UIControl"
+            name: "Subtitle"
+            size: [32.000000, 32.000000]
+            input: false
+            classes: "t-subtitle light"
+            components:
+                UITextComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["visible", "isFreeExists"]
+            - ["UITextComponent.text", "subtitle"]
+    -   class: "UIControl"
+        name: "RewardsSection"
+        position: [0.000000, 214.000000]
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            ClipContent: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                dynamicPadding: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "FreeRewardsSection"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIAttachLayoutMasterComponent:
+                    attachId: "BATTLE_PASS_FREE_REWARDS"
+            children:
+            -   class: "UIScrollView"
+                name: "FreeRewards"
+                position: [72.000000, 0.000000]
+                input: false
+                autoUpdate: true
+                centerContent: true
+                components:
+                    ClipContent:
+                        enabled: false
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 95.000000
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIScrollViewContainer"
+                    name: "scrollContainerControl"
+                    scrollDirection: "kHorizontal"
+                    components:
+                        Anchor: {}
+                        LinearLayout:
+                            spacing: 16.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfChildrenSum"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UILayoutEventComponent:
+                            positionChangedEvent: "UpdateFreeRewardsVisibility"
+                            positionChangedEventData: "_size.X, _parentSize.X, _position.X"
+                            sizeChangedEvent: "UpdateFreeRewardsVisibility"
+                            sizeChangedEventData: "_size.X, _parentSize.X, _position.X"
+                    children:
+                    -   class: "UIControl"
+                        name: "Rewards"
+                        position: [0.000000, 0.000000]
+                        size: [32.000000, 32.000000]
+                        visible: true
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 1.000000
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            LinearLayout:
+                                spacing: 18.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIRepeatComponent:
+                                control: "~res:/UI/Screens3/Lobby/Chests/AutoOpenChestRewardHolder.yaml"
+                                dataContainer: "chests"
+                                args:
+                                    "isSelected": "true"
+                                    "indexInScrollableContainer": "_index"
+                                    "attachId": "\"reward_0_\" + str(_index)"
+                                    "isClickable": "true"
+                                    "isOpened": "true"
+                                    "pivot": "vec2(0.500000, 0.500000)"
+                                    "reward": "_item"
+                                eventActions:
+                                - ["ON_REWARD_CLICKED", "ON_CHEST_CLICKED", "_index"]
+            -   class: "UIControl"
+                name: "Spacer"
+                size: [32.000000, 32.000000]
+                input: false
+        -   class: "UIControl"
+            name: "PaidRewardsSection"
+            position: [0.000000, 142.000000]
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                    padding: "16"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIAttachLayoutMasterComponent:
+                    attachId: "BATTLE_PASS_PAID_REWARDS"
+            bindings:
+            - ["visible", "isPaidExists"]
+            children:
+            -   class: "UIControl"
+                name: "GoldGradient"
+                input: false
+                components:
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIControl"
+                    name: "LeftPart"
+                    position: [35.000000, 0.000000]
+                    size: [26.000000, 57.000000]
+                    input: false
+                    classes: "orange-orange-peel-50-bg"
+                    components:
+                        Background:
+                            drawType: "DRAW_SCALE_TO_RECT"
+                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_horizontal_0-100"
+                        Anchor:
+                            leftAnchorEnabled: true
+                            topAnchorEnabled: false
+                            topAnchor: 0.000000
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "parent/2"
+                            verticalPolicy: "PercentOfParent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml"
+                -   class: "UIControl"
+                    name: "RightPart"
+                    position: [35.000000, 0.000000]
+                    size: [26.000000, 102.000000]
+                    input: false
+                    classes: "orange-orange-peel-50-bg"
+                    components:
+                        Background:
+                            drawType: "DRAW_SCALE_TO_RECT"
+                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_horizontal_0-100"
+                            spriteModification: ["FLIP_HORIZONTAL"]
+                        Anchor:
+                            rightAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "parent/2"
+                            verticalPolicy: "PercentOfParent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "PaidRewardContent"
+                position: [0.000000, 16.000000]
+                size: [1024.000000, 214.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 24.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "PaidRewardTextWrapper"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 4.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "PaidRewardText"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        classes: "t-headline bold"
+                        components:
+                            UITextComponent: {}
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfContent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "rewardTitle"]
+                    -   class: "UIControl"
+                        name: "PaidRewardInfo"
+                        input: false
+                        classes: "t-subtitle regular color=white-wild-sand-text"
+                        components:
+                            UITextComponent:
+                                colorInheritType: "COLOR_IGNORE_PARENT"
+                                align: ["LEFT", "VCENTER"]
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfContent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "rewardSubtitle"]
+                -   class: "UIScrollView"
+                    name: "PaidRewards"
+                    position: [0.000000, 83.000000]
+                    input: false
+                    autoUpdate: true
+                    centerContent: true
+                    components:
+                        ClipContent:
+                            enabled: false
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            horizontalValue: 95.000000
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIScrollViewContainer"
+                        name: "scrollContainerControl"
+                        position: [-33.000000, 0.000000]
+                        scrollDirection: "kHorizontal"
+                        components:
+                            Anchor: {}
+                            LinearLayout:
+                                spacing: 24.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UILayoutEventComponent:
+                                positionChangedEvent: "UpdatePaidRewardsVisibility"
+                                positionChangedEventData: "_size.X, _parentSize.X, _position.X"
+                                sizeChangedEvent: "UpdatePaidRewardsVisibility"
+                                sizeChangedEventData: "_size.X, _parentSize.X, _position.X"
+                        children:
+                        -   class: "UIControl"
+                            name: "Rewards"
+                            size: [32.000000, 32.000000]
+                            visible: true
+                            input: false
+                            components:
+                                UIOpacityComponent: {}
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                LinearLayout:
+                                    spacing: 18.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIRepeatComponent:
+                                    control: "~res:/UI/Screens3/Lobby/Chests/AutoOpenChestRewardHolder.yaml"
+                                    dataContainer: "rewards"
+                                    args:
+                                        "isSelected": "true"
+                                        "indexInScrollableContainer": "_index"
+                                        "isClickable": "true"
+                                        "isOpened": "true"
+                                        "isLocked": "false"
+                                        "attachId": "\"reward_1_\" + str(_index)"
+                                        "pivot": "vec2(0.500000, 0.500000)"
+                                        "reward": "_item"
+                                    eventActions:
+                                    - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_index"]
+    -   class: "UIControl"
+        name: "Buttons"
+        position: [349.000000, 0.000000]
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                bottomAnchorEnabled: true
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "OkButton"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                    args:
+                        "caption": "localize(\"#common:Button/Claim\")"
+                        "sound": "eButtonSound.OK"
+                        "type": "eButtonType.POSITIVE"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "BACK_EVENT", ""]

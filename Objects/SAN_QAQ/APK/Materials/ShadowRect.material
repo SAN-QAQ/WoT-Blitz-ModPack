@@ -1,0 +1,26 @@
+Material:
+    Layers: [ ShadowRectRenderLayer ]
+    Shader: ~res:/Materials/Shaders/ShadowVolume/shadowrect
+    RenderState:
+        blend: true
+        depthFunc: CMP_LEQUAL
+    Stencil:
+        enabled: true
+        failBack: STENCILOP_KEEP
+        failFront: STENCILOP_KEEP
+        funcBack: CMP_NOTEQUAL
+        funcFront: CMP_NOTEQUAL
+        mask: 15
+        passBack: STENCILOP_KEEP
+        passFront: STENCILOP_KEEP
+        ref: 0
+        zFailBack: STENCILOP_KEEP
+        zFailFront: STENCILOP_KEEP
+    Passes:
+        ReflectionRefraction:
+            enabled: false
+        Forward:
+        DepthOnly:
+            enabled: false
+        ShadowMap:
+            enabled: false

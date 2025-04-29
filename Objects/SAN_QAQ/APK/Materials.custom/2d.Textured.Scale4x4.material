@@ -1,0 +1,6 @@
+Material:
+    Shader: ~res:/Materials.custom/shaders/scale4x4
+    RenderState:
+        blend: true
+    Passes:
+        2d:

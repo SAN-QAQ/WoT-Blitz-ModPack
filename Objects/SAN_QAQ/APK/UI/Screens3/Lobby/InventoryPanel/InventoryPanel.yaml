@@ -1,0 +1,488 @@
+Header:
+    version: 159
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/InventoryPanel/Item.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Inventory"
+    size: [1217.000000, 96.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelInitialization.animation;SHOW_FIRST_INVENTORY,~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelShowFirst.animation"
+        UIOpacityComponent: {}
+        LinearLayout:
+            orientation: "TopDown"
+            padding: "16"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfLastChild"
+        UISwitchBarComponent:
+            onSelectElement: "ON_INVENTORY_TAB_SELECT_ACTION"
+            onSelectElementData: "_selectedElement"
+            selectionEventType: "TOUCH_UP"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "canMoveSelectionByHotKeys", "false", "true"]
+            - ["bool", "tankPanelVisible", "false", "true"]
+            - ["bool", "optionalDevicesAreVisible", "true", "true"]
+            - ["bool", "isGeneralPackLoaded", "true", "true"]
+            - ["int", "modulesLayer", "0", "0"]
+            - ["int", "ammoLayer", "0", "0"]
+            - ["string", "ammoMasterId", "\"\"", "\"\""]
+            - ["string", "modulesMasterId", "\"\"", "\"\""]
+            - ["bool", "visible", "true", "true"]
+            - ["bool", "camoIsVisible", "true", "true"]
+            - ["OwnedTank", "tank", "null", "{ }"]
+            - ["InventoryTabType", "selectedTab", "InventoryTabType.UNDEFINED", "InventoryTabType.CREW"]
+            - ["bool", "ammoIsVisible", "true", "true"]
+            - ["bool", "consumablesIsVisible", "true", "true"]
+            - ["bool", "provisionsIsVisible", "true", "true"]
+            - ["bool", "crewFragmentVisible", "false", "true"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["InventoryPanelViewModel", "panel", "null", "{ \"optionalDevices\" = [ { }; { }; { }; ]; }"]
+            - ["eInventoryPanelAnimation", "initializationAnimation", "eInventoryPanelAnimation.kNoAnimation", "eInventoryPanelAnimation.kFallDown"]
+            - ["bool", "isInHangar", "false", "true"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["bool", "showBackground", "false", "true"]
+            events:
+            - "CREW_PRESSED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "cachedRank", "when not isNull(tank) -> tank.dossier.rankState.level, 0"]
+            - ["int", "indexCamo", "int(InventoryTabType.CAMOUFLAGES)"]
+            - ["InventoryTabType", "nextTab", "toEnum((indexCamo + 1), InventoryTabType)"]
+            - ["InventoryTabType", "previousTab", "toEnum((indexCamo - 1), InventoryTabType)"]
+            - ["bool", "animateRanks", "panel.ranksVisible"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "tankIsReadyForBattle", "not isNull(tank) and tank.lockReason == LOCK_REASON.NONE and tank.repairCost == 0"]
+            - ["bool", "camoHasLock", "when (not isGeneralPackLoaded or not panel.camo.isTankPackLoaded) or (panel.camo.customSetIsLocked and not panel.camo.hasVisibleCamouflages) -> true, (panel.camo.isUniqueInvisExist or isNull(tank))"]
+            - ["int", "modulesAnimationIndex", "when crewFragmentVisible -> 1, 0"]
+            - ["int", "camoAnimationIndex", "when camoIsVisible -> modulesAnimationIndex + 1, modulesAnimationIndex"]
+            - ["int", "consumablesAnimationIndex", "when consumablesIsVisible -> camoAnimationIndex + 1, camoAnimationIndex"]
+            - ["int", "provisionsAnimationIndex", "when provisionsIsVisible -> consumablesAnimationIndex + 1, consumablesAnimationIndex"]
+            - ["int", "ammoAnimationIndex", "when ammoIsVisible -> provisionsAnimationIndex + 1, provisionsAnimationIndex"]
+            - ["int", "odAnimationIndex", "when optionalDevicesAreVisible -> ammoAnimationIndex + 1, ammoAnimationIndex"]
+            - ["InventoryTabType", "lastTab", "when optionalDevicesAreVisible -> InventoryTabType.OPTIONAL_DEVICES, ammoIsVisible -> InventoryTabType.AMMUNITION, provisionsIsVisible -> InventoryTabType.PROVISIONS, consumablesIsVisible -> InventoryTabType.CONSUMABLES, InventoryTabType.CAMOUFLAGES"]
+            - ["int", "currentRank", "when not isNull(tank) -> tank.dossier.rankState.level, 0"]
+            - ["bool", "rankSystemAvailable", "not isNull(tank) and tank.stats.isElite and tank.dossier.rankState.enabled and isGeneralPackLoaded"]
+        UIDataLocalControlComponent0:
+            name: "CrewContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/CrewContent.yaml"
+            args:
+                "tank": "tank"
+                "crew": "panel.crew"
+        UIDataLocalControlComponent1:
+            name: "ModulesContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/ModulesContent.yaml"
+            args:
+                "isInHangar": "isInHangar"
+                "tank": "tank"
+                "module": "panel.module"
+                "stuffQuantity": "when not empty(panel.module.costType) and session.artefacts.artefactIds.Contains(panel.module.costType) -> session.artefacts.artefactIds[panel.module.costType], 0"
+                "freeXp": "session.stats.freeXp.quantity"
+            eventActions:
+            - ["ON_MODULE_PROGRESS_ANIMATION_STARTED", "ON_MODULE_PROGRESS_ANIMATION_STARTED", ""]
+        UIDataLocalControlComponent2:
+            name: "RankContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/RankContent.yaml"
+            args:
+                "achievements": "tank.dossier.achievements"
+                "rank": "cachedRank"
+                "rankPoints": "tank.dossier.rankState.points"
+                "tankLevel": "tank.info.level"
+                "ranksConfig": "session.rankConfig"
+                "animateUnlockableRank": "isInHangar"
+                "lastRankSoundPlayed": "when lobby.ranksCache.entries.Contains(tank.info.tankDescriptor.rawDescr) -> lobby.ranksCache.entries[tank.info.tankDescriptor.rawDescr].lastRankSoundPlayed, 0"
+            eventActions:
+            - ["RankUnlockSoundPlayed", "RankUnlockSoundPlayed", "tank.info.tankDescriptor.rawDescr, _event.rank"]
+        UIDataLocalControlComponent3:
+            name: "CamoContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/CamoContent.yaml"
+            args:
+                "tank": "tank"
+                "camo": "panel.camo"
+        UIDataLocalControlComponent4:
+            name: "ConsumablesContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/ConsumablesContent.yaml"
+            args:
+                "tank": "tank"
+        UIDataLocalControlComponent5:
+            name: "ProvisionsContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/ProvisionsContent.yaml"
+            args:
+                "tank": "tank"
+        UIDataLocalControlComponent6:
+            name: "AmmoContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/AmmoContent.yaml"
+            args:
+                "tank": "tank"
+        UIDataLocalControlComponent7:
+            name: "OptionalDevicesContent"
+            prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanelContent/OptionalDevicesContent.yaml"
+            args:
+                "optionalDevices": "panel.optionalDevices"
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanel.actions"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "selectedTab"
+            eventName: "SELECTED_TAB_DID_CHANGE"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "currentRank"
+            eventName: "OnRankLevelChanged"
+        UIEventOnDataComponent2:
+            watchedDataExpression: "rankSystemAvailable"
+            eventName: "OnRankSystemStateChanged"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Lobby/InventoryPanel/InventoryPanel.style.yaml"
+    bindings:
+    - ["visible", "visible"]
+    - ["classes", "when panel.tabsMode and canMoveSelectionByHotKeys -> \"switch-bar-mode-prev-next\", \"\""]
+    - ["UISwitchBarComponent.selectedElement", "selectedTab"]
+    - ["UISwitchBarComponent.unselectedId", "InventoryTabType.UNDEFINED"]
+    children:
+    -   class: "UIControl"
+        name: "HangarBackground"
+        pivot: [0.000000, 1.000000]
+        input: false
+        components:
+            Anchor:
+                topAnchorEnabled: true
+                topAnchor: -48.000000
+            LinearLayout:
+                orientation: "TopDown"
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        bindings:
+        - ["visible", "not panel.tabsMode"]
+        children:
+        -   class: "UIControl"
+            name: "Spacer"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "Formula"
+                    verticalFormula: "when safeAreaInsets.bottom == 0 -> 16, 49"
+            bindings:
+            - ["visible", "not tankPanelVisible"]
+        -   class: "UIControl"
+            name: "HangarBackground"
+            input: false
+            classes: "black-70-bg"
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 144.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Fade"
+        input: false
+        classes: "black-50-bg"
+        components:
+            Background: {}
+            UIOpacityComponent: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "panel.tabsMode and selectedTab == InventoryTabType.CAMOUFLAGES"]
+        children:
+        -   prototype: "BlurModified/BlurModified"
+            name: "Blur"
+    -   class: "UIControl"
+        name: "Group"
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+        children:
+        -   class: "UIControl"
+            name: "TabsContainer"
+            input: false
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    dynamicPadding: true
+                    spacing: 24.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "InventoryBackground"
+                input: false
+                classes: "inventory-limited-width"
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "Formula"
+                        verticalFormula: "parent + 16"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Common/Desktop.style.yaml"
+                bindings:
+                - ["visible", "showBackground"]
+                children:
+                -   class: "UIControl"
+                    name: "Bg"
+                    input: false
+                    classes: "desktop-visible black-15-bg"
+                    components:
+                        Background: {}
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "when parent > 1559 -> parent, 0"
+                            verticalPolicy: "PercentOfParent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Common/Desktop.style.yaml"
+            -   prototype: "Item/Item"
+                name: "Crew"
+                components:
+                    SizePolicy:
+                        horizontalValue: 80.000000
+                    UIDataParamsComponent:
+                        args:
+                            "layer": "0"
+                            "attachId": "\"CREW\""
+                            "enabled": "panel.crew.buttonState != eCrewButtonState.NO_TANK"
+                            "switchId": "InventoryTabType.CREW"
+                            "selectedTab": "selectedTab"
+                            "tabsMode": "panel.tabsMode"
+                            "visible": "crewFragmentVisible"
+                            "content": "CrewContent"
+                            "hasLock": "(not isGeneralPackLoaded and panel.crew.buttonState != eCrewButtonState.NO_MASTERY) or panel.crew.buttonState == eCrewButtonState.NO_TANK"
+                            "titleText": "localize(\"#lobby:MainScreen/Crew/Title\")"
+                            "hasBadge": "false"
+                            "panelAnimationIndex": "0"
+                            "initializationAnimation": "initializationAnimation"
+            -   class: "UIControl"
+                name: "ProgressWrapper"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 80.000000
+                        verticalPolicy: "PercentOfFirstChild"
+                children:
+                -   class: "UIControl"
+                    name: "ModulesWrapper"
+                    input: false
+                    components:
+                        UIOpacityComponent: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                    children:
+                    -   prototype: "Item/Item"
+                        name: "Modules"
+                        components:
+                            SizePolicy:
+                                horizontalValue: 80.000000
+                            UIDataParamsComponent:
+                                args:
+                                    "layer": "modulesLayer"
+                                    "attachId": "modulesMasterId"
+                                    "enabled": "panel.modulesVisible"
+                                    "switchId": "InventoryTabType.PROGRESS"
+                                    "selectedTab": "selectedTab"
+                                    "tabsMode": "panel.tabsMode"
+                                    "visible": "panel.modulesVisible"
+                                    "content": "ModulesContent"
+                                    "hasLock": "false"
+                                    "titleText": "localize(\"hangar button upgrade\")"
+                                    "hasBadge": "false"
+                                    "panelAnimationIndex": "modulesAnimationIndex"
+                                    "initializationAnimation": "initializationAnimation"
+                                eventActions:
+                                - ["ON_MODULE_PROGRESS_ANIMATION_STARTED", "ON_MODULE_PROGRESS_ANIMATION_STARTED", ""]
+                        children:
+                        -   path: "ContentWrapper/TitleWrapper/Title"
+                            components:
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                            children: []
+                -   class: "UIControl"
+                    name: "RankWrapper"
+                    pivot: [0.500000, 1.000000]
+                    input: false
+                    components:
+                        UIOpacityComponent: {}
+                        Anchor:
+                            bottomAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 80.000000
+                            verticalPolicy: "PercentOfFirstChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "Rank"
+                        input: false
+                        components:
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfFirstChild"
+                                verticalPolicy: "PercentOfFirstChild"
+                            UIChildComponent0:
+                                condition: "rankSystemAvailable"
+                                prototypePath: "~res:/UI/Screens3/Lobby/InventoryPanel/Item.yaml"
+                                args:
+                                    "layer": "modulesLayer"
+                                    "attachId": "modulesMasterId"
+                                    "enabled": "panel.ranksVisible"
+                                    "switchId": "InventoryTabType.PROGRESS"
+                                    "selectedTab": "selectedTab"
+                                    "tabsMode": "panel.tabsMode"
+                                    "visible": "panel.ranksVisible"
+                                    "content": "RankContent"
+                                    "hasLock": "false"
+                                    "titleText": "capitalize(localize(\"TankRank/InventoryPanel/Title\"))"
+                                    "hasBadge": "false"
+                                    "panelAnimationIndex": "modulesAnimationIndex"
+                                    "initializationAnimation": "initializationAnimation"
+                                eventActions:
+                                - ["ON_MODULE_PROGRESS_ANIMATION_STARTED", "ON_MODULE_PROGRESS_ANIMATION_STARTED", ""]
+                            UIIdentifierComponent:
+                                id: "open_rank_button"
+                        bindings:
+                        - ["visible", "panel.ranksVisible"]
+            -   prototype: "Item/Item"
+                name: "Camo"
+                components:
+                    SizePolicy:
+                        horizontalValue: 96.000000
+                    UIDataParamsComponent:
+                        args:
+                            "layer": "0"
+                            "attachId": "\"CAMO\""
+                            "enabled": "not camoHasLock and tankIsReadyForBattle"
+                            "switchId": "InventoryTabType.CAMOUFLAGES"
+                            "selectedTab": "selectedTab"
+                            "tabsMode": "panel.tabsMode"
+                            "visible": "camoIsVisible"
+                            "content": "CamoContent"
+                            "hasLock": "camoHasLock"
+                            "titleText": "localize(\"#customization:Shop/Title\")"
+                            "hasBadge": "panel.camoBadge and not camoHasLock and tankIsReadyForBattle"
+                            "panelAnimationIndex": "camoAnimationIndex"
+                            "initializationAnimation": "initializationAnimation"
+            -   prototype: "Item/Item"
+                name: "Consumables"
+                components:
+                    SizePolicy:
+                        horizontalValue: 112.000000
+                    UIDataParamsComponent:
+                        args:
+                            "layer": "0"
+                            "attachId": "\"CONSUMABLES\""
+                            "enabled": "tankIsReadyForBattle"
+                            "switchId": "InventoryTabType.CONSUMABLES"
+                            "selectedTab": "selectedTab"
+                            "tabsMode": "panel.tabsMode"
+                            "visible": "consumablesIsVisible"
+                            "content": "ConsumablesContent"
+                            "hasLock": "isNull(tank)"
+                            "titleText": "localize(\"#lobby:MainScreen/Consumables/Title\")"
+                            "hasBadge": "false"
+                            "panelAnimationIndex": "consumablesAnimationIndex"
+                            "initializationAnimation": "initializationAnimation"
+                children:
+                -   path: "ContentWrapper/TitleWrapper/Title"
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfChildrenSum"
+                    children: []
+            -   prototype: "Item/Item"
+                name: "Provisions"
+                components:
+                    SizePolicy:
+                        horizontalValue: 104.000000
+                    UIDataParamsComponent:
+                        args:
+                            "layer": "0"
+                            "attachId": "\"PROVISIONS\""
+                            "enabled": "tankIsReadyForBattle"
+                            "switchId": "InventoryTabType.PROVISIONS"
+                            "selectedTab": "selectedTab"
+                            "tabsMode": "panel.tabsMode"
+                            "visible": "provisionsIsVisible"
+                            "content": "ProvisionsContent"
+                            "hasLock": "isNull(tank)"
+                            "titleText": "localize(\"#lobby:MainScreen/Provisions/Title\")"
+                            "hasBadge": "false"
+                            "panelAnimationIndex": "provisionsAnimationIndex"
+                            "initializationAnimation": "initializationAnimation"
+            -   prototype: "Item/Item"
+                name: "Ammo"
+                components:
+                    SizePolicy:
+                        horizontalValue: 104.000000
+                    UIDataParamsComponent:
+                        args:
+                            "layer": "ammoLayer"
+                            "attachId": "ammoMasterId"
+                            "enabled": "tankIsReadyForBattle"
+                            "switchId": "InventoryTabType.AMMUNITION"
+                            "selectedTab": "selectedTab"
+                            "tabsMode": "panel.tabsMode"
+                            "visible": "ammoIsVisible"
+                            "content": "AmmoContent"
+                            "hasLock": "isNull(tank)"
+                            "titleText": "localize(\"#lobby:MainScreen/Ammunition/Title\")"
+                            "hasBadge": "false"
+                            "panelAnimationIndex": "ammoAnimationIndex"
+                            "initializationAnimation": "initializationAnimation"
+            -   prototype: "Item/Item"
+                name: "OptionalDevices"
+                components:
+                    SizePolicy:
+                        horizontalValue: 117.000000
+                    UIDataParamsComponent:
+                        args:
+                            "layer": "0"
+                            "attachId": "\"\""
+                            "enabled": "tankIsReadyForBattle"
+                            "switchId": "InventoryTabType.OPTIONAL_DEVICES"
+                            "selectedTab": "selectedTab"
+                            "tabsMode": "panel.tabsMode"
+                            "visible": "optionalDevicesAreVisible"
+                            "content": "OptionalDevicesContent"
+                            "hasLock": "not isGeneralPackLoaded or panel.optionalDevicesLocked or isNull(tank)"
+                            "titleText": "localize(\"#lobby:MainScreen/Equipment/Title\")"
+                            "hasBadge": "false"
+                            "panelAnimationIndex": "odAnimationIndex"
+                            "initializationAnimation": "initializationAnimation"
+        -   class: "UIControl"
+            name: "Spacer"
+            enabled: true
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 16.000000
+            bindings:
+            - ["visible", "not panel.tabsMode and not tankPanelVisible"]

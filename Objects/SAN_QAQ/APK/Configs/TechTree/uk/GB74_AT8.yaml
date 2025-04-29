@@ -1,0 +1,19 @@
+modules:
+    "#vehicle:GB75_AT7":
+        position: [2, 2]
+    "#vehicleGun:QF_6_pounder_Mk_V_AT":
+        position: [1, 1]
+    "#vehicleGun:OQF_77mm_AT_Gun_MkII":
+        position: [2, 1]
+    "#vehicleGun:_17pdr_OQF_AT_Heavy":
+        position: [3, 1]
+    "#vehicleEngine:Nuffield_liberty_MKII":
+        position: [1, 3]
+    "#vehicleEngine:Nuffield_liberty_MKIV":
+        position: [2, 3]
+    "#vehicleEngine:Nuffield_liberty_MKV":
+        position: [3, 3]
+    "#vehicleChassis:Chassis_GB74_AT8":
+        position: [1, 4]
+    "#vehicleChassis:Chassis_GB74_AT8_2":
+        position: [2, 4]

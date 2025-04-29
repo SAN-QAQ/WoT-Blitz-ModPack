@@ -1,0 +1,66 @@
+Header:
+    version: 140
+Prototypes:
+-   class: "UIControl"
+    name: "PlayerName"
+    input: false
+    refreshStylesOnInteract: false
+    components:
+        LinearLayout:
+            orientation: "LeftToRight"
+            spacing: 4.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfMaxChild"
+        UIDataParamsComponent:
+            params:
+            - ["string", "clanTag", "\"\"", "\"WG\""]
+            - ["string", "clanTagStyle", "\"text1 text-color-orange\"", "\"text1 text-color-orange\""]
+            - ["string", "playerNameStyle", "\"text1 text-color-white\"", "\"text1 text-color-white\""]
+            - ["string", "playerName", "\"\"", "\"Konstantinopolsky\""]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["string", "clanText", "when empty(clanTag) -> \"\", \"[\" + clanTag + \"]\""]
+    bindings:
+    - ["visible", "not empty(playerName)"]
+    children:
+    -   class: "UIControl"
+        name: "UserName"
+        input: false
+        refreshStylesOnInteract: false
+        components:
+            UITextComponent:
+                perPixelAccuracyType: "PER_PIXEL_ACCURACY_FORCED"
+                fitting: "FITTING_POINTS"
+                shadowOffset: [1.000000, 1.000000]
+                shadowColor: [0.000000, 0.000000, 0.000000, 0.618000]
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens/Fonts.yaml"
+        bindings:
+        - ["classes", "playerNameStyle"]
+        - ["UITextComponent.text", "playerName"]
+    -   class: "UIControl"
+        name: "ClanTag"
+        input: false
+        refreshStylesOnInteract: false
+        components:
+            UITextComponent:
+                perPixelAccuracyType: "PER_PIXEL_ACCURACY_FORCED"
+                shadowOffset: [1.000000, 1.000000]
+                shadowColor: [0.000000, 0.000000, 0.000000, 0.618000]
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens/Fonts.yaml"
+        bindings:
+        - ["visible", "not empty(clanText)"]
+        - ["classes", "clanTagStyle"]
+        - ["UITextComponent.text", "clanText"]

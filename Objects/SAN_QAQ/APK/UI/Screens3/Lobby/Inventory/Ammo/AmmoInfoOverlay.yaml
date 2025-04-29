@@ -1,0 +1,354 @@
+Header:
+    version: 150
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Overlay/OverlayBasic.yaml"
+- "~res:/UI/Screens3/Lobby/Common/RichText.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "AmmoInfoOverlay"
+    size: [1024.000000, 768.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["int", "initialSelected", "0", "0"]
+            - ["InventoryAmmoModel", "ammoModel", "null", "{ \"maxAmmo\" = 3; \"slots\" = [ { \"index\" = 0; \"shellTitle\" = \"УОФ — 365БМ100\"; \"shellDesc\" = \"Осколочно-фугасный снаряд\"; \"shellHint\" = \"Обладает низкой бронепробиваемостью. Если снаряд всё же пробивает броню, он низкий высокий урон. При столкновении с препятствием снаряд взрывается и может нанести небольшой урон от разлёта осколков. Наиболее эффективен при использовании в орудиях с калибром 152мм. Не рекошетит.\"; \"isPrem\" = true; \"isExplosive\" = true; }; { \"index\" = 1; \"shellTitle\" = \"УОФ — 365БМ100\"; \"shellDesc\" = \"Осколочно-фугасный снаряд\"; \"isPrem\" = false; \"isExplosive\" = false; }; { \"index\" = 2; \"shellTitle\" = \"УОФ — 365БМ100\"; \"shellDesc\" = \"Осколочно-фугасный снаряд\"; \"isPrem\" = false; \"isExplosive\" = false; }; ]; }"]
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "selectedIndex", "initialSelected"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["InventoryAmmoSlot", "slot", "ammoModel.slots[selectedIndex]"]
+            - ["string", "iconPath", "when slot.iconType == \"ap\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/ap_l\", when slot.iconType == \"ap_premium\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/ap_premium_l\", when slot.iconType == \"ap_cr\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/ap_cr_l\", when slot.iconType == \"ap_cr_premium\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/ap_cr_premium_l\", when slot.iconType == \"he\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/he_l\", when slot.iconType == \"he_premium\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/he_premium_l\", when slot.iconType == \"hc\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/hc_l\", when slot.iconType == \"hc_premium\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/hc_premium_l\", when slot.iconType == \"atgm_heat\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/atgm_heat_l\", when slot.iconType == \"atgm_he\" -> \"~res:/Gfx/Shared/tank-supply/ammunition/big/atgm_he_l\", \"~res:/Gfx/Shared/tank-supply/ammunition/big/ap_l\""]
+        UIDataOnEventComponent0:
+            eventName: "SHELL_SELECTED"
+            modelFieldExpression: "selectedIndex"
+            dataExpression: "_event"
+    children:
+    -   prototype: "OverlayBasic/OverlayBasic"
+        name: "OverlayBasic"
+        components:
+            UIDataParamsComponent:
+                args:
+                    "title": "localize(\"Ammo/about_shells\")"
+                    "content": "OverlayContent"
+        children:
+        -   path: "Overlay"
+            position: [32.000000, 200.000000]
+            children: []
+        -   path: "Overlay/Content"
+            position: [0.000000, 80.000000]
+Slots:
+-   class: "UIControl"
+    name: "OverlayContent"
+    size: [960.000000, 576.000000]
+    input: false
+    components:
+        LinearLayout:
+            dynamicPadding: true
+            useRtl: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "ImageSection"
+        position: [0.000000, 100.000000]
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 8.000000
+                skipInvisible: false
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 288.000000
+                verticalPolicy: "FixedSize"
+                verticalValue: 256.000000
+        children:
+        -   class: "UIControl"
+            name: "Icon"
+            size: [96.000000, 96.000000]
+            input: false
+            components:
+                Background:
+                    perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 180.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 180.000000
+            bindings:
+            - ["Background.sprite", "iconPath"]
+        -   class: "UIControl"
+            name: "Spacer"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 0.000000
+        -   class: "UIControl"
+            name: "AmmoName"
+            input: false
+            classes: "t-subtitle bold white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_ENABLED"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 256.000000
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(slot.shellTitle)"]
+        -   class: "UIControl"
+            name: "Control"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/GlowTag.yaml"
+                    args:
+                        "tagTextColor": "\"orange-meteor-text\""
+                        "tagColor": "\"orange-meteor-bg\""
+                        "tagText": "localize(\"Ammo/premium_shells\")"
+            bindings:
+            - ["visible", "slot.isPrem"]
+    -   class: "UIControl"
+        name: "DescriptionSection"
+        position: [110.000000, 136.000000]
+        size: [512.000000, 72.000000]
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "TextInfo"
+            position: [0.000000, 0.000000]
+            size: [606.000000, 232.000000]
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 16.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 200.000000
+            children:
+            -   class: "UIControl"
+                name: "Title"
+                position: [0.000000, 0.000000]
+                input: false
+                components:
+                    UITextComponent:
+                        multiline: "MULTILINE_ENABLED"
+                        align: ["LEFT", "TOP"]
+                        useRtlAlign: "USE_BY_SYSTEM"
+                    Anchor:
+                        leftAnchorEnabled: true
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 612.000000
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["classes", "\"t-content-h2 light \" + (when (slot.isPrem) -> \"orange-orange-peel-text\", \"white-wild-sand-text\")"]
+                - ["UITextComponent.text", "localize(slot.shellDesc)"]
+            -   class: "UIControl"
+                name: "Description"
+                position: [0.000000, 64.000000]
+                input: false
+                classes: "t-subtitle regular white-wild-sand-50-text"
+                components:
+                    RichContent:
+                        text: ""
+                        baseClasses: "t-subtitle regular color=white-wild-sand-50-text"
+                    RichContentAliases0:
+                        aliases:
+                        - ["text_white_bold", "<span class=\"t-subtitle bold color=white-wild-sand-text\" />"]
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 612.000000
+                        verticalPolicy: "PercentOfContent"
+                    FlowLayout:
+                        hDynamicPadding: false
+                        alignment: "Left"
+                        useRtl: true
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["RichContent.text", "localize(slot.shellHint)"]
+        -   class: "UIControl"
+            name: "InfoTable"
+            input: false
+            components:
+                LinearLayout:
+                    useRtl: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "InfoDescriptions"
+                position: [0.000000, 72.000000]
+                input: false
+                components:
+                    Anchor:
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 16.000000
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 8.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   prototype: "RichText/RichText"
+                    name: "DamageLabel"
+                    components:
+                        RichContentAliases2:
+                            aliases:
+                            - ["text_units", "<span class=\"t-body bold white-wild-sand-50-text\" />"]
+                        UIDataParamsComponent:
+                            args:
+                                "baseFontSize": "\"t-body\""
+                                "baseFontStyle": "\"regular\""
+                                "baseFontColor": "\"white-wild-sand-text\""
+                                "key": "\"AMMO_INFO_DAMAGE\""
+                                "linkKey": "\"\""
+                                "resource1Model": "null"
+                                "resource2Model": "null"
+                                "resource3Model": "null"
+                                "resource4Model": "null"
+                                "customKeyProperty": "\"\""
+                -   prototype: "RichText/RichText"
+                    name: "PiercingLabel"
+                    components:
+                        RichContentAliases2:
+                            aliases:
+                            - ["text_units", "<span class=\"t-body bold white-wild-sand-50-text\" />"]
+                        UIDataParamsComponent:
+                            args:
+                                "baseFontSize": "\"t-body\""
+                                "baseFontStyle": "\"regular\""
+                                "baseFontColor": "\"white-wild-sand-text\""
+                                "key": "\"AMMO_INFO_PENETRATION\""
+                                "linkKey": "\"\""
+                                "resource1Model": "null"
+                                "resource2Model": "null"
+                                "resource3Model": "null"
+                                "resource4Model": "null"
+                                "customKeyProperty": "\"\""
+                -   prototype: "RichText/RichText"
+                    name: "RadiusLabel"
+                    components:
+                        RichContentAliases2:
+                            aliases:
+                            - ["text_units", "<span class=\"t-body bold white-wild-sand-50-text\" />"]
+                        UIDataParamsComponent:
+                            args:
+                                "baseFontSize": "\"t-body\""
+                                "baseFontStyle": "\"regular\""
+                                "baseFontColor": "\"white-wild-sand-text\""
+                                "key": "\"AMMO_INFO_EXPLODE_RADIUS\""
+                                "linkKey": "\"\""
+                                "resource1Model": "null"
+                                "resource2Model": "null"
+                                "resource3Model": "null"
+                                "resource4Model": "null"
+                                "customKeyProperty": "\"\""
+                -   prototype: "RichText/RichText"
+                    name: "CaliberLabel"
+                    components:
+                        RichContentAliases2:
+                            aliases:
+                            - ["text_units", "<span class=\"t-body bold white-wild-sand-50-text\" />"]
+                        UIDataParamsComponent:
+                            args:
+                                "baseFontSize": "\"t-body\""
+                                "baseFontStyle": "\"regular\""
+                                "baseFontColor": "\"white-wild-sand-text\""
+                                "key": "\"AMMO_INFO_CALIBER\""
+                                "linkKey": "\"\""
+                                "resource1Model": "null"
+                                "resource2Model": "null"
+                                "resource3Model": "null"
+                                "resource4Model": "null"
+                                "customKeyProperty": "\"\""
+                -   prototype: "RichText/RichText"
+                    name: "CountLabel"
+                    components:
+                        RichContentAliases2:
+                            aliases:
+                            - ["text_units", "<span class=\"t-body bold white-wild-sand-50-text\" />"]
+                        UIDataParamsComponent:
+                            args:
+                                "baseFontSize": "\"t-body\""
+                                "baseFontStyle": "\"regular\""
+                                "baseFontColor": "\"white-wild-sand-text\""
+                                "key": "\"AMMO_INFO_COUNT\""
+                                "linkKey": "\"\""
+                                "resource1Model": "null"
+                                "resource2Model": "null"
+                                "resource3Model": "null"
+                                "resource4Model": "null"
+                                "customKeyProperty": "\"\""
+            -   class: "UIControl"
+                name: "Slots"
+                position: [278.000000, 0.000000]
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 0.000000
+                        useRtl: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Inventory/Ammo/AmmoInfoPanel.yaml"
+                        dataContainer: "ammoModel.slots"
+                        args:
+                            "isSelected": "_index == selectedIndex"
+                            "slot": "_item"
+    -   class: "UIControl"
+        name: "Spacer"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 48.000000
+                verticalPolicy: "PercentOfParent"

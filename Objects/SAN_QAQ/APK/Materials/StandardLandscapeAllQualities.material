@@ -1,0 +1,5 @@
+MaterialTemplate:
+    ULTRA : "~res:/Materials/PBRLandscape.material"
+    HIGH : "~res:/Materials/TileMaskAllQualities.material"
+    MEDIUM : "~res:/Materials/TileMaskAllQualities.material"
+    LOW : "~res:/Materials/TileMaskAllQualities.material"

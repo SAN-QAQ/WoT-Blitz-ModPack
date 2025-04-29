@@ -1,0 +1,44 @@
+Header:
+    version: "85"
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Tabs/IconTabsBarNoBlur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "TabsHeader"
+    size: [360.000000, 56.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+            padding: "16; 0"
+            useRtl: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "ContentArea"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                spacing: 16.000000
+                dynamicSpacing: true
+                useRtl: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 48.000000
+        children:
+        -   class: "UIControl"
+            name: "Control"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout:
+                    useRtl: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+        -   prototype: "IconTabsBarNoBlur/IconTabsBar"
+            name: "IconTabsBar"

@@ -1,0 +1,4 @@
+Material:
+    Passes:
+        SpecularBRDF:
+            Shader: ~res:/Materials/Shaders/Utilities/specular-brdf

@@ -1,0 +1,4 @@
+Material:
+    Passes:
+        BlitPass:
+            Shader: ~res:/Materials/Shaders/Default/texture-blit

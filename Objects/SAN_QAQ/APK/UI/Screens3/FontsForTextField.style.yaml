@@ -1,0 +1,384 @@
+Header:
+    version: 160
+StyleSheets:
+-   selectors:
+    - ".header-text-field-1"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 25.000000
+        textField-lineHeight: 31.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".header-text-field-3"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 21.000000
+        textField-lineHeight: 26.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".header-text-field-5"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 17.000000
+        textField-lineHeight: 21.000000
+        textField-baseLine: 4.000000
+-   selectors:
+    - ".text-field-0"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        textField-fontSize: 25.000000
+        textField-lineHeight: 30.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".text-field-1"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        textField-fontSize: 21.000000
+        textField-lineHeight: 26.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-2"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        textField-fontSize: 19.000000
+        textField-lineHeight: 23.000000
+        textField-baseLine: 4.000000
+-   selectors:
+    - ".text-field-3"
+    properties:
+        textField-fontPath: "~res:/Fonts/HelveticaNeueWorld-55Roman.ttf"
+        textField-fontSize: 17.000000
+        textField-lineHeight: 21.000000
+        textField-baseLine: 4.000000
+-   selectors:
+    - ".header-text-field-1.pl"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 23.000000
+        textField-lineHeight: 29.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".header-text-field-1.fr"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 23.000000
+        textField-lineHeight: 29.000000
+-   selectors:
+    - ".header-text-field-1.it"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 23.000000
+        textField-lineHeight: 29.000000
+-   selectors:
+    - ".header-text-field-1.ar"
+    properties:
+        textField-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        textField-fontSize: 23.000000
+        textField-lineHeight: 32.000000
+        textField-baseLine: 8.000000
+-   selectors:
+    - ".header-text-field-1.ja"
+    properties:
+        textField-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        textField-lineHeight: 33.000000
+-   selectors:
+    - ".header-text-field-1.ko"
+    properties:
+        textField-fontPath: "~res:/Fonts/CoreSans.ttf"
+        textField-lineHeight: 30.000000
+-   selectors:
+    - ".header-text-field-1.th"
+    properties:
+        textField-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        textField-fontSize: 27.000000
+        textField-lineHeight: 35.000000
+        textField-baseLine: 8.000000
+-   selectors:
+    - ".header-text-field-1.vi"
+    properties:
+        textField-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        textField-fontSize: 23.000000
+        textField-lineHeight: 28.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".header-text-field-1.zh-Hans"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        textField-lineHeight: 33.000000
+        textField-baseLine: 7.000000
+-   selectors:
+    - ".header-text-field-1.zh-Hant"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        textField-lineHeight: 32.000000
+        textField-baseLine: 7.000000
+-   selectors:
+    - ".header-text-field-3.ar"
+    properties:
+        textField-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".header-text-field-3.it"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 20.000000
+        textField-lineHeight: 25.000000
+-   selectors:
+    - ".header-text-field-3.ja"
+    properties:
+        textField-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        textField-fontSize: 20.000000
+-   selectors:
+    - ".header-text-field-3.ko"
+    properties:
+        textField-fontPath: "~res:/Fonts/CoreSans.ttf"
+        textField-lineHeight: 25.000000
+-   selectors:
+    - ".header-text-field-3.pl"
+    properties:
+        textField-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        textField-fontSize: 20.000000
+        textField-lineHeight: 25.000000
+-   selectors:
+    - ".header-text-field-3.th"
+    properties:
+        textField-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        textField-fontSize: 23.000000
+        textField-lineHeight: 30.000000
+        textField-baseLine: 8.000000
+-   selectors:
+    - ".header-text-field-3.vi"
+    properties:
+        textField-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        textField-fontSize: 19.000000
+        textField-lineHeight: 23.000000
+        textField-baseLine: 4.000000
+-   selectors:
+    - ".header-text-field-3.zh-Hans"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        textField-lineHeight: 27.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".header-text-field-3.zh-Hant"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        textField-lineHeight: 27.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".header-text-field-5.ar"
+    properties:
+        textField-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+-   selectors:
+    - ".header-text-field-5.ja"
+    properties:
+        textField-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        textField-lineHeight: 22.000000
+-   selectors:
+    - ".header-text-field-5.ko"
+    properties:
+        textField-fontPath: "~res:/Fonts/CoreSans.ttf"
+        textField-lineHeight: 20.000000
+-   selectors:
+    - ".header-text-field-5.th"
+    properties:
+        textField-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        textField-fontSize: 19.000000
+        textField-lineHeight: 25.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".header-text-field-5.vi"
+    properties:
+        textField-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        textField-fontSize: 15.000000
+        textField-lineHeight: 18.000000
+        textField-baseLine: 3.000000
+-   selectors:
+    - ".header-text-field-5.zh-Hans"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        textField-lineHeight: 22.000000
+-   selectors:
+    - ".header-text-field-5.zh-Hant"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        textField-lineHeight: 22.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-0.ar"
+    properties:
+        textField-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        textField-lineHeight: 32.000000
+        textField-baseLine: 9.000000
+-   selectors:
+    - ".text-field-0.ja"
+    properties:
+        textField-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        textField-lineHeight: 33.000000
+-   selectors:
+    - ".text-field-0.ko"
+    properties:
+        textField-fontPath: "~res:/Fonts/CoreSans.ttf"
+-   selectors:
+    - ".text-field-0.th"
+    properties:
+        textField-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        textField-fontSize: 27.000000
+        textField-lineHeight: 33.000000
+        textField-baseLine: 8.000000
+-   selectors:
+    - ".text-field-0.vi"
+    properties:
+        textField-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        textField-fontSize: 23.000000
+        textField-lineHeight: 28.000000
+-   selectors:
+    - ".text-field-0.zh-Hans"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        textField-lineHeight: 33.000000
+        textField-baseLine: 7.000000
+-   selectors:
+    - ".text-field-0.zh-Hant"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        textField-lineHeight: 32.000000
+        textField-baseLine: 7.000000
+-   selectors:
+    - ".text-field-1.ar"
+    properties:
+        textField-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        textField-lineHeight: 26.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".text-field-1.ja"
+    properties:
+        textField-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        textField-lineHeight: 27.000000
+-   selectors:
+    - ".text-field-1.ko"
+    properties:
+        textField-fontPath: "~res:/Fonts/CoreSans.ttf"
+        textField-lineHeight: 25.000000
+-   selectors:
+    - ".text-field-1.th"
+    properties:
+        textField-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        textField-fontSize: 25.000000
+        textField-lineHeight: 28.000000
+        textField-baseLine: 7.000000
+-   selectors:
+    - ".text-field-1.vi"
+    properties:
+        textField-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        textField-fontSize: 19.000000
+        textField-lineHeight: 23.000000
+-   selectors:
+    - ".text-field-1.zh-Hans"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        textField-lineHeight: 27.000000
+-   selectors:
+    - ".text-field-1.zh-Hant"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        textField-lineHeight: 27.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".text-field-2.ar"
+    properties:
+        textField-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        textField-lineHeight: 24.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".text-field-2.ja"
+    properties:
+        textField-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        textField-lineHeight: 25.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-2.ko"
+    properties:
+        textField-fontPath: "~res:/Fonts/CoreSans.ttf"
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-2.th"
+    properties:
+        textField-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        textField-fontSize: 22.000000
+        textField-lineHeight: 27.000000
+        textField-baseLine: 6.000000
+-   selectors:
+    - ".text-field-2.vi"
+    properties:
+        textField-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        textField-fontSize: 17.000000
+        textField-lineHeight: 21.000000
+-   selectors:
+    - ".text-field-2.zh-Hans"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        textField-lineHeight: 25.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-2.zh-Hant"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        textField-lineHeight: 24.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-3.ar"
+    properties:
+        textField-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        textField-fontSize: 16.000000
+        textField-lineHeight: 20.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-3.ja"
+    properties:
+        textField-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        textField-fontSize: 16.000000
+-   selectors:
+    - ".text-field-3.ko"
+    properties:
+        textField-fontPath: "~res:/Fonts/CoreSans.ttf"
+        textField-fontSize: 16.000000
+        textField-lineHeight: 19.000000
+-   selectors:
+    - ".text-field-3.th"
+    properties:
+        textField-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        textField-fontSize: 26.000000
+        textField-lineHeight: 23.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".text-field-3.vi"
+    properties:
+        textField-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        textField-fontSize: 15.000000
+        textField-lineHeight: 19.000000
+-   selectors:
+    - ".text-field-3.zh-Hans"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        textField-fontSize: 16.000000
+-   selectors:
+    - ".text-field-3.zh-Hant"
+    properties:
+        textField-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        textField-fontSize: 16.000000
+        textField-baseLine: 5.000000
+-   selectors:
+    - ".header-text-field-1.hi"
+    - ".header-text-field-3.hi"
+    - ".text-field-0.hi"
+    - ".text-field-1.hi"
+    - ".text-field-2.hi"
+    - ".text-field-3.hi"
+    properties:
+        textField-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+-   selectors:
+    - ".header-text-field-5.hi"
+    properties:
+        textField-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+        textField-baseLine: 3.000000

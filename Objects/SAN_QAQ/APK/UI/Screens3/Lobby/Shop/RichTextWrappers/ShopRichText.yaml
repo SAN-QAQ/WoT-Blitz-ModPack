@@ -1,0 +1,127 @@
+Header:
+    version: 134
+Prototypes:
+-   class: "UIControl"
+    name: "ShopRichText"
+    size: [539.000000, 144.000000]
+    input: false
+    components:
+        RichContent:
+            listControl: "~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/BulletListContent.yaml"
+            listContent: "Content"
+            listItemControl: "~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/BulletItemContent.yaml"
+            listItemContent: "Content"
+        RichContentAliases0:
+            aliases:
+            - ["highlighted", "<span class=\"t-body bold white-wild-sand-text\" />"]
+            - ["regular", "<span class=\"t-body regular white-wild-sand-text\" />"]
+            - ["premium-tank-name", "<span class=\"t-body bold yellow-lightning-text\" />"]
+            - ["collectible-tank-name", "<span class=\"t-body bold blue-rimmi-text\" />"]
+            - ["regular-tank-name", "<span class=\"t-body bold white-wild-sand-text\" />"]
+            - ["ussr", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.USSR\"/>"]
+            - ["germany", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.GERMANY\"/>"]
+            - ["usa", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.USA\"/>"]
+            - ["china", "<control class=\"\"  control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.CHINA\"/>"]
+            - ["france", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.FRANCE\"/>"]
+            - ["uk", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.UK\"/>"]
+            - ["japan", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.JAPAN\"/>"]
+            - ["other", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.OTHER\"/>"]
+            - ["european", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"nation=eNation.EUROPEAN\"/>"]
+            - ["finland", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"subnation=finland\"/>"]
+            - ["poland", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"subnation=poland\"/>"]
+            - ["sweden", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"subnation=sweden\"/>"]
+            - ["italy", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"subnation=italy\"/>"]
+            - ["australia", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"subnation=australia\"/>"]
+            - ["canada", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"subnation=canada\"/>"]
+            - ["czech", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopFlagWrapper.yaml\" args1=\"subnation=czech\"/>"]
+            - ["lvl-1", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=1\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-2", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=2\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-3", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=3\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-4", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=4\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-5", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=5\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-6", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=6\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-7", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=7\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-8", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=8\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-9", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=9\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-10", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=10\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["lvl-1-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=1\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-2-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=2\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-3-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=3\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-4-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=4\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-5-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=5\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-6-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=6\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-7-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=7\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-8-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=8\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-9-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=9\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-10-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=10\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["lvl-1-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=1\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-2-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=2\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-3-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=3\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-4-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=4\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-5-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=5\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-6-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=6\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-7-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=7\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-8-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=8\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-9-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=9\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["lvl-10-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleLevelWrapper.yaml\" args1=\"level=10\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["light", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_LIGHT\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["medium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_MEDIUM\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["heavy", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_HEAVY\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["at-spg", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_AT_SPG\" args2=\"type=eVehicleDescriptionType.NORMAL\" />"]
+            - ["light-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_LIGHT\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["medium-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_MEDIUM\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["heavy-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_HEAVY\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["at-spg-premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_AT_SPG\" args2=\"type=eVehicleDescriptionType.PREMIUM\" />"]
+            - ["light-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_LIGHT\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["medium-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_MEDIUM\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["heavy-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_HEAVY\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["at-spg-collectible", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_AT_SPG\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" />"]
+            - ["light-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_LIGHT\" args2=\"type=eVehicleDescriptionType.NORMAL\" args3=\"elite=true\" />"]
+            - ["medium-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_MEDIUM\" args2=\"type=eVehicleDescriptionType.NORMAL\" args3=\"elite=true\" />"]
+            - ["heavy-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_HEAVY\" args2=\"type=eVehicleDescriptionType.NORMAL\" args3=\"elite=true\" />"]
+            - ["at-spg-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_AT_SPG\" args2=\"type=eVehicleDescriptionType.NORMAL\" args3=\"elite=true\" />"]
+            - ["light-premium-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_LIGHT\" args2=\"type=eVehicleDescriptionType.PREMIUM\" args3=\"elite=true\" />"]
+            - ["medium-premium-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_MEDIUM\" args2=\"type=eVehicleDescriptionType.PREMIUM\" args3=\"elite=true\" />"]
+            - ["heavy-premium-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_HEAVY\" args2=\"type=eVehicleDescriptionType.PREMIUM\" args3=\"elite=true\" />"]
+            - ["at-spg-premium-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_AT_SPG\" args2=\"type=eVehicleDescriptionType.PREMIUM\" args3=\"elite=true\" />"]
+            - ["light-collectible-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_LIGHT\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" args3=\"elite=true\" />"]
+            - ["medium-collectible-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_MEDIUM\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" args3=\"elite=true\" />"]
+            - ["heavy-collectible-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_HEAVY\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" args3=\"elite=true\" />"]
+            - ["at-spg-collectible-elite", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopVehicleClassWrapper.yaml\" args1=\"class=eTankClass.TANK_CLASS_AT_SPG\" args2=\"type=eVehicleDescriptionType.COLLECTIBLE\" args3=\"elite=true\" />"]
+            - ["gold", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.gold\" />"]
+            - ["credits", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.credits\" />"]
+            - ["free-xp", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.free_xp\" />"]
+            - ["elite-xp", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.elite_xp\" />"]
+            - ["xp", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.xp\" />"]
+            - ["crew-xp", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.tankmenXP\" />"]
+            - ["vehicle", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.vehicle\" />"]
+            - ["unlock", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.unlocks\" />"]
+            - ["premium", " <control class=\"\" control=\"~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopCurrencyIcon.yaml\" args1=\"type=ResourceType.premium\" />"]
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfChildrenSum"
+        FlowLayout:
+            hSpacing: 5.000000
+            vSpacing: 3.000000
+            useRtl: true
+        UIDataParamsComponent:
+            params:
+            - ["string", "defaultStyle", "\"\"", "\"t-body regular white-wild-sand-text\""]
+            - ["int", "controlsLimit", "500", "500"]
+            - ["string", "text", "\"offer text description\"", "\"Шрифтовые алиасы:\nТекст по умолчанию\n<regular>[regular] текст</regular>\n<highlighted>[highlighted] текст</highlighted>\n<premium-tank-name>[premium-tank-name] текст</premium-tank-name>\n<collectible-tank-name>[collectible-tank-name] текст</collectible-tank-name>\n<regular-tank-name>[regular-tank-name] текст</regular-tank-name>\n<space/>[space] принудительный пробел\n<br/>\nСписок<ul><li>1000 <gold/></li><li>5 слотов</li><li><heavy/><lvl-10/>AMX 23-45 heavy</li></ul>\nВалюты:\n<gold/>[gold] Золото\n<credits/>[credits] Кредиты\n<free-xp/>[free-xp] Свободка\n<elite-xp/>[elite-xp] Элитный опыт\n<xp/>[xp] Опыт\n<crew-xp/>[crew-xp] Опыт экипажа\n<vehicle/>[vehicle] Техника\n<unlock/>[unlock] Кастомизация\n<premium/>[premium] Премиум\n<br/>\n\nФлаги наций:\n<ussr/>[ussr]\n<germany/>[germany]\n<usa/>[usa]\n<china/>[china]\n<france/>[france]\n<uk/>[uk]\n<japan/>[japan]\n<european/>[european]\n<other/>[other]\n<br/>\n\nФлаги субнаций:\n<finland/>[finland]\n<poland/>[poland]\n<sweden/>[sweden]\n<italy/>[italy]\n<australia/>[australia]\n<canada/>[canada]\n<czech/>[czech]\n<br/>\n\nУровни:\n<lvl-1/>[lvl-1]\n<lvl-2/>[lvl-2]\n<lvl-3/>[lvl-3]\n<lvl-4/>[lvl-4]\n<lvl-5/>[lvl-5]\n<lvl-6/>[lvl-6]\n<lvl-7/>[lvl-7]\n<lvl-8/>[lvl-8]\n<lvl-9/>[lvl-9]\n<lvl-10/>[lvl-10]\n<lvl-1-premium/>[lvl-1-premium]\n<lvl-2-premium/>[lvl-2-premium]\n<lvl-3-premium/>[lvl-3-premium]\n<lvl-4-premium/>[lvl-4-premium]\n<lvl-5-premium/>[lvl-5-premium]\n<lvl-6-premium/>[lvl-6-premium]\n<lvl-7-premium/>[lvl-7-premium]\n<lvl-8-premium/>[lvl-8-premium]\n<lvl-9-premium/>[lvl-9-premium]\n<lvl-10-premium/>[lvl-10-premium]\n<lvl-1-collectible/>[lvl-1-collectible]\n<lvl-2-collectible/>[lvl-2-collectible]\n<lvl-3-collectible/>[lvl-3-collectible]\n<lvl-4-collectible/>[lvl-4-collectible]\n<lvl-5-collectible/>[lvl-5-collectible]\n<lvl-6-collectible/>[lvl-6-collectible]\n<lvl-7-collectible/>[lvl-7-collectible]\n<lvl-8-collectible/>[lvl-8-collectible]\n<lvl-9-collectible/>[lvl-9-collectible]\n<lvl-10-collectible/>[lvl-10-collectible]\n<br/>\n\nКлассы техники:\n<light/>[light]\n<medium/>[medium]\n<heavy/>[heavy]\n<at-spg/>[at-spg]\n<light-premium/>[light-premium]\n<medium-premium/>[medium-premium]\n<heavy-premium/>[heavy-premium]\n<at-spg-premium/>[at-spg-premium]\n<light-collectible/>[light-collectible]\n<medium-collectible/>[medium-collectible]\n<heavy-collectible/>[heavy-collectible]\n<at-spg-collectible/>[at-spg-collectible]\n<light-elite/>[light-elite]\n<medium-elite/>[medium-elite]\n<heavy-elite/>[heavy-elite]\n<at-spg-elite/>[at-spg-elite]\n<light-premium-elite/>[light-premium-elite]\n<medium-premium-elite/>[medium-premium-elite]\n<heavy-premium-elite/>[heavy-premium-elite]\n<at-spg-premium-elite/>[at-spg-premium-elite]\n<light-collectible-elite/>[light-collectible-elite]\n<medium-collectible-elite/>[medium-collectible-elite]\n<heavy-collectible-elite/>[heavy-collectible-elite]\n<at-spg-collectible-elite/><space/>[at-spg-collectible-elite]\""]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["string", "style", "\"t-body regular white-wild-sand-text\""]
+            - ["string", "finland", "\"finland\""]
+            - ["string", "poland", "\"poland\""]
+            - ["string", "sweden", "\"sweden\""]
+            - ["string", "italy", "\"italy\""]
+            - ["string", "australia", "\"australia\""]
+            - ["string", "canada", "\"canada\""]
+            - ["string", "czech", "\"czech\""]
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml"
+    bindings:
+    - ["RichContent.text", "localize(text, { \"highlight_start\" = \"<highlighted>\"; \"highlight_end\" = \"</highlighted>\"; })"]
+    - ["RichContent.baseClasses", "when not empty(defaultStyle) -> defaultStyle, style"]
+    - ["RichContent.contentLimit", "controlsLimit"]

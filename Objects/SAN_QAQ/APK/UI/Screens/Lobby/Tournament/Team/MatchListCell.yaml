@@ -1,0 +1,601 @@
+Header:
+    version: 157
+ImportedPackages:
+- "~res:/UI/Screens/Lobby/Clan/ClanEmblem.yaml"
+- "~res:/UI/Screens/Lobby/Tournament/TeamLiftLabel.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIListCell"
+    name: "MatchEntry"
+    size: [760.000000, 154.000000]
+    input: false
+    classes: "registration-type-tag=clan-reg"
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+        StyleSheet:
+            styles: "~res:/UI/Screens/Lobby/Tournament/Team/MatchListCell.style.yaml;~res:/UI/Screens/Fonts.yaml;~res:/UI/Styles/Clans/ClansStyles.yaml;~res:/UI/Screens/CommonStyles.yaml;~res:/UI/Styles/ButtonStyle.yaml;~res:/UI/Screens/Lobby/Tournament/IndependenceFonts.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 80.000000
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "StageInfo"
+            size: [760.000000, 36.000000]
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                    needClearAlphaAfterRender: true
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent1:
+                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                UIPostProcessTextureComponent2:
+                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                    scale: 0.500000
+                    useVirtualCoordinateSystem: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                LinearLayout:
+                    dynamicPadding: true
+                    spacing: 5.000000
+                    useRtl: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 36.000000
+            children:
+            -   class: "UIStaticText"
+                name: "Stage"
+                size: [101.000000, 36.000000]
+                classes: "lang_independece header3"
+                components:
+                    UITextComponent:
+                        text: "Qualification"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        fitting: "FITTING_POINTS"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfParent"
+            -   class: "UIStaticText"
+                name: "Group"
+                size: [0.000000, 36.000000]
+                classes: "header3"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        fitting: "FITTING_POINTS"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfParent"
+            -   class: "UIStaticText"
+                name: "Title"
+                size: [62.000000, 36.000000]
+                classes: "header3"
+                components:
+                    UITextComponent:
+                        text: "Stage 1"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        fitting: "FITTING_POINTS"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfParent"
+            -   class: "UIStaticText"
+                name: "Bracket"
+                size: [0.000000, 36.000000]
+                classes: "header3"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        fitting: "FITTING_POINTS"
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfParent"
+        -   class: "UIControl"
+            name: "Maps"
+            input: false
+            classes: "text2 text-color-blue"
+            components:
+                UITextComponent:
+                    text: "tournaments/TeamDescrScreen/Timetable/Map"
+                    fitting: "FITTING_POINTS"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 34.000000
+                StyleSheet:
+                    inheritsStylesFromParent: false
+                    styles: "~res:/UI/Screens/Fonts.yaml"
+        -   class: "UIControl"
+            name: "MatchInfo"
+            size: [760.000000, 64.000000]
+            input: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                LinearLayout:
+                    spacing: 4.000000
+                SizePolicy:
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 64.000000
+            children:
+            -   class: "UIControl"
+                name: "Team1"
+                size: [321.000000, 64.000000]
+                classes: "button team result-tag=winner"
+                components:
+                    Background: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   prototype: "BlurModified/BlurModified"
+                    name: "Blur"
+                -   class: "UIControl"
+                    name: "BackWinner"
+                    input: false
+                    classes: "panel-background"
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "BackLoser"
+                    input: false
+                    classes: "background-light-tab"
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "Content"
+                    size: [321.000000, 64.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            padding: "16.000000"
+                            spacing: 14.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   prototype: "ClanEmblem/ClanEmblem"
+                        name: "ClanEmblem"
+                        size: [32.000000, 32.000000]
+                        components:
+                            Background:
+                                drawType: "DRAW_SCALE_PROPORTIONAL"
+                                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                            Anchor:
+                                leftAnchorEnabled: true
+                                leftAnchor: 16.000000
+                                vCenterAnchorEnabled: true
+                    -   class: "UIControl"
+                        name: "Text"
+                        size: [216.000000, 32.000000]
+                        input: false
+                        components:
+                            Background:
+                                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                            Anchor:
+                                leftAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            LinearLayout:
+                                spacing: 4.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "Ignore"
+                        children:
+                        -   class: "UIStaticText"
+                            name: "Tag"
+                            size: [42.000000, 26.000000]
+                            classes: "header4 clan-tag"
+                            components:
+                                UITextComponent:
+                                    text: "[TAG]"
+                                    colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                    fitting: "FITTING_NONE"
+                                    align: ["LEFT", "VCENTER"]
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfContent"
+                        -   class: "UIStaticText"
+                            name: "Title"
+                            size: [170.000000, 26.000000]
+                            classes: "header4"
+                            components:
+                                UITextComponent:
+                                    text: "Team Name"
+                                    colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                    fitting: "FITTING_POINTS"
+                                    align: ["LEFT", "VCENTER"]
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                    -   class: "UIStaticText"
+                        name: "Wins"
+                        size: [13.000000, 64.000000]
+                        classes: "header1"
+                        components:
+                            UITextComponent:
+                                text: "0"
+                                colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                align: ["RIGHT", "VCENTER"]
+                            Anchor: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfParent"
+            -   class: "UIControl"
+                name: "StartAt"
+                position: [0.000000, 0.000000]
+                size: [110.000000, 64.000000]
+                input: false
+                classes: "text-color-blue header4"
+                components:
+                    Background:
+                        usePostProcessedSprite: true
+                    UIPostProcessTextureComponent0:
+                        materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                        needClearAlphaAfterRender: true
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent1:
+                        materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent2:
+                        materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UITextComponent: {}
+                    Anchor: {}
+                    LinearLayout:
+                        orientation: "TopDown"
+                        dynamicPadding: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 110.000000
+                        verticalPolicy: "PercentOfParent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens/Fonts.yaml;~res:/UI/Screens/CommonStyles.yaml"
+                children:
+                -   class: "UIControl"
+                    name: "Date"
+                    input: false
+                    classes: "header4 text-color-blue"
+                    components:
+                        UITextComponent:
+                            text: "20.10.2016"
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            topAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            inheritsStylesFromParent: false
+                            styles: "~res:/UI/Screens/Fonts.yaml"
+                -   class: "UIControl"
+                    name: "Time"
+                    input: false
+                    classes: "header4 text-color-blue"
+                    components:
+                        UITextComponent:
+                            text: "20:30"
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                            bottomAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            inheritsStylesFromParent: false
+                            styles: "~res:/UI/Screens/Fonts.yaml"
+            -   class: "UIControl"
+                name: "Team2"
+                size: [321.000000, 64.000000]
+                classes: "button team result-tag=loser"
+                components:
+                    Background: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   prototype: "BlurModified/BlurModified"
+                    name: "Blur"
+                -   class: "UIControl"
+                    name: "BackLoser"
+                    input: false
+                    classes: "background-light-tab"
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "BackWinner"
+                    input: false
+                    classes: "panel-background"
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "Content"
+                    size: [321.000000, 64.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            padding: "16.000000"
+                            spacing: 14.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   class: "UIStaticText"
+                        name: "Wins"
+                        size: [13.000000, 64.000000]
+                        classes: "header1"
+                        components:
+                            UITextComponent:
+                                text: "0"
+                                colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                align: ["RIGHT", "VCENTER"]
+                            Anchor: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfParent"
+                    -   class: "UIControl"
+                        name: "Text"
+                        size: [216.000000, 32.000000]
+                        input: false
+                        components:
+                            Background:
+                                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                            Anchor:
+                                leftAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            LinearLayout:
+                                orientation: "RightToLeft"
+                                spacing: 4.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "Ignore"
+                        children:
+                        -   class: "UIStaticText"
+                            name: "Title"
+                            size: [88.000000, 26.000000]
+                            classes: "header4"
+                            components:
+                                UITextComponent:
+                                    text: "Team Name"
+                                    colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                    fitting: "FITTING_POINTS"
+                                    align: ["RIGHT", "VCENTER"]
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfContent"
+                        -   class: "UIStaticText"
+                            name: "Tag"
+                            size: [42.000000, 26.000000]
+                            classes: "header4 clan-tag"
+                            components:
+                                UITextComponent:
+                                    text: "[TAG]"
+                                    colorInheritType: "COLOR_MULTIPLY_ALPHA_ONLY"
+                                    fitting: "FITTING_NONE"
+                                    align: ["LEFT", "VCENTER"]
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfContent"
+                    -   prototype: "ClanEmblem/ClanEmblem"
+                        name: "ClanEmblem"
+                        size: [32.000000, 32.000000]
+                        components:
+                            Background:
+                                drawType: "DRAW_SCALE_PROPORTIONAL"
+                                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                            Anchor:
+                                leftAnchorEnabled: true
+                                leftAnchor: 16.000000
+                                vCenterAnchorEnabled: true
+        -   class: "UIControl"
+            name: "Spacer"
+            size: [760.000000, 20.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 20.000000
+    -   class: "UIControl"
+        name: "LeftContainer"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 10.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   prototype: "TeamLiftLabel/HintLift"
+            name: "HintLift"
+            pivot: [1.000000, 0.000000]
+            visible: false
+            classes: "hint-bg=hint-with-bg direct=dialog-direct-left"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: -20.000000
+                    bottomAnchorEnabled: true
+                    bottomAnchor: 4.000000
+    -   class: "UIControl"
+        name: "RightContainer"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 10.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   prototype: "TeamLiftLabel/HintLift"
+            name: "HintLift"
+            visible: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: -20.000000
+                    bottomAnchorEnabled: true
+                    bottomAnchor: 4.000000
+-   class: "UIListCell"
+    name: "LoadingEntry"
+    size: [760.000000, 64.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 64.000000
+        StyleSheet:
+            styles: "~res:/UI/Screens/Fonts.yaml"
+    children:
+    -   class: "UIStaticText"
+        name: "Loading"
+        classes: "text1 text-color-blue"
+        components:
+            UITextComponent:
+                text: "Loading..."
+                align: ["HCENTER", "VCENTER"]
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+-   class: "UIListCell"
+    name: "AttemptEntry"
+    size: [1024.000000, 64.000000]
+    input: false
+    classes: ""
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            spacing: 5.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalValue: 80.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 64.000000
+        StyleSheet:
+            styles: "~res:/UI/Screens/Fonts.yaml;~res:/UI/Screens/CommonStyles.yaml;~res:/UI/Screens/Lobby/Tournament/IndependenceFonts.yaml"
+    children:
+    -   class: "UIControl"
+        name: "LineLeft"
+        size: [416.000000, 1.000000]
+        input: false
+        classes: "panel-background"
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+            Anchor:
+                leftAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 50.000000
+                verticalPolicy: "FixedSize"
+                verticalValue: 1.000000
+    -   class: "UIStaticText"
+        name: "AttemptTitle"
+        size: [182.000000, 64.000000]
+        classes: "text1 text-color-blue"
+        components:
+            UITextComponent:
+                text: "tournaments/TeamDescrScreen/Timetable/Subheader/Attempt"
+                colorInheritType: "COLOR_IGNORE_PARENT"
+            ClipContent: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "LineRight"
+        size: [416.000000, 1.000000]
+        input: false
+        classes: "panel-background"
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 50.000000
+                verticalPolicy: "FixedSize"
+                verticalValue: 1.000000

@@ -1,0 +1,30 @@
+#ensuredefined HIGHLIGHT_COLOR 0
+#ensuredefined HIGHLIGHT_WAVE_ANIM 0
+
+#if HIGHLIGHT_COLOR
+	[material][a] property float4 highlightColor = const1List4;
+#endif
+
+#if HIGHLIGHT_WAVE_ANIM
+	[material][a] property float waveMixColorTerm = 0.5;
+	[material][a] property float4 waveColor = const1List4;
+	[material][a] property float4 waveParams = const1List4; // offset, height, gap, smoothness
+#endif
+
+inline float4 getHighlightAnim(float4 color, float depth)
+{
+	#if HIGHLIGHT_COLOR
+		color *= highlightColor;
+	#endif
+
+	#if HIGHLIGHT_WAVE_ANIM
+		float wavePhase = depth - waveParams.x - waveParams.z;
+		float wave = (-wavePhase * step(waveParams.y + waveParams.z, wavePhase) + wavePhase) * (waveParams.w * (1.0 / waveParams.y));
+		float overShoot = max(wave - 1.0, 0.0);
+		wave += -overShoot * (wave + smoothstep(1.0, waveParams.w, wave)) + overShoot;
+
+		color = lerp(color, waveColor, wave * waveMixColorTerm);
+	#endif
+
+	return color;
+}

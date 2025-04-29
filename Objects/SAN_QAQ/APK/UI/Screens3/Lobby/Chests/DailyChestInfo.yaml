@@ -1,0 +1,339 @@
+Header:
+    version: 144
+Prototypes:
+-   class: "UIControl"
+    name: "DailyChestInfo"
+    size: [1589.000000, 785.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["int64", "dailyBonusUpdate", "0L", "0L"]
+            - ["bool", "purchaseAllowedForCountry", "true", "false"]
+            - ["DailyChest", "dailyChest", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["bool", "hasOpenedOverlays", "false", "true"]
+            - ["bool", "wasPushed", "true", "true"]
+            - ["bool", "showChances", "false", "true"]
+            - ["StuffResourceWithDescription", "stuff", "null", "{ }"]
+            events:
+            - "BACK_EVENT"
+            - "ON_REWARD_CLICKED"
+            - "ON_INFO_CLICKED"
+            - "ON_MAIN_REWARD_CLICKED"
+            - "ON_BUY_CLICKED"
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "canBeOpenedForFree", "not (dailyChest.chestData.freeChestsToOpen == 0)"]
+            - ["bool", "isOnCooldown", "dailyChest.chestData.openTime > session.serverTime"]
+            - ["bool", "chestLocked", "not canBeOpenedForFree or isOnCooldown"]
+            - ["bool", "purchaseAreAllowed", "purchaseAllowedForCountry or dailyChest.price.resources.Empty()"]
+            - ["bool", "canBuy", "not (dailyChest.chestData.paidChestsToOpen == 0) and purchaseAreAllowed and chestLocked"]
+            - ["string", "buttonCaption", "when canBuy -> \"#common:DialogButton/Buy\", \"#common:DialogButton/Open\""]
+            - ["int64", "openTime", "when not canBeOpenedForFree -> (when isOnCooldown -> max(dailyChest.chestData.openTime, dailyBonusUpdate), dailyBonusUpdate), dailyChest.chestData.openTime"]
+            - ["ResourceModel", "resourcesOrigin0", "when not isNull(dailyChest) and Size(dailyChest.price.resources) >= 1 -> dailyChest.price.resources[0], null"]
+            - ["ResourceModel", "resourcesOrigin1", "when not isNull(dailyChest) and Size(dailyChest.price.resources) >= 2 -> dailyChest.price.resources[1], null"]
+            - ["ResourceType", "currencyType0", "when canBuy and not isNull(dailyChest) and Size(dailyChest.price.resources) >= 1 -> dailyChest.price.resources[0].type, ResourceType.undefined"]
+            - ["ResourceType", "currencyType1", "when canBuy and not isNull(dailyChest) and Size(dailyChest.price.resources) >= 2 -> dailyChest.price.resources[1].type, ResourceType.undefined"]
+            - ["bool", "isCurrency0Exist", "when currencyType0 == ResourceType.stuff -> Contains(session.artefacts.artefactIds, dailyChest.price.resources[0].name), not (indexOf(session.stats.resources, \"type\", currencyType0) == -1)"]
+            - ["bool", "isCurrency1Exist", "when currencyType1 == ResourceType.stuff -> Contains(session.artefacts.artefactIds, dailyChest.price.resources[1].name), not (indexOf(session.stats.resources, \"type\", currencyType1) == -1)"]
+            - ["int", "quantity0", "when currencyType0 == ResourceType.stuff and isCurrency0Exist -> session.artefacts.artefactIds[dailyChest.price.resources[0].name], when isCurrency0Exist -> session.stats.resources[indexOf(session.stats.resources, \"type\", currencyType0)].quantity, 0"]
+            - ["int", "quantity1", "when currencyType1 == ResourceType.stuff and isCurrency1Exist -> session.artefacts.artefactIds[dailyChest.price.resources[1].name], when isCurrency1Exist -> session.stats.resources[indexOf(session.stats.resources, \"type\", currencyType1)].quantity, 0"]
+            - ["ResourceModel", "currency0", "{ \"quantity\" = quantity0; \"type\" = currencyType0; \"grade\" = (when not isNull(resourcesOrigin0) -> resourcesOrigin0.grade, ArtefactGrade.rare); \"icon\" = (when not isNull(resourcesOrigin0) -> resourcesOrigin0.icon, \"\"); \"iconUrl\" = (when not isNull(resourcesOrigin0) -> resourcesOrigin0.iconUrl, \"\"); \"showGrade\" = (when not isNull(resourcesOrigin0) -> resourcesOrigin0.showGrade, false); \"isAvatar\" = (when not isNull(resourcesOrigin0) -> resourcesOrigin0.isAvatar, false); \"name\" = (when not isNull(resourcesOrigin0) -> resourcesOrigin0.name, \"\"); }"]
+            - ["ResourceModel", "currency1", "{ \"quantity\" = quantity1; \"type\" = currencyType1; \"grade\" = (when not isNull(resourcesOrigin1) -> resourcesOrigin1.grade, ArtefactGrade.rare); \"icon\" = (when not isNull(resourcesOrigin1) -> resourcesOrigin1.icon, \"\"); \"iconUrl\" = (when not isNull(resourcesOrigin1) -> resourcesOrigin1.iconUrl, \"\"); \"showGrade\" = (when not isNull(resourcesOrigin1) -> resourcesOrigin1.showGrade, false); \"isAvatar\" = (when not isNull(resourcesOrigin1) -> resourcesOrigin1.isAvatar, false); \"name\" = (when not isNull(resourcesOrigin1) -> resourcesOrigin1.name, \"\"); }"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Chests/DailyChestInfo.actions"
+    children:
+    -   class: "UIControl"
+        name: "Overlay"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Chests/ChestInfo.yaml"
+                args:
+                    "headerCurrencies": "[ currency0; currency1; ]"
+                    "session": "session"
+                    "footerHeight": "106"
+                    "additionalLeftContent": "when chestLocked -> FreeTimer, dailyChest.chestData.freeChestsToOpen > 0 -> FreeLeft, null"
+                    "footer": "Footer"
+                    "hasOpenedOverlays": "hasOpenedOverlays"
+                    "wasPushed": "wasPushed"
+                    "showChances": "showChances"
+                    "stuff": "stuff"
+                eventActions:
+                - ["BACK_EVENT", "BACK_EVENT", ""]
+                - ["ON_MAIN_REWARD_CLICKED", "ON_MAIN_REWARD_CLICKED", ""]
+                - ["ON_INFO_CLICKED", "ON_INFO_CLICKED", ""]
+                - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_event.resource, _event.name"]
+                - ["EXTRA2_ACTION", "MainActionRequested", ""]
+    -   class: "UIControl"
+        name: "NavigationPanel"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "isGamepad"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/NavigationPanel.yaml"
+                args:
+                    "content": "NavigationPanel"
+Slots:
+-   class: "UIControl"
+    name: "Footer"
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+            padding: "24"
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "when parent < 1200 -> 832, 1072"
+            verticalPolicy: "PercentOfChildrenSum"
+    children:
+    -   class: "UIControl"
+        name: "ButtonWrapper"
+        input: false
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 10.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfLastChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "Price"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    condition: "canBuy"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/Price.yaml"
+                    args:
+                        "stats": "session.stats"
+                        "artefacts": "session.artefacts"
+                        "priceGet": "{ }"
+                        "pricePay": "dailyChest.price"
+                UIJoypadComponent: {}
+                UIIdentifierComponent:
+                    id: "chest_price"
+                    params:
+                    - ["bool", "can_buy", "canBuy"]
+            bindings:
+            - ["visible", "canBuy"]
+        -   class: "UIControl"
+            name: "BuyButton"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProductButton.yaml"
+                    args:
+                        "enabled": "canBuy or not chestLocked"
+                        "width": "274"
+                        "buttonType": "eButtonType.POSITIVE"
+                        "caption": "buttonCaption"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_BUY_CLICKED", "canBuy"]
+                UIIdentifierComponent:
+                    id: "chest_open"
+-   class: "UIControl"
+    name: "FreeTimer"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 0.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 32.000000
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "3"
+            LinearLayout:
+                padding: "4"
+                spacing: 8.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "FixedSize"
+                verticalValue: 32.000000
+        children:
+        -   class: "UIControl"
+            name: "text"
+            input: false
+            classes: "t-subtitle regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    align: ["LEFT", "VCENTER"]
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(\"activities/BonusContainers/Timer\")"]
+        -   class: "UIControl"
+            name: "timer"
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Timer.yaml"
+                    args:
+                        "time": "openTime"
+                        "serverTime": "session.serverTime"
+                        "timerSize": "eTimerSize.Medium"
+                        "blurScale": "0.000000"
+-   class: "UIControl"
+    name: "FreeLeft"
+    input: false
+    components:
+        Background:
+            usePostProcessedSprite: true
+        UIPostProcessTextureComponent0:
+            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+            needClearAlphaAfterRender: true
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent1:
+            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent2:
+            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIRoundedCornersComponent:
+            radius: "4"
+        LinearLayout:
+            padding: "4"
+            spacing: 8.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "FixedSize"
+            verticalValue: 32.000000
+    children:
+    -   class: "UIControl"
+        name: "text"
+        input: false
+        classes: "t-subtitle regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "localize(\"activities/BonusContainers/ContainersLeft\")"]
+    -   class: "UIControl"
+        name: "count"
+        input: false
+        classes: "t-subtitle regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "str(dailyChest.chestData.freeChestsToOpen)"]
+-   class: "UIControl"
+    name: "NavigationPanel"
+    input: false
+    components:
+        LinearLayout:
+            spacing: 24.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "Back"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Lobby/Back\""
+                    "icon": "eNintendoSwitchControls.B"
+    -   class: "UIControl"
+        name: "Information"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "buttonCaption"
+                    "icon": "eNintendoSwitchControls.Y"

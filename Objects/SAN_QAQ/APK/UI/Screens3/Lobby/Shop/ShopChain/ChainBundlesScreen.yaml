@@ -1,0 +1,374 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Common/HorizontalScrollBar.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ChainBundlesScreen"
+    size: [2000.000000, 1050.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Shop/ShopChain/ChainBundlesScreenInit.animation"
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+        UILayoutEventComponent:
+            sizeChangedEvent: "SCREEN_SIZE_CHANGED"
+            sizeChangedEventData: "_size"
+        ModalInput: {}
+        UIDataParamsComponent:
+            params:
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["ChainBundlesScreenData", "viewData", "null", "{ }"]
+            - ["ShopChain", "chain", "null", "{ \"name\" = \"Test-Chain-title\"; \"products\" = [ { \"name\" = \"bundle-1\"; \"bonus\" = { \"amount\" = 111; }; \"chainLockerTimes\" = 0; }; { \"name\" = \"bundle-2\"; \"bonus\" = { \"amount\" = 111; }; \"chainLockerTimes\" = 0; }; { \"name\" = \"bundle-3\"; \"bonus\" = { \"amount\" = 111; }; \"chainLockerTimes\" = 1; }; ]; }"]
+            - ["bool", "arabicLocalization", "false", "true"]
+            - ["ResourceModel", "blackTicket", "{ \"type\" = ResourceType.stuff; \"icon\" = \"~res:/Gfx/UI/StorageItemIcons/TopUp2017/black_ticket\"; }", "{ \"type\" = ResourceType.stuff; \"icon\" = \"~res:/Gfx/UI/StorageItemIcons/TopUp2017/black_ticket\"; \"quantity\" = 99999; }"]
+            events:
+            - "ON_PRODUCT_CLICKED(int id)"
+            - "ON_CHINA_WARNING_SHOW"
+            - "ON_BLACK_TICKET_CLICKED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "centerIndex", "0"]
+            - ["bool", "isChina", "when not isNull(app) -> app.netease.neteaseAvailable, false"]
+            - ["bool", "initializationEnded", "false"]
+            - ["int", "productWidth", "240"]
+            - ["int", "productHeight", "400"]
+            - ["int", "lockerWidth", "88"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Shop/ShopChain/ChainBundlesScreen.actions"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "viewData.currentIndex"
+            ifExpression: "initializationEnded and centerIndex != viewData.currentIndex"
+            eventName: "SCROLL_TO_NEW_INDEX"
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+            UIUrlImageComponent:
+                checkUpdate: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["UIUrlImageComponent.imageUrl", "when not isNull(viewData) -> viewData.backgroundUrl, \"\""]
+        children:
+        -   class: "UIParticles"
+            name: "Particle"
+            position: [1454.000000, 881.000000]
+            size: [32.000000, 32.000000]
+            pivot: [0.500000, 0.500000]
+            angle: -60.000000
+            input: false
+            effectPath: "~res:/3d/FX/UI/Shop/shop-2-0/light_ray.sc2"
+            autoStart: true
+    -   class: "UIControl"
+        name: "ContentWrapper"
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "BaseHeader"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    condition: "not isNull(session) and not isNull(lobby)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Headers/BaseHeader.yaml"
+                    args:
+                        "isBackButtonHasSounds": "false"
+                        "session": "session"
+                        "bgStyle": "\"black-15-bg\""
+                        "lobby": "lobby"
+                        "leftContent": "ChainBundlesHeader"
+                        "showBackButton": "true"
+                        "isFullScreen": "true"
+                        "statsPanelAdditionalContent": "BlacketPanel"
+                        "showPremium": "false"
+                        "showShopButton": "false"
+                    eventActions:
+                    - ["SHOP_BUTTON", "SHOP_BUTTON", "_event.requiredResource"]
+                    - ["BACK_EVENT", "BACK_ACTION", ""]
+        -   class: "UIControl"
+            name: "Content"
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 0.000000
+                    dynamicSpacing: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Spacer"
+                size: [0.000000, 100.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 30.000000
+            -   class: "UIControl"
+                name: "TitleWrapper"
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 20.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "ChainBundlesName"
+                    input: false
+                    classes: "t-title bold white-wild-sand-text"
+                    components:
+                        UITextComponent: {}
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            topAnchorEnabled: true
+                            vCenterAnchorEnabled: false
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "when isNull(chain) -> localize(\"ChainBundles/Title\"), localize(chain.name)"]
+                -   class: "UIControl"
+                    name: "Timer"
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            topAnchorEnabled: true
+                            vCenterAnchorEnabled: false
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIChildComponent0:
+                            condition: "chain.promoExpiresAt > 0"
+                            prototypePath: "~res:/UI/Screens3/Lobby/Common/Timer.yaml"
+                            args:
+                                "bgVisible": "true"
+                                "bgColorStyle": "\"grey-shark-60-bg\""
+                                "serverTime": "session.serverTime"
+                                "time": "chain.promoExpiresAt"
+                                "alertTime": "3600L"
+            -   class: "UIControl"
+                name: "Spacer"
+                size: [0.000000, 100.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIControl"
+                    name: "HorizontalScrollView"
+                    size: [200.000000, 200.000000]
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                            bottomAnchorEnabled: false
+                        LinearLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "LeftSafeAreeSpacer"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "Formula"
+                                horizontalFormula: "when safeAreaInsets.left == 0 -> 16, safeAreaInsets.left"
+                                verticalPolicy: "PercentOfParent"
+                    -   class: "UIControl"
+                        name: "SafeScrollArea"
+                        input: false
+                        components:
+                            Anchor:
+                                bottomAnchorEnabled: true
+                            LinearLayout:
+                                orientation: "TopDown"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIScrollView"
+                            name: "ScrollArea"
+                            autoUpdate: true
+                            centerContent: true
+                            components:
+                                Background:
+                                    usePostProcessedSprite: true
+                                UIPostProcessTextureComponent0:
+                                    materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                                    needClearAlphaAfterRender: true
+                                    scale: 0.500000
+                                    useVirtualCoordinateSystem: true
+                                    minFilter: "Linear"
+                                    magFilter: "Linear"
+                                UIPostProcessTextureComponent1:
+                                    materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                                    scale: 0.500000
+                                    useVirtualCoordinateSystem: true
+                                    minFilter: "Linear"
+                                    magFilter: "Linear"
+                                UIPostProcessTextureComponent2:
+                                    materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                                    scale: 0.500000
+                                    useVirtualCoordinateSystem: true
+                                    minFilter: "Linear"
+                                    magFilter: "Linear"
+                                UIRoundedCornersComponent:
+                                    radius: "8"
+                                ClipContent:
+                                    enabled: false
+                                Anchor:
+                                    bottomAnchorEnabled: true
+                                    bottomAnchor: 10.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfMaxChild"
+                            children:
+                            -   class: "UIScrollViewContainer"
+                                name: "scrollContainerControl"
+                                refreshStylesOnInteract: false
+                                scrollDirection: "kHorizontal"
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfLastChild"
+                                        verticalPolicy: "PercentOfMaxChild"
+                                children:
+                                -   class: "UIControl"
+                                    name: "ShopChainBundle"
+                                    input: false
+                                    components:
+                                        LinearLayout: {}
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            verticalPolicy: "FixedSize"
+                                        UIRepeatComponent:
+                                            control: "~res:/UI/Screens3/Lobby/Shop/ShopChain/ShopChainBundle.yaml"
+                                            dataContainer: "chain.products"
+                                            args:
+                                                "index": "_index"
+                                                "selected": "viewData.currentIndex == _index"
+                                                "product": "_item"
+                                                "isChina": "isChina"
+                                                "serverTime": "session.serverTime"
+                                                "arabicLocalization": "arabicLocalization"
+                                                "isAtLeastMediumDevice": "viewData.isAtLeastMediumDevice"
+                                                "initializationEnded": "initializationEnded"
+                                                "productWidth": "productWidth"
+                                                "lockerWidth": "lockerWidth"
+                                            eventActions:
+                                            - ["ON_PRODUCT_CLICKED", "ON_PRODUCT_CLICKED", "_event.id"]
+                                            elementNameExpression: "\"index_\" + str(_index)"
+                                    bindings:
+                                    - ["SizePolicy.horizontalValue", "(productWidth + lockerWidth) * chain.products.Size() - lockerWidth"]
+                                    - ["SizePolicy.verticalValue", "productHeight"]
+                        -   class: "UIControl"
+                            name: "Spacer"
+                            size: [1968.000000, 30.000000]
+                            input: false
+                            components:
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 30.000000
+                        -   prototype: "HorizontalScrollBar/HorizontalScrollBar"
+                            name: "HorizontalScrollBar"
+                            components:
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                    rightAnchorEnabled: true
+                                    bottomAnchorEnabled: true
+                                UIScrollBarComponent:
+                                    delegate: "../ScrollArea"
+                    -   class: "UIControl"
+                        name: "RightSafeAreeSpacer"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "Formula"
+                                horizontalFormula: "when safeAreaInsets.right == 0 -> 16, safeAreaInsets.right"
+                                verticalPolicy: "PercentOfParent"
+Slots:
+-   class: "UIControl"
+    name: "ChainBundlesHeader"
+    size: [300.000000, 20.000000]
+    input: false
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "NeteaseWarning"
+        input: true
+        classes: "t-caption regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfParent"
+            UIAttachLayoutMasterComponent:
+                attachId: "CHINA_SHOP_WARNING_ID"
+            UIInputEventComponent:
+                onTouchUpInside: "ON_CHINA_WARNING_SHOW"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "isChina"]
+        - ["UITextComponent.text", "localize(\"ChinaShopWarning/Header\")"]
+-   class: "UIControl"
+    name: "BlacketPanel"
+    input: false
+    components:
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+        UIChildComponent0:
+            condition: "isChina"
+            prototypePath: "~res:/UI/Screens3/Lobby/StatsInfoPanelItem.yaml"
+            args:
+                "resource": "blackTicket"
+            eventActions:
+            - ["ON_STATS_ITEM_PRESSED", "ON_BLACK_TICKET_CLICKED", ""]

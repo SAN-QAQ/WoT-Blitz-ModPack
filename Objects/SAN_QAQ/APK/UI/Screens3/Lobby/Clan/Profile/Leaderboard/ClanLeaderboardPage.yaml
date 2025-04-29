@@ -1,0 +1,99 @@
+Header:
+    version: 151
+Prototypes:
+-   class: "UIControl"
+    name: "ClanLeaderboardPage"
+    size: [640.000000, 200.000000]
+    input: false
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["float", "position", "0.000000", "0.000000"]
+            - ["float", "score1", "0.000000", "0.500000"]
+            - ["float", "score2", "0.000000", "0.300000"]
+            - ["float", "score3", "0.000000", "0.100000"]
+            - ["float", "scoreMax", "0.000000", "1.000000"]
+            - ["ClanProfileLeaderboard", "leaderboard", "null", "{ }"]
+            - ["string", "rightControlPath", "\"\"", "\"~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardWinrateScore.yaml\""]
+    bindings:
+    - ["Anchor.leftAnchor", "position"]
+    children:
+    -   class: "UIControl"
+        name: "Items"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                dynamicPadding: true
+                spacing: 8.000000
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "max(parent, childrenSum)"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "Top2"
+            input: false
+            components:
+                Anchor:
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardItem.yaml"
+                    args:
+                        "playerInfo": "when leaderboard.members.Size() > 1 -> leaderboard.members[1].playerInfo, null"
+                        "place": "2"
+                        "proportion": "0.500000"
+                        "startColor": "rgba(235, 118, 53, 0.500000)"
+                        "endColor": "rgba(217, 98, 47, 0.050000)"
+                        "rightContent": "when rightControlPath != \"\" and leaderboard.members.Size() > 1 -> control(rightControlPath, { \"member\" = leaderboard.members[1]; }, [ ]), null"
+                        "session": "session"
+        -   class: "UIControl"
+            name: "Top1"
+            position: [216.000000, 0.000000]
+            input: false
+            components:
+                Anchor:
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardItem.yaml"
+                    args:
+                        "playerInfo": "when leaderboard.members.Size() > 0 -> leaderboard.members[0].playerInfo, null"
+                        "place": "1"
+                        "proportion": "1.000000"
+                        "startColor": "rgba(255, 194, 38, 0.500000)"
+                        "endColor": "rgba(255, 194, 38, 0.050000)"
+                        "rightContent": "when rightControlPath != \"\" and leaderboard.members.Size() > 0 -> control(rightControlPath, { \"member\" = leaderboard.members[0]; }, [ ]), null"
+                        "session": "session"
+        -   class: "UIControl"
+            name: "Top3"
+            input: false
+            components:
+                Anchor:
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/Leaderboard/ClanLeaderboardItem.yaml"
+                    args:
+                        "playerInfo": "when leaderboard.members.Size() > 2 -> leaderboard.members[2].playerInfo, null"
+                        "place": "3"
+                        "proportion": "0.100000"
+                        "startColor": "rgba(202, 54, 54, 0.500000)"
+                        "endColor": "rgba(154, 53, 53, 0.050000)"
+                        "rightContent": "when rightControlPath != \"\" and leaderboard.members.Size() > 2 -> control(rightControlPath, { \"member\" = leaderboard.members[2]; }, [ ]), null"
+                        "session": "session"

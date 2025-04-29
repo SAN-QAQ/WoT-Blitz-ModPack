@@ -1,0 +1,6 @@
+1
+texture0.packed.webp
+232 53
+2
+0 0 232 53 0 0 0 frame0
+232 0 232 53 0 0 0 frame1

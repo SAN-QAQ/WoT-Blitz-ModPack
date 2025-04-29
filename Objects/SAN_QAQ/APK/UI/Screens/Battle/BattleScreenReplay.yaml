@@ -1,0 +1,642 @@
+Header:
+    version: 125
+ImportedPackages:
+- "~res:/UI/Screens/Common/BgRounded.yaml"
+- "~res:/UI/Styles/ColorStyles.yaml"
+- "~res:/UI/Styles/ButtonStyle.yaml"
+- "~res:/UI/Screens3/Battle/BattleScreen.yaml"
+- "~res:/UI/Styles/ButtonSoundStyles.yaml"
+- "~res:/UI/Screens/Common/StyledBackButton.yaml"
+- "~res:/UI/Screens/Battle/HotKey.yaml"
+StyleSheets:
+-   selectors:
+    - ".time-slider-bg"
+    properties:
+        bg-drawType: "DRAW_FILL"
+        bg-color: [0.807843, 0.807843, 0.807843, 1.000000]
+-   selectors:
+    - ".time-progress-bg"
+    properties:
+        bg-drawType: "DRAW_FILL"
+        bg-color: [0.313726, 0.827451, 0.019608, 1.000000]
+-   selectors:
+    - ".paused"
+    properties:
+        bg-frame: 1
+-   selectors:
+    - ".hudButtonStateHudVisible"
+    properties:
+        bg-frame: 1
+-   selectors:
+    - ".hudButtonStateHudHidden"
+    properties:
+        bg-frame: 0
+Prototypes:
+-   class: "UIControl"
+    name: "ActionsPopupButton"
+    size: [200.000000, 60.000000]
+    exclusiveInput: true
+    classes: "button"
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Battle/BattleScreenReplay.yaml"
+    children:
+    -   class: "UIStaticText"
+        name: "Text"
+        size: [200.000000, 32.000000]
+        classes: "header3 text-color-white"
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            StyleSheet:
+                styles: "~res:/UI/Screens/Fonts.yaml"
+-   class: "UIControl"
+    name: "VideoCommentMark"
+    size: [25.000000, 25.000000]
+    input: false
+    components:
+        Background:
+            sprite: "~res:/Gfx/UI/ReplayHUD/video_coment_mark"
+            color: [0.152941, 1.000000, 0.180392, 1.000000]
+        Anchor:
+            topAnchorEnabled: true
+            topAnchor: -15.000000
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Battle/BattleScreenReplay.yaml;~res:/UI/Screens/Fonts.yaml"
+-   class: "UIControl"
+    name: "BubbleComment"
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_STRETCH_BOTH"
+            sprite: "~res:/Gfx/UI/ReplayHUD/popup_new_replay"
+            frame: 1
+            color: [1.000000, 0.972549, 0.760784, 1.000000]
+            leftRightStretchCap: 5.000000
+            topBottomStretchCap: 5.000000
+        Anchor:
+            topAnchorEnabled: false
+            bottomAnchorEnabled: true
+            bottomAnchor: 45.000000
+        LinearLayout:
+            enabled: true
+            padding: "5.000000"
+            spacing: 20.000000
+            skipInvisible: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            horizontalMax: 975.000000
+            verticalPolicy: "PercentOfChildrenSum"
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Battle/BattleScreenReplay.yaml"
+    children:
+    -   class: "UIControl"
+        name: "ArrowComment"
+        position: [11.000000, 40.000000]
+        size: [40.000000, 17.000000]
+        input: false
+        components:
+            Background:
+                sprite: "~res:/Gfx/UI/ReplayHUD/popup_triangle_replay"
+                color: [1.000000, 0.972549, 0.760784, 1.000000]
+            Anchor:
+                hCenterAnchorEnabled: false
+                vCenterAnchorEnabled: false
+                bottomAnchorEnabled: true
+                bottomAnchor: -17.000000
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+    -   class: "UIControl"
+        name: "Container"
+        position: [5.000000, 0.000000]
+        size: [52.000000, 40.000000]
+        input: false
+        components:
+            LinearLayout:
+                padding: "5.000000"
+                spacing: 5.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "Text"
+            position: [5.000000, 0.000000]
+            size: [1.000000, 40.000000]
+            visible: true
+            input: false
+            components:
+                Background:
+                    align: ["HCENTER", "VCENTER"]
+                LinearLayout:
+                    enabled: true
+                    orientation: "TopDown"
+                    padding: "10.000000"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    horizontalMin: 1.000000
+                    verticalPolicy: "PercentOfChildrenSum"
+                    verticalMin: 40.000000
+            children:
+            -   class: "UIStaticText"
+                name: "TextComment"
+                position: [0.000000, 10.000000]
+                size: [1.000000, 0.000000]
+                visible: true
+                classes: "text1 text-color-white"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        multiline: "MULTILINE_ENABLED"
+                        align: ["LEFT", "VCENTER"]
+                    Anchor:
+                        enabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        horizontalMin: 1.000000
+                        horizontalMax: 850.000000
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens/Fonts.yaml"
+        -   class: "UIControl"
+            name: "IcoEdit"
+            position: [11.000000, 4.000000]
+            size: [30.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    sprite: "~res:/Gfx/UI/ReplayHUD/mark_icon"
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "Ignore"
+        -   class: "UIControl"
+            name: "Spacer"
+            size: [1.000000, 0.000000]
+            input: false
+-   prototype: "BattleScreen/Screen"
+    name: "Screen"
+    components:
+        UIDataParamsComponent:
+            params:
+            - ["ReplayHudModel", "replayHudModel", "{ }", "{ }"]
+            events:
+            - "CAMERA_CHANGED(bool isCameraOn)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "replayRewindIndex", "128"]
+            - ["int", "replayForwardIndex", "129"]
+            - ["int", "replayPauseIndex", "130"]
+            - ["int", "replaySlowdownIndex", "131"]
+            - ["int", "replaySpeedupIndex", "132"]
+            - ["int", "replayToggleBattleHudIndex", "134"]
+            - ["int", "switchFreeCameraIndex", "153"]
+            - ["vector<PlaybackMultiplier>", "multipliers", "[ { \"multiplier\" = 1.000000; \"text\" = \"1x\"; }; { \"multiplier\" = 0.500000; \"text\" = \"1/2x\"; }; { \"multiplier\" = 0.250000; \"text\" = \"1/4x\"; }; { \"multiplier\" = 0.125000; \"text\" = \"1/8x\"; }; { \"multiplier\" = 0.062500; \"text\" = \"1/16x\"; }; ]"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["ReplayKeyInfo", "replayRewindKey", "when replayHudModel.replayKeys.Contains(replayRewindIndex) -> replayHudModel.replayKeys[replayRewindIndex], null"]
+            - ["ReplayKeyInfo", "replayForwardKey", "when replayHudModel.replayKeys.Contains(replayForwardIndex) -> replayHudModel.replayKeys[replayForwardIndex], null"]
+            - ["ReplayKeyInfo", "replayPauseKey", "when replayHudModel.replayKeys.Contains(replayPauseIndex) -> replayHudModel.replayKeys[replayPauseIndex], null"]
+            - ["ReplayKeyInfo", "replaySlowdownKey", "when replayHudModel.replayKeys.Contains(replaySlowdownIndex) -> replayHudModel.replayKeys[replaySlowdownIndex], null"]
+            - ["ReplayKeyInfo", "replaySpeedupKey", "when replayHudModel.replayKeys.Contains(replaySpeedupIndex) -> replayHudModel.replayKeys[replaySpeedupIndex], null"]
+            - ["ReplayKeyInfo", "hudInfoKey", "when replayHudModel.replayKeys.Contains(replayToggleBattleHudIndex) -> replayHudModel.replayKeys[replayToggleBattleHudIndex], null"]
+            - ["ReplayKeyInfo", "switchFreeCameraKey", "when replayHudModel.replayKeys.Contains(switchFreeCameraIndex) -> replayHudModel.replayKeys[switchFreeCameraIndex], null"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Battle/Replay/BattleScreenReplay.actions"
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Battle/BattleScreenReplay.yaml"
+    children:
+    -   class: "UIControl"
+        name: "HUDReplayLayer"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                bottomAnchorEnabled: true
+        children:
+        -   prototype: "StyledBackButton/StyledBackButton"
+            name: "BackButton"
+            classes: "button button-color-gray button-close-sound"
+            components:
+                UIInputEventComponent:
+                    onTouchUpInside: "ON_BACK"
+        -   prototype: "BgRounded/BgRounded6px"
+            name: "HUDReplay"
+            position: [0.000000, 505.000000]
+            size: [960.000000, 134.000000]
+            input: true
+            classes: "color-black-semitransparent"
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 134.000000
+                UIAnchorSafeAreaComponent:
+                    leftSafeInset: "INSET"
+                    rightSafeInset: "INSET"
+                    bottomSafeInset: "INSET"
+            children:
+            -   class: "UIControl"
+                name: "ContainerAll"
+                position: [0.000000, 20.000000]
+                input: false
+                components:
+                    Anchor:
+                        topAnchorEnabled: true
+                        topAnchor: 20.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 20.000000
+                    LinearLayout:
+                        orientation: "TopDown"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIControl"
+                    name: "BgForSlider"
+                    position: [25.000000, 0.000000]
+                    size: [910.000000, 45.000000]
+                    input: false
+                    classes: ""
+                    components:
+                        Anchor:
+                            enabled: true
+                            leftAnchorEnabled: true
+                            leftAnchor: 25.000000
+                            hCenterAnchorEnabled: false
+                            rightAnchorEnabled: true
+                            rightAnchor: 25.000000
+                        LinearLayout:
+                            enabled: true
+                            dynamicPadding: false
+                            spacing: 25.000000
+                            skipInvisible: true
+                    children:
+                    -   class: "UIStaticText"
+                        name: "TimeNow"
+                        position: [0.000000, 0.000000]
+                        size: [61.000000, 24.000000]
+                        classes: "header4 text-color-blue"
+                        components:
+                            UITextComponent:
+                                text: "00:00"
+                                colorInheritType: "COLOR_IGNORE_PARENT"
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                topAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 60.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 30.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens/Fonts.yaml"
+                    -   class: "UIControl"
+                        name: "SliderContainer"
+                        size: [738.000000, 32.000000]
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                        children:
+                        -   prototype: "BubbleComment"
+                            name: "BubbleComment"
+                            position: [171.000000, -53.000000]
+                            visible: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: false
+                        -   class: "UISlider"
+                            name: "Slider"
+                            size: [738.000000, 32.000000]
+                            components:
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                    rightAnchorEnabled: true
+                                    bottomAnchorEnabled: true
+                            children:
+                            -   class: "UIControl"
+                                name: "ProgressAll"
+                                size: [738.000000, 4.000000]
+                                visible: true
+                                input: false
+                                classes: "time-slider-bg"
+                                components:
+                                    Background:
+                                        drawType: "DRAW_FILL"
+                                    Anchor:
+                                        enabled: true
+                                        leftAnchorEnabled: true
+                                        rightAnchorEnabled: true
+                                        vCenterAnchorEnabled: true
+                                children:
+                                -   class: "UIControl"
+                                    name: "ProgressCurrent"
+                                    size: [664.200012, 4.000000]
+                                    input: false
+                                    classes: "time-progress-bg"
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_FILL"
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfParent"
+                                            horizontalValue: 90.000000
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 4.000000
+                            -   class: "UIControl"
+                                name: "thumbSpriteControl"
+                                position: [0.000000, 16.000000]
+                                pivot: [0.500000, 0.500000]
+                                input: false
+                                components:
+                                    Background:
+                                        sprite: "~res:/Gfx/UI/ReplayHUD/video_mark"
+                                        colorInherit: "COLOR_REPLACE_ALPHA_ONLY"
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                        -   prototype: "VideoCommentMark"
+                            name: "VideoCommentMark"
+                            position: [20.000000, -15.000000]
+                            visible: false
+                    -   class: "UIStaticText"
+                        name: "TimeAll"
+                        position: [849.000000, 0.000000]
+                        size: [61.000000, 24.000000]
+                        classes: "header4 text-color-blue"
+                        components:
+                            UITextComponent:
+                                text: "00:05"
+                                colorInheritType: "COLOR_IGNORE_PARENT"
+                            Anchor:
+                                leftAnchorEnabled: false
+                                leftAnchor: 0.000000
+                                rightAnchorEnabled: true
+                                topAnchorEnabled: true
+                                topAnchor: 0.000000
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 60.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 30.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens/Fonts.yaml"
+                -   class: "UIControl"
+                    name: "ContainerForButtons"
+                    position: [25.000000, 45.000000]
+                    size: [910.000000, 40.000000]
+                    input: false
+                    components:
+                        Anchor:
+                            enabled: true
+                            leftAnchorEnabled: true
+                            leftAnchor: 25.000000
+                            rightAnchorEnabled: true
+                            rightAnchor: 25.000000
+                    children:
+                    -   class: "UIControl"
+                        name: "CameraModSelector"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            Anchor:
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfMaxChild"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens/Battle/CameraModSelector.yaml"
+                                args:
+                                    "enabled": "when not isNull(switchFreeCameraKey) -> switchFreeCameraKey.isEnabled, false"
+                                    "hotKeyText": "when not isNull(switchFreeCameraKey) -> switchFreeCameraKey.value, \"\""
+                                eventActions:
+                                - ["CAMERA_STATE_CHANGED", "CAMERA_CHANGED", "_event.isCameraOn"]
+                        bindings:
+                        - ["visible", "when not isNull(switchFreeCameraKey) -> switchFreeCameraKey.isVisible, false"]
+                    -   class: "UIControl"
+                        name: "GroupButtonsControl"
+                        size: [375.000000, 40.000000]
+                        input: false
+                        components:
+                            Anchor:
+                                enabled: true
+                                hCenterAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            LinearLayout:
+                                spacing: 64.000000
+                                skipInvisible: false
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfMaxChild"
+                        children:
+                        -   class: "UIControl"
+                            name: "ButtonLeft"
+                            position: [0.000000, 0.000000]
+                            size: [50.000000, 50.000000]
+                            classes: "button button-choose-sound"
+                            visible: true
+                            components:
+                                Background:
+                                    drawType: "DRAW_ALIGNED"
+                                    sprite: "~res:/Gfx/UI/ReplayHUD/video_controls"
+                                    perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                Anchor:
+                                    enabled: true
+                                    vCenterAnchorEnabled: true
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_REWIND"
+                                Sound: {}
+                            children:
+                            -   prototype: "HotKey/HotKey"
+                                name: "HotKey"
+                                position: [50.000000, 119.000000]
+                                components:
+                                    Background:
+                                        colorInherit: "COLOR_IGNORE_PARENT"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        topAnchorEnabled: true
+                                        topAnchor: 46.000000
+                                children:
+                                -   path: "text"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "replayRewindKey.value"]
+                        -   class: "UIControl"
+                            name: "ButtonPlay"
+                            position: [84.000000, 4.000000]
+                            size: [50.000000, 50.000000]
+                            classes: "button button-open-sound"
+                            components:
+                                Background:
+                                    sprite: "~res:/Gfx/UI/ReplayCommon/play_icon"
+                                    perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_PLAY_TOGGLE"
+                                Sound: {}
+                            bindings:
+                            - ["visible", "when not isNull(replayPauseKey) -> replayPauseKey.isVisible, false"]
+                            children:
+                            -   prototype: "HotKey/HotKey"
+                                name: "HotKey"
+                                position: [50.000000, 119.000000]
+                                components:
+                                    Background:
+                                        colorInherit: "COLOR_IGNORE_PARENT"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        bottomAnchorEnabled: true
+                                        bottomAnchor: -18.000000
+                                children:
+                                -   path: "text"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "when not isNull(replayPauseKey) -> replayPauseKey.value, \"\""]
+                        -   class: "UIControl"
+                            name: "ButtonRight"
+                            position: [168.000000, 4.000000]
+                            size: [50.000000, 50.000000]
+                            classes: "button button-choose-sound"
+                            visible: true
+                            components:
+                                Background:
+                                    drawType: "DRAW_ALIGNED"
+                                    sprite: "~res:/Gfx/UI/ReplayHUD/video_controls"
+                                    frame: 1
+                                    perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_FAST_FORWARD"
+                                Sound: {}
+                            children:
+                            -   prototype: "HotKey/HotKey"
+                                name: "HotKey"
+                                position: [50.000000, 119.000000]
+                                components:
+                                    Background:
+                                        colorInherit: "COLOR_IGNORE_PARENT"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        bottomAnchorEnabled: true
+                                        bottomAnchor: -18.000000
+                                children:
+                                -   path: "text"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "replayForwardKey.value"]
+                    -   class: "UIControl"
+                        name: "RightButtonsContainer"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            Anchor:
+                                rightAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            LinearLayout:
+                                spacing: 15.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfMaxChild"
+                        children:
+                        -   class: "UIControl"
+                            name: "PlaybackMultiplier"
+                            size: [32.000000, 32.000000]
+                            visible: true
+                            components:
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 56.000000
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIChildComponent0:
+                                    condition: "true"
+                                    prototypePath: "~res:/UI/Screens3/Battle/Replay/PlaybackSpeedPanel.yaml"
+                                    args:
+                                        "values": "multipliers"
+                            children:
+                            -   prototype: "HotKey/HotKey"
+                                name: "HotKey"
+                                position: [50.000000, 119.000000]
+                                components:
+                                    Background:
+                                        colorInherit: "COLOR_IGNORE_PARENT"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        bottomAnchorEnabled: true
+                                        bottomAnchor: -18.000000
+                                children:
+                                -   path: "text"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "replaySpeedupKey.value + \" + \" + replaySlowdownKey.value"]
+                        -   class: "UIControl"
+                            name: "ButtonHideHUD"
+                            position: [71.000000, 0.000000]
+                            size: [50.000000, 50.000000]
+                            classes: "button button-choose-sound hudButtonState=hudButtonStateHudVisible"
+                            components:
+                                Background:
+                                    drawType: "DRAW_ALIGNED"
+                                    sprite: "~res:/Gfx/UI/ReplayHUD/eye.psd"
+                                    perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_TOOGLE_BATTLE_HUD"
+                                Sound: {}
+                            bindings:
+                            - ["visible", "when not isNull(hudInfoKey) -> hudInfoKey.isVisible, false"]
+                            children:
+                            -   prototype: "HotKey/HotKey"
+                                name: "HotKey"
+                                position: [50.000000, 119.000000]
+                                components:
+                                    Background:
+                                        colorInherit: "COLOR_IGNORE_PARENT"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        bottomAnchorEnabled: true
+                                        bottomAnchor: -18.000000
+                                children:
+                                -   path: "text"
+                                    components:
+                                        UITextComponent: {}
+                                    bindings:
+                                    - ["UITextComponent.text", "when not isNull(hudInfoKey) -> hudInfoKey.value, \"\""]
+                        -   class: "UIControl"
+                            name: "ButtonMenu"
+                            size: [50.000000, 50.000000]
+                            visible: false
+                            classes: "button button-open-sound"
+                            components:
+                                Background:
+                                    drawType: "DRAW_ALIGNED"
+                                    sprite: "~res:/Gfx/UI/ReplayHUD/menu_btn"
+                                    perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                UIInputEventComponent:
+                                    onTouchUpInside: "ON_MENU"
+                                Sound: {}

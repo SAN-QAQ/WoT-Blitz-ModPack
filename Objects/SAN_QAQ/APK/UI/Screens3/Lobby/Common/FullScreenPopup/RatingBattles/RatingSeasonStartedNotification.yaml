@@ -1,0 +1,317 @@
+Header:
+    version: 157
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/FullscreenPopupWithContentSlot.yaml"
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+- "~res:/UI/Screens3/Lobby/Common/InfoIcon.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "RatingSeasonStartedNotification"
+    size: [1920.000000, 1080.000000]
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Common/FullScreenPopup/RatingBattles/RatingSeasonStartedNotification.animation"
+        UIOpacityComponent:
+            opacity: 1.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["string", "startDate", "\"\"", "\"05.02\""]
+            - ["string", "endDate", "\"\"", "\"31.02\""]
+            - ["bool", "animateInfoIcon", "false", "true"]
+            events:
+            - "CloseRatingSeasonStartedNotification"
+            - "RATING_BATTLES_INFO"
+            - "ShowGameTypeSelector"
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "title", "capitalize(localize(\"ratingBattles/ratingSeasonStarted/Title\"))"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "anchorDistance", "when screenHeight < 1080 -> 16, 48"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/RatingBattles/RatingSeasonStartedNotification.actions"
+    children:
+    -   prototype: "FullscreenPopupWithContentSlot/FullscreenPopupWithContentSlot"
+        name: "FullscreenPopupWithContentSlot"
+        components:
+            UIDataParamsComponent:
+                args:
+                    "customBg": "Background"
+                    "isButtonVisible": "true"
+                    "disableInput": "true"
+                    "contentControl": "Description"
+                eventActions:
+                - ["CLOSE_NOTIFICATION", "CloseRatingSeasonStartedNotification", ""]
+                - ["ACCENT_CLICKED", "ENTER_SHORTCUT", ""]
+                - ["SwitchDebugMode", "", ""]
+        children:
+        -   path: "Content/Content"
+            position: [16.000000, 16.000000]
+Slots:
+-   class: "UIControl"
+    name: "Description"
+    input: false
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            horizontalMin: 800.000000
+            verticalPolicy: "PercentOfChildrenSum"
+            verticalMin: 600.000000
+    children:
+    -   prototype: "InfoIcon/InfoIcon"
+        name: "InfoIcon"
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+            UIDataParamsComponent:
+                args:
+                    "animate": "animateInfoIcon"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "RATING_BATTLES_INFO", "_event"]
+    -   prototype: "BlurModified/BlurModified"
+        name: "ScreenTop"
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: false
+                leftAnchorEnabled: false
+                rightAnchorEnabled: false
+                topAnchorEnabled: true
+                bottomAnchorEnabled: false
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: -27.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+            UIDataParamsComponent:
+                args:
+                    "roundCorner": "\"8\""
+        bindings:
+        - ["Anchor.topAnchor", "anchorDistance"]
+        children:
+        -   class: "UIControl"
+            name: "Icon"
+            input: false
+            components:
+                Background:
+                    sprite: "~res:/Gfx/Lobby/icons/icon_rating_l"
+                UIGradientComponent:
+                    finishColor: [1.000000, 1.000000, 1.000000, 0.000000]
+                    orientation: "TopDown"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    horizontalValue: 100.000000
+                    verticalPolicy: "PercentOfContent"
+                    verticalValue: 100.000000
+        -   class: "UIControl"
+            name: "Title"
+            input: false
+            classes: "t-title bold color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_ENABLED"
+                    align: ["HCENTER", "VCENTER"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 500.000000
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "title"]
+        -   class: "UIControl"
+            name: "Spacer"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 62.000000
+        -   class: "UIControl"
+            name: "Subtitle"
+            position: [37.000000, 40.000000]
+            input: false
+            components:
+                Anchor:
+                    enabled: true
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/RatingBattles/DateDuration.yaml"
+                    args:
+                        "startDate": "startDate"
+                        "endDate": "endDate"
+    -   class: "UIControl"
+        name: "ScreenBottom"
+        input: false
+        components:
+            Anchor:
+                bottomAnchorEnabled: true
+            LinearLayout:
+                enabled: true
+                orientation: "TopDown"
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        bindings:
+        - ["Anchor.bottomAnchor", "anchorDistance"]
+        children:
+        -   class: "UIControl"
+            name: "Description"
+            position: [0.000000, 128.000000]
+            size: [102.000000, 346.000000]
+            input: false
+            classes: "t-subtitle regular white-wild-sand-text"
+            components:
+                UIOpacityComponent: {}
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_ENABLED"
+                    align: ["HCENTER", "VCENTER"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    topAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 700.000000
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(\"ratingBattles/ratingSeasonStarted/Description\")"]
+        -   class: "UIControl"
+            name: "ButtonHolder"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 1.000000
+                Anchor:
+                    hCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 16.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   prototype: "Button/Button"
+                name: "ButtonRewards"
+                components:
+                    UIDataParamsComponent:
+                        args:
+                            "sound": "eButtonSound.OPEN"
+                            "size": "eButtonSize.NORMAL"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "enabled": "true"
+                            "caption": "capitalize(localize(\"ratingBattles/ratingSeasonStarted/RewardsButton\"))"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ShowRewards", ""]
+            -   prototype: "Button/Button"
+                name: "ButtonPositive"
+                position: [-60.000000, 0.000000]
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    UIDataParamsComponent:
+                        args:
+                            "size": "eButtonSize.NORMAL"
+                            "type": "eButtonType.POSITIVE"
+                            "enabled": "true"
+                            "caption": "capitalize(localize(\"ratingBattles/ratingSeasonStarted/StartButton\"))"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ShowGameTypeSelector", ""]
+-   class: "UIControl"
+    name: "Background"
+    pivot: [0.500000, 0.500000]
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_SCALE_TO_RECT"
+            sprite: "~res:/Gfx/Lobby/backgrounds/bg_rating_season_started"
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 1364.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 768.000000
+        ScalePolicy:
+            horizontalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+            verticalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+    children:
+    -   class: "UIControl"
+        name: "TopGradient"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+            UIGradientComponent:
+                startColor: [0.000000, 0.000000, 0.000000, 0.750000]
+                finishColor: [0.000000, 0.000000, 0.000000, 0.000000]
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+                verticalValue: 50.000000
+    -   class: "UIControl"
+        name: "BottomGradient"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+            UIGradientComponent:
+                startColor: [0.000000, 0.000000, 0.000000, 0.750000]
+                finishColor: [0.000000, 0.000000, 0.000000, 0.000000]
+                orientation: "BottomUp"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+                verticalValue: 50.000000
+    -   class: "UIParticles"
+        name: "Sparks"
+        position: [16.000000, 624.000000]
+        size: [32.000000, 32.000000]
+        pivot: [0.500000, 0.500000]
+        angle: 90.000000
+        input: false
+        effectPath: "~res:/3d/FX/UI/Default_KeyArt/sparks4.sc2"
+        autoStart: true
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            IgnoreLayout: {}
+    -   class: "UIParticles"
+        name: "Sparks2"
+        position: [16.000000, 624.000000]
+        size: [32.000000, 32.000000]
+        pivot: [0.500000, 0.500000]
+        angle: 90.000000
+        input: false
+        effectPath: "~res:/3d/FX/UI/Default_KeyArt/sparks1.sc2"
+        autoStart: true
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            IgnoreLayout: {}

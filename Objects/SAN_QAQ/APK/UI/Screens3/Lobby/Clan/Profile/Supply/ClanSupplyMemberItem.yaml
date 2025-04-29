@@ -1,0 +1,253 @@
+Header:
+    version: 151
+Prototypes:
+-   class: "UIControl"
+    name: "MemberItem"
+    size: [600.000000, 100.000000]
+    classes: "clan-supply-list-row button-open-sound pressed-opacity"
+    components:
+        LinearLayout:
+            dynamicSpacing: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 64.000000
+        UIInputEventComponent:
+            onTouchUpInside: "ShowMemberPopup"
+            onTouchUpInsideData: "index"
+        UIDataParamsComponent:
+            params:
+            - ["int", "index", "0", "0"]
+            - ["bool", "isSelf", "false", "false"]
+            - ["int64", "xpContribution", "0L", "10000L"]
+            - ["int", "supplyLevel", "0", "0"]
+            - ["ClanMember", "model", "null", "{ }"]
+            events:
+            - "ShowMemberPopup(int index)"
+        Sound: {}
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Common/Hover.style.yaml;~res:/UI/Screens3/ButtonSound.style.yaml;~res:/UI/Screens3/Common/Touch.style.yaml"
+    bindings:
+    - ["enabled", "not isSelf"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        classes: "content"
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                needDepth: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "4"
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "ProfileBg"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                UIRoundedCornersComponent:
+                    radius: "4"
+                ClipContent: {}
+                UIUrlImageComponent: {}
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            bindings:
+            - ["UIUrlImageComponent.imageUrl", "model.playerInfo.profileBgUrl"]
+        -   class: "UIControl"
+            name: "Bg"
+            input: false
+            components:
+                Background: {}
+                IgnoreLayout: {}
+                UIRoundedCornersComponent:
+                    radius: "4"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["classes", "when isSelf -> \"white-wild-sand-25-bg\", \"white-wild-sand-15-bg\""]
+        -   class: "UIControl"
+            name: "Hover"
+            size: [32.000000, 32.000000]
+            input: false
+            classes: "hover white-wild-sand-25-bg"
+            components:
+                Background: {}
+                UIOpacityComponent: {}
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Common/Hover.style.yaml;"
+        -   class: "UIControl"
+            name: "PlayerInfo"
+            input: false
+            components:
+                LinearLayout:
+                    padding: "10;0"
+                    spacing: 8.000000
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 188.000000
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Avatar"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 48.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 48.000000
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/PlayerAvatar.yaml"
+                        args:
+                            "animated": "true"
+                            "interactive": "false"
+                            "avatar": "model.playerInfo.avatarModel"
+                            "size": "eAvatarSize.MEDIUM"
+            -   class: "UIControl"
+                name: "Info"
+                input: false
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIAttachLayoutMasterComponent: {}
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                bindings:
+                - ["UIAttachLayoutMasterComponent.attachId", "\"CLAN_MEMBER_\" + str(model.playerInfo.nameModel.dbId)"]
+                children:
+                -   class: "UIControl"
+                    name: "Nickname"
+                    input: false
+                    components:
+                        UITextComponent: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                    bindings:
+                    - ["classes", "when isSelf -> \"t-overline bold yellow-lightning-text\", \"t-overline bold white-wild-sand-text\""]
+                    - ["UITextComponent.text", "model.playerInfo.nameModel.name"]
+        -   class: "UIControl"
+            name: "SupplyInfo"
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "RightToLeft"
+                    spacing: 35.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "XpContribution"
+                input: false
+                components:
+                    LinearLayout:
+                        dynamicPadding: true
+                        spacing: 4.000000
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 120.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 64.000000
+                children:
+                -   class: "UIControl"
+                    name: "Target"
+                    position: [32.000000, 22.000000]
+                    input: false
+                    classes: "t-overline bold white-wild-sand-text"
+                    components:
+                        UITextComponent:
+                            align: ["LEFT", "VCENTER"]
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "str1000Separated(xpContribution)"]
+                -   class: "UIControl"
+                    name: "Icon"
+                    position: [122.000000, 8.000000]
+                    input: false
+                    components:
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                            vCenterAnchor: -1.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfChildrenSum"
+                            verticalPolicy: "PercentOfChildrenSum"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/Currency.yaml"
+                            args:
+                                "resource": "{ \"type\" = ResourceType.xp; }"
+                                "hideValue": "true"
+                                "currencySize": "eCurrencySize.SMALL"
+            -   class: "UIControl"
+                name: "SupplyLevel"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 120.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 64.000000
+                    UIChildAnimatedSwitchingComponent:
+                        switchPolicy: "kAfterRemovingAnimation"
+                    UIChildComponent0:
+                        childType: "kPrototype"
+                        condition: "supplyLevel != 0"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Search/ClanStatField.yaml"
+                        args:
+                            "statString": "roman(supplyLevel)"
+                    UIChildComponent1:
+                        childType: "kPrototype"
+                        condition: "supplyLevel == 0"
+                        prototypePath: "~res:/UI/Screens3/Common/Loaders/LoaderCircle.yaml"
+                        args:
+                            "bgIsVisible": "false"

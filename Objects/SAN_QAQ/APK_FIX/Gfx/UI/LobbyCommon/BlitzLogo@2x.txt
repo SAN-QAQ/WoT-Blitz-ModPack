@@ -1,0 +1,5 @@
+1
+BlitzLogo@2x.packed.webp
+760 580
+1
+0 0 681 512 45 32 0 frame0

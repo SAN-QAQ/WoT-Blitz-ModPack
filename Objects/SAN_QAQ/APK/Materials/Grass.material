@@ -1,0 +1,23 @@
+Material:
+    Layers: [ VegetationRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Default/grass
+    ConsiderOnlyDefines: [ ENABLE_FOG, ENABLE_HIGH_QUALITY_FOG, VEGETATION_LIT, VEGETATION_BEND, FLORA_WAVE_ANIMATION, USE_SHADOW_MAP, SHADOW_PCF, SHADOW_CASCADES_COUNT, VERTEX_FOG, FOG_ATMOSPHERE, FOG_ATMOSPHERE_NO_SCATTERING, FOG_ATMOSPHERE_NO_ATTENUATION, FOG_HALFSPACE, FOG_LINEAR, FOG_HALFSPACE_LINEAR, DISTANCE_ATTENUATION, HEIGHTMAP_FLOAT_TEXTURE ]
+    RenderState:
+        depthTest: true
+        depthWrite: true
+        depthFunc: CMP_LESS
+        cullMode: FACE_BACK
+    Passes:
+        ReflectionRefraction:
+            enabled: true
+        Forward:
+        DepthOnly:
+            enabled: false
+        ShadowMap:
+            enabled: false
+    Presets:
+        ForceDrawDepthPrepass:
+            Passes:
+                DepthOnly:
+                    enabled: true
+                    ConsiderOnlyDefines: [ VEGETATION_BEND, FLORA_WAVE_ANIMATION, HEIGHTMAP_FLOAT_TEXTURE ]

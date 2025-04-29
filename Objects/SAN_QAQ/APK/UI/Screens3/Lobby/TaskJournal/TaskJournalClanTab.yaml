@@ -1,0 +1,249 @@
+Header:
+    version: 151
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Timer.yaml"
+- "~res:/UI/Screens3/Lobby/Common/BlurDynamic.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ClanTab"
+    size: [1400.000000, 640.000000]
+    pivot: [0.500000, 0.500000]
+    input: false
+    classes: "default-limited-width"
+    components:
+        UIOpacityComponent: {}
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalValue: 96.000000
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["AccountDataModel", "account", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["TaskJournal", "model", "null", "{ }"]
+            - ["TaskJournalCache", "cache", "null", "{ }"]
+            events:
+            - "CLAN_TASKS_COLLECT_QUEST(string slotId)"
+            - "ON_CLAN_TASK_REWARD_CLICKED(eClanTasksGroup group, string slotId, int rewardIndex)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "clanContentShift", "0.000000"]
+            - ["float", "clanRewardsShift", "0.000000"]
+            - ["bool", "isWeekChangingOutAnimation", "false"]
+            - ["bool", "isWeekChangingInAnimation", "false"]
+            - ["int64", "weekSeconds", "60L * 60L * 24L * 7L"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isWeekFinished", "session.serverTime > model.clanTasks.activeWeek.periodEndTime"]
+            - ["bool", "isInClan", "not isNull(session.clanInfo.clan)"]
+            - ["bool", "isBlockedForCollectingRewards", "isWeekFinished and session.serverTime < model.clanTasks.activeWeek.periodEndTime + model.clanTasks.lockInterval"]
+            - ["bool", "isBlockedTasksButtons", "isWeekChangingInAnimation or isWeekChangingOutAnimation or session.serverTime < model.clanTasks.activeWeek.periodEndTime - weekSeconds + model.clanTasks.lockInterval"]
+        UIChildComponent0:
+            childType: "kControl"
+            condition: "isBlockedForCollectingRewards"
+            control: "WeekChangeBlocking"
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/TaskJournal/Animations/ClanTab.actions"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Common/Desktop.style.yaml"
+    children:
+    -   class: "UIControl"
+        name: "RewardsWithProgress"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            UIOpacityComponent: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+                topAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                condition: "isInClan and model.clanTasks.activeWeek.rewards.Size() > 0"
+                prototypePath: "~res:/UI/Screens3/Lobby/TaskJournal/Clan/RewardsWithProgress.yaml"
+                args:
+                    "isWeekChangingOutAnimation": "isWeekChangingOutAnimation"
+                    "isWeekChangingInAnimation": "isWeekChangingInAnimation"
+                    "session": "session"
+                    "weekData": "model.clanTasks.activeWeek"
+                    "clan": "session.clanInfo.clan"
+                    "cache": "cache"
+                    "clanEmblem": "model.clanTasks.clanEmblem"
+                    "progressState": "model.clanTasks.progressState"
+        bindings:
+        - ["Anchor.topAnchor", "clanRewardsShift"]
+    -   class: "UIControl"
+        name: "TabContent"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            UIOpacityComponent: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+                topAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "Formula"
+                verticalFormula: "parent - 196"
+        bindings:
+        - ["Anchor.topAnchor", "clanContentShift + 196"]
+        children:
+        -   class: "UIControl"
+            name: "Tabs"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 64.000000
+                UIChildComponent0:
+                    condition: "not isWeekFinished"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Tabs/TextTabsBar.yaml"
+                    args:
+                        "bgStyle": ""
+                        "info": "[ { \"text\" = localize(\"clanMissions/missionScreen/missionsTab\"); \"autotestKey\" = \"clanTasksTab\"; \"attachId\" = \"CLAN_TASKS_TAB_QUESTS\"; }; { \"text\" = localize(\"clanMissions/missionScreen/leaderboardTab\"); \"autotestKey\" = \"clanLeaderboardTab\"; \"attachId\" = \"CLAN_TASKS_TAB_LEADERBOARD\"; }; ]"
+                        "activeTab": "int(model.clanTasks.activeTab)"
+                    eventActions:
+                    - ["ON_SELECT_TAB", "ON_SELECT_CLAN_TAB", "toEnum(_event, eClanTasksTab)"]
+                UILayerComponent: {}
+            bindings:
+            - ["UILayerComponent.layer", "when account.tutorialData.currentHighlightControl == eTutorialHighlights.kClanTasksLeaderboardTab -> 1, 0"]
+        -   class: "UIControl"
+            name: "ClanTasks"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                ClipContent:
+                    left: false
+                    right: false
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "Formula"
+                    verticalFormula: "parent - 77"
+                UIChildComponent0:
+                    condition: "model.clanTasks.activeTab == eClanTasksTab.Tasks and not isWeekFinished"
+                    prototypePath: "~res:/UI/Screens3/Lobby/TaskJournal/Clan/ClanTasks.yaml"
+                    args:
+                        "isButtonsLocked": "isBlockedTasksButtons"
+                        "isScrollEnabled": "account.tutorialData.currentHint != eTutorialHint.kClanTasks"
+                        "rewardsTakenTasks": "model.clanTasks.rewardsTakenTasks"
+                        "weeklyTasks": "model.clanTasks.weeklyTasks"
+                        "dailyTasks": "model.clanTasks.dailyTasks"
+                        "weeklyResetTime": "model.progress.weekly.progressResetTime"
+                        "dailyResetTime": "model.progress.daily.progressResetTime"
+                        "serverTime": "session.serverTime"
+                    eventActions:
+                    - ["CLAN_TASKS_COLLECT_QUEST", "CLAN_TASKS_COLLECT_QUEST", "_event.slotId"]
+                    - ["ON_CLAN_TASK_REWARD_CLICKED", "ON_CLAN_TASK_REWARD_CLICKED", "_event.group, _event.slotId, _event.rewardIndex"]
+        -   class: "UIControl"
+            name: "Leaderboard"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                ClipContent:
+                    right: false
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "Formula"
+                    verticalFormula: "parent - 38"
+                UIChildComponent0:
+                    condition: "model.clanTasks.activeTab == eClanTasksTab.Leaderboard or isWeekFinished"
+                    prototypePath: "~res:/UI/Screens3/Lobby/TaskJournal/Clan/Leaderboard.yaml"
+                    args:
+                        "isDataLoaded": "model.clanTasks.progressState == eClanTasksProgressState.Loaded"
+                        "session": "session"
+                        "week": "model.clanTasks.activeWeek"
+Slots:
+-   class: "UIControl"
+    name: "WeekChangeBlocking"
+    size: [600.000000, 400.000000]
+    components:
+        IgnoreLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   prototype: "BlurDynamic/BlurDynamic"
+        name: "BlurDynamic"
+        components:
+            UIPostProcessTextureComponent0:
+                renderRequestingType: "ON_SIZE_CHANGED"
+            UIPostProcessTextureComponent1:
+                renderRequestingType: "ON_SIZE_CHANGED"
+            UIPostProcessTextureComponent2:
+                renderRequestingType: "ON_SIZE_CHANGED"
+            UIPostProcessTextureComponent3:
+                renderRequestingType: "ON_SIZE_CHANGED"
+    -   class: "UIControl"
+        name: "ImageAndText"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 20.000000
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "Image"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                    sprite: "~res:/Gfx/Lobby/icons/icon_clans_l"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 166.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 148.000000
+        -   prototype: "Timer/Timer"
+            name: "Timer"
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy: {}
+                UIDataParamsComponent:
+                    args:
+                        "serverTime": "session.serverTime"
+                        "time": "model.clanTasks.lockInterval + model.clanTasks.activeWeek.periodEndTime"
+                        "timerSize": "eTimerSize.Big"
+            bindings:
+            - ["SizePolicy.verticalValue", "verticalSize"]
+        -   class: "UIControl"
+            name: "Text"
+            size: [32.000000, 32.000000]
+            input: false
+            classes: "t-content-h2 regular white-wild-sand-text"
+            components:
+                UITextComponent:
+                    text: "missionJournal/clan/weekChangingBlocker"
+                    multiline: "MULTILINE_ENABLED"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"

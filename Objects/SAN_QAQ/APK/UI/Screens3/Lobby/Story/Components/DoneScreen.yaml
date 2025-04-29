@@ -1,0 +1,164 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/BlurDynamic.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "DoneScreen"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["Story", "story", "null", "{ }"]
+            - ["StoryStringsKeys", "keys", "null", "{ }"]
+            - ["bool", "isFullScreen", "true", "true"]
+            - ["bool", "show3dScene", "false", "false"]
+            events:
+            - "CLOSE"
+        UIDataLocalBindingsComponent:
+            data:
+            - ["string", "tokenName", "when story.name == \"2023-CARN\" -> \"prx_2023_carn\", story.name == \"2023-TOP-UP-2\" -> \"prx_2023_top_up_2_tank\", story.resources.strings.Contains(keys.richtextPlaceholders.shopProxy) -> story.resources.strings[keys.richtextPlaceholders.shopProxy], \"\""]
+            - ["map<string,ResourceDetailed>", "proxies", "story.stage.proxies"]
+            - ["bool", "hasToken", "not empty(tokenName) and proxies.Contains(tokenName) and not isNull(proxies[tokenName].stuff) and proxies[tokenName].stuff.quantity > 0"]
+            - ["string", "shopHeader", "when hasToken and story.resources.strings.Contains(keys.doneScreen.shopHeader) -> story.resources.strings[keys.doneScreen.shopHeader], \"\""]
+            - ["string", "header", "when story.isFinished and not story.tree.isDone -> \"Story/DoneScreen/Header/StoryExpired\", not empty(shopHeader) -> shopHeader, story.resources.strings.Contains(keys.doneScreen.header) -> story.resources.strings[keys.doneScreen.header], \"Story/DoneScreen/Header\""]
+            - ["string", "shopDescription", "when hasToken and story.resources.strings.Contains(keys.doneScreen.shopHint) -> story.resources.strings[keys.doneScreen.shopHint], \"\""]
+            - ["string", "description", "when story.isFinished and not story.tree.isDone -> \"Story/DoneScreen/Description/StoryExpired\", not empty(shopDescription) -> shopDescription, story.resources.strings.Contains(keys.doneScreen.hint) -> story.resources.strings[keys.doneScreen.hint], \"Story/DoneScreen/Description\""]
+            - ["ResourceDetailed", "shopProxy", "when proxies.Contains(tokenName) -> proxies[tokenName], null"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Story/Components/DoneScreen.actions"
+    children:
+    -   class: "UIControl"
+        name: "Container"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            ClipContent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/FullscreenPopupWithContentSlot.yaml"
+                args:
+                    "disableInput": "true"
+                    "contentControl": "Content"
+                    "customBg": "BlurDynamic"
+                    "isButtonVisible": "false"
+                    "fadeOpacity": "0.000000"
+                    "modalInput": "false"
+                eventActions:
+                - ["ACCENT_CLICKED", "ENTER_SHORTCUT", ""]
+Slots:
+-   class: "UIControl"
+    name: "Content"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+            spacing: 32.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfChildrenSum"
+    children:
+    -   class: "UIControl"
+        name: "Congratulations"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 80.000000
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "Header"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    condition: "not empty(header)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Story/Components/StoryRichText.yaml"
+                    args:
+                        "text": "header"
+                        "textStyle": "\"t-title light\""
+                        "colorStyle": "\"white-wild-sand-text\""
+                        "proxy1": "null"
+                        "proxy2": "null"
+                        "proxy3": "null"
+                        "shopProxy": "shopProxy"
+                        "alignment": "eFlowLayoutAlignment.Center"
+        -   class: "UIControl"
+            name: "Description"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    condition: "not empty(description)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Story/Components/StoryRichText.yaml"
+                    args:
+                        "text": "description"
+                        "textStyle": "\"t-subtitle regular\""
+                        "colorStyle": "\"white-wild-sand-text\""
+                        "proxy1": "null"
+                        "proxy2": "null"
+                        "proxy3": "null"
+                        "shopProxy": "shopProxy"
+                        "alignment": "eFlowLayoutAlignment.Center"
+    -   class: "UIControl"
+        name: "ButtonHolder"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                bottomAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "hasToken"
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                args:
+                    "locked": "false"
+                    "caption": "localize(\"taskJournal/BuyItemInStore/ProceedToStore/Button\")"
+                    "type": "eButtonType.POSITIVE"
+                    "size": "eButtonSize.NORMAL"
+                    "sound": "eButtonSound.OPEN"
+                    "enabled": "true"
+                    "horizontalPolicy": "eSizePolicy.PercentOfParent"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "OPEN_SHOP_SECTION", "\"vehicles\", true"]
+            UIChildComponent1:
+                condition: "isFullScreen and not hasToken"
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                args:
+                    "locked": "false"
+                    "caption": "localize(\"#common:DialogButton/OK\")"
+                    "type": "eButtonType.POSITIVE"
+                    "size": "eButtonSize.NORMAL"
+                    "sound": "eButtonSound.OK"
+                    "enabled": "true"
+                    "horizontalPolicy": "eSizePolicy.PercentOfParent"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "CLOSE", ""]
+-   prototype: "BlurDynamic/BlurDynamic"
+    name: "BlurDynamic"
+    components:
+        UIPostProcessInputComponent: {}
+    bindings:
+    - ["UIPostProcessInputComponent.id", "when show3dScene -> \"StoryHangarScene\", \"\""]

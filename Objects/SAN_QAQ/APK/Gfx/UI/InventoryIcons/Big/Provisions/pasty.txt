@@ -1,0 +1,5 @@
+1
+texture0.packed.webp
+90 90
+1
+316 386 60 72 15 9 0 frame0

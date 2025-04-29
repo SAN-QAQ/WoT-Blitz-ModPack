@@ -1,0 +1,283 @@
+Header:
+    version: 144
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "AchievementsTab"
+    size: [872.000000, 496.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Inventory/TankProgress/AchievementsTabInitialization.animation"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["TankStats", "tankStats", "null", "{ }"]
+            - ["VehicleDataModel", "tankInfo", "null", "{ }"]
+            - ["TanksRankConfigurationModel", "rankConfig", "null", "{ }"]
+            - ["VehicleDossier", "dossier", "null", "{ \"rankState\" = { \"level\" = 0; }; }"]
+            - ["int", "vehicleId", "0", "0"]
+            - ["TanksRankCacheModel", "ranksCache", "null", "{ }"]
+            - ["bool", "debug", "false", "true"]
+            events:
+            - "OnContentPositionChanged(int position)"
+            - "OnPromoRankInfoClicked"
+            - "ShowAchievementInfo(string achievementName)"
+            - "OnCounterClicked"
+            - "UnlockRank"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "scrollPosition", "0"]
+            - ["bool", "isHaveAwards", "not dossier.achievements.Empty()"]
+            - ["bool", "needsUnlock", "not isNull(dossier.rankState) and dossier.rankState.level == 0"]
+            - ["bool", "showRank", "not needsUnlock"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["TanksRankCacheEntry", "cacheEntry", "when ranksCache.entries.Contains(tankInfo.tankDescriptor.rawDescr) -> ranksCache.entries[tankInfo.tankDescriptor.rawDescr], null"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Inventory/TankProgress/AchievementsTab.actions"
+        UIDataOnEventComponent0:
+            eventName: "OnScrollContentPositionChanged"
+            modelFieldExpression: "scrollPosition"
+            dataExpression: "int(_event)"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "scrollPosition"
+            eventName: "OnContentPositionChanged"
+            eventData: "scrollPosition"
+    children:
+    -   class: "UIScrollView"
+        name: "ScrollArea"
+        autoUpdate: true
+        centerContent: true
+        components:
+            ClipContent:
+                left: false
+                right: false
+                top: false
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                rightAnchor: 10.000000
+                topAnchorEnabled: true
+                bottomAnchorEnabled: true
+        children:
+        -   class: "UIScrollViewContainer"
+            name: "scrollContainerControl"
+            refreshStylesOnInteract: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UILayoutEventComponent:
+                    positionChangedEvent: "OnScrollContentPositionChanged"
+                    positionChangedEventData: "_position.Y"
+            children:
+            -   class: "UIControl"
+                name: "Content"
+                input: false
+                components:
+                    LinearLayout:
+                        orientation: "TopDown"
+                        padding: "16"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "RankPaneWrapper"
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 870.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 138.000000
+                    children:
+                    -   class: "UIControl"
+                        name: "NoRankWrapper"
+                        input: false
+                        components:
+                            UIOpacityComponent: {}
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            LinearLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfMaxChild"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 138.000000
+                            UIChildComponent0:
+                                condition: "not tankStats.isElite or needsUnlock"
+                                prototypePath: "~res:/UI/Screens3/Lobby/Inventory/TankProgress/NotEliteTankPanel.yaml"
+                                args:
+                                    "vehicle": "tankInfo"
+                                    "isElite": "tankStats.isElite"
+                                eventActions:
+                                - ["UnlockFirstRank", "UnlockRank", ""]
+                    -   class: "UIControl"
+                        name: "RankWrapper"
+                        input: false
+                        components:
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            LinearLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfMaxChild"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 138.000000
+                            UIChildComponent0:
+                                condition: "not isNull(dossier.rankState) and showRank and tankStats.isElite"
+                                prototypePath: "~res:/UI/Screens3/Lobby/Inventory/TankProgress/TankRank.yaml"
+                                args:
+                                    "achievements": "dossier.achievements"
+                                    "rankConfig": "rankConfig"
+                                    "tankInfo": "tankInfo"
+                                    "tankStats": "tankStats"
+                                    "rankState": "dossier.rankState"
+                                    "cacheEntry": "cacheEntry"
+                                    "firstRankUnlock": "needsUnlock"
+                                    "debug": "debug"
+                                eventActions:
+                                - ["UnlockRank", "UnlockRank", ""]
+                                - ["OnPromoRankInfoClicked", "OnPromoRankInfoClicked", ""]
+                -   class: "UIControl"
+                    name: "Spacer"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 16.000000
+                -   class: "UIControl"
+                    name: "Counters"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UIChildComponent0:
+                            condition: "tankStats.isElite"
+                            prototypePath: "~res:/UI/Screens3/Lobby/Inventory/TankProgress/TankCounters.yaml"
+                            args:
+                                "vehicleId": "vehicleId"
+                                "rankConfig": "rankConfig"
+                                "prevRankState": "when not isNull(cacheEntry) -> cacheEntry.state, null"
+                                "rankState": "dossier.rankState"
+                            eventActions:
+                            - ["OnCounterClicked", "OnCounterClicked", "_event"]
+                -   class: "UIControl"
+                    name: "Spacer"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 20.000000
+                -   class: "UIControl"
+                    name: "Divider"
+                    input: false
+                    components:
+                        Background:
+                            usePostProcessedSprite: true
+                        UIPostProcessTextureComponent0:
+                            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                            needClearAlphaAfterRender: true
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent1:
+                            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent2:
+                            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIRoundedCornersComponent:
+                            radius: "8"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 816.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 16.000000
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Profile/Common/HorizontalDividerWithCaption.yaml"
+                            args:
+                                "text": "localize(\"TankRank/Inventory/Rank/Achievements\")"
+                    bindings:
+                    - ["visible", "isHaveAwards"]
+                -   class: "UIControl"
+                    name: "Spacer"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 14.000000
+                -   class: "UIControl"
+                    name: "Achievements"
+                    input: false
+                    components:
+                        Background:
+                            usePostProcessedSprite: true
+                        UIPostProcessTextureComponent0:
+                            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                            needClearAlphaAfterRender: true
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent1:
+                            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent2:
+                            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIRoundedCornersComponent:
+                            radius: "8"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 816.000000
+                            verticalPolicy: "PercentOfChildrenSum"
+                        FlowLayout:
+                            alignment: "Center"
+                        UIRepeatComponent:
+                            control: "~res:/UI/Screens3/Lobby/Inventory/TankProgress/FixedSizeAchievement.yaml"
+                            dataContainer: "dossier.achievements"
+                            args:
+                                "achievement": "_item"
+                            eventActions:
+                            - ["ON_PRESSED", "ShowAchievementInfo", "_event.achievementName"]
+                            elementNameExpression: "_item.name"
+                            loadingPolicy: "Lazy"
+                            loadingDistance: 120.000000
+                            unloadingDistance: 240.000000
+    -   prototype: "VerticalScrollBar/VerticalScrollBar"
+        name: "VerticalScrollBar"
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+                rightAnchor: 9.000000
+                topAnchorEnabled: true
+                bottomAnchorEnabled: true
+            ScrollBarDelegate:
+                delegate: "../ScrollArea"
