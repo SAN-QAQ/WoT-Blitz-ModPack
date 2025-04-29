@@ -1,0 +1,633 @@
+Header:
+    version: 155
+Prototypes:
+-   class: "UIControl"
+    name: "BattleResults"
+    size: [1024.000000, 640.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/BattleResults/BattleResults.animation"
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "FixedSize"
+        ModalInput: {}
+        UIVirtualActionEventComponent0:
+            virtualKeyAction: "Escape"
+            keyDownEvent: "BACK_EVENT_BY_SHORTCUT"
+        UIVirtualActionEventComponent1:
+            virtualKeyAction: "BasePrevious"
+            keyDownEvent: "PREV_TAB"
+        UIVirtualActionEventComponent2:
+            virtualKeyAction: "BaseNext"
+            keyDownEvent: "NEXT_TAB"
+        UIDataParamsComponent:
+            params:
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["DevCameraSwitchingData", "devCameraSwitchingData", "null", "{ }"]
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["ePageType", "firstTab", "ePageType.Efficiency", "ePageType.Efficiency"]
+            - ["scene", "battleResultsScene", "null", "load3DScene(\"~res:/3d/Maps/battle_results_scene/sbr_01.sc2\")"]
+            - ["BattleResultsViewModel", "results", "null", "{ \"battleResult\" = BattleResult.WIN; \"firstShow\" = true; \"gameplayMode\" = eGameMode.Rating; \"rating\" = { \"leagueType\" = eLeague.SILVER; \"currentRating\" = 2990; \"difference\" = -34; \"state\" = eBattleRatingState.HAS_RATING; \"calibrationBattlesLeft\" = 2; }; \"tank\" = { \"tankRank\" = 0; }; }"]
+            - ["AccountDataModel", "account", "null", "{ }"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            events:
+            - "SendReactionsForAutotest"
+            - "SendReactionsForMyEveryone"
+            - "SendReactionsFromEveryone"
+            - "ShowAccountReactionWithParams(string icon, int packId, int reactionId, int index)"
+            - "ShowReactionLimitPopupWithParam(bool isEnemy, int index)"
+            - "SendMyselfReacton"
+            - "TeamPageTableReverse"
+            - "TeamPageTableSorting(eTeamEffectivenessFilterType teamEffectivenessFilterType, bool reverse)"
+            - "HIDE_POPUP_INFO"
+            - "PageChangedPosition"
+            - "ForceHideTopHintLayer"
+            - "BATTLE_RESULTS_READY_FOR_TUTORIAL"
+            - "SHOW_EXCELLENT_OFFER"
+            - "PLAY_VIDEO_AD"
+            - "SHOW_RIBBON_INFO"
+            - "SHOW_ACHIEVEMENT_INFO"
+            - "TRIGGER_REVERSE_ANIMATIN"
+            - "TRIGGER_TRANSITION_ANIMATIN"
+            - "LoadHangarScene"
+            - "PAGE_CHANGING_FINISH"
+            - "PAGE_CHANGING_START"
+            - "STATISTIC"
+            - "OVERLAY_STATISTIC_SHOW"
+            - "BACK_EVENT"
+            - "START_REPLAY"
+            - "BUY_PREMIUM"
+            - "ON_REWARD_CLICK"
+            - "START_SHARE"
+            - "OpenModulePageForResearch"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "isHeaderInputBlocked", "false"]
+            - ["bool", "isInputBlocked", "false"]
+            - ["vector<ePageType>", "defaultPages", "[ ePageType.Efficiency; ePageType.Economy; ePageType.TeamEffectiveness; ]"]
+            - ["vector<ePageType>", "tutorialPages", "[ ePageType.Efficiency; ePageType.Economy; ]"]
+            - ["bool", "teamFirstShow", "results.firstShow and firstTab == ePageType.Efficiency"]
+            - ["vector<TabIconInfo>", "defaultTabs", "[ { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_battles_m\"; \"tabSize\" = eTabSize.L; }; { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_tank_m\"; \"tabSize\" = eTabSize.L; }; { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_command_m\"; \"tabSize\" = eTabSize.L; }; ]"]
+            - ["vector<TabIconInfo>", "tutorialTabs", "[ { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_battles_m\"; \"tabSize\" = eTabSize.L; }; { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_tank_m\"; \"tabSize\" = eTabSize.L; }; ]"]
+            - ["ePageType", "previousSelectedTab", "ePageType.Efficiency"]
+            - ["bool", "showOverlay", "false"]
+            - ["bool", "showPremiumHint", "false"]
+            - ["float", "blurOpacity", "0.000000"]
+            - ["float", "fadeOpacity", "0.000000"]
+            - ["bool", "statrLoadingHangarScene", "false"]
+            - ["float", "nextButtonOpacity", "when results.firstShow -> 0.000000, 1.000000"]
+            - ["float", "nextButtonProgress", "when results.firstShow -> 1.000000, 0.000000"]
+            - ["int", "teamEffectivenessProgress", "when results.firstShow -> 0, 100"]
+            - ["int", "economyProgress", "when results.firstShow -> 0, 100"]
+            - ["int", "efficiencyProgress", "when results.firstShow -> 0, 100"]
+            - ["ePageType", "selectedTab", "firstTab"]
+            - ["float", "buttonsOpacityBecauseTutorial", "when (account.tutorialData.status == eAccountTutorialStatus.IN_PROGRESS and not account.tutorialData.completedLessons.Contains(eTutorialLesson.kExcellentBattle)) -> 0.000000, 1.000000"]
+            - ["bool", "nextButtonVisible", "true"]
+            - ["bool", "personalFirstShow", "results.firstShow"]
+            - ["bool", "economyFirstShow", "results.firstShow"]
+            - ["bool", "hasMedals", "(Empty(results.medalsViewModel.leftMedals) != true) or (Empty(results.medalsViewModel.rightMedals) != true) or (Empty(results.medalsViewModel.leftRibbons) != true) or (Empty(results.medalsViewModel.rightRibbons) != true) or (Empty(results.medalsViewModel.epicMedals) != true)"]
+            - ["int", "medalsSize", "Size(results.medalsViewModel.leftMedals) + Size(results.medalsViewModel.rightMedals) + Size(results.medalsViewModel.leftRibbons) + Size(results.medalsViewModel.rightRibbons) + Size(results.medalsViewModel.epicMedals)"]
+            - ["float", "personalTime", "when (results.battleStats.damageDealt == 0 and results.battleStats.vehiclesDestroyed == 0) -> 3.000000, (results.gameplayMode == eGameMode.Rating and hasMedals and medalsSize > 8) -> 8.200000, (results.gameplayMode == eGameMode.Rating and hasMedals and medalsSize <= 7) -> 7.000000, (medalsSize > 9) -> 6.000000, (results.gameplayMode == eGameMode.Rating or hasMedals) -> 5.200000, 3.000000"]
+            - ["float", "economyTime", "when (results.economics.totalXp.base == 0 and results.economics.earnedCredits.base == 0) -> 3.200000, (Size(results.economics.resources) > 6) -> 6.500000, (Size(results.economics.resources) > 0) -> 5.000000, 4.500000"]
+            - ["float", "teamTime", "3.100000"]
+            - ["int", "currentSwipeIndex", "int(selectedTab)"]
+            - ["int", "leftIndex", "currentSwipeIndex"]
+            - ["int", "rightIndex", "currentSwipeIndex"]
+            - ["float", "leftPosition", "0.000000"]
+            - ["float", "rightPosition", "0.000000"]
+            - ["float", "leftProportion", "1.000000"]
+            - ["float", "rightProportion", "1.000000"]
+            - ["bool", "isSessionPlayerResults", "session.playerName == results.playerName.playerName"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["float", "contentSizeY", "when not (isGamepad and lobby.hasOwnedNavigationPanel) -> screenHeight - 8.000000, screenHeight - 48.000000"]
+            - ["int", "bottomPart", "when isGamepad -> 200, 160"]
+            - ["float", "distanceBgWin", "screenWidth + 100.000000"]
+            - ["bool", "adBonusValid", "results.economics.adBonus.expirationTime > session.serverTime and not results.economics.adBonus.rewards.Empty()"]
+            - ["bool", "adPlaysiteActive", "app.sDlc.isGeneralPackLoaded and session.serverConfig.advertising.enabled and session.serverConfig.advertising.battleResults.enabled and lobby.advertising.battleResultsAdAvailable and session.stats.battleResultsAds.remainingAds > 0 and session.stats.battleResultsAds.nextViewTime <= session.serverTime"]
+            - ["bool", "canWatchAd", "not app.netease.neteaseAvailable and not account.tutorialData.isTutorialActive and adPlaysiteActive and adBonusValid"]
+            - ["bool", "isTutorialInProgress", "account.tutorialData.status == eAccountTutorialStatus.IN_PROGRESS and not account.tutorialData.completedLessons.Contains(eTutorialLesson.kNewTank2)"]
+            - ["bool", "stopAfterEconomy", "isTutorialInProgress or showPremiumHint"]
+            - ["vector<TabIconInfo>", "tabsInfo", "when isTutorialInProgress -> tutorialTabs, defaultTabs"]
+            - ["vector<ePageType>", "pages", "when isTutorialInProgress -> tutorialPages, defaultPages"]
+            - ["string", "backText", "when lobby.labelType == eBackLabel.Back -> \"Switch/HubridPanel/Lobby/Back\", lobby.labelType == eBackLabel.Close -> \"Switch/HubridPanel/Lobby/Close\", lobby.labelType == eBackLabel.Hangar -> \"Switch/HubridPanel/Lobby/Hangar\", \"\""]
+            - ["string", "bgWinStyle", "when contentSizeY >= 830 -> \"t-content-huge\", \"t-content-h0\""]
+            - ["int", "pageCount", "Size(pages)"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/BattleResults/BattleResults.actions"
+        UIDataOnEventComponent0:
+            eventName: "ShowOverlay"
+            modelFieldExpression: "showOverlay"
+            dataExpression: "_event"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "selectedTab"
+            eventName: "StopBlockInput"
+    bindings:
+    - ["SizePolicy.horizontalValue", "screenWidth"]
+    - ["SizePolicy.verticalValue", "screenHeight"]
+    children:
+    -   class: "UIControl"
+        name: "BattleResultsrScene"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            UIPostProcessSourceComponent0:
+                id: "sceneId"
+            SceneComponent:
+                drawToFramebuffer: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            Update:
+                updateInvisible: true
+        bindings:
+        - ["visible", "not (selectedTab == ePageType.TeamEffectiveness)"]
+        - ["SceneComponent.scene3d", "battleResultsScene"]
+    -   class: "UIControl"
+        name: "Blur"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIOpacityComponent: {}
+            UIPostProcessInputComponent:
+                id: "sceneId"
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.250000
+                useVirtualCoordinateSystem: true
+                renderRequestingType: "ALWAYS"
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.250000
+                useVirtualCoordinateSystem: true
+                renderRequestingType: "ALWAYS"
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.250000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            Update:
+                updateInvisible: true
+        bindings:
+        - ["UIOpacityComponent.opacity", "when selectedTab == ePageType.TeamEffectiveness -> 1, blurOpacity"]
+    -   class: "UIControl"
+        name: "BgWin"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                topAnchorEnabled: true
+            IgnoreLayout: {}
+        bindings:
+        - ["Anchor.topAnchor", "when contentSizeY <= 830 -> 212, contentSizeY <= 1080 -> 228, contentSizeY > 1080 -> 276, 0"]
+        children:
+        -   class: "UIControl"
+            name: "BgWinWrapper"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout: {}
+            bindings:
+            - ["visible", "selectedTab != ePageType.TeamEffectiveness"]
+            children:
+            -   class: "UIControl"
+                name: "Spacer"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "notchOffsets.left + 16"
+            -   class: "UIControl"
+                name: "BgWin"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        verticalPolicy: "PercentOfMaxChild"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                children:
+                -   class: "UIControl"
+                    name: "BgWin1"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        UIOpacityComponent:
+                            opacity: 0.000000
+                        UITextComponent: {}
+                        Anchor:
+                            leftAnchorEnabled: true
+                            leftAnchor: 0.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                    bindings:
+                    - ["classes", "\"white-wild-sand-text bold\" + \" \" + bgWinStyle"]
+                    - ["UITextComponent.text", "capitalize(localize(when results.battleResult == BattleResult.WIN -> \"#battle_results:Result/Victory\", results.battleResult == BattleResult.LOSE -> \"#battle_results:Result/Defeat\", \"#battle_results:Result/Draw\"))"]
+                -   class: "UIControl"
+                    name: "BgWin2"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        UIOpacityComponent:
+                            opacity: 0.000000
+                        UITextComponent: {}
+                        Anchor:
+                            leftAnchorEnabled: true
+                            leftAnchor: 0.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                    bindings:
+                    - ["classes", "\"white-wild-sand-text bold\" + \" \" + bgWinStyle"]
+                    - ["UITextComponent.text", "capitalize(localize(when results.battleResult == BattleResult.WIN -> \"#battle_results:Result/Victory\", results.battleResult == BattleResult.LOSE -> \"#battle_results:Result/Defeat\", \"#battle_results:Result/Draw\"))"]
+    -   class: "UIControl"
+        name: "Content"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+                padding: "8;0"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Decoration"
+            position: [0.000000, 0.000000]
+            size: [1024.000000, 655.000000]
+            input: false
+            components:
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["SizePolicy.horizontalValue", "screenWidth"]
+            children:
+            -   class: "UIControl"
+                name: "TopDecoration"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_TO_RECT"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                        spriteModification: ["FLIP_VERTICAL"]
+                    UIOpacityComponent:
+                        opacity: 0.400000
+                    Anchor:
+                        topAnchorEnabled: true
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 184.000000
+                bindings:
+                - ["SizePolicy.horizontalValue", "screenWidth"]
+            -   class: "UIControl"
+                name: "BottomDecoration"
+                position: [0.000000, 527.000000]
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_TO_RECT"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                    UIOpacityComponent:
+                        ignoreParentOpacity: true
+                        opacity: 0.500000
+                    Anchor:
+                        bottomAnchorEnabled: true
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 144.000000
+                bindings:
+                - ["SizePolicy.horizontalValue", "screenWidth"]
+        -   class: "UIControl"
+            name: "FadeTeam"
+            input: false
+            classes: "black-50-bg"
+            components:
+                Background: {}
+                UIOpacityComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UIOpacityComponent.opacity", "when selectedTab == ePageType.TeamEffectiveness -> 1, 0"]
+        -   class: "UIControl"
+            name: "Header"
+            position: [0.000000, 8.000000]
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 80.000000
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Common/BattleResultsHeader.yaml"
+                    args:
+                        "showFakeReactionsButtons": "results.showFakeReactionsButtons"
+                        "showReactionsOverlay": "lobby.currentActiveOverlay == eCurrentScreen.kReactionsPopup"
+                        "myReactions": "results.myReactions"
+                        "firstShow": "results.firstShow"
+                        "playerName": "results.playerName"
+                        "avatar": "results.avatar"
+                        "needHiglightCloseButton": "account.tutorialData.isTutorialActive and account.tutorialData.currentHighlightControl == eTutorialHighlights.kBack"
+                        "backLabelType": "lobby.labelType"
+                        "isPremium": "results.economics.withPremium"
+                        "buttonsOpacityBecauseTutorial": "buttonsOpacityBecauseTutorial"
+                        "teamEffectivenessProgress": "teamEffectivenessProgress"
+                        "efficiencyProgress": "efficiencyProgress"
+                        "economyProgress": "economyProgress"
+                        "selectedTab": "selectedTab"
+                        "tabsInfo": "tabsInfo"
+                    eventActions:
+                    - ["SendReactionsForAutotest", "SendReactionsForAutotest", ""]
+                    - ["SendReactionsForMyEveryone", "SendReactionsForMyEveryone", ""]
+                    - ["SendReactionsFromEveryone", "SendReactionsFromEveryone", ""]
+                    - ["SendMyselfReacton", "SendMyselfReacton", ""]
+                    - ["ShowAccountReactionWithParams", "ShowAccountReactionWithParams", "_event.icon, _event.packId, _event.reactionId, _event.index"]
+                    - ["ON_CLICK_BACK_BUTTON", "ON_CLICK_BACK_BUTTON", ""]
+                    - ["ON_SELECT_TAB_FROM_TAB_BAR", "ON_SELECT_TAB_FROM_TAB_BAR", "_event"]
+                    - ["STOP_ANIMATION", "STOP_ANIMATION", "_event"]
+            bindings:
+            - ["SizePolicy.horizontalValue", "screenWidth"]
+        -   class: "UIControl"
+            name: "BodySwiper"
+            input: true
+            refreshStylesOnInteract: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "FixedSize"
+                UISwipeComponent:
+                    mode: "Page"
+                    direction: "RightLeft"
+                    swipeOffsetEvent: "SwipeOffset"
+                    swipeOffsetEventData: "_leftIndex, _rightIndex, _leftPosition, _rightPosition, _leftProportion, _rightProportion, _isInertion"
+                    swipeStartedEvent: "SwipeStarted"
+                    swipeFinishedEvent: "SwipeFinished"
+                    swipeCancelEvent: "SwipeCanceled"
+                    swipeCancelEventData: "int(selectedTab)"
+                    pageChangedEvent: "PageChanged"
+                    pageChangedEventData: "_pageIndex"
+                UIRepeatComponent:
+                    control: "~res:/UI/Screens3/Lobby/BattleResults/Page.yaml"
+                    dataContainer: "tabsInfo"
+                    args:
+                        "rankConfig": "session.rankConfig"
+                        "contentSizeY": "contentSizeY"
+                        "tutorialData": "account.tutorialData"
+                        "selectedTab": "selectedTab"
+                        "isTutorialInProgress": "isTutorialInProgress"
+                        "personalFirstShow": "personalFirstShow"
+                        "canWatchAd": "canWatchAd"
+                        "teamFirstShow": "teamFirstShow"
+                        "results": "results"
+                        "index": "_index"
+                        "hidden": "false"
+                        "proportion": "when _index == leftIndex -> leftProportion, (when _index == rightIndex -> rightProportion, 0.000000)"
+                        "point": "(_index - rightIndex) * screenWidth + rightPosition"
+                        "economyFirstShow": "economyFirstShow"
+                        "isSessionPlayerResults": "isSessionPlayerResults"
+                    eventActions:
+                    - ["ShowReactionLimitPopupWithParam", "ShowReactionLimitPopupWithParam", "_event.isEnemy, _event.index"]
+                    - ["SET_LIKE", "SET_LIKE", "_event.likeData, _event.data"]
+                    - ["TeamPageTableReverse", "TeamPageTableReverse", ""]
+                    - ["TeamPageTableSorting", "TeamPageTableSorting", "_event.teamEffectivenessFilterType, _event.reverse"]
+                    - ["HIDE_POPUP_INFO", "HIDE_POPUP_INFO", ""]
+                    - ["NewTabFromSwipe", "NewTabFromSwipe", "_event"]
+                    - ["SHOW_EXCELLENT_OFFER", "SHOW_EXCELLENT_OFFER", ""]
+                    - ["PLAY_VIDEO_AD", "PLAY_VIDEO_AD", ""]
+                    - ["SHOW_ACHIEVEMENT_INFO", "SHOW_ACHIEVEMENT_INFO", "_event"]
+                    - ["SHOW_RIBBON_INFO", "SHOW_RIBBON_INFO", "_event"]
+                    - ["SHOW_SHORT_PROFILE", "SHOW_SHORT_PROFILE", "_event"]
+                    - ["OVERLAY_STATISTIC_SHOW", "OVERLAY_STATISTIC_SHOW", ""]
+                    - ["BUY_PREMIUM", "BUY_PREMIUM", ""]
+                    - ["ON_REWARD_CLICK", "ON_REWARD_CLICK", "_event"]
+                    - ["STOP_ANIMATION", "STOP_ANIMATION", "_event"]
+                    - ["OpenModulePageForResearch", "OpenModulePageForResearch", ""]
+            bindings:
+            - ["SizePolicy.horizontalValue", "screenWidth"]
+            - ["SizePolicy.verticalValue", "contentSizeY - 160"]
+            - ["UISwipeComponent.pageCount", "pageCount"]
+            - ["UISwipeComponent.currentPageIndex", "currentSwipeIndex"]
+        -   class: "UIControl"
+            name: "Footer"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 80.000000
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/BattleResults/Common/BattleResultsFooter.yaml"
+                    args:
+                        "rankConfig": "session.rankConfig"
+                        "gameplayMode": "results.gameplayMode"
+                        "needHiglightShareBattleResults": "account.tutorialData.isTutorialActive and account.tutorialData.currentHighlightControl == eTutorialHighlights.kShareBattleResults"
+                        "nsb": "app.constants.nsb"
+                        "isReplaysAvailable": "account.diaryDataModel.isReplaysAvailable"
+                        "hasShareReward": "results.shareResultsToSocialNetworks.hasReward"
+                        "isSharingAvailable": "not app.constants.nsb and app.netease.neteaseAvailable and results.shareResultsToSocialNetworks.canShare"
+                        "contentSizeY": "contentSizeY"
+                        "isTutorialInProgress": "isTutorialInProgress"
+                        "isInputActive": "(selectedTab == ePageType.Economy and economyFirstShow) or (selectedTab == ePageType.Efficiency and personalFirstShow) or (selectedTab == ePageType.TeamEffectiveness and teamFirstShow)"
+                        "previousSelectedTab": "previousSelectedTab"
+                        "selectedTab": "selectedTab"
+                        "app": "app"
+                        "account": "account"
+                        "results": "results"
+                    eventActions:
+                    - ["STOP_ANIMATION", "STOP_ANIMATION", "_event"]
+                    - ["StopBlockInput", "StopBlockInput", ""]
+                    - ["START_REPLAY", "START_REPLAY", ""]
+                    - ["OVERLAY_STATISTIC_SHOW", "OVERLAY_STATISTIC_SHOW", ""]
+                    - ["START_SHARE", "START_SHARE", ""]
+            bindings:
+            - ["SizePolicy.horizontalValue", "screenWidth"]
+        -   class: "UIControl"
+            name: "NextButtonWrapper"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    rightAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                LinearLayout: {}
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 48.000000
+            bindings:
+            - ["enabled", "buttonsOpacityBecauseTutorial > 0.300000"]
+            - ["UIOpacityComponent.opacity", "buttonsOpacityBecauseTutorial"]
+            children:
+            -   class: "UIControl"
+                name: "NextButtonHolder"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    UIOpacityComponent: {}
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 48.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 48.000000
+                    UIChildComponent0:
+                        condition: "selectedTab < ePageType.TeamEffectiveness and not isTutorialInProgress"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "inputDisabled": "nextButtonOpacity == 0.000000"
+                            "sound": "eButtonSound.CHOOSE"
+                            "isRoundedProgressBar": "true"
+                            "image": "when isGamepad -> \"~res:/Gfx/Lobby/icons/nintendo-switch/icon_switch_right_m\", \"~res:/Gfx/Lobby/icons/icon_arrow_s\""
+                            "value": "nextButtonProgress"
+                            "rounded": "true"
+                            "roundCorner": "\"100\""
+                            "type": "eButtonType.OPTIONAL_DARK"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "NEXT_EVENT_FROM_BUTTON", ""]
+                bindings:
+                - ["UIOpacityComponent.opacity", "nextButtonOpacity"]
+            -   class: "UIControl"
+                name: "RightSafeArea"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "max(safeAreaInsets.right, 16)"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 48.000000
+    -   class: "UIControl"
+        name: "NavigationPanel"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "isGamepad and lobby.hasOwnedNavigationPanel"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/NavigationPanel.yaml"
+                args:
+                    "content": "NavigationPanelContent"
+    -   class: "UIControl"
+        name: "BlockInputFooter"
+        components:
+            Anchor:
+                bottomAnchorEnabled: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                verticalPolicy: "FixedSize"
+                verticalValue: 80.000000
+        bindings:
+        - ["input", "isInputBlocked or (currentSwipeIndex != selectedTab)"]
+        - ["Anchor.bottomAnchor", "when isGamepad -> 40, 0"]
+        - ["SizePolicy.horizontalValue", "screenWidth"]
+    -   class: "UIControl"
+        name: "BlockInputHeader"
+        components:
+            Anchor:
+                topAnchorEnabled: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                verticalPolicy: "FixedSize"
+                verticalValue: 80.000000
+        bindings:
+        - ["input", "isHeaderInputBlocked"]
+        - ["SizePolicy.horizontalValue", "screenWidth"]
+    -   class: "UIControl"
+        name: "ExcellentBattleDialogHolder"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+Slots:
+-   class: "UIControl"
+    name: "NavigationPanelContent"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "LeftToRight"
+            spacing: 24.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfMaxChild"
+        UIShadowHoleComponent: {}
+    bindings:
+    - ["UIShadowHoleComponent.isEnabled", "account.tutorialData.isTutorialActive"]
+    children:
+    -   class: "UIControl"
+        name: "Back"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "when lobby.labelType == eBackLabel.Hangar -> \"Switch/HubridPanel/Lobby/Hangar\", \"Switch/HubridPanel/Lobby/Back\""
+                    "icon": "eNintendoSwitchControls.B"
+    -   class: "UIControl"
+        name: "ChooseTab"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "not account.tutorialData.isTutorialActive or account.tutorialData.currentLesson > eTutorialLesson.kExcellentBattle"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconsWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Lobby/ChooseInventoryScreen\""
+                    "nsControls": "[ eNintendoSwitchControls.LeftShoulder; eNintendoSwitchControls.RightShoulder; ]"

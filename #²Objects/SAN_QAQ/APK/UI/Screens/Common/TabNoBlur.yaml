@@ -1,0 +1,192 @@
+Header:
+    version: "23"
+ImportedPackages:
+- "~res:/UI/Screens/Fonts.yaml"
+StyleSheets:
+-   selector: ".tab"
+    properties:
+        bg-color: [0.627451, 0.725490, 0.800000, 1.000000]
+-   selector: ".tab #Text"
+    properties:
+        text-color: [0.620000, 0.720000, 0.800000, 1.000000]
+-   selector: ".tab:selected"
+    properties:
+        bg-drawType: "DRAW_STRETCH_BOTH"
+        bg-color: [1.000000, 1.000000, 1.000000, 1.000000]
+        bg-leftRightStretchCap: 5.000000
+        bg-sprite: "~res:/Gfx/UI/SettingsScreen/over_button_tab_bar"
+        bg-topBottomStretchCap: 5.000000
+-   selector: ".tab:selected #Text"
+    properties:
+        text-color: [1.000000, 1.000000, 1.000000, 1.000000]
+-   selector: ".tab-color"
+    properties:
+        bg-color: [0.192157, 0.243137, 0.301961, 0.705882]
+-   selector: ".sort-down #sortDirImage"
+    properties:
+        visible: true
+        bg-spriteModification: ["FLIP_VERTICAL"]
+-   selector: ".sort-up #sortDirImage"
+    properties:
+        visible: true
+        bg-spriteModification: []
+-   selector: ".sort-undefined #sortDirImage"
+    properties:
+        visible: false
+-   selector: ".tab #Badge"
+    properties:
+        visible: false
+-   selector: ".tab.badge #Badge"
+    properties:
+        visible: true
+Prototypes:
+-   class: "UIControl"
+    customClass: "UITabSwitcher"
+    name: "TabPane"
+    size: [600.000000, 74.000000]
+    components:
+        LinearLayout:
+            padding: 4.000000
+            safeAreaPaddingInset: true
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+        Background: {}
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Common/Tab.yaml"
+-   class: "UIControl"
+    name: "ImageTab"
+    size: [150.000000, 66.000000]
+    noInput: true
+    classes: "tab"
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+            dynamicPadding: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+        Anchor:
+            vCenterAnchorEnabled: true
+        Background: {}
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Common/Tab.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Icon"
+        size: [0.000000, 0.000000]
+        noInput: true
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            Anchor:
+                hCenterAnchorEnabled: true
+    -   class: "UIStaticText"
+        name: "Text"
+        noInput: true
+        classes: "header3 text-color-selectable"
+        components:
+            SizePolicy:
+                verticalPolicy: "PercentOfContent"
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 0.000000
+                rightAnchorEnabled: true
+                rightAnchor: 0.000000
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+-   class: "UIControl"
+    name: "TextTab"
+    size: [150.000000, 66.000000]
+    noInput: true
+    classes: "tab"
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+        Anchor:
+            vCenterAnchorEnabled: true
+        Background: {}
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Common/Tab.yaml"
+    children:
+    -   class: "UIStaticText"
+        name: "Text"
+        size: [150.000000, 0.000000]
+        noInput: true
+        classes: "header3 text-color-selectable"
+        components:
+            SizePolicy:
+                verticalPolicy: "PercentOfContent"
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 0.000000
+                rightAnchorEnabled: true
+                rightAnchor: 0.000000
+                vCenterAnchorEnabled: true
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                fitting: "FITTING_REDUCE"
+-   class: "UIControl"
+    name: "ImageTabWithSort"
+    size: [150.000000, 66.000000]
+    noInput: true
+    classes: "tab state=sort-undefined"
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+        Anchor:
+            vCenterAnchorEnabled: true
+        Background: {}
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Common/Tab.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Icon"
+        size: [32.000000, 32.000000]
+        noInput: true
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            Background:
+                colorInherit: "COLOR_MULTIPLY_ON_PARENT"
+    -   class: "UIControl"
+        name: "sortDirImage"
+        size: [15.000000, 15.000000]
+        noInput: true
+        classes: ""
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                bottomAnchorEnabled: true
+                bottomAnchor: 3.000000
+            Background:
+                sprite: "~res:/Gfx/UI/LobbyCommon/IconsSmall.psd"
+                frame: 8
+                colorInherit: "COLOR_MULTIPLY_ON_PARENT"
+-   prototype: "TextTab"
+    name: "TextTabWithBadge"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Common/Tab.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Badge"
+        size: [16.000000, 16.000000]
+        noInput: true
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+                rightAnchor: 7.000000
+                topAnchorEnabled: true
+                topAnchor: 7.000000
+            Background:
+                drawType: "DRAW_SCALE_TO_RECT"
+                sprite: "~res:/Gfx/UI/CommonUIElements/WhiteCircle"
+                color: [1.000000, 0.000000, 0.000000, 1.000000]

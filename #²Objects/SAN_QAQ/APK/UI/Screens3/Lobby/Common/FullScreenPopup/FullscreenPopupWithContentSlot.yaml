@@ -1,0 +1,160 @@
+Header:
+    version: 160
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "FullscreenPopupWithContentSlot"
+    size: [960.000000, 640.000000]
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        ModalInput: {}
+        UIInputEventComponent:
+            onTouchUpInside: "ON_CLOSE"
+        UIVirtualActionEventComponent0:
+            virtualKeyAction: "Perform"
+            keyDownEvent: "ACCENT_CLICKED"
+            shouldBeFocused: false
+        UIVirtualActionEventComponent1:
+            virtualKeyAction: "Escape"
+            keyDownEvent: "ON_CLOSE"
+        UIShortcutEventComponent:
+            shortcuts: "ON_CLOSE,Back;SwitchDebugMode,SHIFT+D"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "playSounds", "true", "true"]
+            - ["bool", "ignoreEnter", "false", "true"]
+            - ["float", "fadeOpacity", "0.600000", "0.600000"]
+            - ["float", "blurOpacity", "1.000000", "1.000000"]
+            - ["control", "customBg", "null", "null"]
+            - ["bool", "showBlurAndFade", "true", "true"]
+            - ["bool", "isButtonVisible", "true", "true"]
+            - ["control", "contentControl", "null", "control(\"~res:/UI/Screens3/Lobby/Common/Dialog/TextContent.yaml\", { \"contentText\" = \"Его многочисленные, убого тонкие по сравнению с остальным телом ножки беспомощно копошились у него перед глазами. «Что со мной случилось?\"; }, [ ])"]
+            - ["bool", "disableInput", "false", "false"]
+            - ["int", "padding", "16", "16"]
+            - ["bool", "closeOnEnter", "false", "false"]
+            - ["bool", "modalInput", "true", "true"]
+            events:
+            - "CLOSE_NOTIFICATION"
+            - "ACCENT_CLICKED"
+            - "SwitchDebugMode"
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/FullScreenDialogClose.actions"
+    bindings:
+    - ["input", "not disableInput"]
+    - ["ModalInput.enabled", "modalInput"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Bg"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "Formula"
+                    verticalFormula: "parent + 2"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "not isNull(customBg)"
+                    control: "customBg"
+                UIChildComponent1:
+                    condition: "showBlurAndFade"
+                    prototypePath: "~res:/UI/Screens3/Common/BlurAndFade.yaml"
+                    args:
+                        "blurOpacity": "blurOpacity"
+                        "fadeOpacity": "fadeOpacity"
+        -   class: "UIControl"
+            name: "Content"
+            input: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    childType: "kOldExpression"
+                    control: "contentControl"
+                    args: {}
+                    eventActions:
+                    - ["ACCENT_CLICKED", "ACCENT_CLICKED", ""]
+            bindings:
+            - ["Anchor.leftAnchor", "padding"]
+            - ["Anchor.rightAnchor", "padding"]
+            - ["Anchor.topAnchor", "padding"]
+            - ["Anchor.bottomAnchor", "padding"]
+        -   class: "UIControl"
+            name: "CloseButton"
+            input: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "SafeAreaLeft"
+                input: false
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "safeAreaInsets.left + 16"
+                        verticalPolicy: "PercentOfParent"
+            -   prototype: "IconButton/IconButton"
+                name: "IconButtonLight"
+                components:
+                    Anchor:
+                        topAnchorEnabled: true
+                        topAnchor: 16.000000
+                    UIDataParamsComponent:
+                        args:
+                            "locked": "false"
+                            "visible": "isButtonVisible"
+                            "isBgVisible": "true"
+                            "image": "\"~res:/Gfx/Shared/icons/icon_close_n\""
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "sound": "eButtonSound.CLOSE"
+                            "enabled": "true"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_CLOSE", ""]
+    -   class: "UIControl"
+        name: "NavigationPanel"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                bottomAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "isGamepad and isButtonVisible"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/LobbyNavigationPanel.yaml"
+                args:
+                    "labels": "{ eNintendoSwitchControls.B = \"Switch/HubridPanel/Lobby/Close\"; }"
+            UIChildComponent1:
+                condition: "isGamepad and not isButtonVisible"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/LobbyNavigationPanel.yaml"
+                args:
+                    "labels": "{ }"

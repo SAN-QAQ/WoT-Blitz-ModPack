@@ -1,0 +1,5 @@
+Material:
+    Shader: ~res:/Materials/Shaders/DebugDraw/depth
+    Passes:
+        RenderDebugPass:
+

@@ -1,0 +1,8 @@
+1
+SixSense_SAN_QAQ.packed.webp
+240 135
+4
+0 0 240 135 0 0 0 frame0
+0 135 240 135 0 0 0 frame1
+0 270 240 135 0 0 0 frame2
+0 405 240 135 0 0 0 frame3

@@ -1,0 +1,487 @@
+Header:
+    version: 152
+Prototypes:
+-   class: "UIControl"
+    name: "Header"
+    size: [960.000000, 50.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/BattleResults/Common/BattleResultsHeader.animation"
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 80.000000
+        UIDataParamsComponent:
+            params:
+            - ["bool", "showFakeReactionsButtons", "false", "false"]
+            - ["bool", "showReactionsOverlay", "false", "false"]
+            - ["vector<TeamReactionData>", "myReactions", "null", "[ ]"]
+            - ["bool", "firstShow", "false", "false"]
+            - ["NameModel", "playerName", "null", "{ }"]
+            - ["PlayerAvatar", "avatar", "null", "{ }"]
+            - ["eBackLabel", "backLabelType", "eBackLabel.Hangar", "eBackLabel.Hangar"]
+            - ["bool", "needHiglightCloseButton", "false", "false"]
+            - ["float", "buttonsOpacityBecauseTutorial", "1.000000", "1.000000"]
+            - ["int", "efficiencyProgress", "0", "50"]
+            - ["int", "teamEffectivenessProgress", "0", "0"]
+            - ["int", "economyProgress", "0", "0"]
+            - ["bool", "isPremium", "false", "false"]
+            - ["vector<TabIconInfo>", "tabsInfo", "null", "[ { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_battles_m\"; \"tabSize\" = eTabSize.L; }; { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_tank_m\"; \"tabSize\" = eTabSize.L; }; { \"sprite\" = \"~res:/Gfx/Lobby/icons/icon_command_m\"; \"tabSize\" = eTabSize.L; }; ]"]
+            - ["ePageType", "selectedTab", "ePageType.Efficiency", "ePageType.Efficiency"]
+            events:
+            - "SendReactionsForAutotest"
+            - "SendReactionsForMyEveryone"
+            - "SendReactionsFromEveryone"
+            - "STOP_ANIMATION"
+            - "SendMyselfReacton"
+            - "ShowAccountReactionWithParams(string icon, int packId, int reactionId, int index)"
+            - "ON_SELECT_TAB_FROM_TAB_BAR"
+            - "ON_CLICK_BACK_BUTTON"
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "accountTypeStyle", "when isPremium -> \"bold yellow-chalky-text\", \"regular white-wild-sand-50-text\""]
+            - ["string", "closeButtonIcon", "when backLabelType == eBackLabel.Hangar -> \"~res:/Gfx/Lobby/icons/icon_cross_m\", \"~res:/Gfx/Lobby/icons/icon_arrow-back\""]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isStopLayerActive", "(selectedTab == ePageType.Efficiency and efficiencyProgress != 100) or (selectedTab == ePageType.Economy and economyProgress != 100) or (selectedTab == ePageType.TeamEffectiveness and teamEffectivenessProgress != 100)"]
+    children:
+    -   class: "UIControl"
+        name: "ProgressHolder"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+                topAnchorEnabled: true
+            LinearLayout:
+                spacing: 4.000000
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "parent - 32"
+                verticalPolicy: "FixedSize"
+                verticalValue: 3.000000
+            UIRepeatComponent:
+                control: "~res:/UI/Screens3/Lobby/Common/ProgressBar.yaml"
+                dataContainer: "tabsInfo"
+                args:
+                    "progressColor": "\"white-wild-sand-bg\""
+                    "value": "when _index == int(ePageType.Efficiency) -> efficiencyProgress, _index == int(ePageType.Economy) -> economyProgress, teamEffectivenessProgress"
+    -   class: "UIControl"
+        name: "LeftSafeArea"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "max(safeAreaInsets.left, 16)"
+                verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "Content"
+        position: [16.000000, 0.000000]
+        size: [960.000000, 80.000000]
+        input: false
+        components:
+            LinearLayout:
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "StopLayer"
+            exclusiveInput: true
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 48.000000
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "parent - 288"
+                    verticalPolicy: "PercentOfParent"
+                UIInputEventComponent:
+                    onTouchUpInside: "STOP_ANIMATION"
+                    onTouchUpInsideData: "true"
+            bindings:
+            - ["visible", "isStopLayerActive"]
+            - ["input", "isStopLayerActive"]
+        -   class: "UIControl"
+            name: "LeftContent"
+            position: [0.000000, 8.000000]
+            size: [48.000000, 50.000000]
+            input: false
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 16.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "CloseButton"
+                size: [32.000000, 32.000000]
+                pivot: [0.500000, 0.500000]
+                input: false
+                components:
+                    UIOpacityComponent: {}
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 48.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 48.000000
+                    UIAttachLayoutMasterComponent:
+                        attachId: "BACK"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "isBgVisible": "false"
+                            "image": "closeButtonIcon"
+                            "sound": "eButtonSound.CLOSE"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_CLICK_BACK_BUTTON", ""]
+                    UILayerComponent: {}
+                bindings:
+                - ["enabled", "buttonsOpacityBecauseTutorial > 0.300000"]
+                - ["UIOpacityComponent.opacity", "buttonsOpacityBecauseTutorial"]
+                - ["UILayerComponent.layer", "when needHiglightCloseButton -> 1, 0"]
+            -   class: "UIControl"
+                name: "PlayerInfo"
+                position: [64.000000, 0.000000]
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 16.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UILayerComponent: {}
+                bindings:
+                - ["UILayerComponent.layer", "when showReactionsOverlay -> 10, 0"]
+                children:
+                -   class: "UIControl"
+                    name: "AvatarWrapper"
+                    position: [80.000000, 0.000000]
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        Anchor: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "FxHolder"
+                        input: false
+                        components:
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                topAnchorEnabled: true
+                                topAnchor: -32.000000
+                            IgnoreLayout: {}
+                            UIChildComponent0:
+                                childType: "kControl"
+                                condition: "isPremium"
+                                control: "Fx"
+                        bindings:
+                        - ["visible", "isPremium"]
+                    -   class: "UIControl"
+                        name: "PremTiar"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            Background:
+                                drawType: "DRAW_ALIGNED"
+                                sprite: "~res:/Gfx/Lobby/icons/icon_tiar_l"
+                            UIOpacityComponent: {}
+                            Anchor: {}
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 72.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 64.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml"
+                        bindings:
+                        - ["classes", "when isPremium -> \"yellow-chalky-bg\", \"white-wild-sand-bg\""]
+                        - ["UIOpacityComponent.opacity", "when isPremium -> 1.000000, 0.400000"]
+                    -   class: "UIControl"
+                        name: "Avatar"
+                        position: [12.000000, 8.000000]
+                        size: [32.000000, 32.000000]
+                        pivot: [0.500000, 0.500000]
+                        input: false
+                        components:
+                            UIOpacityComponent: {}
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfMaxChild"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/PlayerAvatar.yaml"
+                                args:
+                                    "animated": "true"
+                                    "avatar": "avatar"
+                                    "size": "eAvatarSize.MEDIUM"
+                                    "interactive": "false"
+                -   class: "UIControl"
+                    name: "NameWrapper"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        UIOpacityComponent: {}
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 2.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "NameContainer"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            LinearLayout:
+                                spacing: 8.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfFirstChild"
+                                verticalPolicy: "PercentOfFirstChild"
+                        children:
+                        -   class: "UIControl"
+                            name: "Name"
+                            size: [32.000000, 32.000000]
+                            input: false
+                            components:
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfMaxChild"
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIChildComponent0:
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Common/PlayerName.yaml"
+                                    args:
+                                        "playerNameSize": "ePlayerSize.kBig"
+                                        "clanTag": "playerName.playerClan"
+                                        "playerName": "playerName.playerName"
+                    -   class: "UIControl"
+                        name: "InfoHolder"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfFirstChild"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 20.000000
+                            UIChildComponent0:
+                                childType: "kControl"
+                                condition: "not Empty(myReactions)"
+                                control: "ReactionContainer"
+                            UIChildComponent1:
+                                childType: "kControl"
+                                condition: "Empty(myReactions)"
+                                control: "AccountType"
+            -   class: "UIControl"
+                name: "FakeReactionsButtons"
+                input: false
+                components:
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfParent"
+                bindings:
+                - ["visible", "showFakeReactionsButtons"]
+                children:
+                -   class: "UIControl"
+                    name: "FromMy"
+                    size: [32.000000, 32.000000]
+                    pivot: [0.500000, 0.500000]
+                    input: false
+                    components:
+                        UIOpacityComponent: {}
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 48.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 48.000000
+                        UIAttachLayoutMasterComponent:
+                            attachId: "BACK"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                            args:
+                                "isBgVisible": "false"
+                                "image": "\"~res:/Gfx/Lobby/icons/icon_news_n\""
+                                "sound": "eButtonSound.CLOSE"
+                            eventActions:
+                            - ["ON_CLICK_BUTTON", "SendReactionsFromEveryone", ""]
+                        UILayerComponent: {}
+                    bindings:
+                    - ["enabled", "buttonsOpacityBecauseTutorial > 0.300000"]
+                    - ["UIOpacityComponent.opacity", "buttonsOpacityBecauseTutorial"]
+                    - ["UILayerComponent.layer", "when needHiglightCloseButton -> 1, 0"]
+                -   class: "UIControl"
+                    name: "ForMy"
+                    size: [32.000000, 32.000000]
+                    pivot: [0.500000, 0.500000]
+                    input: false
+                    components:
+                        UIOpacityComponent: {}
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 48.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 48.000000
+                        UIAttachLayoutMasterComponent:
+                            attachId: "BACK"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                            args:
+                                "isBgVisible": "false"
+                                "image": "\"~res:/Gfx/Lobby/icons/icon_chat_n\""
+                                "sound": "eButtonSound.CLOSE"
+                            eventActions:
+                            - ["ON_CLICK_BUTTON", "SendReactionsForMyEveryone", ""]
+                        UILayerComponent: {}
+                    bindings:
+                    - ["enabled", "buttonsOpacityBecauseTutorial > 0.300000"]
+                    - ["UIOpacityComponent.opacity", "buttonsOpacityBecauseTutorial"]
+                    - ["UILayerComponent.layer", "when needHiglightCloseButton -> 1, 0"]
+                -   class: "UIControl"
+                    name: "ForAutotestEvent"
+                    size: [32.000000, 32.000000]
+                    pivot: [0.500000, 0.500000]
+                    input: false
+                    components:
+                        UIOpacityComponent: {}
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 48.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 48.000000
+                        UIAttachLayoutMasterComponent:
+                            attachId: "BACK"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                            args:
+                                "isBgVisible": "false"
+                                "image": "\"~res:/Gfx/Lobby/icons/icon_clans_n\""
+                                "sound": "eButtonSound.CLOSE"
+                            eventActions:
+                            - ["ON_CLICK_BUTTON", "SendReactionsForAutotest", ""]
+                        UILayerComponent: {}
+                    bindings:
+                    - ["enabled", "buttonsOpacityBecauseTutorial > 0.300000"]
+                    - ["UIOpacityComponent.opacity", "buttonsOpacityBecauseTutorial"]
+                    - ["UILayerComponent.layer", "when needHiglightCloseButton -> 1, 0"]
+        -   class: "UIControl"
+            name: "RightContent"
+            position: [704.000000, 8.000000]
+            size: [151.000000, 48.000000]
+            input: false
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    vCenterAnchorEnabled: true
+                LinearLayout:
+                    spacing: 16.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            bindings:
+            - ["UIOpacityComponent.opacity", "buttonsOpacityBecauseTutorial"]
+            children:
+            -   class: "UIControl"
+                name: "Tabs"
+                position: [0.000000, 0.000000]
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    UIOpacityComponent: {}
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Tabs/IconTabsBarNoBlur.yaml"
+                        args:
+                            "useRTL": "false"
+                            "showSelectionLine": "false"
+                            "activeTab": "int(selectedTab)"
+                            "info": "tabsInfo"
+                        eventActions:
+                        - ["ON_SELECT_TAB_FROM_TAB_BAR", "ON_SELECT_TAB_FROM_TAB_BAR", ""]
+    -   class: "UIControl"
+        name: "RightSafeArea"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "max(safeAreaInsets.right, 16)"
+                verticalPolicy: "PercentOfParent"
+Slots:
+-   class: "UIParticles"
+    name: "Fx"
+    size: [32.000000, 32.000000]
+    scale: [1.000000, 1.000000]
+    pivot: [0.500000, 0.500000]
+    input: false
+    effectPath: "~res:/3d/FX/UI/BattleResult/PremIdleGlow.sc2"
+    autoStart: true
+    startDelay: 0.500000
+-   class: "UIControl"
+    name: "ReactionContainer"
+    input: false
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            leftAnchor: -5.000000
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "FixedSize"
+            verticalValue: 28.000000
+        UIRepeatComponent:
+            control: "~res:/UI/Screens3/Lobby/BattleResults/Reactions/HorizontalReactionCard.yaml"
+            dataContainer: "myReactions"
+            args:
+                "hasUpdate": "_item.hasUpdate"
+                "index": "_index"
+                "icon": "_item.reactionIcons.smallIcon"
+                "value": "Size(_item.players)"
+                "isLocatedInHeader": "true"
+            eventActions:
+            - ["ShowAccountReaction", "ShowAccountReactionWithParams", "_item.reactionIcons.smallIcon, _item.packId, _item.reactionId, _index"]
+-   class: "UIControl"
+    name: "AccountType"
+    input: false
+    components:
+        UITextComponent: {}
+        UIShadowComponent:
+            blurType: "Gauss"
+            color: [1.000000, 0.164706, 0.000000, 1.000000]
+            indent: 10
+            canBeDelayed: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfContent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 20.000000
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml"
+    bindings:
+    - ["classes", "\"t-body \" + accountTypeStyle"]
+    - ["UITextComponent.text", "when isPremium -> localize(\"battleType/Header/PremiumAccount\"), localize(\"battleType/Header/RegularAccount\")"]
+    - ["UIShadowComponent.textureScale", "when isPremium -> 1, 0"]

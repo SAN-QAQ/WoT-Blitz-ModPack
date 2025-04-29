@@ -1,0 +1,233 @@
+Header:
+    version: 157
+ImportedPackages:
+- "~res:/UI/Screens/Lobby/Tournament/CellSelectionFrame.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIListCell"
+    name: "PlayerEntry"
+    size: [350.000000, 64.000000]
+    enabled: true
+    selected: false
+    input: false
+    classes: "selectable player role=role-invited"
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 64.000000
+        StyleSheet:
+            styles: "~res:/UI/Screens/Lobby/Tournament/Team/PlayerListCell.style.yaml;~res:/UI/Screens/Fonts.yaml;~res:/UI/Screens/CommonStyles.yaml;~res:/UI/Styles/ButtonStyle.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Button"
+        classes: "button"
+        components:
+            Background:
+                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Back"
+            size: [350.000000, 64.000000]
+            input: false
+            classes: "panel-background"
+            components:
+                Background:
+                    drawType: "DRAW_FILL"
+                    colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   prototype: "BlurModified/BlurModified"
+                name: "Blur"
+        -   class: "UIControl"
+            name: "Content"
+            input: false
+            components:
+                Background:
+                    colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Padding"
+                size: [20.000000, 64.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 20.000000
+                        verticalPolicy: "PercentOfParent"
+            -   class: "UIControl"
+                name: "PlayerStatus"
+                input: false
+                components:
+                    Background:
+                        colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                    LinearLayout:
+                        orientation: "TopDown"
+                        padding: "10.000000"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIControl"
+                    name: "NameWrapper"
+                    input: false
+                    components:
+                        LinearLayout:
+                            spacing: 4.000000
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "parentRest - 4"
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   class: "UIStaticText"
+                        name: "Name"
+                        classes: "header3"
+                        components:
+                            Background:
+                                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                            UITextComponent:
+                                text: "Player Name"
+                                fitting: "FITTING_POINTS"
+                                align: ["LEFT", "VCENTER"]
+                            SizePolicy:
+                                horizontalPolicy: "Formula"
+                                horizontalFormula: "min(content, parentRest)"
+                                verticalPolicy: "PercentOfParent"
+                    -   class: "UIStaticText"
+                        name: "Tag"
+                        classes: "header3 text-color-orange"
+                        components:
+                            Background:
+                                colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                            UITextComponent:
+                                text: "[KOPM]"
+                                align: ["LEFT", "VCENTER"]
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfParent"
+                -   class: "UIStaticText"
+                    name: "Status"
+                    size: [165.000000, 22.000000]
+                    classes: "text2 text-color-blue"
+                    components:
+                        Background:
+                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                        UITextComponent:
+                            text: "Player Name"
+                            fitting: "FITTING_POINTS"
+                            align: ["LEFT", "VCENTER"]
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+            -   class: "UIControl"
+                name: "RateContainer"
+                size: [90.000000, 64.000000]
+                input: false
+                components:
+                    Background:
+                        colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIControl"
+                    name: "Flag"
+                    size: [25.000000, 64.000000]
+                    input: false
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/Tournament/wins"
+                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 25.000000
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIStaticText"
+                    name: "Rate"
+                    size: [70.000000, 64.000000]
+                    classes: "header3"
+                    components:
+                        Background:
+                            colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                        UITextComponent:
+                            text: "71.21%"
+                            fitting: "FITTING_REDUCE"
+                            align: ["LEFT", "VCENTER"]
+                        Anchor:
+                            leftAnchorEnabled: true
+                            leftAnchor: 10.000000
+                            rightAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 70.000000
+                            verticalPolicy: "PercentOfParent"
+            -   class: "UIStaticText"
+                name: "TicketsText"
+                size: [75.000000, 64.000000]
+                classes: "header3"
+                components:
+                    Background:
+                        colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                    UITextComponent:
+                        text: "?"
+                        fitting: "FITTING_REDUCE"
+                        align: ["HCENTER", "VCENTER"]
+                    Anchor:
+                        leftAnchorEnabled: true
+                        leftAnchor: 10.000000
+                        rightAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 75.000000
+                        verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "Free"
+        size: [350.000000, 64.000000]
+        classes: "background-light-tab"
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   prototype: "BlurModified/BlurModified"
+            name: "Blur"
+        -   class: "UIStaticText"
+            name: "FreeText"
+            classes: "text2 text-color-blue"
+            components:
+                Background:
+                    colorInherit: "COLOR_MULTIPLY_ALPHA_ONLY"
+                UITextComponent:
+                    text: "tournaments/TeamDescrScreen/Members/PlaceAvailable"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+    -   prototype: "CellSelectionFrame/SelectionFrame"
+        name: "SelectionFrame"
+    -   class: "UIControl"
+        name: "bottomSelector"
+        size: [350.000000, 1.000000]
+        input: false
+        classes: "selector"
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+                color: [1.000000, 1.000000, 1.000000, 0.141176]
+                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                bottomAnchorEnabled: true
+            IgnoreLayout: {}

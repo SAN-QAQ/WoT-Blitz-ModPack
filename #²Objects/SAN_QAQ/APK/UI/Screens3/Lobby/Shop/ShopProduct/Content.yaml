@@ -1,0 +1,832 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Blur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Content"
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Shop/ShopProduct/ContentInitialization.animation"
+        LinearLayout:
+            orientation: "TopDown"
+            spacing: 8.000000
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 240.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 400.000000
+        UIDataParamsComponent:
+            params:
+            - ["bool", "hideFooter", "false", "false"]
+            - ["bool", "isChina", "false", "true"]
+            - ["string", "taxMessage", "\"\"", "\"\""]
+            - ["bool", "nintendoSwitch", "false", "false"]
+            - ["bool", "hasBadgeLabel", "false", "true"]
+            - ["bool", "initializationEnded", "false", "true"]
+            - ["ShopProduct", "product", "null", "{ \"isChainBundle\" = true; \"chainLockerTimes\" = 1; }"]
+            - ["int64", "serverTime", "0L", "100L"]
+            - ["bool", "arabicLocalization", "false", "false"]
+            - ["bool", "debugMode", "false", "false"]
+            - ["float", "shopScrollBottomOffset", "0.000000", "40.000000"]
+            - ["float", "shopScrollTopOffset", "0.000000", "48.000000"]
+            - ["bool", "isAtLeastMediumDevice", "false", "true"]
+            - ["bool", "selected", "false", "true"]
+            - ["bool", "available", "false", "true"]
+            - ["bool", "forcedTimerHide", "false", "false"]
+            events:
+            - "PIGGY_BANK_STAGE_PROGRESS(int stuffDescr)"
+            - "PIGGY_BANK_SAVE_PROGRESS(int stuffDescr)"
+            - "LOADED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "blurAnimationTime", "0.500000"]
+            - ["bool", "showBlur", "false"]
+            - ["vector<int>", "oneVector", "[ 1; ]"]
+            - ["vector<int>", "emptyVector", "[ ]"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isChainLocked", "product.isChainBundle and product.chainLockerTimes > 0"]
+            - ["bool", "noArtFooter", "product.noArt and isNull(product.subscriptionInfo) and (isNull(product.vehicle) or product.cardContent.Empty())"]
+            - ["int64", "timeLeft", "when not isNull(product.rouletteInfo) -> product.rouletteInfo.expirationTime - serverTime, product.promoExpiresAt - serverTime"]
+            - ["ResourceDetailed", "singleItem", "when product.cardContent.Size() == 1 -> product.content[product.cardContent[0]], null"]
+            - ["bool", "footerVisible", "available and not noArtFooter and (not isNull(product.piggyBank) or (not isNull(product.rouletteInfo) and not product.cardContent.Empty()) or (not isNull(singleItem) and singleItem.type == ResourceType.stuff and singleItem.stuff.type == ArtefactType.chest) or (not isNull(singleItem) and (singleItem.type == ResourceType.gold or singleItem.type == ResourceType.free_xp or singleItem.type == ResourceType.credits)) or (product.cardContent.Size() > 1 or (not isNull(singleItem) and singleItem.type != ResourceType.vehicle and singleItem.type != ResourceType.premium)))"]
+            - ["bool", "blurVisible", "showBlur and isAtLeastMediumDevice and initializationEnded"]
+            - ["bool", "timerVisible", "(product.isPromo and available and timeLeft <= 604800L and not forcedTimerHide) or not isNull(product.rouletteInfo)"]
+            - ["bool", "giftableVisible", "product.giftable and product.giftAvailableTimes > 0"]
+            - ["bool", "requiresEShopButton", "nintendoSwitch and not product.salePrice.resources.Empty() and product.salePrice.resources[0].type == ResourceType.real_currency"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/Content.actions"
+    children:
+    -   class: "UIControl"
+        name: "Title"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 240.000000
+                verticalPolicy: "FixedSize"
+                verticalValue: 24.000000
+            UIChildComponent0:
+                condition: "product.useVehicleName and not isNull(product.vehicle) and not product.isChainBundle"
+                prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProductVehicleTitle.yaml"
+                args:
+                    "hasBadge": "hasBadgeLabel"
+                    "vehicle": "product.vehicle"
+            UIChildComponent1:
+                childType: "kControl"
+                condition: "not product.isChainBundle"
+                control: "SimpleTitle"
+    -   class: "UIControl"
+        name: "Wrapper"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 240.000000
+                verticalPolicy: "FixedSize"
+                verticalValue: 337.000000
+        children:
+        -   class: "UIControl"
+            name: "SimpleContent"
+            input: false
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    condition: "product.noArt"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/SimpleContent/SimpleContent.yaml"
+                    args:
+                        "product": "product"
+        -   class: "UIControl"
+            name: "PurchasePending"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 240.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 336.000000
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "product.pendingPurchase"
+                    control: "PurchasePending"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Footer"
+            input: false
+            components:
+                Anchor:
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 240.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 47.000000
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "footerVisible and not hideFooter"
+                    control: "FooterWrapper"
+        -   class: "UIControl"
+            name: "Selection"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 240.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 336.000000
+                UIChildComponent0:
+                    condition: "selected"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/SelectionRounded_r1.yaml"
+        -   class: "UIControl"
+            name: "RightLabels"
+            input: false
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: -4.000000
+                    topAnchorEnabled: true
+                    topAnchor: -4.000000
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 1.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfChildrenSum"
+            children:
+            -   class: "UIControl"
+                name: "Discount"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        condition: "product.discount > 0.000000 and available"
+                        prototypePath: "~res:/UI/Screens3/Common/DiscountLabel.yaml"
+                        args:
+                            "discount": "product.discount"
+                            "size": "eDiscountLabelSize.Big"
+                bindings:
+                - ["visible", "product.discount > 0.000000"]
+            -   class: "UIControl"
+                name: "Bonus"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        condition: "not isNull(product.bonus) and available"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProductBonus.yaml"
+                        args:
+                            "bonus": "product.bonus"
+                            "reversedAnimation": "arabicLocalization"
+                            "timeValue": "product.content.Size() == 1 and product.content[0].type == ResourceType.premium"
+                bindings:
+                - ["visible", "not isNull(product.bonus)"]
+            -   class: "UIControl"
+                name: "Label"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        condition: "not isNull(product.label) and available"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProductLabel.yaml"
+                        args:
+                            "labelText": "product.label.text"
+                            "color": "product.label.color"
+                            "reversedAnimation": "arabicLocalization"
+        -   class: "UIControl"
+            name: "LeftLabels"
+            input: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 0.000000
+                    rightAnchorEnabled: false
+                    topAnchorEnabled: true
+                    topAnchor: 0.000000
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 1.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfChildrenSum"
+            children:
+            -   class: "UIControl"
+                name: "LockerBG"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 50.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 50.000000
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "isChainLocked"
+                        control: "LockerBG"
+        -   class: "UIControl"
+            name: "RemainingLabel"
+            input: false
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: -4.000000
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 32.000000
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "(product.xTimed and product.rouletteName.empty() and not product.isChainBundle) or (product.isChainBundle and product.availableTimes > 1)"
+                    control: "RemainingLabelWrapper"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["Anchor.bottomAnchor", "when noArtFooter -> 8, 55"]
+        -   class: "UIControl"
+            name: "BottomLabels"
+            input: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: -4.000000
+                    bottomAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 2.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfChildrenSum"
+            bindings:
+            - ["Anchor.bottomAnchor", "when noArtFooter -> 8, 55"]
+            children:
+            -   class: "UIControl"
+                name: "Giftable"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "giftableVisible"
+                        control: "Giftable"
+            -   class: "UIControl"
+                name: "Timer"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "timerVisible"
+                        control: "Timer"
+            -   class: "UIControl"
+                name: "Subtitle"
+                input: false
+                classes: "t-body bold white-wild-sand-50-text"
+                components:
+                    UITextComponent:
+                        text: "Shop/BigChestProduct/CanContain"
+                        fitting: "FITTING_REDUCE"
+                        align: ["LEFT", "VCENTER"]
+                    Anchor:
+                        leftAnchorEnabled: true
+                        leftAnchor: 8.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        horizontalMax: 100.000000
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                bindings:
+                - ["visible", "not isNull(singleItem) and singleItem.type == ResourceType.stuff and singleItem.stuff.type == ArtefactType.chest and available and footerVisible"]
+    -   class: "UIControl"
+        name: "BottomWrapper"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "Bottom"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopItemPrice.yaml"
+                    args:
+                        "product": "product"
+        -   class: "UIControl"
+            name: "TaxMessage"
+            input: false
+            classes: "t-caps regular white-wild-sand-text"
+            components:
+                UITextComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["visible", "not empty(taxMessage) and requiresEShopButton"]
+            - ["UITextComponent.text", "taxMessage"]
+Slots:
+-   class: "UIControl"
+    name: "SimpleTitle"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        LinearLayout:
+            spacing: 4.000000
+            useRtl: true
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 240.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 24.000000
+    children:
+    -   class: "UIControl"
+        name: "text"
+        input: false
+        classes: "t-subtitle regular white-wild-sand-text"
+        components:
+            UITextComponent:
+                fitting: "FITTING_POINTS"
+                align: ["LEFT", "VCENTER"]
+                useRtlAlign: "USE_BY_SYSTEM"
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "min(parentRest, content)"
+                verticalPolicy: "FixedSize"
+                verticalValue: 24.000000
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "when not isNull(product.rouletteInfo) -> localize(product.rouletteInfo.description.stuff.stuff.title), product.name"]
+    -   class: "UIControl"
+        name: "badge"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                condition: "hasBadgeLabel"
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Badge.yaml"
+                args:
+                    "value": "localize(\"#common:Badge/New\")"
+                    "type": "eBadgeType.Shop"
+-   class: "UIControl"
+    name: "Timer"
+    input: false
+    components:
+        LinearLayout:
+            padding: "4; 8"
+            useRtl: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "FixedSize"
+            verticalValue: 32.000000
+    children:
+    -   class: "UIControl"
+        name: "BlurWrapper"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["visible", "blurVisible"]
+        children:
+        -   prototype: "Blur/Blur"
+            name: "Blur"
+            components:
+                UIPostProcessTextureComponent0:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent1:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent2:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessPolicyComponent:
+                    canBeDelayed: true
+                    renderControlOnlyOnScreen: true
+            bindings:
+            - ["UIPostProcessPolicyComponent.topOffset", "shopScrollTopOffset"]
+            - ["UIPostProcessPolicyComponent.bottomOffset", "shopScrollBottomOffset"]
+    -   class: "UIControl"
+        name: "Fade"
+        input: false
+        classes: "black-35-bg"
+        components:
+            Background: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Icon"
+        input: false
+        classes: "white-wild-sand-bg"
+        components:
+            Background:
+                drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                sprite: "~res:/Gfx/Lobby/icons/icon_timer"
+                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Value"
+        input: false
+        classes: "t-subtitle regular white-wild-sand-text"
+        components:
+            UITextComponent: {}
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "timeDiffShort(timeLeft)"]
+-   class: "UIControl"
+    name: "FooterWrapper"
+    size: [240.000000, 47.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "BlurWrapper"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["visible", "blurVisible"]
+        children:
+        -   prototype: "Blur/Blur"
+            name: "Blur"
+            components:
+                UIPostProcessTextureComponent0:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent1:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent2:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessPolicyComponent:
+                    canBeDelayed: true
+                    renderControlOnlyOnScreen: true
+                UIRoundedCornersComponent:
+                    radius: "0;0;2;2;"
+            bindings:
+            - ["UIPostProcessPolicyComponent.topOffset", "shopScrollTopOffset"]
+            - ["UIPostProcessPolicyComponent.bottomOffset", "shopScrollBottomOffset"]
+    -   class: "UIControl"
+        name: "Fade"
+        input: false
+        classes: "black-35-bg"
+        components:
+            Background:
+                drawType: "DRAW_SCALE_TO_RECT"
+                sprite: "~res:/Gfx/Lobby/backgrounds/bg_fill"
+            UIRoundedCornersComponent:
+                radius: "0;0;2;2;"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Footer"
+        input: false
+        components:
+            Anchor:
+                bottomAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                condition: "not isNull(product.piggyBank)"
+                prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/PiggyBankContent.yaml"
+                args:
+                    "piggy": "product.piggyBank"
+                eventActions:
+                - ["PIGGY_BANK_STAGE_PROGRESS", "PIGGY_BANK_STAGE_PROGRESS", "_event.stuffDescr"]
+                - ["PIGGY_BANK_SAVE_PROGRESS", "PIGGY_BANK_SAVE_PROGRESS", "_event.stuffDescr"]
+            UIChildComponent1:
+                condition: "not isNull(product.rouletteInfo)"
+                prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/RouletteCardContent.yaml"
+                args:
+                    "isChina": "isChina"
+                    "indexes": "product.cardContent"
+                    "content": "product.content"
+            UIChildComponent2:
+                condition: "not isNull(singleItem) and singleItem.type == ResourceType.stuff and singleItem.stuff.type == ArtefactType.chest"
+                prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/ChestContent.yaml"
+                args:
+                    "isAtLeastMediumDevice": "isAtLeastMediumDevice"
+                    "size": "240"
+                    "isChina": "isChina"
+                    "chestInfo": "product.chestInfo"
+                    "chest": "singleItem.stuff"
+                    "bonus": "product.bonus"
+            UIChildComponent3:
+                condition: "not isNull(singleItem) and (singleItem.type == ResourceType.gold or singleItem.type == ResourceType.free_xp or singleItem.type == ResourceType.credits)"
+                prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/SingleResourceContent.yaml"
+                args:
+                    "resource": "singleItem"
+                    "bonus": "product.bonus"
+            UIChildComponent4:
+                condition: "not isNull(singleItem) and not isNull(singleItem.stuff) and singleItem.stuff.type == ArtefactType.subscription and not isNull(product.subscriptionInfo)"
+                prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/SubscriptionCardContent.yaml"
+                args:
+                    "isChina": "isChina"
+                    "content": "product.subscriptionInfo.maxRewards"
+            UIChildComponent5:
+                condition: "product.cardContent.Size() > 1 or (not isNull(singleItem) and singleItem.type != ResourceType.vehicle and singleItem.type != ResourceType.premium)"
+                prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/BundleContent.yaml"
+                args:
+                    "isChina": "isChina"
+                    "product": "product"
+-   class: "UIControl"
+    name: "RemainingLabelWrapper"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "BlurWrapper"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["visible", "blurVisible"]
+        children:
+        -   prototype: "Blur/Blur"
+            name: "Blur"
+            components:
+                UIPostProcessTextureComponent0:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent1:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent2:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessPolicyComponent:
+                    canBeDelayed: true
+                    renderControlOnlyOnScreen: true
+            bindings:
+            - ["UIPostProcessPolicyComponent.topOffset", "shopScrollTopOffset"]
+            - ["UIPostProcessPolicyComponent.bottomOffset", "shopScrollBottomOffset"]
+    -   class: "UIControl"
+        name: "Fade"
+        input: false
+        classes: "black-35-bg"
+        components:
+            Background: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "RemainingLabel"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "product.xTimed"
+                prototypePath: "~res:/UI/Screens3/Common/RemainingLabelForShopContent.yaml"
+                args:
+                    "textPaddings": "8"
+                    "left": "product.availableTimes"
+                    "bgStyle": "\"\""
+                    "textStyle": "when product.availableTimes > 0 -> \"t-subtitle regular white-wild-sand-text\", \"t-subtitle regular red-red-text\""
+-   class: "UIControl"
+    name: "PurchasePending"
+    input: false
+    classes: "black-50-bg"
+    components:
+        Background: {}
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 240.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 336.000000
+        UIChildComponent0:
+            prototypePath: "~res:/UI/Screens3/Common/Loaders/LoaderCircle.yaml"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Color.style.yaml"
+    bindings:
+    - ["visible", "product.pendingPurchase"]
+    children:
+    -   class: "UIControl"
+        name: "Anchor"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Hint"
+            input: false
+            classes: "t-caption regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    multiline: "MULTILINE_ENABLED"
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 16.000000
+                    rightAnchorEnabled: true
+                    rightAnchor: 16.000000
+                    topAnchorEnabled: true
+                    topAnchor: 16.000000
+                SizePolicy:
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(when product.salePrice.resources.Empty() -> \"shop/FreeBundle/PurchaseProgress\", \"shop/Error/AlreadyOwned\")"]
+-   class: "UIControl"
+    name: "Giftable"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 40.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 32.000000
+    children:
+    -   class: "UIControl"
+        name: "BlurWrapper"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["visible", "blurVisible"]
+        children:
+        -   prototype: "Blur/Blur"
+            name: "Blur"
+            components:
+                UIPostProcessTextureComponent0:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent1:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessTextureComponent2:
+                    renderRequestingType: "ON_SIZE_CHANGED"
+                UIPostProcessPolicyComponent:
+                    canBeDelayed: true
+                    renderControlOnlyOnScreen: true
+            bindings:
+            - ["UIPostProcessPolicyComponent.topOffset", "shopScrollTopOffset"]
+            - ["UIPostProcessPolicyComponent.bottomOffset", "shopScrollBottomOffset"]
+    -   class: "UIControl"
+        name: "Fade"
+        input: false
+        classes: "black-35-bg"
+        components:
+            Background: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Icon"
+        input: false
+        classes: "white-wild-sand-bg"
+        components:
+            Background:
+                drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                sprite: "~res:/Gfx/Lobby/icons/icon_handshake_m"
+                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+-   class: "UIControl"
+    name: "LockerBG"
+    position: [7.000000, 36.000000]
+    size: [60.000000, 100.000000]
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_FILL"
+            color: [0.600000, 0.105882, 0.058824, 1.000000]
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            dynamicPadding: true
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 50.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 50.000000
+    bindings:
+    - ["visible", "isChainLocked"]
+    children:
+    -   class: "UIControl"
+        name: "LockLabel"
+        position: [84.000000, 50.000000]
+        input: false
+        components:
+            UITextComponent: {}
+            Anchor:
+                enabled: true
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+                vCenterAnchor: 0.000000
+                bottomAnchorEnabled: false
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["classes", "\"t-headline bold white-wild-sand-text\""]
+        - ["UITextComponent.text", "when product.chainLockerTimes > 1 -> product.chainLockerTimes, \"\""]
+    -   class: "UIControl"
+        name: "LockImage"
+        size: [60.000000, 32.000000]
+        input: false
+        components:
+            UITextureComponent:
+                spritePath: "~res:/Gfx/Lobby/icons/icon_lock"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"

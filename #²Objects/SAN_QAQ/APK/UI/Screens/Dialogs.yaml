@@ -1,0 +1,293 @@
+Header:
+    version: "56"
+ImportedPackages:
+- "~res:/UI/Screens/Common.yaml"
+- "~res:/UI/Screens/Common/StyledButton.yaml"
+- "~res:/UI/Screens/Common/StyledBackButton.yaml"
+- "~res:/UI/Screens/Lobby/Common/RichText.yaml"
+- "~res:/UI/Screens/Fonts.yaml"
+- "~res:/UI/Styles/BackgroundStyles.yaml"
+- "~res:/UI/Screens/Lobby/Common/Timer.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ErrorDialogNoButton"
+    size: [1024.000000, 768.000000]
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        ModalInput: {}
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   prototype: "BlurModified/BlurModified"
+        name: "Blur"
+        components:
+            UIDataParamsComponent:
+                args:
+                    "bgStyle": "\"screen-background\""
+    -   prototype: "Common/Dialog"
+        name: "Dialog"
+        size: [500.000000, 370.000000]
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+        children:
+        -   path: "Middle"
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+            children:
+            -   class: "UIStaticText"
+                name: "DialogText"
+                classes: "text1 text-color-white"
+                components:
+                    UITextComponent:
+                        shadowColor: [0.000000, 0.000000, 0.000000, 1.000000]
+                        multiline: "MULTILINE_ENABLED"
+                    Anchor:
+                        leftAnchorEnabled: true
+                        leftAnchor: 20.000000
+                        rightAnchorEnabled: true
+                        rightAnchor: 20.000000
+                        topAnchorEnabled: true
+                        topAnchor: 90.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 40.000000
+        -   path: "Top/TitleText"
+            classes: "header1 text-color-white"
+            components:
+                UITextComponent:
+                    text: "Error"
+-   prototype: "ErrorDialogNoButton"
+    name: "ErrorDialog"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   path: "Dialog/Middle"
+        children:
+        -   class: "UIControl"
+            name: "ButtonHolder"
+            components:
+                Anchor:
+                    bottomAnchorEnabled: true
+                    bottomAnchor: 20.000000
+                LinearLayout:
+                    orientation: "RightToLeft"
+                    padding: "20.000000"
+                    spacing: 20.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   prototype: "StyledButton/StyledButton"
+                name: "OkButton"
+                classes: "button button-color-green"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                children:
+                -   path: "Caption"
+                    components:
+                        UITextComponent:
+                            text: "#common:DialogButton/OK"
+    -   path: "Dialog/Middle/DialogText"
+        components:
+            Anchor:
+                topAnchor: 70.000000
+                bottomAnchor: 100.000000
+-   prototype: "ErrorDialog"
+    name: "ErrorDialogWithoutCaption"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   path: "Dialog"
+        size: [500.000000, 300.000000]
+        children: []
+    -   path: "Dialog/Middle/DialogText"
+        components:
+            Anchor:
+                topAnchor: 10.000000
+    -   path: "Dialog/Top"
+        visible: false
+        children: []
+-   prototype: "ErrorDialog"
+    name: "WarningDialog"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   path: "Dialog/Middle/ButtonHolder"
+        children:
+        -   prototype: "StyledButton/StyledButton"
+            name: "CancelButton"
+            visible: true
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+            children:
+            -   path: "Caption"
+                components:
+                    UITextComponent:
+                        text: "#common:DialogButton/Cancel"
+    -   path: "Dialog/Top/TitleText"
+        components:
+            UITextComponent:
+                text: "Warning"
+-   prototype: "WarningDialog"
+    name: "WarningDialogWithoutCaption"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   path: "Dialog"
+        size: [500.000000, 300.000000]
+        children: []
+    -   path: "Dialog/Middle/DialogText"
+        components:
+            Anchor:
+                topAnchor: 10.000000
+    -   path: "Dialog/Top"
+        visible: false
+        components:
+            Background:
+                color: [1.000000, 1.000000, 1.000000, 1.000000]
+        children: []
+-   prototype: "Timer/Timer"
+    name: "ExpireTimer"
+    components:
+        StyleSheet:
+            styles: "~res:/UI/Screens/Lobby/Common/Styles/TimerStyles.yaml;~res:/UI/Screens/Fonts.yaml;~res:/UI/Screens/FontsColors.yaml;~res:/UI/Screens/Dialogs.yaml"
+Controls:
+-   prototype: "ErrorDialog"
+    name: "ConnectionWarningDialog"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   prototype: "StyledBackButton/StyledBackButton"
+        name: "CancelButton"
+-   prototype: "ErrorDialog"
+    name: "NotificationDialog"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   path: "Dialog/Top/TitleText"
+        components:
+            UITextComponent:
+                text: "Warning"
+-   prototype: "WarningDialog"
+    name: "WarningDialogRichText"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   path: "Dialog"
+        position: [262.000000, 199.000000]
+        children: []
+    -   path: "Dialog/Middle"
+        children:
+        -   prototype: "RichText/RichText"
+            name: "RichDialogText"
+            size: [460.000000, 200.000000]
+            components:
+                RichContent:
+                    baseClasses: "text-color-blue text1"
+                RichContentAliases0:
+                    aliases: "text_blue,<span class=\"text-color-blue text1\" />;text_white_bold,<span class=\"text-color-white header3\" />;text_mono,<span class=\"text-mono\" />;timer,<object path=\"~res:/UI/Screens/Dialogs.yaml\" prototype=\"ExpireTimer\" />;price,<object control=\"PriceContainer\" name=\"price\" path=\"~res:/UI/Screens/Dialogs.yaml\" />;player_name_with_tag,<object path=\"~res:/UI/Screens/Common/PlayerNameWithTag.yaml\" prototype=\"PlayerNameWithTag\" />;player_teams_header_text,<span class=\"header1\" />;clan_name_with_tag,<object path=\"~res:/UI/Screens/Common/PlayerNameWithTag.yaml\" prototype=\"PlayerNameWithTag\" />;player_name_with_tag_header1,<object path=\"~res:/UI/Screens/Common/PlayerNameWithTag.yaml\" prototype=\"PlayerNameWithTagHeader1\" />;clan_name_with_tag_header1,<object path=\"~res:/UI/Screens/Common/PlayerNameWithTag.yaml\" prototype=\"PlayerNameWithTagHeader1\" />;elite_vehicle_icon,<object control=\"EliteIcon\" path=\"~res:/UI/Screens/Lobby/Common/CommonIcons.yaml\" />;elite_premium_vehicle_icon,<object control=\"ElitePremiumIcon\" path=\"~res:/UI/Screens/Lobby/Common/CommonIcons.yaml\" />;"
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 20.000000
+                    rightAnchorEnabled: true
+                    rightAnchor: 20.000000
+                    topAnchorEnabled: true
+                    topAnchor: 70.000000
+                    bottomAnchorEnabled: true
+                    bottomAnchor: 100.000000
+                FlowLayout:
+                    hPadding: "0.000000"
+                    hDynamicInLinePadding: true
+                    vDynamicPadding: true
+                    vSpacing: 5.000000
+                    useRtl: true
+    -   path: "Dialog/Middle/DialogText"
+        visible: false
+    -   path: "Dialog/Middle/ButtonHolder"
+        position: [0.000000, 286.000000]
+        children: []
+-   class: "UIControl"
+    name: "PriceContainer"
+    input: false
+    components:
+        Anchor:
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "FixedSize"
+            verticalValue: 24.000000
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+-   prototype: "WarningDialogWithoutCaption"
+    name: "WarningDialogRichTextNoCaption"
+    components:
+        StyleSheet:
+            inheritsStylesFromParent: true
+            styles: "~res:/UI/Screens/Dialogs.yaml"
+    children:
+    -   path: "Dialog"
+        position: [262.000000, 234.000000]
+        children: []
+    -   path: "Dialog/Middle"
+        components:
+            Anchor:
+                topAnchorEnabled: false
+                vCenterAnchorEnabled: true
+                bottomAnchorEnabled: false
+            LinearLayout:
+                orientation: "BottomUp"
+                padding: "20.000000"
+                spacing: 20.000000
+            SizePolicy:
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   prototype: "RichText/RichText"
+            name: "RichDialogText"
+            input: false
+            components:
+                RichContent:
+                    text: ""
+                RichContentAliases1:
+                    aliases: "intext_price,<object control=\"PriceContainer\" name=\"price\" path=\"~res:/UI/Screens/Dialogs.yaml\" />;"
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 20.000000
+                    rightAnchorEnabled: true
+                    rightAnchor: 20.000000
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    verticalPolicy: "PercentOfChildrenSum"
+                FlowLayout:
+                    hDynamicInLinePadding: true
+                    useRtl: true
+    -   path: "Dialog/Middle/DialogText"
+        visible: false
+    -   path: "Dialog/Middle/ButtonHolder"
+        position: [0.000000, 40.000000]
+        children: []

@@ -1,0 +1,10 @@
+[auto][a] property float2 viewportOffset;
+[auto][a] property float2 viewportSize;
+
+__forceinline float getLodTransition(float2 texCoord, float threshold)
+{
+	const float modTexCoord = fmod(dot(floor((texCoord * 0.5 + const05List2) * viewportSize + viewportOffset), float2(347.83451793, 3343.28371963)), 10000.0);
+	const float randSample = frac(cos(modTexCoord) * 1000.0);
+
+	return lerp(float(threshold + 1.0 <= randSample), float(threshold > randSample), step(0.0, threshold));
+}

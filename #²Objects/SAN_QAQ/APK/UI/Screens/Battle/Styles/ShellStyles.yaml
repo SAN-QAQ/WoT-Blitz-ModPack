@@ -1,0 +1,13 @@
+Header:
+    version: 157
+StyleSheets:
+-   selectors:
+    - ".lowAmmo #Active"
+    - ".lowAmmo #Full"
+    properties:
+        atlasImage-color: [1.000000, 0.000000, 0.000000, 1.000000]
+-   selectors:
+    - ".fullAmmo #Active"
+    - ".fullAmmo #Full"
+    properties:
+        atlasImage-color: [1.000000, 1.000000, 1.000000, 1.000000]

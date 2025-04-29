@@ -1,0 +1,675 @@
+Header:
+    version: 160
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "BattlePassTabHeader"
+    size: [960.000000, 64.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 64.000000
+        UIDataParamsComponent:
+            params:
+            - ["bool", "isSelected", "false", "false"]
+            - ["bool", "usePremBpAsLicense", "false", "false"]
+            - ["bool", "havePremBp", "false", "false"]
+            - ["bool", "disableInput", "false", "false"]
+            - ["int", "weekIndex", "0", "0"]
+            - ["bool", "isWidgetActive", "false", "false"]
+            - ["bool", "haveLicense", "false", "false"]
+            - ["bool", "showTimerEffect", "false", "true"]
+            - ["int64", "time", "0L", "0L"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["bool", "isCurrent", "false", "true"]
+            - ["BattlePassTasksWeekData", "week", "null", "{ }"]
+            - ["bool", "locked", "false", "false"]
+            events:
+            - "ON_COLLECT_ALL"
+            - "ON_COLLECT_SHOWN"
+            - "ON_ACTIVATE_WEEK_CLICKED"
+            - "ON_LICENSE_CLICKED"
+            - "ON_REFRESH_QUESTS"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "activateWeekClicked", "false"]
+            - ["bool", "collectButtonClicked", "false"]
+            - ["bool", "collectButtonInputEnabled", "when week.lastDisplayedUntakenStages == 0 -> false, true"]
+            - ["float", "collectButtonOpacity", "when week.lastDisplayedUntakenStages == 0 -> 0.000000, 1.000000"]
+            - ["bool", "refreshButtonInputEnabled", "when week.lastDisplayedUntakenStages == 0 and week.actualUntakenStages == 0 -> true, false"]
+            - ["float", "refreshButtonOpacity", "when week.lastDisplayedUntakenStages == 0 and week.actualUntakenStages == 0 -> 1.000000, 0.000000"]
+            - ["float", "activeWeekTextOpacity", "when isWidgetActive -> 0.000000, 1.000000"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "licenseFeaturesEnabled", "(haveLicense and not usePremBpAsLicense) or (usePremBpAsLicense and havePremBp)"]
+            - ["bool", "isRefreshInfoActive", "week.freeRefreshCount + week.paidRefreshCount > 0 and licenseFeaturesEnabled and week.hasUncompletedTasks"]
+            - ["string", "refreshButtonCaption", "when week.refreshMode -> localize(\"Cancel\"), \"  \" + localize(\"missionJournal/battlePass/refreshButton\")"]
+            - ["string", "refreshDescription", "when week.freeRefreshCount == 0 -> \"#Paid refresh price\", \"Free refresh count:\" + str(week.freeRefreshCount)"]
+            - ["eBattlePassTasksWeekState", "weekState", "when isCurrent -> week.state, week.previousState"]
+            - ["string", "headerDescription", "when weekState == eBattlePassTasksWeekState.Active -> \"missionJournal/battlePass/ActiveDescription\", weekState == eBattlePassTasksWeekState.Inactive -> \"missionJournal/battlePass/InactiveDescription\", \"missionJournal/battlePass/BlockedDescription\""]
+        UIChildComponent0:
+            childType: "kControl"
+            condition: "weekState == eBattlePassTasksWeekState.Blocked"
+            control: "BlockedState"
+        UIChildComponent1:
+            childType: "kControl"
+            condition: "weekState == eBattlePassTasksWeekState.Active"
+            control: "ActiveState"
+        UIChildComponent2:
+            childType: "kControl"
+            condition: "weekState == eBattlePassTasksWeekState.Inactive"
+            control: "InactiveState"
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/TaskJournal/Animations/BattlePassTabHeader.actions"
+        UIDataOnEventComponent0:
+            eventName: "ON_COLLECT_ALL"
+            modelFieldExpression: "collectButtonClicked"
+            dataExpression: "true"
+        UIDataOnEventComponent1:
+            eventName: "ON_ACTIVATE_WEEK_CLICKED"
+            modelFieldExpression: "activateWeekClicked"
+            dataExpression: "true"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "week.state"
+            ifExpression: "week.state == eBattlePassTasksWeekState.Inactive"
+            eventName: "ActiveChanged"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "week.actualUntakenStages"
+            ifExpression: "week.actualUntakenStages > 0"
+            eventName: "ActualUntakenStagesChanged"
+Slots:
+-   class: "UIControl"
+    name: "FreeRefreshInfo"
+    input: false
+    components:
+        Background:
+            usePostProcessedSprite: true
+        UIPostProcessTextureComponent0:
+            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+            needClearAlphaAfterRender: true
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent1:
+            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent2:
+            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIRoundedCornersComponent:
+            radius: "8"
+        LinearLayout:
+            orientation: "TopDown"
+            dynamicPadding: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            horizontalValue: 100.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 48.000000
+    children:
+    -   class: "UIControl"
+        name: "Description"
+        input: false
+        classes: "t-body regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["HCENTER", "RIGHT", "VCENTER"]
+            Anchor:
+                rightAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "localize(\"missionJournal/battlePass/refreshInfo/freeDescription\", { \"number\" = str(week.freeRefreshCount); })"]
+-   class: "UIControl"
+    name: "PaidRefreshInfo"
+    input: false
+    components:
+        Background:
+            usePostProcessedSprite: true
+        UIPostProcessTextureComponent0:
+            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+            needClearAlphaAfterRender: true
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent1:
+            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent2:
+            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIRoundedCornersComponent:
+            radius: "8"
+        LinearLayout:
+            orientation: "TopDown"
+            dynamicPadding: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "FixedSize"
+            verticalValue: 48.000000
+    children:
+    -   class: "UIControl"
+        name: "Description"
+        input: false
+        classes: "t-body regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                text: "missionJournal/battlePass/refreshInfo/paidDescription"
+                colorInheritType: "COLOR_IGNORE_PARENT"
+                align: ["RIGHT", "VCENTER"]
+            Anchor:
+                rightAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "Price"
+        input: false
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/Currencies.yaml"
+                args:
+                    "currencySize": "eCurrencySize.BUTTON_BOLD"
+                    "showDiscount": "false"
+                    "price": "week.refreshPrice"
+-   class: "UIParticles"
+    name: "TimerEffect"
+    size: [100.000000, 100.000000]
+    pivot: [0.500000, 0.500000]
+    input: false
+    effectPath: "~res:/3d/FX/UI/BP_Progression_v2/TimeGlow.sc2"
+    autoStart: true
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Lobby/TaskJournal/TaskJournalTask.style.yaml"
+-   class: "UIControl"
+    name: "BlockedState"
+    input: false
+    components:
+        Anchor:
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            dynamicSpacing: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "SpacerLeft"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 152.000000
+    -   class: "UIControl"
+        name: "DescriptionWrapper"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                horizontalMax: 534.000000
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "TimerWrapper"
+            input: false
+            components:
+                LinearLayout:
+                    padding: "16"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 37.000000
+            children:
+            -   class: "UIControl"
+                name: "TimerEffectWrapper"
+                pivot: [0.500000, 0.500000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "showTimerEffect"
+                        control: "TimerEffect"
+            -   class: "UIControl"
+                name: "Bg"
+                input: false
+                components:
+                    Background:
+                        usePostProcessedSprite: true
+                    UIPostProcessTextureComponent0:
+                        materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                        needClearAlphaAfterRender: true
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent1:
+                        materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIPostProcessTextureComponent2:
+                        materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                        scale: 0.500000
+                        useVirtualCoordinateSystem: true
+                        minFilter: "Linear"
+                        magFilter: "Linear"
+                    UIRoundedCornersComponent:
+                        radius: "4"
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "Timer"
+                input: false
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Timer.yaml"
+                        args:
+                            "time": "time"
+                            "serverTime": "session.serverTime"
+        -   class: "UIControl"
+            name: "Description"
+            input: false
+            components:
+                RichContent:
+                    baseClasses: "t-subtitle regular color=white-wild-sand-text"
+                RichContentAliases0:
+                    aliases:
+                    - ["white_bold", "<span class=\"t-subtitle bold color=white-wild-sand-text\" />"]
+                    - ["icon", "<control control=\"~res:/UI/Screens3/Lobby/TaskJournal/BattlePass/BattlePassTaskStageCard.yaml\" args1=\"isTaken=true\" />"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    horizontalMax: 500.000000
+                    verticalPolicy: "PercentOfChildrenSum"
+                FlowLayout:
+                    hDynamicPadding: true
+                    alignment: "Center"
+                    hSpacing: 4.000000
+                    useRtl: true
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["RichContent.text", "localize(\"missionJournal/battlePass/BlockedDescription\", { \"day\" = date(week.startTime, \"%e\"); \"month\" = localize(\"month/\" + date(week.startTime, \"%m\")); })"]
+    -   class: "UIControl"
+        name: "SpacerRight"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 152.000000
+-   class: "UIControl"
+    name: "ActiveState"
+    size: [960.000000, 48.000000]
+    input: false
+    components:
+        Anchor:
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            spacing: 16.000000
+            dynamicSpacing: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+            verticalMin: 64.000000
+    children:
+    -   class: "UIControl"
+        name: "Bg"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            Anchor:
+                vCenterAnchorEnabled: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 64.000000
+    -   class: "UIControl"
+        name: "DescriptionWrapper"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "Description"
+            input: false
+            components:
+                UIOpacityComponent: {}
+                RichContent:
+                    baseClasses: "t-subtitle regular color=white-wild-sand-text"
+                RichContentAliases0:
+                    aliases:
+                    - ["white_bold", "<span class=\"t-subtitle bold color=white-wild-sand-text\" />"]
+                    - ["icon", "<control control=\"~res:/UI/Screens3/Lobby/TaskJournal/BattlePass/BattlePassTaskStageCard.yaml\" args1=\"isTaken=true\" />"]
+                Anchor:
+                    vCenterAnchorEnabled: true
+                    vCenterAnchor: 4.000000
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "min(parentRest, childrenSum)"
+                    verticalPolicy: "PercentOfChildrenSum"
+                FlowLayout:
+                    hSpacing: 4.000000
+                    useRtl: true
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UIOpacityComponent.opacity", "activeWeekTextOpacity"]
+            - ["RichContent.text", "localize(\"missionJournal/battlePass/ActiveDescription\")"]
+    -   class: "UIControl"
+        name: "RefreshInfo"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                childType: "kControl"
+                condition: "week.freeRefreshCount > 0 and licenseFeaturesEnabled"
+                control: "FreeRefreshInfo"
+            UIChildComponent1:
+                childType: "kControl"
+                condition: "week.freeRefreshCount == 0 and licenseFeaturesEnabled"
+                control: "PaidRefreshInfo"
+        bindings:
+        - ["visible", "isRefreshInfoActive"]
+        - ["UIOpacityComponent.opacity", "refreshButtonOpacity"]
+    -   class: "UIControl"
+        name: "Buttons"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 152.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "CollectLevelsButton"
+            input: false
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIAttachLayoutMasterComponent:
+                    attachId: "BPWP_COLLECT"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                    args:
+                        "caption": "\"missionJournal/battlePass/pickUp\""
+                        "inputDisabled": "collectButtonClicked or disableInput or not collectButtonInputEnabled"
+                        "size": "eButtonSize.NORMAL"
+                        "type": "eButtonType.POSITIVE"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_COLLECT_ALL", ""]
+            bindings:
+            - ["UIOpacityComponent.opacity", "collectButtonOpacity"]
+        -   class: "UIControl"
+            name: "RefreshQuestsButton"
+            input: false
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIAttachLayoutMasterComponent: {}
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                    args:
+                        "inputDisabled": "disableInput or not refreshButtonInputEnabled"
+                        "caption": "refreshButtonCaption"
+                        "iconPath": "when week.refreshMode -> \"\", \"~res:/Gfx/Lobby/icons/icon_angled-arrow\""
+                        "size": "eButtonSize.NORMAL"
+                        "type": "eButtonType.POSITIVE"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_REFRESH_QUESTS", ""]
+            bindings:
+            - ["visible", "week.freeRefreshCount + week.paidRefreshCount > 0 and week.hasUncompletedTasks"]
+            - ["UIOpacityComponent.opacity", "refreshButtonOpacity"]
+            - ["UIAttachLayoutMasterComponent.attachId", "\"REFRESH_QUESTS_BUTTON_\" + str(weekIndex)"]
+            children:
+            -   class: "UIControl"
+                name: "DisabledTapArea"
+                input: true
+                classes: "button-tap-area button-cancel-sound"
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        hCenterAnchorEnabled: true
+                        rightAnchorEnabled: true
+                        topAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    UIAttachLayoutMasterComponent: {}
+                    UIInputEventComponent:
+                        onTouchUpInside: "ON_REFRESH_QUESTS"
+                        blockDuplicatedEvents: true
+                    Sound: {}
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Lobby/Common/Button.style.yaml;~res:/UI/Screens3/ButtonSound.style.yaml"
+                bindings:
+                - ["enabled", "refreshButtonInputEnabled and not disableInput"]
+                - ["UIAttachLayoutMasterComponent.attachId", "when isSelected -> \"REFRESH_QUESTS_BUTTON\", \"\""]
+            -   class: "UIParticles"
+                name: "GlowPurchase"
+                position: [74.000000, 24.000000]
+                size: [32.000000, 32.000000]
+                scale: [0.780000, 1.000000]
+                pivot: [0.500000, 0.500000]
+                input: false
+                effectPath: "~res:/3d/FX/UI/BattlePass/BlinkPurchase.sc2"
+                components:
+                    IgnoreLayout: {}
+-   class: "UIControl"
+    name: "InactiveState"
+    size: [1072.000000, 64.000000]
+    input: false
+    components:
+        Anchor:
+            rightAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            padding: "8"
+            spacing: 16.000000
+            dynamicSpacing: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "Formula"
+            verticalFormula: "maxChild + 16"
+    children:
+    -   class: "UIControl"
+        name: "Bg"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            Anchor:
+                vCenterAnchorEnabled: true
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 64.000000
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "DescriptionInactive"
+        input: false
+        classes: "t-subtitle regular color=white-wild-sand-text"
+        components:
+            UITextComponent:
+                multiline: "MULTILINE_ENABLED"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "min(parentRest, content)"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "when usePremBpAsLicense -> localize(\"missionJournal/battlePass/NewInactiveDescription\"), localize(\"missionJournal/battlePass/InactiveDescription\")"]
+    -   class: "UIControl"
+        name: "Buttons"
+        input: false
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            LinearLayout:
+                spacing: 8.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   prototype: "Button/Button"
+            name: "ActivateWeekButton"
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                UIDataParamsComponent:
+                    args:
+                        "inputDisabled": "activateWeekClicked or disableInput"
+                        "size": "eButtonSize.NORMAL"
+                        "type": "eButtonType.POSITIVE"
+                        "enabled": "true"
+                        "caption": "\"missionJournal/battlePass/activateWeek\""
+                        "locked": "locked"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_ACTIVATE_WEEK_CLICKED", ""]
+        -   class: "UIControl"
+            name: "BuyLicenseButton"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                    args:
+                        "inputDisabled": "disableInput"
+                        "caption": "when usePremBpAsLicense -> localize(\"missionJournal/battlePass/premiumPass\"), localize(\"missionJournal/battlePass/license\")"
+                        "enabled": "true"
+                        "size": "eButtonSize.NORMAL"
+                        "type": "eButtonType.ALTERNATIVE"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_LICENSE_CLICKED", ""]

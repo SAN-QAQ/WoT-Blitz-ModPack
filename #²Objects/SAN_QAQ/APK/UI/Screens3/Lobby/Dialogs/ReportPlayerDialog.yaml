@@ -1,0 +1,791 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ReportPlayerDialog"
+    size: [892.000000, 620.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalValue: 100.000000
+            verticalPolicy: "PercentOfParent"
+            verticalValue: 100.000000
+        UIDataParamsComponent:
+            params:
+            - ["bool", "showErrorDialog", "false", "false"]
+            - ["string", "errorString", "\"\"", "\"Lobby/ReportPlayer/ChooseTime\""]
+            - ["string", "errorid", "\"\"", "\"TYPEMENU\""]
+            - ["bool", "enableInputID", "true", "true"]
+            - ["bool", "canChangeid", "true", "true"]
+            - ["string", "listName3", "\"Lobby/ReportPlayer/ChooseTime\"", "\"Lobby/ReportPlayer/ChooseTime\""]
+            - ["string", "listName2", "\"Lobby/ReportPlayer/ChooseChannel\"", "\"Lobby/ReportPlayer/ChooseChannel\""]
+            - ["string", "listName1", "\"Lobby/ReportPlayer/ChooseType\"", "\"Lobby/ReportPlayer/ChooseType\""]
+            - ["bool", "showList3", "false", "false"]
+            - ["bool", "showList2", "false", "false"]
+            - ["bool", "showList1", "false", "true"]
+            - ["vector<string>", "btnTimeNames", "[ ]", "[ \"OneHour\"; \"Today\"; \"Earlier\"; ]"]
+            - ["vector<string>", "btnChannelNames", "[ ]", "[ \"Channel1\"; \"Channel2\"; ]"]
+            - ["vector<string>", "btnTypeNames", "[ ]", "[ \"InformationHarmfultoYouth\"; \"InappropriateMessage\"; \"AdvertisingInformation\"; \"InappropriateNickname\"; \"FraudInformation\"; ]"]
+            - ["string", "playerid", "\"\"", "\"\""]
+            - ["string", "description", "\"\"", "\"\""]
+            - ["bool", "showerror", "false", "true"]
+            events:
+            - "ACCENT_CLICKED"
+            - "OPTIONAL_CLICKED"
+            eventActions: []
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "playerIDTitle", "\"settings/general/userId\""]
+            - ["string", "descriptionTitle", "\"Lobby/ReportPlayer/Description\""]
+            - ["string", "time", "\"Lobby/ReportPlayer/Time\""]
+            - ["string", "channel", "\"Lobby/ReportPlayer/Channel\""]
+            - ["string", "type", "\"Lobby/ReportPlayer/Type\""]
+            - ["string", "problemText", "\"Story/BuyoutDialog/Problem/Description\""]
+            - ["string", "solutionText", "\"Story/BuyoutDialog/Solution\""]
+    children:
+    -   class: "UIControl"
+        name: "ContentHolder"
+        size: [640.000000, 900.000000]
+        enabled: true
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 100.000000
+                verticalPolicy: "PercentOfParent"
+                verticalValue: 100.000000
+                verticalMin: 620.000000
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Dialog/TextDialog.yaml"
+                args:
+                    "closeOnAcceptAction": "false"
+                    "closeByTap": "false"
+                    "type": "eDialogType.FILL"
+                    "header": "\"Lobby/ReportPlayer/Title\""
+                    "accentButton": "\"#common:DialogButton/Approve\""
+                    "optionalButton": "\"#common:DialogButton/Cancel\""
+                    "contentControl": "Content"
+                eventActions:
+                - ["OPTIONAL_CLICKED", "CANCEL", ""]
+                - ["ACCENT_CLICKED", "REPORT", ""]
+    -   class: "UIControl"
+        name: "listSelBg"
+        position: [0.000000, 0.000000]
+        size: [892.000000, 620.000000]
+        components:
+            Anchor:
+                enabled: true
+                leftAnchorEnabled: true
+                leftAnchor: 0.000000
+                hCenterAnchorEnabled: false
+                rightAnchorEnabled: true
+                rightAnchor: 0.000000
+                topAnchorEnabled: true
+                topAnchor: 0.000000
+                vCenterAnchorEnabled: false
+                bottomAnchorEnabled: true
+                bottomAnchor: 0.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+                verticalMin: 0.000000
+            UIInputEventComponent:
+                onTouchDown: "CLICK_DROP_BOX_BG"
+            Focus:
+                state: "Enabled"
+                focusWithAnimation: true
+                focusLostEvent: ""
+        bindings:
+        - ["visible", "(showList1 or showList2) or showList3"]
+        children:
+        -   prototype: "BlurModified/BlurModified"
+        -   class: "UIControl"
+            name: "PopUpType"
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/UI/CommonUIElements/popup_new"
+                    leftRightStretchCap: 14.000000
+                    topBottomStretchCap: 14.000000
+                Anchor:
+                    enabled: false
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                    vCenterAnchor: 80.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIAttachLayoutSmartSlaveComponent:
+                    attachId: "TYPEMENU"
+                    slaveAlign: "Bottom"
+            bindings:
+            - ["visible", "showList1"]
+            children:
+            -   class: "UIControl"
+                name: "Arrow"
+                position: [245.000000, -32.000000]
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Background:
+                        sprite: "~res:/Gfx/UI/CommonUIElements/popup_triangle"
+                        align: ["HCENTER", "VCENTER", "BOTTOM"]
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        hCenterAnchor: 0.000000
+                        topAnchorEnabled: true
+                        topAnchor: -32.000000
+            -   class: "UIControl"
+                name: "listMenu"
+                input: false
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        rightAnchorEnabled: true
+                        topAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Common/Button/MenuListButton.yaml"
+                        dataContainer: "btnTypeNames"
+                        args:
+                            "buttonIndex": "_index"
+                            "caption": "localize(btnTypeNames[_index])"
+                        eventActions:
+                        - ["BTN_CLICKED", "BTN_TYPE_CLICKED", "_index"]
+        -   class: "UIControl"
+            name: "PopUpChannel"
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/UI/CommonUIElements/popup_new"
+                    leftRightStretchCap: 14.000000
+                    topBottomStretchCap: 14.000000
+                Anchor:
+                    enabled: false
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                    vCenterAnchor: 50.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIAttachLayoutSmartSlaveComponent:
+                    attachId: "CHANNELMENU"
+                    slaveAlign: "Bottom"
+            bindings:
+            - ["visible", "showList2"]
+            children:
+            -   class: "UIControl"
+                name: "Arrow"
+                position: [245.000000, -32.000000]
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Background:
+                        sprite: "~res:/Gfx/UI/CommonUIElements/popup_triangle"
+                        align: ["HCENTER", "VCENTER", "BOTTOM"]
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        hCenterAnchor: 0.000000
+                        topAnchorEnabled: true
+                        topAnchor: -32.000000
+            -   class: "UIControl"
+                name: "listMenu"
+                input: false
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        rightAnchorEnabled: true
+                        topAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Common/Button/MenuListButton.yaml"
+                        dataContainer: "btnChannelNames"
+                        args:
+                            "buttonIndex": "_index"
+                            "caption": "localize(btnChannelNames[_index])"
+                        eventActions:
+                        - ["BTN_CLICKED", "BTN_CHANNEL_CLICKED", "_index"]
+        -   class: "UIControl"
+            name: "PopUpTime"
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/UI/CommonUIElements/popup_new"
+                    leftRightStretchCap: 14.000000
+                    topBottomStretchCap: 14.000000
+                Anchor:
+                    enabled: false
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                    vCenterAnchor: 100.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIAttachLayoutSmartSlaveComponent:
+                    attachId: "TIMEMENU"
+                    slaveAlign: "Bottom"
+            bindings:
+            - ["visible", "showList3"]
+            children:
+            -   class: "UIControl"
+                name: "Arrow"
+                position: [245.000000, -32.000000]
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Background:
+                        sprite: "~res:/Gfx/UI/CommonUIElements/popup_triangle"
+                        align: ["HCENTER", "VCENTER", "BOTTOM"]
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        hCenterAnchor: 0.000000
+                        topAnchorEnabled: true
+                        topAnchor: -32.000000
+            -   class: "UIControl"
+                name: "listMenu"
+                input: false
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        rightAnchorEnabled: true
+                        topAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Common/Button/MenuListButton.yaml"
+                        dataContainer: "btnTimeNames"
+                        args:
+                            "buttonIndex": "_index"
+                            "caption": "localize(btnTimeNames[_index])"
+                        eventActions:
+                        - ["BTN_CLICKED", "BTN_TIME_CLICKED", "_index"]
+    -   class: "UIControl"
+        name: "ErrorPopup"
+        size: [892.000000, 558.000000]
+        input: false
+        components:
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                condition: "showerror"
+                prototypePath: "~res:/UI/Screens3/Common/PopupMenu.yaml"
+                args:
+                    "defaultTextHMax": "200"
+                    "text": "localize(errorString)"
+                    "slaveAlign": "ePositionAlign.Right"
+                    "masterId": "errorid"
+                    "title": "\"\""
+Slots:
+-   class: "UIControl"
+    name: "Content"
+    position: [320.000000, 240.000000]
+    size: [600.000000, 600.000000]
+    pivot: [0.500000, 0.500000]
+    classes: ""
+    components:
+        Background:
+            drawType: "DRAW_STRETCH_BOTH"
+            sprite: "~res:/Gfx/Lobby/backgrounds/bg_r16.psd"
+            color: [1.000000, 1.000000, 1.000000, 0.000000]
+            leftRightStretchCap: 16.000000
+            topBottomStretchCap: 16.000000
+        UIOpacityComponent: {}
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+            spacing: 10.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalValue: 2000.000000
+            verticalPolicy: "PercentOfMaxChild"
+            verticalValue: 300.000000
+            verticalFormula: ""
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Color.style.yaml"
+    bindings:
+    - ["Anchor.vCenterAnchor", "0"]
+    children:
+    -   class: "UIControl"
+        name: "PlayerID"
+        position: [115.000000, 0.000000]
+        size: [370.000000, 48.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                topAnchorEnabled: false
+                topAnchor: 0.000000
+            LinearLayout:
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 400.000000
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "PlayerIDTitle"
+            input: false
+            classes: "t-subtitle regular white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_DISABLED"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 70.000000
+                    horizontalFormula: ""
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(playerIDTitle)"]
+        -   class: "UIControl"
+            name: "PlayerIDInput"
+            position: [0.000000, 75.000000]
+            size: [370.000000, 48.000000]
+            input: false
+            components:
+                Anchor:
+                    enabled: true
+                    leftAnchorEnabled: false
+                    leftAnchor: 0.000000
+                    hCenterAnchorEnabled: false
+                    topAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 330.000000
+                    verticalPolicy: "PercentOfMaxChild"
+                UIAttachLayoutMasterComponent:
+                    attachId: "PLAYERID"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Common/TextField.yaml"
+                    args:
+                        "input": "enableInputID"
+                        "maxLength": "10"
+                        "leftIconImage": "\"~res:/Gfx/Lobby/icons/icon_search_s\""
+                        "bgStyle": "\"black-50-bg\""
+                        "placeholderTextColor": "\"white-wild-sand-50-text\""
+                        "textStyle": "\"t-subtitle regular\""
+                        "text": "playerid"
+                        "placeholderText": "localize(\"Lobby/ReportPlayer/IDPlaceholder\")"
+                        "validatedWithError": "showerror and errorid == \"PLAYERID\""
+                        "showValidate": "false"
+                        "filterRegExp": "\"^[0-9]+$\""
+                        "canCleaned": "enableInputID"
+                        "isEnabled": "enableInputID"
+                        "textFieldType": "eTextFieldType.Text"
+                        "keyboardType": "eKeyboardType.KEYBOARD_TYPE_NUMBER_PAD"
+                    eventActions:
+                    - ["EDIT_ENDED", "EDIT_ENDED", ""]
+                    - ["FIELD_CLICKED", "FIELD_CLICKED", ""]
+                    - ["EDITING_STARTED", "EDITING_STARTED", ""]
+                    - ["TEXT_CHANGED", "ID_CHANGED", "_event"]
+                UIIdentifierComponent:
+                    id: "player_id"
+            bindings:
+            - ["enabled", "canChangeid"]
+    -   class: "UIControl"
+        name: "Type"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 400.000000
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "TypeTitle"
+            input: false
+            classes: "t-subtitle regular white-wild-sand-text"
+            components:
+                UITextComponent:
+                    fontSize: 17.000000
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_DISABLED"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 70.000000
+                    horizontalFormula: ""
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(type)"]
+        -   class: "UIControl"
+            name: "TypeButton"
+            position: [31.000000, 0.000000]
+            size: [300.000000, 50.000000]
+            components:
+                UITextComponent:
+                    fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                    fontSize: 18.000000
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    enabled: true
+                    leftAnchorEnabled: false
+                    hCenterAnchorEnabled: false
+                    rightAnchorEnabled: false
+                    topAnchorEnabled: false
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 330.000000
+                UIAnchorSafeAreaComponent:
+                    rightSafeInset: "INSET"
+                UIAttachLayoutMasterComponent:
+                    attachId: "TYPEMENU"
+                UIInputEventComponent:
+                    onTouchUpInside: "BTN_MENU_CLICK"
+                    onTouchUpInsideData: "1"
+            bindings:
+            - ["UITextComponent.text", "\"   \" + localize(listName1)"]
+            children:
+            -   class: "UIControl"
+                name: "Background"
+                input: false
+                components:
+                    Background:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_r4"
+                        color: [0.000000, 0.000000, 0.000000, 0.500000]
+                        leftRightStretchCap: 4.000000
+                        topBottomStretchCap: 4.000000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "dropArrow"
+                position: [360.000000, 0.000000]
+                size: [40.000000, 80.000000]
+                input: false
+                components:
+                    Background:
+                        sprite: "~res:/Gfx/UI/CommonUIElements/IconArrowDropDownMenu"
+                    Anchor:
+                        rightAnchorEnabled: true
+                        rightAnchor: 0.000000
+                        topAnchorEnabled: true
+                        topAnchor: 0.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 0.000000
+    -   class: "UIControl"
+        name: "Channel"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 400.000000
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "ChannelTitle"
+            input: false
+            classes: "t-subtitle regular white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_DISABLED"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 70.000000
+                    horizontalFormula: ""
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(channel)"]
+        -   class: "UIControl"
+            name: "ChannelButton"
+            position: [31.000000, 0.000000]
+            size: [300.000000, 50.000000]
+            components:
+                UITextComponent:
+                    fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                    fontSize: 18.000000
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    enabled: true
+                    leftAnchorEnabled: false
+                    hCenterAnchorEnabled: false
+                    rightAnchorEnabled: false
+                    topAnchorEnabled: false
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 330.000000
+                UIAnchorSafeAreaComponent:
+                    rightSafeInset: "INSET"
+                UIAttachLayoutMasterComponent:
+                    attachId: "CHANNELMENU"
+                UIInputEventComponent:
+                    onTouchUpInside: "BTN_MENU_CLICK"
+                    onTouchUpInsideData: "2"
+            bindings:
+            - ["UITextComponent.text", "\"   \" + localize(listName2)"]
+            children:
+            -   class: "UIControl"
+                name: "Background"
+                input: false
+                components:
+                    Background:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_r4"
+                        color: [0.000000, 0.000000, 0.000000, 0.500000]
+                        leftRightStretchCap: 4.000000
+                        topBottomStretchCap: 4.000000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "dropArrow"
+                position: [360.000000, 0.000000]
+                size: [40.000000, 80.000000]
+                input: false
+                components:
+                    Background:
+                        sprite: "~res:/Gfx/UI/CommonUIElements/IconArrowDropDownMenu"
+                    Anchor:
+                        rightAnchorEnabled: true
+                        rightAnchor: 0.000000
+                        topAnchorEnabled: true
+                        topAnchor: 0.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 0.000000
+    -   class: "UIControl"
+        name: "Time"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 400.000000
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   class: "UIControl"
+            name: "TimeTitle"
+            input: false
+            classes: "t-subtitle regular white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_DISABLED"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    leftAnchorEnabled: false
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 70.000000
+                    horizontalFormula: ""
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(time)"]
+        -   class: "UIControl"
+            name: "TimeButton"
+            position: [31.000000, 0.000000]
+            size: [300.000000, 50.000000]
+            classes: ""
+            components:
+                UITextComponent:
+                    fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                    fontSize: 18.000000
+                    letterSpacing: 0.000000
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    fitting: "FITTING_NONE"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    enabled: true
+                    leftAnchorEnabled: false
+                    hCenterAnchorEnabled: false
+                    rightAnchorEnabled: false
+                    topAnchorEnabled: false
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 330.000000
+                UIAnchorSafeAreaComponent:
+                    rightSafeInset: "INSET"
+                UIAttachLayoutMasterComponent:
+                    attachId: "TIMEMENU"
+                UIInputEventComponent:
+                    onTouchUpInside: "BTN_MENU_CLICK"
+                    onTouchUpInsideData: "3"
+            bindings:
+            - ["UITextComponent.text", "\"   \" + localize(listName3)"]
+            children:
+            -   class: "UIControl"
+                name: "Background"
+                input: false
+                components:
+                    Background:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_r4"
+                        color: [0.000000, 0.000000, 0.000000, 0.500000]
+                        leftRightStretchCap: 4.000000
+                        topBottomStretchCap: 4.000000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "dropArrow"
+                position: [360.000000, 0.000000]
+                size: [40.000000, 80.000000]
+                input: false
+                components:
+                    Background:
+                        sprite: "~res:/Gfx/UI/CommonUIElements/IconArrowDropDownMenu"
+                    Anchor:
+                        rightAnchorEnabled: true
+                        rightAnchor: 0.000000
+                        topAnchorEnabled: true
+                        topAnchor: 0.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 0.000000
+    -   class: "UIControl"
+        name: "Description"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                dynamicSpacing: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 400.000000
+                verticalPolicy: "PercentOfLastChild"
+        children:
+        -   class: "UIControl"
+            name: "DescriptionTitle"
+            input: false
+            classes: "t-subtitle regular white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_DISABLED"
+                    align: ["LEFT", "HCENTER", "VCENTER"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 70.000000
+                    horizontalFormula: ""
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(descriptionTitle)"]
+        -   class: "UIControl"
+            name: "DescriptionInput"
+            position: [70.000000, 0.000000]
+            size: [330.000000, 132.000000]
+            enabled: true
+            input: false
+            components:
+                Anchor:
+                    enabled: true
+                    leftAnchorEnabled: false
+                    leftAnchor: 0.000000
+                    hCenterAnchorEnabled: false
+                    topAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 330.000000
+                    verticalPolicy: "PercentOfMaxChild"
+                    verticalValue: 100.000000
+                    verticalMin: 100.000000
+                UIAttachLayoutMasterComponent:
+                    attachId: "DESCRIPTION"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Common/TextField.yaml"
+                    args:
+                        "maxLength": "100"
+                        "bgStyle": "\"black-50-bg\""
+                        "placeholderTextColor": "\"white-wild-sand-50-text\""
+                        "textStyle": "\"t-subtitle regular\""
+                        "text": "description"
+                        "placeholderText": "localize(\"Lobby/ReportPlayer/Placeholder\")"
+                        "validatedWithError": "false"
+                        "showValidate": "false"
+                        "filterRegExp": "\"\""
+                        "canCleaned": "true"
+                        "input": "not (((showList1 or showList3) or showList2) or showErrorDialog)"
+                        "textFieldType": "eTextFieldType.Multiline"
+                        "isVisible": "not ((showList1 or showList3) or showErrorDialog)"
+                        "keyboardType": "eKeyboardType.KEYBOARD_TYPE_DEFAULT"
+                    eventActions:
+                    - ["EDIT_ENDED", "EDIT_ENDED", ""]
+                    - ["FIELD_CLICKED", "FIELD_CLICKED", ""]
+                    - ["EDITING_STARTED", "EDITING_STARTED", ""]
+                    - ["TEXT_CHANGED", "DESCRIPTION_CHANGED", "_event"]
+                UIIdentifierComponent:
+                    id: "description_text_field"
+CustomData:
+    Guides:
+        ReportPlayerDialog:
+            Vertical:
+            - 801.000000

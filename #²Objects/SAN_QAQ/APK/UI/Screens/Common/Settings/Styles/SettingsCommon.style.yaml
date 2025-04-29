@@ -1,0 +1,105 @@
+Header:
+    version: 160
+StyleSheets:
+-   selectors:
+    - ".reset-button:pressed_inside"
+    properties:
+        bg-color: [1.000000, 1.000000, 1.000000, 0.501961]
+-   selectors:
+    - ".settings-button:pressed_inside #TextContainer"
+    properties:
+        bg-color: [1.000000, 1.000000, 1.000000, 0.501961]
+-   selectors:
+    - ".key-input:pressed_inside #Container"
+    properties:
+        bg-color: [1.000000, 1.000000, 1.000000, 0.501961]
+-   selectors:
+    - ".key-input #Container #Key #Value"
+    properties:
+        text-color: [1.000000, 1.000000, 1.000000, 1.000000]
+-   selectors:
+    - ".key-input:selected #Container #Key #Value"
+    properties:
+        text-color: [0.960784, 0.650980, 0.137255, 1.000000]
+-   selectors:
+    - "UISettingsSelector .selector-highlight"
+    properties:
+        bg-drawType: "DRAW_STRETCH_BOTH"
+        bg-sprite: "~res:/Gfx/UI/SettingsScreen/over_button_tab_bar"
+        bg-color: [1.000000, 1.000000, 1.000000, 1.000000]
+        bg-leftRightStretchCap: 5.000000
+        bg-topBottomStretchCap: 5.000000
+-   selectors:
+    - "UISettingsSelector .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 19.000000
+        text-lineHeight: 24.000000
+        text-baseLine: 5.000000
+        text-color:
+            value: [0.619608, 0.721569, 0.800000, 1.000000]
+            transitionTime: 0.100000
+            transitionFunction: "LINEAR"
+-   selectors:
+    - "UISettingsSelector.ar .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        text-baseLine: 7.000000
+-   selectors:
+    - "UISettingsSelector.ja .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+-   selectors:
+    - "UISettingsSelector.ko .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+-   selectors:
+    - "UISettingsSelector.th .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 22.000000
+-   selectors:
+    - "UISettingsSelector.vi .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 17.000000
+-   selectors:
+    - "UISettingsSelector.zh-Hans .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+-   selectors:
+    - "UISettingsSelector.zh-Hant .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+-   selectors:
+    - "UISettingsSelector.hi .selector-option #Text"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+-   selectors:
+    - "UISettingsSelector .selector-option:selected #Text"
+    properties:
+        text-color: [1.000000, 1.000000, 1.000000, 1.000000]
+-   selectors:
+    - ".slider-with-caption #ValueAndCaption #Value"
+    properties:
+        text-color: [0.862745, 0.807843, 0.729412, 1.000000]
+-   selectors:
+    - "UISettingsSelector:disabled .selector-option #Text"
+    - "UISettingsSelector .selector-option:disabled #Text"
+    properties:
+        text-color:
+            value: [0.619608, 0.721569, 0.800000, 0.200000]
+            transitionTime: 0.100000
+            transitionFunction: "LINEAR"
+-   selectors:
+    - "UISettingsSelector:disabled .selector-option:selected #Text"
+    properties:
+        text-color: [1.000000, 1.000000, 1.000000, 0.200000]
+-   selectors:
+    - "UISettingsSelector:disabled .selector-highlight"
+    properties:
+        bg-color: [1.000000, 1.000000, 1.000000, 0.498039]
+-   selectors:
+    - ".slider-with-caption:disabled #ValueAndCaption"
+    properties:
+        bg-color: [1.000000, 1.000000, 1.000000, 0.509804]

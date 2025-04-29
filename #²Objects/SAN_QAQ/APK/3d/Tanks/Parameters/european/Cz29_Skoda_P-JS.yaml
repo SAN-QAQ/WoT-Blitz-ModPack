@@ -1,0 +1,257 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/european-Cz29_Skoda_P-JS"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/european-Cz29_Skoda_P-JS"
+    blitzModelPath: "Tanks/European/Cz29_Skoda_P-JS.sc2"
+    collisionMesh: "CollisionMeshes/european-Cz29_Skoda_P-JS.sc2"
+    smokeEffectPath: "FX/Exhausts/hullback-up15"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/ht"
+    engineSoundNPC: "tanks/npc/engine/de/ht"
+    chassisSoundPC: "tanks/pc/treads/ht"
+    chassisSoundNPC: "tanks/npc/treads/ht"
+textureTransform:
+    gun_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.000000, 1.000000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    gun_01_mask:
+        shear: [0.000000, 0.000000]
+        scale: [1.000000, 1.000000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    hull:
+        shear: [0.000000, 0.000000]
+        scale: [1.000000, 1.000000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    turret_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.000000, 1.000000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+treadParameters:
+    forceManualWidth: true
+    manualWidth: 0.541095
+    forceManualSpace: false
+    manualSpace: 1.000000
+    texturePath: "~res:/3d/Tanks/Common/images/German_01_tread.tex"
+gunRecoil:
+    gun_01:
+        enabled: true
+        durationForward: 0.900000
+        durationBackward: 0.050000
+        distance: 0.200000
+    gun_02:
+        enabled: true
+        durationForward: 1.000000
+        durationBackward: 0.050000
+        distance: 0.200000
+    gun_03:
+        enabled: true
+        durationForward: 1.000000
+        durationBackward: 0.050000
+        distance: 0.200000
+    gun_04:
+        enabled: true
+        durationForward: 0.900000
+        durationBackward: 0.050000
+        distance: 0.160869
+    gun_05:
+        enabled: true
+        durationForward: 1.000000
+        durationBackward: 0.050000
+        distance: 0.200000
+    gun_06:
+        enabled: true
+        durationForward: 1.000000
+        durationBackward: 0.050000
+        distance: 0.200000
+maskSlice:
+    gun_01:
+        enabled: false
+        planePosition: [-0.003062, 1.706724, -0.029697]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_02:
+        enabled: false
+        planePosition: [0.000117, 2.112891, -0.025073]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_03:
+        enabled: false
+        planePosition: [0.000140, 2.293465, -0.025245]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_04:
+        enabled: false
+        planePosition: [-0.000604, 1.734698, -0.032950]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_05:
+        enabled: false
+        planePosition: [-0.000482, 2.157309, -0.032880]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+    gun_06:
+        enabled: false
+        planePosition: [-0.000363, 2.321423, -0.032818]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 3.655737
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAALZhdz24HgU+AQAAALZhdz24HgU+AQAAALZhdz24HgU+AAAAALZhdz24HgU+AQAAALZhdz24HgU+AQAAALZhdz24HgU+AAAAALZhdz24HgU+AQAAALZhdz24HgU+AQAAALZhdz24HgU+AAAAALZhdz24HgU+\f"
+    leftTrackChains:
+        00: "a6rvv3gGJzgBAAAAGC2Rv4Cz0zcBAAAA3Ga8viRMJjcBAAAAFuu7PsF1gjoBAAAABVKRP31vgDoBAAAAeVDvP0cRFLgBAAAA1MECQLjnFj0BAAAAg3UOQFz3DT4AAAAAFnkXQA7AYj4AAAAAqXwgQGDEmz4AAAAAPIApQLooxj4AAAAAFTI1QI0BAT8BAAAA9aY9QKWlJT8BAAAAXnBBQDOmXT8BAAAAfMc9QBkliz8BAAAAmFszQK/Onz8BAAAAZs0lQG9Dpz8BAAAAqlkbQIuupj8AAAAA7eUQQKgZpj8AAAAAMHIGQMSEpT8AAAAA6Pz3P+DvpD8AAAAAbxXjP/1apD8AAAAA9i3OPxnGoz8AAAAAfUa5PzUxoz8AAAAABF+kP1Kcoj8AAAAAi3ePP24Hoj8AAAAAJCB1P4pyoT8AAAAAizZcP9WRmT8BAAAAkmcyP86gmT8BAAAAoGbvPt+znz8AAAAAuMibPvwenz8AAAAAoFUQPhiKnj8AAAAAADG3vDT1nT8AAAAA4CE+vlFgnT8AAAAA2K6yvm3LnD8AAAAAYCYDv4o2nD8AAAAAjf8jv0QSmT8BAAAAxQNMv3QAmT8BAAAAmkmAv993mj8AAAAAFDGVv/vimT8AAAAAjBiqvxdOmT8AAAAABAC/vzS5mD8AAAAAfOfTv1AkmD8AAAAA+M7ov2yPlz8AAAAAcLb9v4n6lj8AAAAA9E4JwKVllj8AAAAAssITwMHQlT8AAAAAbjYewN47lT8AAAAA76ExwDsnlD8BAAAAjYU/wBBYiz8BAAAAHMtJwPsZbT8BAAAAs2FNwNIZND8BAAAA5RpKwH4R9z4BAAAAlMA/wBRaoT4BAAAApbc1wCTZiT4AAAAAta4rwGewZD4AAAAAxqUhwIauNT4AAAAA1pwXwKasBj4AAAAA55MNwIxVrz0AAAAAme/9v3C35jsBAAAA\f"
+    rightTrackChains:
+        00: "a6rvv3gGJzgBAAAAGC2Rv4Cz0zcBAAAA3Ga8viRMJjcBAAAAFuu7PsF1gjoBAAAABVKRP31vgDoBAAAAeVDvP0cRFLgBAAAA1MECQLjnFj0BAAAAg3UOQFz3DT4AAAAAFnkXQA7AYj4AAAAAqXwgQGDEmz4AAAAAPIApQLooxj4AAAAAFTI1QI0BAT8BAAAA9aY9QKWlJT8BAAAAXnBBQDOmXT8BAAAAfMc9QBkliz8BAAAAmFszQK/Onz8BAAAAZs0lQG9Dpz8BAAAAqlkbQIuupj8AAAAA7eUQQKgZpj8AAAAAMHIGQMSEpT8AAAAA6Pz3P+DvpD8AAAAAbxXjP/1apD8AAAAA9i3OPxnGoz8AAAAAfUa5PzUxoz8AAAAABF+kP1Kcoj8AAAAAi3ePP24Hoj8AAAAAJCB1P4pyoT8AAAAAizZcP9WRmT8BAAAAkmcyP86gmT8BAAAAoGbvPt+znz8AAAAAuMibPvwenz8AAAAAoFUQPhiKnj8AAAAAADG3vDT1nT8AAAAA4CE+vlFgnT8AAAAA2K6yvm3LnD8AAAAAYCYDv4o2nD8AAAAAjf8jv0QSmT8BAAAAxQNMv3QAmT8BAAAAmkmAv993mj8AAAAAFDGVv/vimT8AAAAAjBiqvxdOmT8AAAAABAC/vzS5mD8AAAAAfOfTv1AkmD8AAAAA+M7ov2yPlz8AAAAAcLb9v4n6lj8AAAAA9E4JwKVllj8AAAAAssITwMHQlT8AAAAAbjYewN47lT8AAAAA76ExwDsnlD8BAAAAjYU/wBBYiz8BAAAAHMtJwPsZbT8BAAAAs2FNwNIZND8BAAAA5RpKwH4R9z4BAAAAlMA/wBRaoT4BAAAApbc1wCTZiT4AAAAAta4rwGewZD4AAAAAxqUhwIauNT4AAAAA1pwXwKasBj4AAAAA55MNwIxVrz0AAAAAme/9v3C35jsBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: true
+        upperMin: 0.000000
+        upperFactor: 0.213973
+        frontFactor: 0.183760
+        backFactor: 0.207627
+        lengthPower: 0.500000
+        speed: 0.900000
+    trackLayingInfo:
+        bendingFactor: 0.744000
+        lengthPower: 0.920000
+        pointCountPower: 0.918000
+        pressurePower: 0.260000
+        primaryPower: 0.670000
+shadowDecal:
+    texturePath: "~res:/3d/Tanks/Common/DecalShadow/Decal_Shadow.tex"
+    scale: [3.939976, 6.359566, 1.600000]
+    offset: [0.000000, -0.012054, 0.494560]
+    blendingType: "Alphablend"
+    fogBehaviour: "Inherited"
+chassis:
+    textureScale: -0.850000
+detachedTurret:
+    cylinderPos: [0.000000, 0.000000, -0.063383]
+    cylinderXYScale: 1.073941
+    cylinderZScale: 1.007041
+    turret_01:
+        shouldClipGun: false
+        clippingPlaneZPos: 1.825000
+        textureScaleFactor: 0.591547
+    turret_02:
+        shouldClipGun: false
+        clippingPlaneZPos: 1.825000
+        textureScaleFactor: 0.591547
+armorScale:
+    gun_01:
+        pushNormalsScale: true
+        armorScale: [0.024100, 0.024100, 0.024100]
+    gun_02:
+        pushNormalsScale: true
+        armorScale: [0.024100, 0.024100, 0.024100]
+    gun_03:
+        pushNormalsScale: true
+        armorScale: [0.024100, 0.024100, 0.024100]
+    gun_04:
+        pushNormalsScale: true
+        armorScale: [0.024096, 0.024096, 0.024096]
+    gun_05:
+        pushNormalsScale: true
+        armorScale: [0.024100, 0.024100, 0.024100]
+    gun_06:
+        pushNormalsScale: true
+        armorScale: [0.024100, 0.024100, 0.024100]
+    hull:
+        pushNormalsScale: true
+        armorScale: [0.016867, 0.019277, 0.002409]
+    turret_01:
+        pushNormalsScale: true
+        armorScale: [0.003614, 0.003614, 0.003614]
+    turret_02:
+        pushNormalsScale: true
+        armorScale: [0.009638, 0.009638, 0.009638]
+collision:
+    chassis:
+        points: [0.000000, 0.000000, -0.000000]
+        bbox:
+            min: [-1.575990, -3.209088, -0.000035]
+            max: [1.575990, 3.022483, 1.306745]
+    gun_01:
+        points: [-0.000011, -1.762639, -2.251238]
+        bbox:
+            min: [-0.304977, -0.951410, -0.337210]
+            max: [0.305009, 3.413508, 0.326990]
+    gun_02:
+        points: [0.000013, -1.762601, -2.251200]
+        bbox:
+            min: [-0.304890, -0.951372, -0.337172]
+            max: [0.305096, 4.225803, 0.327028]
+    gun_03:
+        points: [-0.000020, -1.762601, -2.251200]
+        bbox:
+            min: [-0.305022, -0.951372, -0.337172]
+            max: [0.304965, 4.586907, 0.327028]
+    gun_04:
+        points: [0.000045, -1.905236, -2.239501]
+        bbox:
+            min: [-0.501659, -0.890497, -0.293965]
+            max: [0.301482, 3.469543, 0.307659]
+    gun_05:
+        points: [0.000075, -1.906237, -2.239501]
+        bbox:
+            min: [-0.501695, -0.890497, -0.293966]
+            max: [0.301446, 4.314621, 0.307657]
+    gun_06:
+        points: [-0.000102, -1.906236, -2.239500]
+        bbox:
+            min: [-0.501660, -0.890497, -0.293965]
+            max: [0.301481, 4.642903, 0.307659]
+    hull:
+        points: [-0.000340, 0.000289, 0.000083]
+        bbox:
+            min: [-1.419400, -3.246450, 0.504516]
+            max: [1.419400, 3.053550, 1.854005]
+        averageThickness:
+            turret_01: 125.774406
+            turret_02: 111.797707
+    turret_01:
+        points: [-0.000011, -0.641307, -1.824015]
+        bbox:
+            min: [-1.141630, -1.520326, -0.319242]
+            max: [1.141661, 1.455284, 1.206460]
+    turret_02:
+        points: [-0.000189, -0.641586, -1.824126]
+        bbox:
+            min: [-1.117348, -1.565615, -0.342342]
+            max: [1.108971, 1.513166, 1.167852]

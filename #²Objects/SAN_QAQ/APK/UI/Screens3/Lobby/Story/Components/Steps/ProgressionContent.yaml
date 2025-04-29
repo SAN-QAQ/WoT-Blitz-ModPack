@@ -1,0 +1,411 @@
+Header:
+    version: 152
+ImportedPackages:
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ProgressionContent"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfFirstChild"
+            verticalPolicy: "PercentOfFirstChild"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "forcedInput", "false", "true"]
+            - ["control", "additionalFx", "null", "null"]
+            - ["control", "selectionFx", "null", "null"]
+            - ["bool", "isFxVisible", "false", "true"]
+            - ["control", "cornerContent", "null", "null"]
+            - ["string", "customBg", "\"\"", "\"~res:/Gfx/Lobby/flags/flag_carousel_gold\""]
+            - ["ResourceDetailed", "mainReward", "null", "{ \"type\" = ResourceType.vehicle; \"vehicle\" = { }; }"]
+            - ["string", "leftLabelStyle", "\"red-tamarillo-bg\"", "\"red-tamarillo-bg\""]
+            - ["float", "progressValue", "0", "100"]
+            - ["string", "attachId", "\"\"", "\"\""]
+            - ["bool", "isInfiniteRepeats", "false", "false"]
+            - ["int", "repeatsLeft", "0", "0"]
+            - ["control", "priceControl", "null", "null"]
+            - ["bool", "isFinished", "false", "false"]
+            - ["bool", "isSelected", "false", "false"]
+            - ["color", "topProgressColor", "rgba(16777215, 0.000000)", "rgba(16777215, 0.000000)"]
+            - ["color", "bottomProgressColor", "rgb(438891)", "rgb(438891)"]
+            - ["float", "opacity", "1.000000", "1.000000"]
+            - ["eStepSize", "stepSize", "eStepSize.M", "eStepSize.M"]
+            events:
+            - "ON_CLICKED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "isLocked", "false"]
+            - ["float", "selectedOpacity", "when isSelected and not isFinished -> 1.000000, 0.000000"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isLongStep", "stepSize == eStepSize.ML or stepSize == eStepSize.XL"]
+            - ["string", "flagPrefix", "when isLongStep -> \"~res:/Gfx/Lobby/flags/flag_tutor-tank_\", \"~res:/Gfx/Lobby/flags/flag_tank-node_I_\""]
+            - ["bool", "isVehicle", "not isNull(mainReward.vehicle)"]
+            - ["string", "tankFlag", "when not isVehicle -> \"\", empty(mainReward.vehicle.info.subnation) -> flagPrefix + str(mainReward.vehicle.info.nation, eNation, \"autotests\"), flagPrefix + mainReward.vehicle.info.subnation"]
+            - ["float", "contentOpacity", "when isFinished -> 0.100000, isLocked -> 0.500000, 1.000000"]
+            - ["string", "customBgPath", "when customBg.empty() -> tankFlag, customBg"]
+            - ["bool", "showCustomBg", "not customBgPath.empty()"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Story/Components/Steps/ProgressionContent.actions"
+    children:
+    -   class: "UIControl"
+        name: "ContentHolder"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/ButtonDecorator.yaml"
+                args:
+                    "content": "Content"
+                    "sound": "when isSelected -> eButtonSound.CHOOSE, eButtonSound.OPEN"
+                    "isSelected": "when not isFinished -> isSelected, false"
+                    "hasInput": "not isFinished or forcedInput"
+                    "ltrbSafeZone": "vec4(8.000000, 8.000000, 8.000000, 8.000000)"
+                eventActions:
+                - ["PUSH", "PUSH", "_event.scale, _event.opacity, _event.time"]
+                - ["PULL", "PULL", "_event.time"]
+                - ["HOVER", "HOVER", "_event.brightness, _event.time"]
+                - ["CANCEL_HOVER", "CANCEL_HOVER", "_event.time"]
+                - ["SELECT", "SELECT", "_event.time"]
+                - ["CANCEL_SELECT", "CANCEL_SELECT", "_event.time"]
+                - ["ON_TOUCH", "ON_TOUCH", ""]
+Slots:
+-   class: "UIControl"
+    name: "FxWrapper"
+    size: [160.000000, 160.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIParticles"
+        name: "Fx"
+        scale: [2.200000, 2.200000]
+        pivot: [0.500000, 0.500000]
+        input: false
+        effectPath: "~res:/3d/FX/UI/BattlePass/GlowReward.sc2"
+        autoStart: true
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+-   class: "UIControl"
+    name: "Overlay"
+    size: [160.000000, 160.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "Completed"
+        input: false
+        components:
+            UIOpacityComponent:
+                ignoreParentOpacity: true
+            UITextureComponent:
+                spritePath: "~res:/Gfx/Lobby/icons/icon_tick_xl"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["visible", "isFinished"]
+        - ["UIOpacityComponent.opacity", "opacity"]
+    -   class: "UIControl"
+        name: "Locked"
+        input: false
+        components:
+            UIOpacityComponent:
+                ignoreParentOpacity: true
+            UITextureComponent:
+                spritePath: "~res:/Gfx/Lobby/icons/icon_lock_m"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["visible", "isLocked"]
+        - ["UIOpacityComponent.opacity", "opacity"]
+-   class: "UIControl"
+    name: "Content"
+    pivot: [0.500000, 0.500000]
+    input: false
+    components:
+        UIOpacityComponent: {}
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfFirstChild"
+            verticalPolicy: "PercentOfFirstChild"
+    children:
+    -   class: "UIControl"
+        name: "Body"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+        bindings:
+        - ["UIOpacityComponent.opacity", "contentOpacity * opacity"]
+        children:
+        -   class: "UIControl"
+            name: "BgWrapper"
+            input: false
+            components:
+                ClipContent: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Default"
+                input: false
+                components:
+                    UIOpacityComponent:
+                        ignoreParentOpacity: true
+                    Anchor:
+                        rightAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                bindings:
+                - ["UIOpacityComponent.opacity", "opacity"]
+                children:
+                -   prototype: "BlurModified/BlurModified"
+                    name: "Blur"
+                    components:
+                        UIDataParamsComponent:
+                            args:
+                                "bgStyle": "\"grey-shark-25-bg\""
+            -   class: "UIControl"
+                name: "VehicleBgHolder"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "showCustomBg and isLongStep"
+                        control: "CustomBgLong"
+                    UIChildComponent1:
+                        childType: "kControl"
+                        condition: "showCustomBg"
+                        control: "CustomBg"
+            -   class: "UIControl"
+                name: "Colored"
+                input: false
+                components:
+                    UIOpacityComponent:
+                        ignoreParentOpacity: true
+                    Anchor:
+                        leftAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                bindings:
+                - ["UIOpacityComponent.opacity", "opacity"]
+                - ["SizePolicy.horizontalValue", "progressValue * 100.000000"]
+                children:
+                -   class: "UIControl"
+                    name: "TopColor"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_STRETCH_BOTH"
+                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                            spriteModification: ["FLIP_VERTICAL"]
+                            perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                        Anchor:
+                            bottomAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "Formula"
+                            verticalFormula: "parent / 0.15"
+                    bindings:
+                    - ["Background.color", "topProgressColor"]
+                -   class: "UIControl"
+                    name: "BottomColor"
+                    input: false
+                    components:
+                        Background:
+                            drawType: "DRAW_STRETCH_BOTH"
+                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                            perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "Formula"
+                            verticalFormula: "parent / 0.3"
+                    bindings:
+                    - ["Background.color", "bottomProgressColor"]
+        -   class: "UIControl"
+            name: "RewardHolder"
+            input: false
+            components:
+                ClipContent: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    childType: "kOldExpression"
+                    condition: "not isNull(mainReward)"
+                    control: "str(stepSize, eStepSize, \"source\")"
+                    args:
+                        "attachId": "attachId"
+                        "fx": "when isFxVisible and not floatEqual(opacity, 0.000000) -> FxWrapper, null"
+                        "overlay": "when isFinished or isLocked -> Overlay, null"
+                        "reward": "mainReward"
+        -   class: "UIControl"
+            name: "Brightness"
+            input: false
+            classes: "white-wild-sand-10-bg"
+            components:
+                Background: {}
+                UIOpacityComponent:
+                    opacity: 0.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Selected"
+            input: false
+            components:
+                UIOpacityComponent:
+                    ignoreParentOpacity: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Selection.yaml"
+                    args:
+                        "selectionType": "eSelectionBorderType.kRect"
+                        "isVisible": "true"
+            bindings:
+            - ["UIOpacityComponent.opacity", "selectedOpacity * opacity"]
+        -   class: "UIControl"
+            name: "AdditionalFx"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "FixedSize"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "not isNull(additionalFx)"
+                    control: "additionalFx"
+        -   class: "UIControl"
+            name: "SelectionFx"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "FixedSize"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "not isNull(selectionFx) and isSelected"
+                    control: "selectionFx"
+        -   class: "UIControl"
+            name: "CornerContent"
+            input: false
+            components:
+                UIOpacityComponent:
+                    ignoreParentOpacity: true
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: 4.000000
+                    topAnchorEnabled: true
+                    topAnchor: 4.000000
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 16.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 16.000000
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "not isNull(cornerContent)"
+                    control: "cornerContent"
+            bindings:
+            - ["UIOpacityComponent.opacity", "opacity"]
+        -   class: "UIControl"
+            name: "LabelHolder"
+            input: false
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: -4.000000
+                    topAnchorEnabled: true
+                    topAnchor: -4.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    condition: "repeatsLeft > 1"
+                    prototypePath: "~res:/UI/Screens3/Common/RemainingLabel.yaml"
+                    args:
+                        "left": "repeatsLeft"
+                        "isInfinite": "isInfiniteRepeats"
+                        "isShort": "stepSize == eStepSize.S"
+                        "bgStyle": "leftLabelStyle"
+    -   class: "UIControl"
+        name: "Price"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                bottomAnchorEnabled: true
+                bottomAnchor: -32.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                childType: "kControl"
+                condition: "not isNull(priceControl)"
+                control: "priceControl"
+        bindings:
+        - ["visible", "not isNull(priceControl)"]
+-   class: "UIControl"
+    name: "CustomBg"
+    size: [128.000000, 117.044998]
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_SCALE_PROPORTIONAL"
+            perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+        UIOpacityComponent:
+            opacity: 0.750000
+        Anchor:
+            topAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfContent"
+    bindings:
+    - ["Background.sprite", "customBgPath"]
+-   class: "UIControl"
+    name: "CustomBgLong"
+    size: [336.000000, 160.000000]
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+            perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+        UIOpacityComponent:
+            opacity: 0.750000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    bindings:
+    - ["Background.sprite", "customBgPath"]

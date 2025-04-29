@@ -1,0 +1,71 @@
+Header:
+    version: 151
+Prototypes:
+-   class: "UIControl"
+    name: "ClanBg"
+    size: [1364.000000, 768.000000]
+    input: false
+    components:
+        ClipContent: {}
+        IgnoreLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["string", "texturePath", "\"\"", "\"~res:/Gfx/Lobby/backgrounds/key-art/key-art_clan-2\""]
+            - ["float", "blurOpacity", "1.000000", "1.000000"]
+            - ["float", "fadeOpacity", "0.200000", "0.200000"]
+    children:
+    -   class: "UIControl"
+        name: "Texture"
+        size: [32.000000, 32.000000]
+        pivot: [0.500000, 0.500000]
+        input: false
+        components:
+            UITextureComponent:
+                materialPath: "~res:/Materials.custom/2d.Textured.Saturation.material"
+                materialParams: "hue,5;saturation,1.25;value,5"
+                spriteResource: "PreferMaxResolution"
+                drawType: "DRAW_SCALE_TO_RECT"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "content / 0.75"
+                verticalPolicy: "PercentOfContent"
+            ScalePolicy:
+                horizontalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+                verticalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+        bindings:
+        - ["UITextureComponent.spritePath", "texturePath"]
+    -   class: "UIControl"
+        name: "Blur"
+        input: false
+        components:
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Blur.yaml"
+        bindings:
+        - ["UIOpacityComponent.opacity", "blurOpacity"]
+    -   class: "UIControl"
+        name: "Fade"
+        input: false
+        classes: "black-bg"
+        components:
+            Background: {}
+            UIOpacityComponent: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UIOpacityComponent.opacity", "fadeOpacity"]

@@ -1,0 +1,1043 @@
+Header:
+    version: 157
+ImportedPackages:
+- "~res:/UI/Screens3/NewbieLobby/NewbieHangarScene.yaml"
+- "~res:/UI/Screens3/Lobby/Common/TankInfo/NationFlag.yaml"
+- "~res:/UI/Screens3/NewbieLobby/NewbieProgress.yaml"
+- "~res:/UI/Screens3/Lobby/Common/Blur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "NewbieHangar"
+    size: [1024.000000, 768.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/NewbieLobby/NewbieHangar.animation"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        ModalInput: {}
+        UIVirtualActionEventComponent0:
+            virtualKeyAction: "Extra2"
+            keyDownEvent: "ON_SWITCH_ACCEPT"
+        UIShortcutEventComponent:
+            shortcuts: "CLOSE_APP, Escape; CLOSE_APP, Back"
+        UIDataParamsComponent:
+            params:
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["TutorialDataModel", "tutorialData", "null", "{ }"]
+            - ["NewbieProgressViewModel", "newbieProgress", "null", "{ \"hangarLevel\" = 3; }"]
+            - ["TankParams", "tankParams", "null", "{ }"]
+            - ["NewbieTanks", "hangarTanks", "null", "{ }"]
+            - ["bool", "isNewcommersLogin", "false", "false"]
+            - ["bool", "isFirstTimeHangarOpening", "true", "true"]
+            - ["eInputMode", "inputMode", "eInputMode.MODE_UNKNOWN", "eInputMode.MODE_TOUCHSCREEN"]
+            events:
+            - "ON_SHOW_TRADEMARK_CLICKED"
+            - "MOTION_FINISHED"
+            - "TANK_CLICKED"
+            - "LOGOUT_REQUESTED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "isProgressOverlayDisplaying", "false"]
+            - ["string", "chinaLocalizationPostfix", "\"/China\""]
+            - ["bool", "showDevUI", "false"]
+            - ["bool", "showTestPage", "false"]
+            - ["float", "animTime", "0.500000"]
+            - ["int", "maxBattlesCount", "3"]
+            - ["eNewbieHangarTanks", "currentTank", "eNewbieHangarTanks.USA"]
+            - ["eNewbieHangarTanks", "nextRecommendedTank", "eNewbieHangarTanks.USA"]
+            - ["bool", "isTooltipFirstBattleDisplaying", "false"]
+            - ["bool", "isTooltipSelectTankDisplaying", "false"]
+            - ["bool", "isTooltipWinMoreDisplaying", "false"]
+            - ["string", "tooltipSelectTankAttachId", "\"\""]
+            - ["int", "tooltipSelectTankOffsetX", "0"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["eNation", "currentNation", "hangarTanks.tanksInfo[currentTank].nation"]
+            - ["bool", "hasTrademark", "hangarTanks.tanksInfo[currentTank].hasTrademark"]
+            - ["string", "currentNationName", "when currentNation == eNation.USA -> \"lobby/Common/TankInfo/Nation/USA\", currentNation == eNation.GERMANY -> \"lobby/Common/TankInfo/Nation/Germany\", currentNation == eNation.USSR -> \"lobby/Common/TankInfo/Nation/USSR\", currentNation == eNation.CHINA -> \"lobby/Common/TankInfo/Nation/China\", \"\""]
+            - ["bool", "isChina", "app.netease.neteaseAvailable"]
+            - ["string", "tankInfoText", "\"NewbieHangar/HistoricalReference/\" + hangarTanks.tanksInfo[currentTank].tankName"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/NewbieLobby/NewbieHangar.actions"
+        UIDataOnEventComponent0:
+            eventName: "SWITCH_DEV_UI_VISIBILITY"
+            modelFieldExpression: "showDevUI"
+            dataExpression: "not showDevUI"
+        UIDataOnEventComponent1:
+            eventName: "ON_CLOSE_TEST_PAGE"
+            modelFieldExpression: "showTestPage"
+            dataExpression: "false"
+        UIDataOnEventComponent2:
+            eventName: "SHOW_DEBUG_UI_PAGE"
+            modelFieldExpression: "showTestPage"
+            dataExpression: "true"
+        UIDataOnEventComponent3:
+            eventName: "ON_PROGRESS_FINISHED"
+            modelFieldExpression: "isProgressOverlayDisplaying"
+            dataExpression: "false"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "hangarTanks.currentTank"
+            eventName: "HideTankInfo"
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   prototype: "NewbieHangarScene/HangarScene"
+            name: "HangarScene"
+            components:
+                UIPostProcessSourceComponent0:
+                    id: "NEWBIE_HANGAR"
+                Anchor:
+                    vCenterAnchorEnabled: true
+                UIDataParamsComponent:
+                    args: {}
+                    eventActions:
+                    - ["tap_ger_ui", "TANK_CLICKED", "eNewbieHangarTanks.GERMANY"]
+                    - ["tap_ussr_ui", "TANK_CLICKED", "eNewbieHangarTanks.USSR"]
+                    - ["tap_usa_ui", "TANK_CLICKED", "eNewbieHangarTanks.USA"]
+                    - ["anim_stoped", "MOTION_FINISHED", ""]
+                    - ["anim_stoped", "ShowTankInfo", ""]
+                    - ["init_anim_stopped", "MOTION_FINISHED", ""]
+                    - ["init_anim_stopped", "ShowTankInfo", ""]
+                    - ["init_anim_stopped", "ShowButtons", ""]
+                    - ["anim_tank_stoped", "PREBATTLE_ANIMATION_FINISHED", ""]
+                Update: {}
+        -   class: "UIControl"
+            name: "HangarSceneScreenshot"
+            visible: false
+            input: false
+            components:
+                Background:
+                    usePostProcessedSprite: true
+                UIPostProcessInputComponent:
+                    id: "NEWBIE_HANGAR"
+                UIPostProcessSourceComponent0:
+                    id: "NEWBIE_HANGAR_SCREENSHOT"
+                UIPostProcessTextureComponent0:
+                    materialPath: "~res:/Materials/2d.Textured.material"
+                    scale: 0.500000
+                    needDepth: true
+                    minFilter: "Linear"
+                    magFilter: "Linear"
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 70.000000
+        -   prototype: "Blur/Blur"
+            name: "Blur1"
+            visible: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.000000
+                UIPostProcessInputComponent:
+                    id: "NEWBIE_HANGAR_SCREENSHOT"
+                UIPostProcessTextureComponent0:
+                    needClearAlphaAfterRender: false
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    verticalValue: 70.000000
+        -   prototype: "Blur/Blur"
+            name: "Blur2"
+            visible: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.000000
+                UIPostProcessInputComponent:
+                    id: "NEWBIE_HANGAR_SCREENSHOT"
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    verticalValue: 70.000000
+        -   prototype: "Blur/Blur"
+            name: "Blur3"
+            components:
+                UIOpacityComponent:
+                    opacity: 0.000000
+                UIPostProcessInputComponent:
+                    id: "NEWBIE_HANGAR_SCREENSHOT"
+                UIPostProcessTextureComponent0:
+                    scale: 0.250000
+                UIPostProcessTextureComponent1:
+                    scale: 0.250000
+                UIPostProcessTextureComponent2:
+                    scale: 0.250000
+                Anchor:
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    verticalValue: 70.000000
+            bindings:
+            - ["visible", "not hangarTanks.skipInitialCameraAnimation and tutorialData.battleTutorial.totalBattlesCount == 0"]
+        -   class: "UIControl"
+            name: "LogoWithFade"
+            size: [32.000000, 32.000000]
+            visible: false
+            input: false
+            classes: "black-25-bg"
+            components:
+                Background: {}
+                UIOpacityComponent: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            children:
+            -   class: "UIControl"
+                name: "Logo"
+                input: false
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_TO_RECT"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/splash-screens/logo_wotb"
+                    UIOpacityComponent: {}
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 384.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 286.000000
+        -   class: "UIControl"
+            name: "CinemaEffect"
+            size: [32.000000, 32.000000]
+            visible: false
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIIdentifierComponent:
+                    id: "cinema_effect"
+            children:
+            -   class: "UIControl"
+                name: "TopBlackRect"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-bg"
+                components:
+                    Background: {}
+                    Anchor:
+                        topAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                        verticalValue: 15.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "BottomBlackRect"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-bg"
+                components:
+                    Background: {}
+                    Anchor:
+                        bottomAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                        verticalValue: 15.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "Gradients"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Top"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-50-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_gredient_round-8-bottom_center"
+                        spriteModification: ["FLIP_VERTICAL"]
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                        verticalValue: 30.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "Left"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-70-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
+                        spriteModification: []
+                    Anchor:
+                        leftAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 50.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 600.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "Right"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-70-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
+                        spriteModification: ["FLIP_HORIZONTAL"]
+                    Anchor:
+                        rightAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 50.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 600.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "Bottom"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-70-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_STRETCH_BOTH"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_radial-gradient_quarter"
+                        spriteModification: ["FLIP_VERTICAL"]
+                    Anchor:
+                        bottomAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 256.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 300.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "MainContent"
+            input: false
+            components:
+                UIOpacityComponent: {}
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "Header"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 72.000000
+            -   class: "UIControl"
+                name: "SafeAreaContent"
+                input: false
+                components:
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                children:
+                -   class: "UIControl"
+                    name: "LeftInset"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "safeAreaInsets.left"
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "MainControls"
+                    input: false
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                            skipInvisible: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   class: "UIControl"
+                        name: "TopWrapper"
+                        input: false
+                        components:
+                            Anchor:
+                                leftAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "Formula"
+                                horizontalFormula: "parent - safeAreaInsets.left"
+                                verticalPolicy: "PercentOfMaxChild"
+                        children:
+                        -   class: "UIControl"
+                            name: "BattleButton"
+                            visible: false
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    topAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfFirstChild"
+                                    verticalPolicy: "PercentOfFirstChild"
+                                UIChildComponent0:
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Hangar/BattleButton.yaml"
+                                    args:
+                                        "forceDisabled": "hangarTanks.cameraAnimating"
+                                        "isDeveloperUI": "showDevUI and app.constants.developerUI"
+                                        "isBattleTypeButtonVIsible": "false"
+                                        "boostersButtonIsVisible": "false"
+                                        "packIsAvailibleForBattle": "true"
+                                        "isRepair": "false"
+                                        "isSquadType": "false"
+                                        "isTournamentType": "false"
+                                    eventActions:
+                                    - ["DEV_LOGOUT", "DEV_LOGOUT", ""]
+                                    - ["ON_DEV_BUTTON", "ON_DEV_BUTTON", ""]
+                                    - ["ON_DEV_INFO_BUTTON", "ON_DEV_INFO_BUTTON", ""]
+                                    - ["BATTLE_BUTTON_PRESSED", "TO_BATTLE", ""]
+                                UIIdentifierComponent:
+                                    id: "start_battle_button"
+                            children:
+                            -   class: "UIControl"
+                                name: "CheatButtonsHolder"
+                                size: [32.000000, 32.000000]
+                                input: false
+                                components:
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        bottomAnchorEnabled: true
+                                    IgnoreLayout: {}
+                                    SizePolicy:
+                                        horizontalPolicy: "Formula"
+                                        horizontalFormula: "parent * 2"
+                                        verticalPolicy: "Formula"
+                                        verticalFormula: "parent * 2.5"
+                                children:
+                                -   class: "UIControl"
+                                    name: "L_Part"
+                                    size: [32.000000, 32.000000]
+                                    input: true
+                                    components:
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                            topAnchorEnabled: true
+                                            bottomAnchorEnabled: true
+                                        IgnoreLayout: {}
+                                        SizePolicy:
+                                            horizontalPolicy: "Formula"
+                                            horizontalFormula: "parent * 0.25"
+                                        UIInputEventComponent:
+                                            onTouchDown: "L_DOWN"
+                                -   class: "UIControl"
+                                    name: "M_Part"
+                                    size: [32.000000, 32.000000]
+                                    input: true
+                                    components:
+                                        Anchor:
+                                            hCenterAnchorEnabled: true
+                                            topAnchorEnabled: true
+                                        IgnoreLayout: {}
+                                        SizePolicy:
+                                            horizontalPolicy: "Formula"
+                                            horizontalFormula: "parent * 0.5"
+                                            verticalPolicy: "Formula"
+                                            verticalFormula: "parent * 0.6"
+                                        UIInputEventComponent:
+                                            onTouchDown: "M_DOWN"
+                                -   class: "UIControl"
+                                    name: "R_Part"
+                                    size: [32.000000, 32.000000]
+                                    input: true
+                                    components:
+                                        Anchor:
+                                            rightAnchorEnabled: true
+                                            topAnchorEnabled: true
+                                            bottomAnchorEnabled: true
+                                        IgnoreLayout: {}
+                                        SizePolicy:
+                                            horizontalPolicy: "Formula"
+                                            horizontalFormula: "parent * 0.25"
+                                        UIInputEventComponent:
+                                            onTouchDown: "R_DOWN"
+                    -   class: "UIControl"
+                        name: "TankDescription"
+                        input: false
+                        components:
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfParent"
+                        children:
+                        -   class: "UIControl"
+                            name: "Parameters"
+                            visible: false
+                            input: false
+                            components:
+                                UIOpacityComponent: {}
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                    topAnchorEnabled: true
+                                    topAnchor: -8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "Formula"
+                                    horizontalFormula: "maxChild + 32"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   class: "UIControl"
+                                name: "ParamsWrapper"
+                                input: false
+                                components:
+                                    Anchor:
+                                        leftAnchorEnabled: true
+                                        leftAnchor: 32.000000
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                    SizePolicy:
+                                        horizontalPolicy: "Formula"
+                                        horizontalFormula: "maxChild"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                children:
+                                -   class: "UIControl"
+                                    name: "titleWrapper"
+                                    size: [32.000000, 32.000000]
+                                    input: false
+                                    components:
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                            topAnchorEnabled: true
+                                        LinearLayout: {}
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfChildrenSum"
+                                            verticalPolicy: "PercentOfMaxChild"
+                                    children:
+                                    -   class: "UIControl"
+                                        name: "tankName"
+                                        input: false
+                                        classes: "t-content-h2 bold color=white-wild-sand-text"
+                                        components:
+                                            UITextComponent:
+                                                colorInheritType: "COLOR_IGNORE_PARENT"
+                                                align: ["LEFT", "VCENTER"]
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfContent"
+                                                verticalPolicy: "PercentOfContent"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(tankParams.tankName)"]
+                                    -   class: "UIControl"
+                                        name: "infoButton"
+                                        size: [32.000000, 32.000000]
+                                        input: false
+                                        components:
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfFirstChild"
+                                                verticalPolicy: "PercentOfFirstChild"
+                                            UIAttachLayoutMasterComponent:
+                                                attachId: "TANK_NAME_INFO_BUTTON"
+                                            UIChildComponent0:
+                                                prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                                                args:
+                                                    "rounded": "true"
+                                                    "isBgVisible": "false"
+                                                    "type": "eButtonType.NO_BG"
+                                                    "imageOpacity": "0.500000"
+                                                    "image": "\"~res:/Gfx/Lobby/icons/icon_info_xs\""
+                                                eventActions:
+                                                - ["ON_CLICK_BUTTON", "ON_SHOW_TRADEMARK_CLICKED", ""]
+                                        bindings:
+                                        - ["visible", "hasTrademark"]
+                                -   class: "UIControl"
+                                    name: "spacer8"
+                                    input: false
+                                    components:
+                                        SizePolicy:
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 8.000000
+                                -   class: "UIControl"
+                                    name: "VehicleCountry"
+                                    input: false
+                                    components:
+                                        Anchor:
+                                            leftAnchorEnabled: true
+                                        LinearLayout:
+                                            spacing: 8.000000
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfChildrenSum"
+                                            verticalPolicy: "PercentOfMaxChild"
+                                    children:
+                                    -   prototype: "NationFlag/NationFlag"
+                                        name: "NationFlag"
+                                        components:
+                                            UIDataParamsComponent:
+                                                args:
+                                                    "nation": "currentNation"
+                                    -   class: "UIControl"
+                                        name: "CountryName"
+                                        input: false
+                                        classes: "t-overline bold white-wild-sand-text"
+                                        components:
+                                            UITextComponent: {}
+                                            Anchor:
+                                                vCenterAnchorEnabled: true
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfContent"
+                                                verticalPolicy: "PercentOfContent"
+                                            StyleSheet:
+                                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                                        bindings:
+                                        - ["UITextComponent.text", "localize(currentNationName)"]
+                                -   class: "UIControl"
+                                    name: "spacer"
+                                    input: false
+                                    components:
+                                        SizePolicy:
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 24.000000
+                                -   class: "UIControl"
+                                    name: "Params"
+                                    input: false
+                                    components:
+                                        LinearLayout:
+                                            orientation: "TopDown"
+                                            spacing: 8.000000
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 222.000000
+                                            verticalPolicy: "PercentOfChildrenSum"
+                                    children:
+                                    -   class: "UIControl"
+                                        name: "MaxHealth"
+                                        size: [32.000000, 32.000000]
+                                        input: false
+                                        components:
+                                            SizePolicy:
+                                                horizontalPolicy: "FixedSize"
+                                                horizontalValue: 222.000000
+                                                verticalPolicy: "PercentOfMaxChild"
+                                            UIRepeatComponent:
+                                                control: "~res:/UI/Screens3/NewbieLobby/NewbieHangarTankParam.yaml"
+                                                dataContainer: "tankParams.sectionsByType[\"base\"].content"
+                                                args:
+                                                    "newbieHangarParamScale": "1.800000"
+                                                    "displayedParams": "[ \"maxHealth\"; ]"
+                                                    "item": "_item"
+                                                    "tankParams": "tankParams"
+                                    -   class: "UIControl"
+                                        name: "Damage"
+                                        size: [32.000000, 32.000000]
+                                        input: false
+                                        components:
+                                            SizePolicy:
+                                                horizontalPolicy: "FixedSize"
+                                                horizontalValue: 222.000000
+                                                verticalPolicy: "PercentOfMaxChild"
+                                            UIRepeatComponent:
+                                                control: "~res:/UI/Screens3/NewbieLobby/NewbieHangarTankParam.yaml"
+                                                dataContainer: "tankParams.sectionsByType[\"base\"].content"
+                                                args:
+                                                    "newbieHangarParamScale": "3.000000"
+                                                    "displayedParams": "[ \"damage\"; ]"
+                                                    "item": "_item"
+                                                    "tankParams": "tankParams"
+                                    -   class: "UIControl"
+                                        name: "Speed"
+                                        size: [32.000000, 32.000000]
+                                        input: false
+                                        components:
+                                            SizePolicy:
+                                                horizontalPolicy: "FixedSize"
+                                                horizontalValue: 222.000000
+                                                verticalPolicy: "PercentOfMaxChild"
+                                            UIRepeatComponent:
+                                                control: "~res:/UI/Screens3/NewbieLobby/NewbieHangarTankParam.yaml"
+                                                dataContainer: "tankParams.sectionsByType[\"base\"].content"
+                                                args:
+                                                    "newbieHangarParamScale": "1.200000"
+                                                    "displayedParams": "[ \"speed\"; ]"
+                                                    "item": "_item"
+                                                    "tankParams": "tankParams"
+                                    -   class: "UIControl"
+                                        name: "Armor"
+                                        size: [32.000000, 32.000000]
+                                        input: false
+                                        components:
+                                            SizePolicy:
+                                                horizontalPolicy: "FixedSize"
+                                                horizontalValue: 222.000000
+                                                verticalPolicy: "PercentOfMaxChild"
+                                            UIRepeatComponent:
+                                                control: "~res:/UI/Screens3/NewbieLobby/NewbieHangarTankParam.yaml"
+                                                dataContainer: "tankParams.sectionsByType[\"base\"].content"
+                                                args:
+                                                    "newbieHangarParamScale": "1.500000"
+                                                    "displayedParams": "[ \"armor\"; ]"
+                                                    "item": "_item"
+                                                    "tankParams": "tankParams"
+                        -   class: "UIControl"
+                            name: "Description"
+                            visible: false
+                            input: false
+                            components:
+                                UIOpacityComponent: {}
+                                Anchor:
+                                    rightAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "Formula"
+                                    horizontalFormula: "maxChild + 32"
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   class: "UIControl"
+                                name: "Wrapper"
+                                input: false
+                                components:
+                                    Anchor:
+                                        rightAnchorEnabled: true
+                                        rightAnchor: 32.000000
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                        spacing: 8.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfMaxChild"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                children:
+                                -   class: "UIControl"
+                                    name: "Label"
+                                    input: false
+                                    classes: "t-subtitle bold color=yellow-lightning-text"
+                                    components:
+                                        UITextComponent:
+                                            colorInheritType: "COLOR_IGNORE_PARENT"
+                                            multiline: "MULTILINE_ENABLED"
+                                            align: ["LEFT", "VCENTER"]
+                                            useRtlAlign: "USE_BY_SYSTEM"
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 259.000000
+                                            verticalPolicy: "PercentOfContent"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                    bindings:
+                                    - ["UITextComponent.text", "localize(\"NewbieHangar/HistoricalReference\" + (when isChina -> chinaLocalizationPostfix, \"\"))"]
+                                -   class: "UIControl"
+                                    name: "Info"
+                                    input: false
+                                    classes: "t-caption regular color=white-wild-sand-text"
+                                    components:
+                                        UITextComponent:
+                                            colorInheritType: "COLOR_IGNORE_PARENT"
+                                            multiline: "MULTILINE_ENABLED"
+                                            align: ["LEFT", "VCENTER"]
+                                            useRtlAlign: "USE_BY_SYSTEM"
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            horizontalValue: 259.000000
+                                            verticalPolicy: "PercentOfContent"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                    bindings:
+                                    - ["UITextComponent.text", "localize(tankInfoText + (when isChina -> chinaLocalizationPostfix, \"\"))"]
+                    -   class: "UIControl"
+                        name: "BottomPanel"
+                        visible: false
+                        input: false
+                        components:
+                            Anchor:
+                                leftAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "FixedSize"
+                        children:
+                        -   class: "UIControl"
+                            name: "LogoutButton"
+                            input: false
+                            components:
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                    leftAnchor: 32.000000
+                                    bottomAnchorEnabled: true
+                                    bottomAnchor: 32.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfMaxChild"
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIChildComponent0:
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                                    args:
+                                        "sound": "eButtonSound.CLOSE"
+                                        "rounded": "true"
+                                        "image": "\"~res:/Gfx/Lobby/icons/icon_exit_s\""
+                                    eventActions:
+                                    - ["ON_CLICK_BUTTON", "LOGOUT_REQUESTED", ""]
+                -   class: "UIControl"
+                    name: "RightInset"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "safeAreaInsets.right"
+                            verticalPolicy: "PercentOfParent"
+        -   class: "UIControl"
+            name: "ShowDev"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: 70.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIInputEventComponent:
+                    onTouchUpInside: "SWITCH_DEV_UI_VISIBILITY"
+            bindings:
+            - ["visible", "app.constants.developerUI"]
+            children:
+            -   class: "UIControl"
+                name: "Caption"
+                input: false
+                classes: "bold t-content-h0 white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        text: "DEV"
+                        fontSize: 7.000000
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        horizontalValue: 100.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 24.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml"
+        -   class: "UIControl"
+            name: "DevLayer"
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.300000
+                Anchor:
+                    topAnchorEnabled: true
+                    topAnchor: 30.000000
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+            bindings:
+            - ["visible", "showDevUI and app.constants.developerUI"]
+            children:
+            -   class: "UIControl"
+                name: "DevButtonsHolder"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        topAnchorEnabled: true
+                        topAnchor: 116.000000
+                    LinearLayout:
+                        spacing: 4.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIControl"
+                    name: "FirstBattle"
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            color: [0.200000, 0.223529, 0.345098, 1.000000]
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIInputEventComponent:
+                            onTouchUpInside: "DEV_TO_BATTLE"
+                            onTouchUpInsideData: "0"
+                    children:
+                    -   class: "UIControl"
+                        name: "Caption"
+                        input: false
+                        classes: "bold t-content-h0 white-wild-sand-text"
+                        components:
+                            UITextComponent:
+                                text: "\"# Battle 1\""
+                                fontSize: 7.000000
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                horizontalValue: 100.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 24.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                -   class: "UIControl"
+                    name: "SecondBattle"
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            color: [0.200000, 0.223529, 0.345098, 1.000000]
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIInputEventComponent:
+                            onTouchUpInside: "DEV_TO_BATTLE"
+                            onTouchUpInsideData: "1"
+                    children:
+                    -   class: "UIControl"
+                        name: "Caption"
+                        input: false
+                        classes: "bold t-content-h0 white-wild-sand-text"
+                        components:
+                            UITextComponent:
+                                text: "\"# Battle 2\""
+                                fontSize: 7.000000
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                horizontalValue: 100.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 24.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+                -   class: "UIControl"
+                    name: "ThirdBattle"
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            color: [0.200000, 0.223529, 0.345098, 1.000000]
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIInputEventComponent:
+                            onTouchUpInside: "DEV_TO_BATTLE"
+                            onTouchUpInsideData: "2"
+                    children:
+                    -   class: "UIControl"
+                        name: "Caption"
+                        input: false
+                        classes: "bold t-content-h0 white-wild-sand-text"
+                        components:
+                            UITextComponent:
+                                text: "\"# Battle 3\""
+                                fontSize: 7.000000
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                horizontalValue: 100.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 24.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml"
+        -   class: "UIControl"
+            name: "TooltipsLayer"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    condition: "isTooltipFirstBattleDisplaying"
+                    prototypePath: "~res:/UI/Screens3/NewbieLobby/Tooltips/TooltipNewbieFirstBattle.yaml"
+                    eventActions:
+                    - ["FINISH_HIDE_POPUP_ANIMATION", "ON_TOOLTIP_CLOSED", ""]
+                UIChildComponent1:
+                    condition: "isTooltipSelectTankDisplaying"
+                    prototypePath: "~res:/UI/Screens3/NewbieLobby/Tooltips/TooltipNewbieSelectTank.yaml"
+                    args:
+                        "inputMode": "inputMode"
+                        "offsetX": "tooltipSelectTankOffsetX"
+                        "attachId": "tooltipSelectTankAttachId"
+                    eventActions:
+                    - ["FINISH_HIDE_POPUP_ANIMATION", "ON_TOOLTIP_CLOSED", ""]
+                UIChildComponent2:
+                    condition: "isTooltipWinMoreDisplaying"
+                    prototypePath: "~res:/UI/Screens3/NewbieLobby/Tooltips/TooltipNewbieWinMore.yaml"
+                    args:
+                        "battlesNeeded": "maxBattlesCount - newbieProgress.hangarLevel"
+                    eventActions:
+                    - ["FINISH_HIDE_POPUP_ANIMATION", "ON_TOOLTIP_CLOSED", ""]
+        -   prototype: "NewbieProgress/NewbieProgress"
+            name: "NewbieProgress"
+            components:
+                UIDataParamsComponent:
+                    args:
+                        "progress": "newbieProgress"
+                    eventActions:
+                    - ["ON_PROGRESS_FINISHED", "ON_PROGRESS_FINISHED", ""]
+        -   class: "UIControl"
+            name: "UITestPage"
+            input: false
+            components:
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    condition: "showTestPage and app.constants.developerUI"
+                    prototypePath: "~res:/UI/Screens3/Common/UITestPage.yaml"
+                    eventActions:
+                    - ["ON_CLOSE_TEST_PAGE", "ON_CLOSE_TEST_PAGE", ""]
+        -   class: "UIControl"
+            name: "KeyArtAndFade"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            bindings:
+            - ["visible", "isFirstTimeHangarOpening"]
+            children:
+            -   class: "UIControl"
+                name: "KeyArt"
+                size: [960.000000, 640.000000]
+                visible: true
+                input: false
+                components:
+                    Anchor:
+                        leftAnchorEnabled: true
+                        rightAnchorEnabled: true
+                        topAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    UIChildComponent0:
+                        condition: "not isNewcommersLogin"
+                        prototypePath: "~res:/UI/Screens3/Common/KeyArt.yaml"
+                    UIChildComponent1:
+                        condition: "isNewcommersLogin"
+                        prototypePath: "~res:/UI/Screens3/Common/KeyArtNewcommersNA.yaml"
+            -   class: "UIControl"
+                name: "KeyArtFade"
+                visible: false
+                input: false
+                classes: "black-bg"
+                components:
+                    Background: {}
+                    UIOpacityComponent: {}
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"

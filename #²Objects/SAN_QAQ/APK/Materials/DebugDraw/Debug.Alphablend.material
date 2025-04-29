@@ -1,0 +1,15 @@
+Material:
+    Layers: [ DebugRenderLayer ]
+    Shader: ~res:/Materials/Shaders/DebugDraw/debugdraw
+    UniqueDefines: [ ALPHABLEND ]
+    RenderState:
+        blend: true
+        depthTest: true
+    Passes:
+        Forward:
+        ForwardWithDepthOnly:
+        ReflectionRefraction:
+        DepthOnly:
+            enabled: false
+        ShadowMap:
+            enabled: false

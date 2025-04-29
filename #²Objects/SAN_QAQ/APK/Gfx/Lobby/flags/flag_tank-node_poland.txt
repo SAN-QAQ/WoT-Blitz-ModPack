@@ -1,0 +1,5 @@
+1
+Flag_Tank-Node.packed.webp
+176 64
+1
+0 192 176 64 0 0 0 frame0

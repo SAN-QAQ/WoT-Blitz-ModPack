@@ -1,0 +1,58 @@
+Material:
+    Layers: [ OpaqueRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Default/speedtree-materials
+    UniqueDefines: [ SPHERICAL_LIT ]
+    IgnoreDefines: [ DEPTH_PREPASS_ENABLED, WIND_ANIMATION ]
+    QualityDependentUniqueDefines:
+        ULTRA: [ SPHERICAL_HARMONICS_9 ]
+        HIGH: [ SPHERICAL_HARMONICS_9 ]
+        MEDIUM: [ SPHERICAL_HARMONICS_4 ]
+        LOW: []
+    RenderState:
+        depthTest: true
+        depthWrite: true
+        depthFunc: CMP_LESS
+        cullMode: FACE_BACK
+    Passes:
+        ReflectionRefraction:
+            enabled: true
+        Forward:
+        DepthOnly:
+            enabled: false
+        ShadowMap:
+            IgnoreDefines: [ SPHERICAL_LIT, SPHERICAL_HARMONICS_9, SPHERICAL_HARMONICS_4, VERTEX_FOG, FOG_LINEAR, FOG_HALFSPACE, FOG_ATMOSPHERE, USE_SHADOW_MAP, SHADOW_PCF, SHADOW_CASCADES_COUNT, SHADOW_CASCADES_BLEND, DEPTH_PREPASS_ENABLED, DEPTH_TARGET_IS_FRAMEBUFFER ]
+    Presets:
+        AlphaTest:
+            Layers: [ AlphaTestRenderLayer ]
+            UniqueDefines: [ ALPHATEST ]
+        AlphaBlend:
+            Layers: [ TransclucentRenderLayer ]
+            UniqueDefines: [ ALPHABLEND ]
+            RenderState:
+                blend: true
+                depthWrite: false
+            Passes:
+                ShadowMap:
+                    UniqueDefines: [ ALPHATEST ]
+                    RenderState:
+                        blend: false
+                        depthWrite: true
+        LodTransition:
+            UniqueDefines: [ LOD_TRANSITION ]
+            Variations:
+                Opaque:
+                    Condition: "!AlphaBlend && !AlphaTest"
+                    Layers: [ AlphaTestRenderLayer ]
+                    UniqueDefines: [ ALPHATEST ]
+        DisableShadow:
+            Passes:
+                ShadowMap:
+                    enabled: false
+        DisableShadowRuntimeOnly:
+            Passes:
+                ShadowMap:
+                    enabled: false
+        DisableShadowTransition:
+            Passes:
+                ShadowMap:
+                    IgnoreDefines: [ LOD_TRANSITION ]

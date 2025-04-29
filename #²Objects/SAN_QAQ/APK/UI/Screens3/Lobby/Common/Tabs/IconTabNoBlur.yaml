@@ -1,0 +1,160 @@
+Header:
+    version: 151
+Prototypes:
+-   class: "UIControl"
+    name: "TabIcon"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "FixedSize"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "verticalTabBar", "false", "true"]
+            - ["bool", "showTabDescription", "false", "true"]
+            - ["bool", "isSelected", "false", "true"]
+            - ["TabIconInfo", "tabInfo", "null", "{ }"]
+            - ["int", "tabID", "0", "0"]
+            events:
+            - "ON_SELECT_TAB"
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "masterID", "\"ICON_TAB_\" + str(tabID)"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isLocked", "tabInfo.isLocked"]
+            - ["string", "descriptionText", "localize(tabInfo.text)"]
+            - ["string", "lockedStyle", "when isLocked -> \"locked \", \"\""]
+            - ["string", "directionStyle", "when verticalTabBar -> \"vertical-tab\", \"horizontal-tab\""]
+            - ["string", "tapAreaStyle", "\"tab tap-area \" + lockedStyle + directionStyle"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/Tabs/Tab.actions"
+        UIIdentifierComponent:
+            id: "lobby_info_tab"
+            params:
+            - ["int", "tab_id", "tabID"]
+            - ["bool", "selected", "isSelected"]
+    bindings:
+    - ["SizePolicy.horizontalValue", "when tabInfo.tabSize == eTabSize.L -> 80, 48"]
+    - ["SizePolicy.verticalValue", "when tabInfo.tabSize == eTabSize.L -> 80, 48"]
+    children:
+    -   class: "UIControl"
+        name: "TapArea"
+        position: [-8.000000, 0.000000]
+        size: [32.000000, 32.000000]
+        input: true
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                bottomAnchorEnabled: true
+            UIInputEventComponent:
+                onTouchDown: "TOUCH_DOWN"
+            UISwitchBarElementComponent: {}
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Lobby/Common/Tabs/Tab.style.yaml"
+        bindings:
+        - ["classes", "tapAreaStyle"]
+        - ["UISwitchBarElementComponent.id", "tabID"]
+        children:
+        -   class: "UIControl"
+            name: "Content"
+            size: [32.000000, 32.000000]
+            input: false
+            classes: "content-area"
+            components:
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                UIAttachLayoutMasterComponent: {}
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Lobby/Common/Tabs/Tab.style.yaml"
+            bindings:
+            - ["UIAttachLayoutMasterComponent.attachId", "masterID"]
+            children:
+            -   class: "UIControl"
+                name: "BadgeHolder"
+                input: false
+                components:
+                    Anchor:
+                        rightAnchorEnabled: true
+                        topAnchorEnabled: true
+                        topAnchor: 4.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/BadgeHolder.yaml"
+                        args:
+                            "type": "tabInfo.badge.type"
+                            "value": "tabInfo.badge.value"
+            -   class: "UIControl"
+                name: "Icon"
+                pivot: [0.500000, 0.500000]
+                input: false
+                classes: "inner-content"
+                components:
+                    UIOpacityComponent: {}
+                    UITextureComponent:
+                        perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Lobby/Common/Tabs/Tab.style.yaml"
+                bindings:
+                - ["UITextureComponent.spritePath", "tabInfo.sprite"]
+        -   class: "UIControl"
+            name: "TabDescription"
+            size: [32.000000, 32.000000]
+            input: false
+            classes: "description"
+            components:
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "lastChild + 12"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 20.000000
+                UIAttachLayoutSlaveComponent:
+                    masterAlign: "LeftCenter"
+                    slaveAlign: "RightCenter"
+                    additionalOffset: [-4.000000, 0.000000]
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Lobby/Common/Tabs/Tab.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["visible", "showTabDescription and isSelected"]
+            - ["UIAttachLayoutSlaveComponent.attachId", "masterID"]
+            children:
+            -   class: "UIControl"
+                name: "Bg"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "grey-shark-90-bg"
+                components:
+                    Background: {}
+                    UIRoundedCornersComponent:
+                        radius: "4"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+            -   class: "UIControl"
+                name: "Label"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "t-caps bold white-wild-sand-text"
+                components:
+                    UITextComponent: {}
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "PercentOfContent"
+                bindings:
+                - ["UITextComponent.text", "descriptionText"]

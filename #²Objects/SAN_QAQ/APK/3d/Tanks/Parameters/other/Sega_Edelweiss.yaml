@@ -1,0 +1,85 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/other-Sega_Edelweiss"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/other-Sega_Edelweiss"
+    blitzModelPath: "Tanks/Other/Sega_Edelweiss.sc2"
+    collisionMesh: "CollisionMeshes/other-Sega_Edelweiss.sc2"
+    smokeEffectPath: "FX/Exhausts/cent.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/mt"
+    engineSoundNPC: "tanks/npc/engine/de/mt"
+    chassisSoundPC: "tanks/pc/treads/mt"
+    chassisSoundNPC: "tanks/npc/treads/mt"
+textureTransform: {}
+gunRecoil:
+    gun_01:
+        enabled: true
+        durationForward: 0.360000
+        durationBackward: 0.100000
+        distance: 0.269565
+maskSlice:
+    gun_01:
+        enabled: true
+        planePosition: [-0.000800, 1.718914, -0.452567]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 2.700000
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAAKt+tj39k7M9AQAAAKt+tj39k7M9AAAAAKt+tj39k7M9AQAAAKt+tj39k7M9AQAAAKt+tj39k7M9AAAAAKt+tj39k7M9AQAAAKt+tj39k7M9AQAAAKt+tj39k7M9AAAAAKt+tj39k7M9AQAAAKt+tj39k7M9AAAAAKt+tj39k7M9\f"
+    leftTrackChain: "qDW1v91kkToBAAAAMfdZvxClizoBAAAAOAaTvkTlhToBAAAA6OGNPnclgDoBAAAAGGVXP1TLdDoBAAAA39O0P7LHhrsBAAAA/VPDP6RXojsBAAAAVnbtP6iOvj0AAAAAwYgAQHFnCz4AAAAAVlYKQI6HNz4AAAAAi28YQET9dj4AAAAAKcslQC/iwj4BAAAALxYxQFfTGj8BAAAAw7Y0QJWNXj8BAAAAjPQwQEEukT8BAAAABCElQH5Rqj8BAAAA+FUbQG3nrz8BAAAAsmgQQOYitj8BAAAAeT0GQJs7tz8BAAAAgiT4P1BUuD8AAAAAEM7jPwVtuT8AAAAAn3fPP7qFuj8AAAAALiG7P2+euz8AAAAAvMqmPyS3vD8AAAAA6EyGP5p3vj8BAAAA0N1jPzVxvj8BAAAA0CE7P9Bqvj8AAAAAz2USP2xkvj8AAAAAnlPTPgdevj8AAAAAntuBPqJXvj8AAAAAcI7BPT1Rvj8BAAAAkFGEvdlKvj8BAAAAyBhlvnREvj8AAAAAZATEvg8+vj8AAAAAMr4Kv6o3vj8AAAAAMnozv0Uxvj8AAAAAWKZyv1snvj8BAAAAsLCNv+7fvT8BAAAANA6iv4GYvT8AAAAAuGu2vxVRvT8AAAAAPMnKv6gJvT8AAAAAwCbfvzvCvD8AAAAAQ4Tzv856vD8AAAAA5PADwGEzvD8BAAAA2/oOwPPluz8BAAAAQX4ewHbdsT8BAAAAHO0pwH13mT8BAAAAJZAuwHP+dD8BAAAAFaoqwMI+Lj8BAAAAUb8gwGU18T4BAAAAkBQYwBJvxj4AAAAAzmkPwMComz4AAAAARs4CwIbfOj4AAAAA6Wvyv+pHBD4AAAAARjvfv5xgmz0AAAAATFPEv0R9yDsBAAAA\f"
+    rightTrackChain: "qDW1v91kkToBAAAAMfdZvxClizoBAAAAOAaTvkTlhToBAAAA6OGNPnclgDoBAAAAGGVXP1TLdDoBAAAA39O0P7LHhrsBAAAA/VPDP6RXojsBAAAAVnbtP6iOvj0AAAAAwYgAQHFnCz4AAAAAVlYKQI6HNz4AAAAAi28YQET9dj4AAAAAKcslQC/iwj4BAAAALxYxQFfTGj8BAAAAw7Y0QJWNXj8BAAAAjPQwQEEukT8BAAAABCElQH5Rqj8BAAAA+FUbQG3nrz8BAAAAsmgQQOYitj8BAAAAeT0GQJs7tz8BAAAAgiT4P1BUuD8AAAAAEM7jPwVtuT8AAAAAn3fPP7qFuj8AAAAALiG7P2+euz8AAAAAvMqmPyS3vD8AAAAA6EyGP5p3vj8BAAAA0N1jPzVxvj8BAAAA0CE7P9Bqvj8AAAAAz2USP2xkvj8AAAAAnlPTPgdevj8AAAAAntuBPqJXvj8AAAAAcI7BPT1Rvj8BAAAAkFGEvdlKvj8BAAAAyBhlvnREvj8AAAAAZATEvg8+vj8AAAAAMr4Kv6o3vj8AAAAAMnozv0Uxvj8AAAAAWKZyv1snvj8BAAAAsLCNv+7fvT8BAAAANA6iv4GYvT8AAAAAuGu2vxVRvT8AAAAAPMnKv6gJvT8AAAAAwCbfvzvCvD8AAAAAQ4Tzv856vD8AAAAA5PADwGEzvD8BAAAA2/oOwPPluz8BAAAAQX4ewHbdsT8BAAAAHO0pwH13mT8BAAAAJZAuwHP+dD8BAAAAFaoqwMI+Lj8BAAAAUb8gwGU18T4BAAAAkBQYwBJvxj4AAAAAzmkPwMComz4AAAAARs4CwIbfOj4AAAAA6Wvyv+pHBD4AAAAARjvfv5xgmz0AAAAATFPEv0R9yDsBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: true
+        upperMin: 0.152263
+        upperFactor: 0.227074
+        frontFactor: 0.269230
+        backFactor: 0.250000
+        lengthPower: 0.500000
+        speed: 1.000000
+    trackLayingInfo:
+        bendingFactor: 0.744000
+        lengthPower: 0.920000
+        pointCountPower: 0.918000
+        pressurePower: 0.260000
+        primaryPower: 0.670000
+chassis:
+    textureScale:  -0.989000 
+detachedTurret:
+    cylinderPos: [0.000000, 0.000000, -0.021000]
+    cylinderXYScale: 0.845000
+    turret_01:
+        shouldClipGun: true
+        clippingPlaneZPos: 1.718000
+        textureScaleFactor: 0.697000
+collision:
+    hull:
+        points: [0.000000, -0.000008, 0.000104]
+        bbox: 
+            min: [-1.709862, -2.916745, 0.402428]
+            max: [1.710300, 3.080091, 1.824552]
+        averageThickness: 
+            turret_01: 74.798607
+    chassis:
+        points: [0.000000, -0.006612, 0.000831]
+        bbox: 
+            min: [-1.553053, -2.727548, 0.000887]
+            max: [1.553033, 2.823655, 1.467955]
+    turret_01:
+        points: [-0.009022, 0.269674, -1.707831]
+        bbox: 
+            min: [-1.029139, -1.610458, -0.495518]
+            max: [1.029139, 1.584523, 0.978419]
+    gun_01:
+        points: [0.000191, -0.183152, -2.672786]
+        bbox: 
+            min: [-0.400543, -0.279040, -1.014925]
+            max: [0.400543, 3.399562, 0.056838]

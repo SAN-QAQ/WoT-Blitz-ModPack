@@ -1,0 +1,25 @@
+Material:
+    Layers: [ VegetationRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Default/flora
+    RenderState:
+        depthTest: true
+        depthWrite: true
+        depthFunc: CMP_LESS
+        cullMode: FACE_BACK
+    Passes:
+        ReflectionRefraction:
+            enabled: true
+        Forward:
+        DepthOnly:
+            enabled: false
+        ShadowMap:
+            enabled: false
+    Presets:
+        AlphaTest:
+            Layers: [ AlphaTestRenderLayer ]
+            UniqueDefines: [ ALPHATEST ]
+        ForceDrawDepthPrepass:
+            Passes:
+                DepthOnly:
+                    enabled: true
+                    ConsiderOnlyDefines: [ FLORA_LOD_TRANSITION_NEAR, FLORA_LOD_TRANSITION_FAR, FLORA_BILLBOARD, FLORA_AMBIENT_ANIMATION, FLORA_WIND_ANIMATION, FLORA_WAVE_ANIMATION, FLORA_LAYING, HEIGHTMAP_FLOAT_TEXTURE, ALPHATEST, ALPHATESTVALUE, VEGETATION_BEND ]

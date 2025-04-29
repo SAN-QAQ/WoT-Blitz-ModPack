@@ -1,0 +1,337 @@
+Header:
+    version: 152
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ClanSupplyPersonalContent"
+    size: [1600.000000, 800.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "isLevelUpInProgress", "false", "false"]
+            - ["int", "currentClanLevel", "0", "4"]
+            - ["ClanSupplyLevelInfo", "personalInfo", "null", "{ }"]
+            events:
+            - "PERSONAL_PROGRESS_ANIMATION_ENDED"
+            - "ON_SPEED_UP_BTN_CLICKED"
+            - "ON_SUPPLY_LEVEL_CLICKED(int level)"
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "maxLevel", "Size(personalInfo.supplyLevelsNeededContribution)"]
+            - ["bool", "maxLevelReached", "when personalInfo.supplyLevelsNeededContribution.Size() > 0 and maxLevel > 0 -> personalInfo.currentPoints >= personalInfo.supplyLevelsNeededContribution[maxLevel - 1], false"]
+            - ["int", "currentAccountSupplyLevel", "when maxLevelReached -> maxLevel, max(1, upperBound(personalInfo.supplyLevelsNeededContribution, personalInfo.currentPoints))"]
+    children:
+    -   class: "UIControl"
+        name: "Wrapper"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIScrollView"
+            name: "ScrollArea"
+            size: [857.000000, 427.000000]
+            autoUpdate: true
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIScrollViewContainer"
+                name: "scrollContainerControl"
+                scrollDirection: "kVertical"
+                components:
+                    LinearLayout:
+                        orientation: "TopDown"
+                        spacing: 24.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   class: "UIControl"
+                    name: "ProgressInfo"
+                    input: false
+                    components:
+                        Background:
+                            usePostProcessedSprite: true
+                        UIPostProcessTextureComponent0:
+                            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                            needClearAlphaAfterRender: true
+                            needDepth: true
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent1:
+                            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent2:
+                            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIRoundedCornersComponent:
+                            radius: "4;4;0;0"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        LinearLayout:
+                            orientation: "TopDown"
+                            padding: "20; 16"
+                            spacing: 24.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "Fade"
+                        position: [0.000000, 2.000000]
+                        input: false
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                            UIGradientComponent:
+                                startColor: [0.090196, 0.011765, 0.011765, 0.000000]
+                                finishColor: [0.027451, 0.023529, 0.086275, 0.600000]
+                                orientation: "BottomUp"
+                            UIRoundedCornersComponent:
+                                radius: "4;4;0;0"
+                            Anchor:
+                                topAnchorEnabled: true
+                                bottomAnchorEnabled: false
+                            IgnoreLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfParent"
+                    -   class: "UIControl"
+                        name: "SupplyInfo"
+                        input: false
+                        components:
+                            Anchor: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIChildComponent0:
+                                prototypePath: "~res:/UI/Screens3/Lobby/Clan/Profile/Supply/ClanSupplyPersonalProgress.yaml"
+                                args:
+                                    "isLevelUpInProgress": "isLevelUpInProgress"
+                                    "personalInfo": "personalInfo"
+                                    "showButton": "currentAccountSupplyLevel != 10"
+                                eventActions:
+                                - ["ON_SUPPLY_LEVEL_CLICKED", "ON_SUPPLY_LEVEL_CLICKED", "_event.level"]
+                                - ["PERSONAL_PROGRESS_ANIMATION_ENDED", "PERSONAL_PROGRESS_ANIMATION_ENDED", ""]
+                                - ["ON_SPEED_UP_BTN_CLICKED", "ON_SPEED_UP_BTN_CLICKED", ""]
+                    -   class: "UIControl"
+                        name: "GradientBorderLeft"
+                        input: false
+                        components:
+                            Background:
+                                drawType: "DRAW_ALIGNED"
+                                sprite: "~res:/Gfx/Lobby/backgrounds/bg_clan_border"
+                                color: [1.000000, 1.000000, 1.000000, 0.200000]
+                                align: ["LEFT", "TOP"]
+                            Anchor:
+                                leftAnchorEnabled: true
+                                bottomAnchorEnabled: true
+                            IgnoreLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfParent"
+                    -   class: "UIControl"
+                        name: "BorderBottom"
+                        input: false
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                                color: [1.000000, 1.000000, 1.000000, 0.200000]
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                topAnchorEnabled: true
+                            IgnoreLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "Formula"
+                                horizontalFormula: "parent-16"
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 1.000000
+                    -   class: "UIControl"
+                        name: "GradientBorderRight"
+                        input: false
+                        components:
+                            Background:
+                                drawType: "DRAW_ALIGNED"
+                                sprite: "~res:/Gfx/Lobby/backgrounds/bg_clan_border"
+                                spriteModification: ["FLIP_HORIZONTAL"]
+                                color: [1.000000, 1.000000, 1.000000, 0.200000]
+                                align: ["RIGHT", "TOP"]
+                            Anchor:
+                                rightAnchorEnabled: true
+                                bottomAnchorEnabled: true
+                            IgnoreLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "AvailableLevelsWrapper"
+                    input: false
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 10.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "AvailableLevelsTitle"
+                        input: false
+                        classes: "t-overline bold white-wild-sand-50-text"
+                        components:
+                            UITextComponent:
+                                align: ["LEFT", "VCENTER"]
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                vCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfContent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "capitalize(localize(\"Clans/SupplyTab/PersonalInfo/AvailableLevels\"))"]
+                    -   class: "UIControl"
+                        name: "AvailableLevels"
+                        input: false
+                        components:
+                            LinearLayout:
+                                dynamicPadding: true
+                                spacing: 12.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfMaxChild"
+                        children:
+                        -   class: "UIControl"
+                            name: "LeftGradientLine"
+                            input: false
+                            components:
+                                Background:
+                                    drawType: "DRAW_FILL"
+                                UIGradientComponent:
+                                    startColor: [1.000000, 0.717647, 0.513726, 0.000000]
+                                    finishColor: [1.000000, 0.945098, 0.752941, 1.000000]
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                IgnoreLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    horizontalValue: 50.000000
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 2.000000
+                        -   class: "UIControl"
+                            name: "RightGradientLine"
+                            input: false
+                            components:
+                                Background:
+                                    drawType: "DRAW_FILL"
+                                UIGradientComponent:
+                                    startColor: [1.000000, 0.717647, 0.513726, 0.000000]
+                                    finishColor: [1.000000, 0.945098, 0.752941, 1.000000]
+                                    orientation: "RightToLeft"
+                                Anchor:
+                                    rightAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                IgnoreLayout: {}
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    horizontalValue: 50.000000
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 2.000000
+                        -   class: "UIControl"
+                            name: "Supplies"
+                            input: false
+                            components:
+                                Anchor:
+                                    vCenterAnchorEnabled: true
+                                LinearLayout:
+                                    spacing: 12.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIRepeatComponent:
+                                    control: "~res:/UI/Screens3/Lobby/Clan/Profile/Supply/ClanSupplyProgressBarPoints.yaml"
+                                    dataContainer: "[ 1; 2; 3; 4; 5; 6; 7; 8; 9; 10; ]"
+                                    args:
+                                        "size": "eClanSupplyPointsSize.Big"
+                                        "visible": "min(currentClanLevel, currentAccountSupplyLevel) >= _item"
+                                        "supplyLevel": "_item"
+                                    eventActions:
+                                    - ["ON_SUPPLY_LEVEL_CLICKED", "ON_SUPPLY_LEVEL_CLICKED", "_item"]
+                -   class: "UIControl"
+                    name: "SupplyBonusesList"
+                    input: false
+                    components:
+                        Background:
+                            usePostProcessedSprite: true
+                        UIPostProcessTextureComponent0:
+                            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                            needClearAlphaAfterRender: true
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent1:
+                            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIPostProcessTextureComponent2:
+                            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                            scale: 0.500000
+                            useVirtualCoordinateSystem: true
+                            minFilter: "Linear"
+                            magFilter: "Linear"
+                        UIRoundedCornersComponent:
+                            radius: "8"
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        GridLayout:
+                            dynamicColumnCalulation: "bySize"
+                            columnWidth: 120.000000
+                            columnDynamicPadding: true
+                            columnSpacing: 8.000000
+                            columnDynamicSpacing: false
+                            dynamicRowCalulation: "byControls"
+                            rowHeight: 160.000000
+                            rowSpacing: 16.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfChildrenSum"
+                        UIRepeatComponent:
+                            control: "~res:/UI/Screens3/Lobby/Clan/Profile/Supply/ClanSupplyItemWrapper.yaml"
+                            dataContainer: "personalInfo.discounts"
+                            args:
+                                "enableInputForTank": "true"
+                                "isBig": "true"
+                                "discountInfo": "_item"
+                            eventActions:
+                            - ["ON_SUPPLY_ITEM_CLICKED", "ON_SUPPLY_ITEM_CLICKED", "_index"]
+        -   prototype: "VerticalScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                ScrollBarDelegate:
+                    delegate: "../ScrollArea"

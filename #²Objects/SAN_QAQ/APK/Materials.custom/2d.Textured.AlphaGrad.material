@@ -1,0 +1,6 @@
+Material:
+    Shader: ~res:/Materials.custom/shaders/alpha-grad
+    RenderState:
+        blend: true
+    Passes:
+        2d:

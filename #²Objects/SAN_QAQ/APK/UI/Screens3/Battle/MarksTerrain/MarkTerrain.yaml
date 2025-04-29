@@ -1,0 +1,167 @@
+Header:
+    version: 161
+Prototypes:
+-   class: "UIControl"
+    name: "MarkTerrain"
+    size: [0.000000, 0.000000]
+    input: false
+    children:
+    -   class: "UIControl"
+        name: "MarkTerrainContent"
+        input: false
+        classes: "mark send-from=from-ally mark-type=attack-mark"
+        refreshStylesOnInteract: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+        children:
+        -   class: "UIControl"
+            name: "MarkNameHolder"
+            position: [12.000000, 7.000000]
+            size: [87.000000, 14.000000]
+            input: false
+            classes: "mark-bg-color"
+            components:
+                Background:
+                    drawType: "DRAW_STRETCH_BOTH"
+                    sprite: "~res:/Gfx/UI/BattleScreenHUD/bg_marker-round"
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "maxChild+17"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 14.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Battle/MarksTerrain/MarkTerrainColor.style.yaml"
+            children:
+            -   class: "UIControl"
+                name: "Name"
+                position: [7.000000, 0.000000]
+                input: false
+                classes: "name"
+                components:
+                    UITextComponent:
+                        text: "CAPS REGULAR"
+                        fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                        fontSize: 11.000000
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfContent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 14.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Battle/MarksTerrain/MarkTerrainDistanceCounter.style.yaml"
+        -   class: "UIControl"
+            name: "MarkIcon"
+            size: [28.000000, 28.000000]
+            input: false
+            classes: "icon"
+            refreshStylesOnInteract: false
+            components:
+                Background: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Battle/MarksTerrain/MarkTerrainIcon.style.yaml"
+        -   class: "UIControl"
+            name: "MarkTerrainDistanceCounterWrapper"
+            size: [80.000000, 20.000000]
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    topAnchorEnabled: true
+                    topAnchor: 28.000000
+            children:
+            -   class: "UIControl"
+                name: "MarkTerrainDistanceCounter"
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 15.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Battle/MarksTerrain/MarkTerrainDistanceCounter.style.yaml"
+                children:
+                -   class: "UIControl"
+                    name: "CounterBg"
+                    input: false
+                    classes: "counter-bg-color"
+                    components:
+                        Background:
+                            drawType: "DRAW_STRETCH_HORIZONTAL"
+                            sprite: "~res:/Gfx/Shared/backgrounds/bg_text-shadow"
+                            leftRightStretchCap: 4.000000
+                        UIOpacityComponent:
+                            opacity: 0.500000
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            topAnchorEnabled: true
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            horizontalValue: 130.000000
+                            verticalPolicy: "PercentOfParent"
+                            verticalValue: 110.000000
+                -   class: "UIControl"
+                    name: "Distance"
+                    input: false
+                    classes: "counter-text-color"
+                    components:
+                        UITextComponent:
+                            text: "321"
+                            fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                            fontSize: 13.000000
+                            lineHeight: 15.000000
+                            baseLine: 2.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            horizontalValue: 125.000000
+                            verticalPolicy: "PercentOfContent"
+                -   class: "UIControl"
+                    name: "M"
+                    input: false
+                    classes: "counter-text-color"
+                    components:
+                        UITextComponent:
+                            text: "#common:Shortening/Meter"
+                            fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                            fontSize: 13.000000
+                            lineHeight: 15.000000
+                            baseLine: 2.000000
+                        Anchor:
+                            rightAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+        -   class: "UIControl"
+            name: "RayTerrain"
+            size: [2.000000, 48.000000]
+            input: false
+            classes: "mark-bg-color"
+            refreshStylesOnInteract: false
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_TO_RECT"
+                    sprite: "~res:/Gfx/UI/BattleScreenHUD/bg_gradient_vertical_0-100"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Battle/MarksTerrain/MarkTerrainColor.style.yaml"
+            children:
+            -   class: "UIControl"
+                name: "Ring"
+                size: [4.000000, 4.000000]
+                input: false
+                classes: "point-icon"
+                components:
+                    Background: {}
+                    UIRoundedCornersComponent:
+                        radius: "50"
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                        bottomAnchor: -2.000000

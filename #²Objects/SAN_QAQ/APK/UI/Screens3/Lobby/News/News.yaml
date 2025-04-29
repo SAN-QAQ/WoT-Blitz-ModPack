@@ -1,0 +1,381 @@
+Header:
+    version: 141
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/BlurDynamic.yaml"
+- "~res:/UI/Screens3/Common/OverlayBlur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "News"
+    size: [1210.000000, 516.000000]
+    input: false
+    components:
+        UIAnimationComponent: {}
+        LinearLayout:
+            orientation: "BottomUp"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UILayoutEventComponent:
+            sizeChangedEvent: "CHANGE_SCREEN_SIZE"
+            sizeChangedEventData: "_size.Y"
+        ModalInput: {}
+        UIVirtualActionEventComponent0:
+            virtualKeyAction: "Escape"
+            keyDownEvent: "BACK_EVENT_BY_SHORTCUT"
+        UIVirtualActionEventComponent1:
+            virtualKeyAction: "Extra2"
+            keyDownEvent: "ON_NEWS_ITEM_CLICK_EVENT_BY_SCHORTCUT"
+            keyDownEventData: "selectedItem"
+        UIVirtualActionEventComponent2:
+            virtualKeyAction: "Extra1"
+            keyDownEvent: "ON_MARK_READ_EVENT_BY_SCHORTCUT"
+        UIVirtualActionEventComponent3:
+            virtualKeyAction: "Options"
+            keyDownEvent: "GO_TO_SHOP"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "newsUpdated", "false", "false"]
+            - ["NewsNotificationsViewModel", "model", "null", "{ \"mobileLines\" = [ { \"items\" = [ { \"cardSize\" = eNewsCardSize.M; \"item\" = { \"title\" = \"one\"; }; }; { \"cardSize\" = eNewsCardSize.M; \"item\" = { \"title\" = \"two\"; }; }; ]; }; { \"items\" = [ { \"item\" = { \"title\" = \"three\"; }; }; ]; }; ]; }"]
+            - ["AccountDataModel", "account", "null", "{ }"]
+            - ["eNewsTab", "activeTab", "eNewsTab.Undefined", "eNewsTab.News"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ \"newsNotifications\" = { \"items\" = [ { \"title\" = \"Ники Минаж беременна\"; }; { \"title\" = \"Сиара родила\"; }; ]; }; }"]
+            events:
+            - "GO_TO_SHOP"
+            - "POSITION_WAS_CHANGED"
+            - "ON_NEWS_ITEM_CLICK"
+            - "SELECTED_ITEM_CHANGED"
+            - "ON_NEWS_ITEM_TOUCH"
+            - "ON_MARK_READ"
+            - "ON_SELECT_TAB_CHANGED"
+            - "BACK_EVENT"
+            - "PREMIUM_INFO_EVENT"
+            - "SHOP_BUTTON"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "showFade", "false"]
+            - ["int", "screenSize", "when isNull(model) -> 0, model.screenSize"]
+            - ["int", "scrollPositionForNs", "0"]
+            - ["eNewsTab", "activeTabLocal", "activeTab"]
+            - ["int", "scrollPosition", "when isGamepad or isNull(model) -> 0, model.scrollPosition"]
+            - ["int", "selectedItem", "when isGamepad and (not isNull(model)) -> model.selectedItem, -1"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["float", "opacity", "clamp(float((abs(scrollPosition)) / 24.000000), 0.000000, 1.000000)"]
+            - ["int", "incomingAutoInvitesCount", "when session.prebattleInvites.incomingAutoInvitesId.Contains(account.prebattleModel.prebattleId) -> session.prebattleInvites.incomingAutoInvitesCount - 1, session.prebattleInvites.incomingAutoInvitesCount"]
+            - ["int", "tournamentNotificationsCount", "session.tournamentPlayerinfo.playerNotifications + incomingAutoInvitesCount"]
+            - ["string", "title", "localize(\"#news:caption\")"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/News/News.actions"
+        UIDataOnEventComponent0:
+            eventName: "ON_ACTIVE_TAB_CHANGED"
+            modelFieldExpression: "activeTabLocal"
+            dataExpression: "_event"
+        UIDataOnEventComponent1:
+            eventName: "SELECTED_ITEM_WAS_CHANGED"
+            modelFieldExpression: "selectedItem"
+            dataExpression: "_event"
+        UIDataOnEventComponent2:
+            eventName: "CHANGE_LOCAL_POSITION"
+            modelFieldExpression: "scrollPosition"
+            dataExpression: "_event"
+        UIDataOnEventComponent3:
+            eventName: "CHANGE_SCROLL_POSITION_NS"
+            modelFieldExpression: "scrollPositionForNs"
+            dataExpression: "_event"
+        UIDataOnEventComponent4:
+            eventName: "CHANGE_SCREEN_SIZE"
+            modelFieldExpression: "screenSize"
+            dataExpression: "int(_event)"
+        UIDataOnEventComponent5:
+            eventName: "SHOW_FADE"
+            modelFieldExpression: "showFade"
+            dataExpression: "_event"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "selectedItem"
+            ifExpression: "selectedItem >= 0"
+            eventName: "SCROLL_TO_SELECTED_ITEM"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "activeTabLocal"
+            ifExpression: "not (activeTabLocal == eNewsTab.News)"
+            eventName: "CHANGE_HEADER_OPACITY"
+            eventData: "0"
+        UIEventOnDataComponent2:
+            watchedDataExpression: "scrollPositionForNs"
+            ifExpression: "isGamepad"
+            eventName: "SCROLL_POSITION_FOR_SELECTED_ITEM_CHANGED"
+            eventData: "screenSize - scrollPositionForNs"
+        UIEventOnDataComponent3:
+            watchedDataExpression: "screenSize"
+            eventName: "SCREEN_SIZE_WAS_CHANGED"
+            eventData: "screenSize"
+        UIEventOnDataComponent4:
+            watchedDataExpression: "showFade"
+            ifExpression: "showFade == true"
+            eventName: "OPEN_NEWS"
+    children:
+    -   class: "UIControl"
+        name: "AdditionalBg"
+        size: [32.000000, 32.000000]
+        input: false
+        classes: "grey-shark-50-bg"
+        components:
+            Background: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "NavigationPanel"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "isGamepad"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/NavigationPanel.yaml"
+                args:
+                    "content": "NewsNavigatePanel"
+    -   class: "UIControl"
+        name: "Content"
+        position: [0.000000, 112.000000]
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                condition: "activeTabLocal == eNewsTab.News and (not Empty(session.newsNotifications.items)) and (not isNull(model))"
+                prototypePath: "~res:/UI/Screens3/Lobby/News/NewsFeedContent.yaml"
+                args:
+                    "newsUpdated": "newsUpdated"
+                    "markReadIsVisible": "session.newsNotifications.unreadCount > 0"
+                    "model": "model"
+                eventActions:
+                - ["CHANGE_SCROLL_POSITION_NS", "CHANGE_SCROLL_POSITION_NS", "_event.position"]
+                - ["CHANGE_POSITION_SELECTED_ITEM", "CHANGE_POSITION_SELECTED_ITEM", "_event"]
+                - ["NEWS_TAB_INIT", "NEWS_TAB_INIT", ""]
+                - ["SCROLL_TO_SELECTED_ITEM", "SCROLL_TO_SELECTED_ITEM", ""]
+                - ["CHANGE_POSITION_CONTENT", "CHANGE_POSITION", "_event"]
+                - ["ON_MARK_READ_CLICK", "ON_MARK_READ_CLICK", ""]
+                - ["SELECTED_ITEM_WAS_CHANGED", "SELECTED_ITEM_WAS_CHANGED", "_event"]
+            UIChildComponent1:
+                condition: "activeTabLocal == eNewsTab.News and Empty(session.newsNotifications.items)"
+                prototypePath: "~res:/UI/Screens3/Lobby/News/NewsFeedEmptyContent.yaml"
+                args:
+                    "text": "\"#news:emptyNewsList\""
+    -   class: "UIControl"
+        name: "HeaderAndTabWrapper"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                orientation: "BottomUp"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "BlurAndFade"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.000000
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   prototype: "BlurDynamic/BlurDynamic"
+                name: "BlurDynamic"
+                visible: false
+                components:
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+            -   class: "UIControl"
+                name: "Fade"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "black-50-bg"
+                components:
+                    Background: {}
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfParent"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+        -   class: "UIControl"
+            name: "TextTabsBar"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Tabs/TextTabsBarNoBlur.yaml"
+                    args:
+                        "bgStyle": "\"\""
+                        "activeTab": "int(activeTabLocal)"
+                        "info": "[ { \"text\" = localize(\"#news:tab/news\"); \"badge\" = { \"value\" = (when session.newsNotifications.unreadCount > 0 -> str(session.newsNotifications.unreadCount), \" \"); \"type\" = eBadgeType.Digit; }; }; { \"text\" = localize(\"NEWS_SCREEN_TAB_NOTIFICATIONS\"); \"badge\" = { \"value\" = (when session.systemMessages.unreadCount > 0 -> str(session.systemMessages.unreadCount), \" \"); \"type\" = eBadgeType.Digit; }; }; { \"text\" = localize(\"NEWS_SCREEN_TAB_TOURNAMENTS\"); \"badge\" = { \"value\" = (when tournamentNotificationsCount > 0 -> str(tournamentNotificationsCount), \" \"); \"type\" = eBadgeType.Digit; }; }; ]"
+        -   class: "UIControl"
+            name: "Header"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Headers/BaseHeader.yaml"
+                    args:
+                        "showBackButton": "true"
+                        "bgStyle": "\"\""
+                        "leftContent": "LeftContent"
+                        "lobby": "lobby"
+                        "session": "session"
+                    eventActions:
+                    - ["GO_TO_SHOP", "GO_TO_SHOP", ""]
+                    - ["BACK_EVENT", "BACK_EVENT", ""]
+                    - ["PREMIUM_INFO_EVENT", "PREMIUM_INFO_EVENT", ""]
+                    - ["SHOP_BUTTON", "SHOP_BUTTON", "_event.requiredResource"]
+    -   prototype: "OverlayBlur/BlurAndFade"
+        name: "BlurAndFadeForSwitch"
+        components:
+            IgnoreLayout: {}
+        bindings:
+        - ["visible", "showFade and isGamepad"]
+    -   class: "UIControl"
+        name: "LoadingControl"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                condition: "(not newsUpdated) and activeTabLocal == eNewsTab.News"
+                prototypePath: "~res:/UI/Screens3/Common/LoadingOverlay.yaml"
+                args:
+                    "description": "\"\""
+Slots:
+-   class: "UIControl"
+    name: "LeftContent"
+    size: [256.000000, 48.000000]
+    input: false
+    components:
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "Spacer"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 16.000000
+                verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "TItle"
+        input: false
+        classes: "t-subtitle regular white-wild-sand-text"
+        components:
+            UITextComponent:
+                fitting: "FITTING_POINTS"
+                align: ["LEFT", "VCENTER"]
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "Formula"
+                horizontalFormula: "when parent == 0 -> content, min(parentRest, content)"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "title"]
+-   class: "UIControl"
+    name: "NewsNavigatePanel"
+    size: [768.000000, 40.000000]
+    input: false
+    components:
+        LinearLayout:
+            spacing: 24.000000
+            dynamicSpacing: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "Back"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/Lobby/Back\""
+                    "icon": "eNintendoSwitchControls.B"
+    -   class: "UIControl"
+        name: "ChoiceNews"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+            UIChildComponent0:
+                condition: "activeTabLocal == eNewsTab.News and (not Empty(session.newsNotifications.items))"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/News/ChoiceNews\""
+                    "icon": "eNintendoSwitchControls.AllArrows"
+    -   class: "UIControl"
+        name: "OpenNews"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "activeTabLocal == eNewsTab.News and (not Empty(session.newsNotifications.items))"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/News/OpenNews\""
+                    "icon": "eNintendoSwitchControls.Y"
+    -   class: "UIControl"
+        name: "MarkAsReadedAllNews"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            Anchor: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                condition: "activeTabLocal == eNewsTab.News and session.newsNotifications.unreadCount > 0"
+                prototypePath: "~res:/UI/Screens3/Common/NintendoSwitch/NavigationPanel/IconWithLabel.yaml"
+                args:
+                    "text": "\"Switch/HubridPanel/News/MarkAsReadedAllNews\""
+                    "icon": "eNintendoSwitchControls.X"

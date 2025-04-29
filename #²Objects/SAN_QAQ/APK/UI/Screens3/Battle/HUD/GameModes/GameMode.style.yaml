@@ -1,0 +1,48 @@
+Header:
+    version: 160
+StyleSheets:
+-   selectors:
+    - ".battle-points"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 17.000000
+        text-lineHeight: 21.000000
+        text-baseLine: 3.000000
+        text-shadowColor: [0.003922, 0.003922, 0.003922, 0.200000]
+        text-shadowOffset: [1.000000, 1.000000]
+-   selectors:
+    - ".battle-points.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+-   selectors:
+    - ".battle-points.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        text-baseLine: 2.000000
+-   selectors:
+    - ".battle-points.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+-   selectors:
+    - ".battle-points.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 19.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".battle-points.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 15.000000
+-   selectors:
+    - ".battle-points.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+-   selectors:
+    - ".battle-points.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+-   selectors:
+    - ".battle-points.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"

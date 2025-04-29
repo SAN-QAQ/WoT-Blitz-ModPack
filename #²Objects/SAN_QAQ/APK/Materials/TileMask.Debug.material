@@ -1,0 +1,14 @@
+Material:
+    Layers: [ OpaqueRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Landscape/tilemask
+    RenderState:
+        depthTest: true
+        depthWrite: true
+        depthFunc: CMP_LESS
+        cullMode: FACE_BACK
+    Passes:
+        ReflectionRefraction:
+        Forward:
+        DepthOnly:
+        ShadowMap:
+            enabled: false

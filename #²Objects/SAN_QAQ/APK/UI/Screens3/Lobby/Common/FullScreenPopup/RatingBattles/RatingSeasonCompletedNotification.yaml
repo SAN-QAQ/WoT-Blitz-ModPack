@@ -1,0 +1,1319 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/FullscreenPopupWithContentSlot.yaml"
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "RatingSeasonCompletedNotification"
+    size: [960.000000, 640.000000]
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Common/FullScreenPopup/RatingBattles/RatingSeasonCompletedNotification.animation"
+        UIOpacityComponent:
+            opacity: 1.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["int", "battlesInSeason", "0", "123"]
+            - ["int", "winsInSeason", "0", "122"]
+            - ["int", "averageDamageInSeason", "0", "2345"]
+            - ["vector<ResourceDetailed>", "rewards", "null", "[ { \"type\" = ResourceType.stuff; \"stuff\" = { \"type\" = ArtefactType.player_avatar; }; }; { \"type\" = ResourceType.unlocks; }; ]"]
+            - ["RatingSeasonInfoModel", "seasonInfo", "null", "{ \"ratingPosition\" = 2; \"ratingPositionRange\" = eRatingPositionRange.Top2; \"totalPlayers\" = 100; }"]
+            - ["RatingBattleModel", "rating", "null", "{ \"leagueType\" = eLeague.DIAMOND; }"]
+            events:
+            - "ON_REWARD_CLICKED(ResourceDetailed resource, string attachId)"
+            - "CLOSE_NOTIFICATION"
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "winPercentageInSeason", "when battlesInSeason > 0 -> (float(winsInSeason) / float(battlesInSeason)) * 100, 0"]
+            - ["float", "percentageBestPlayers", "when seasonInfo.totalPlayers > 0 -> (float(seasonInfo.ratingPosition) / float(seasonInfo.totalPlayers)) * 100, 0"]
+            - ["eLeague", "league", "rating.leagueType"]
+            - ["string", "leagueColorTextStyle", "when league == eLeague.NO_LEAGUE -> \"white-wild-sand-50-text\", league == eLeague.BRONZE -> \"orange-tango-text\", league == eLeague.SILVER -> \"blue-riptide-text\", league == eLeague.GOLD -> \"yellow-lightning-text\", league == eLeague.PLATINUM -> \"orange-orange-peel-text\", league == eLeague.DIAMOND -> \"purple-chupretto-text\", \"\""]
+            - ["string", "leagueStyle", "when league == eLeague.NO_LEAGUE -> \"t-content-h2 regular not-localize \" + leagueColorTextStyle, \"t-content-h2 bold not-localize \" + leagueColorTextStyle"]
+            - ["string", "leagueName", "localize(\"ratingBattles/leagueName/\" + str(league, eLeague, \"lower_case\"))"]
+            - ["string", "description", "localize(\"ratingBattles/ratingSeasonCompleted/Description\")"]
+            - ["bool", "canShowRewards", "rating.currentRating >= 3000 and not rewards.Empty()"]
+            - ["string", "winrateColor", "when winPercentageInSeason >= 90.000000 -> \"red-red-text\", winPercentageInSeason >= 80.000000 -> \"gold-shining-text\", winPercentageInSeason >= 70.000000 -> \"purple-zhuk-text\", winPercentageInSeason >= 60.000000 -> \"blue-rimmi-text\", winPercentageInSeason >= 50.000000 -> \"green-zmilly-text\", \"white-wild-sand-text\""]
+            - ["bool", "isTop100", "seasonInfo.ratingPositionRange == eRatingPositionRange.Top1 or seasonInfo.ratingPositionRange == eRatingPositionRange.Top2 or seasonInfo.ratingPositionRange == eRatingPositionRange.Top3 or seasonInfo.ratingPositionRange == eRatingPositionRange.Top100"]
+            - ["eRatingPositionRange", "ratingPositionRange", "eRatingPositionRange.Top3"]
+            - ["string", "ratingPositionColor", "str(seasonInfo.ratingPositionRange, eRatingPositionRange, \"color\")"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "anchorDistance", "when screenHeight < 1080 -> 16, 48"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/RatingBattles/RatingSeasonCompletedNotification.actions"
+    children:
+    -   prototype: "FullscreenPopupWithContentSlot/FullscreenPopupWithContentSlot"
+        name: "FullscreenPopupWithContentSlot"
+        components:
+            UIDataParamsComponent:
+                args:
+                    "customBg": "Background"
+                    "isButtonVisible": "true"
+                    "disableInput": "true"
+                    "contentControl": "Description"
+                eventActions:
+                - ["CLOSE_NOTIFICATION", "CLOSE_NOTIFICATION", ""]
+                - ["ACCENT_CLICKED", "RatingSeasonCompletedOnAccentClicked", ""]
+                - ["SwitchDebugMode", "", ""]
+        children:
+        -   path: "Content/Content"
+            position: [16.000000, 16.000000]
+Slots:
+-   class: "UIControl"
+    name: "Description"
+    size: [960.000000, 640.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "ScreenTop"
+        input: false
+        components:
+            UIOpacityComponent:
+                opacity: 1.000000
+            Anchor:
+                hCenterAnchorEnabled: true
+                topAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: -27.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfChildrenSum"
+        bindings:
+        - ["Anchor.topAnchor", "anchorDistance"]
+        children:
+        -   class: "UIControl"
+            name: "Icon"
+            input: false
+            components:
+                Background:
+                    sprite: "~res:/Gfx/Lobby/icons/icon_rating_l"
+                UIGradientComponent:
+                    finishColor: [1.000000, 1.000000, 1.000000, 0.000000]
+                    orientation: "TopDown"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    horizontalValue: 100.000000
+                    verticalPolicy: "PercentOfContent"
+                    verticalValue: 100.000000
+        -   class: "UIControl"
+            name: "Title"
+            input: false
+            classes: "t-title bold color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    multiline: "MULTILINE_ENABLED"
+                    align: ["HCENTER", "VCENTER"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 500.000000
+                    verticalPolicy: "PercentOfContent"
+                    verticalMax: 72.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/Title\"))"]
+        -   class: "UIControl"
+            name: "Spacer"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 62.000000
+        -   class: "UIControl"
+            name: "Subtitle"
+            position: [37.000000, 40.000000]
+            input: false
+            components:
+                Anchor:
+                    enabled: true
+                    hCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIChildComponent0:
+                    prototypePath: "~res:/UI/Screens3/Lobby/Common/FullScreenPopup/RatingBattles/DateDuration.yaml"
+                    args:
+                        "startDate": "seasonInfo.startDate"
+                        "endDate": "seasonInfo.endDate"
+    -   class: "UIControl"
+        name: "ScreenCenter"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalMax: 1200.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Spacer1"
+            input: false
+            components:
+                SizePolicy:
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 200.000000
+        -   class: "UIControl"
+            name: "MainContentWrapper"
+            visible: true
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 1.000000
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "MainContent"
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIControl"
+                    name: "LeftPart"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfFirstChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "LeftBlock"
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 1.000000
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                hCenterAnchor: 0.000000
+                                topAnchorEnabled: true
+                            LinearLayout:
+                                orientation: "TopDown"
+                                spacing: 24.000000
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 148.000000
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIControl"
+                            name: "Block1"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                input: false
+                                classes: "bold t-caption white-wild-sand-50-text"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_ENABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfContent"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/battlesInSeason\"))"]
+                            -   class: "UIControl"
+                                name: "Value"
+                                position: [56.000000, 26.000000]
+                                input: false
+                                classes: "bold t-headline white-wild-sand-text not-localize"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_DISABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(battlesInSeason)"]
+                        -   class: "UIControl"
+                            name: "Block2"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                input: false
+                                classes: "bold t-caption white-wild-sand-50-text"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_ENABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfContent"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/winsInSeason\"))"]
+                            -   class: "UIControl"
+                                name: "Value"
+                                position: [0.000000, 20.000000]
+                                input: false
+                                classes: "bold t-headline white-wild-sand-text not-localize"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_DISABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(winsInSeason)"]
+                        -   class: "UIControl"
+                            name: "Block3"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                input: false
+                                classes: "bold t-caption white-wild-sand-50-text"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_ENABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfContent"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/winPercentageInSeason\"))"]
+                            -   class: "UIControl"
+                                name: "Value"
+                                input: false
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_DISABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                bindings:
+                                - ["classes", "\"bold t-headline not-localize\" + \" \" + winrateColor"]
+                                - ["UITextComponent.text", "percent(winPercentageInSeason, 2)"]
+                        -   class: "UIControl"
+                            name: "Block4"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                position: [-50.000000, 0.000000]
+                                input: false
+                                classes: "bold t-caption white-wild-sand-50-text"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_ENABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfContent"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/averageDamageInSeason\"))"]
+                            -   class: "UIControl"
+                                name: "Value"
+                                input: false
+                                classes: "bold t-headline white-wild-sand-text not-localize"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_DISABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(averageDamageInSeason)"]
+                -   class: "UIControl"
+                    name: "CenterPart"
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                            vCenterAnchor: 24.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 272.000000
+                    children:
+                    -   class: "UIControl"
+                        name: "LeagueInfoHolder"
+                        visible: true
+                        input: false
+                        components:
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 320.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 214.000000
+                        children:
+                        -   class: "UIControl"
+                            name: "LeagueCommon"
+                            visible: true
+                            input: false
+                            components:
+                                UIOpacityComponent:
+                                    opacity: 1.000000
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 424.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                            children:
+                            -   class: "UIControl"
+                                name: "LeagueIcon"
+                                pivot: [0.500000, 0.500000]
+                                input: false
+                                components:
+                                    UIOpacityComponent:
+                                        opacity: 1.000000
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfMaxChild"
+                                        verticalPolicy: "PercentOfMaxChild"
+                                    UIChildComponent0:
+                                        prototypePath: "~res:/UI/Screens3/Lobby/Profile/Common/LeagueIcon.yaml"
+                                        args:
+                                            "showAnimation": "true"
+                                            "league": "league"
+                            -   class: "UIControl"
+                                name: "League"
+                                input: false
+                                components:
+                                    UIOpacityComponent:
+                                        opacity: 1.000000
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                        bottomAnchorEnabled: true
+                                    LinearLayout:
+                                        orientation: "TopDown"
+                                        spacing: 4.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfMaxChild"
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                children:
+                                -   class: "UIControl"
+                                    name: "Spaser"
+                                    input: false
+                                    components:
+                                        SizePolicy:
+                                            horizontalPolicy: "FixedSize"
+                                            verticalPolicy: "FixedSize"
+                                            verticalValue: 6.000000
+                                -   class: "UIControl"
+                                    name: "LeagueDescription"
+                                    input: false
+                                    classes: "t-caption regular white-wild-sand-50-text"
+                                    components:
+                                        UITextComponent: {}
+                                        Anchor:
+                                            hCenterAnchorEnabled: true
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfContent"
+                                            verticalPolicy: "PercentOfContent"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                                    bindings:
+                                    - ["UITextComponent.text", "description"]
+                                -   class: "UIControl"
+                                    name: "LeagueName"
+                                    input: false
+                                    classes: "t-title bold"
+                                    components:
+                                        UITextComponent: {}
+                                        Anchor:
+                                            hCenterAnchorEnabled: true
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfContent"
+                                            verticalPolicy: "PercentOfContent"
+                                        StyleSheet:
+                                            styles: "~res:/UI/Screens3/Font.style.yaml"
+                                    bindings:
+                                    - ["UITextComponent.text", "capitalize(leagueName)"]
+                        -   class: "UIControl"
+                            name: "LeagueTop100"
+                            pivot: [0.500000, 0.500000]
+                            visible: false
+                            input: false
+                            components:
+                                UIOpacityComponent:
+                                    opacity: 0.000000
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: -4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 424.000000
+                                    verticalPolicy: "FixedSize"
+                                    verticalValue: 214.000000
+                            children:
+                            -   class: "UIControl"
+                                name: "PositionValueWrapper"
+                                input: false
+                                components:
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    LinearLayout: {}
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfChildrenSum"
+                                        verticalPolicy: "PercentOfLastChild"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                                children:
+                                -   class: "UIControl"
+                                    name: "TopBg"
+                                    input: false
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_SCALE_TO_RECT"
+                                            sprite: "~res:/Gfx/Lobby/backgrounds/bg_top-glow_l"
+                                        UIOpacityComponent: {}
+                                        Anchor:
+                                            hCenterAnchorEnabled: true
+                                            vCenterAnchorEnabled: true
+                                            vCenterAnchor: -12.000000
+                                        IgnoreLayout: {}
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfParent"
+                                            horizontalValue: 180.000000
+                                            verticalPolicy: "PercentOfParent"
+                                            verticalValue: 180.000000
+                                    bindings:
+                                    - ["classes", "when seasonInfo.ratingPositionRange == eRatingPositionRange.Top3 -> \"orange-tango-bg\", seasonInfo.ratingPositionRange == eRatingPositionRange.Top2 -> \"blue-curious-blue-bg\", seasonInfo.ratingPositionRange == eRatingPositionRange.Top1 -> \"orange-orange-peel-bg\", \"yellow-submarine-bg\""]
+                                    - ["UIOpacityComponent.opacity", "when ratingPositionRange == eRatingPositionRange.Top2 -> 0.750000, ratingPositionRange == eRatingPositionRange.Top100 -> 0.400000, 0.500000"]
+                                -   class: "UIControl"
+                                    name: "LaurelLeft"
+                                    input: false
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_SCALE_TO_RECT"
+                                            sprite: "~res:/Gfx/Lobby/icons/icon_laurel-rb-top_l"
+                                            spriteModification: ["FLIP_HORIZONTAL"]
+                                        Anchor:
+                                            rightAnchorEnabled: true
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfContent"
+                                            horizontalValue: 88.000000
+                                            verticalPolicy: "PercentOfContent"
+                                            verticalValue: 88.000000
+                                    bindings:
+                                    - ["classes", "ratingPositionColor + \"-bg\""]
+                                -   class: "UIControl"
+                                    name: "PositionValueWrapper"
+                                    input: false
+                                    components:
+                                        SizePolicy:
+                                            horizontalPolicy: "Formula"
+                                            horizontalFormula: "firstChild-32"
+                                            verticalPolicy: "PercentOfFirstChild"
+                                    children:
+                                    -   class: "UIControl"
+                                        name: "PositionValue"
+                                        input: false
+                                        components:
+                                            UITextComponent: {}
+                                            Anchor:
+                                                hCenterAnchorEnabled: true
+                                                vCenterAnchorEnabled: true
+                                                vCenterAnchor: 2.000000
+                                            SizePolicy:
+                                                horizontalPolicy: "PercentOfContent"
+                                                verticalPolicy: "PercentOfContent"
+                                        bindings:
+                                        - ["classes", "\"t-content-h0 bold not-localize\" + \" \" + ratingPositionColor + \"-text\""]
+                                        - ["UITextComponent.text", "seasonInfo.ratingPosition"]
+                                -   class: "UIControl"
+                                    name: "LaurelRight"
+                                    input: false
+                                    components:
+                                        Background:
+                                            drawType: "DRAW_SCALE_TO_RECT"
+                                            sprite: "~res:/Gfx/Lobby/icons/icon_laurel-rb-top_l"
+                                        Anchor:
+                                            rightAnchorEnabled: true
+                                        SizePolicy:
+                                            horizontalPolicy: "PercentOfContent"
+                                            horizontalValue: 88.000000
+                                            verticalPolicy: "PercentOfContent"
+                                            verticalValue: 88.000000
+                                    bindings:
+                                    - ["classes", "ratingPositionColor + \"-bg\""]
+                            -   class: "UIControl"
+                                name: "Spacer1"
+                                input: false
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 11.000000
+                            -   class: "UIControl"
+                                name: "TopPositionText"
+                                input: false
+                                components:
+                                    UITextComponent: {}
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml"
+                                bindings:
+                                - ["classes", "\"t-content-h4 bold\" + \" \" + ratingPositionColor + \"-text\""]
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/profile/top\"))"]
+                            -   class: "UIControl"
+                                name: "Spacer2"
+                                input: false
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 36.000000
+                    -   class: "UIControl"
+                        name: "CurrentRatingWrapper"
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 1.000000
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                bottomAnchorEnabled: true
+                                bottomAnchor: -8.000000
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 170.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 58.000000
+                        children:
+                        -   class: "UIControl"
+                            name: "CurrentRating"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    spacing: -16.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "PercentOfMaxChild"
+                            children:
+                            -   class: "UIControl"
+                                name: "RatingValue"
+                                size: [39.000000, 24.000000]
+                                input: false
+                                classes: "t-content-h2 bold yellow-submarine-text not-localize"
+                                components:
+                                    UITextComponent:
+                                        colorInheritType: "COLOR_IGNORE_PARENT"
+                                        multiline: "MULTILINE_ENABLED"
+                                        align: ["HCENTER", "VCENTER"]
+                                    UIShadowComponent:
+                                        blurType: "Gauss"
+                                        textureScale: 0.300000
+                                        color: [0.933333, 0.333333, 0.133333, 0.500000]
+                                        canBeDelayed: true
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    LinearLayout:
+                                        dynamicPadding: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        horizontalValue: 120.000000
+                                        verticalPolicy: "PercentOfContent"
+                                        verticalValue: 120.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(rating.currentRating)"]
+                            -   class: "UIControl"
+                                name: "RatingIcon"
+                                input: false
+                                classes: "yellow-submarine-bg"
+                                components:
+                                    Background:
+                                        drawType: "DRAW_ALIGNED"
+                                        sprite: "~res:/Gfx/Lobby/icons/icon_rating_m"
+                                    UIShadowComponent:
+                                        blurType: "Gauss"
+                                        textureScale: 0.350000
+                                        color: [0.933333, 0.333333, 0.133333, 1.000000]
+                                        canBeDelayed: true
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                        vCenterAnchor: 2.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        horizontalValue: 150.000000
+                                        verticalPolicy: "PercentOfParent"
+                                        verticalValue: 120.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Color.style.yaml"
+                        -   class: "UIControl"
+                            name: "CurrentRatingShadow"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    spacing: -16.000000
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfChildrenSum"
+                                    verticalPolicy: "PercentOfMaxChild"
+                            children:
+                            -   class: "UIControl"
+                                name: "RatingValue"
+                                size: [39.000000, 24.000000]
+                                input: false
+                                classes: "t-content-h2 bold yellow-submarine-text not-localize"
+                                components:
+                                    UITextComponent:
+                                        colorInheritType: "COLOR_IGNORE_PARENT"
+                                        multiline: "MULTILINE_ENABLED"
+                                        align: ["HCENTER", "VCENTER"]
+                                    UIShadowComponent:
+                                        blurType: "Gauss"
+                                        textureScale: 0.600000
+                                        color: [1.000000, 0.164706, 0.000000, 1.000000]
+                                        canBeDelayed: true
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        horizontalValue: 120.000000
+                                        verticalPolicy: "PercentOfContent"
+                                        verticalValue: 120.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(rating.currentRating)"]
+                            -   class: "UIControl"
+                                name: "RatingIcon"
+                                position: [123.000000, 0.000000]
+                                input: false
+                                classes: "yellow-submarine-bg"
+                                components:
+                                    Background:
+                                        drawType: "DRAW_ALIGNED"
+                                        sprite: "~res:/Gfx/Lobby/icons/icon_rating_m"
+                                    UIShadowComponent:
+                                        blurType: "Gauss"
+                                        textureScale: 0.600000
+                                        color: [1.000000, 0.164706, 0.000000, 1.000000]
+                                        canBeDelayed: true
+                                    Anchor:
+                                        vCenterAnchorEnabled: true
+                                        vCenterAnchor: 2.000000
+                                    SizePolicy:
+                                        horizontalPolicy: "PercentOfContent"
+                                        horizontalValue: 150.000000
+                                        verticalPolicy: "PercentOfParent"
+                                        verticalValue: 120.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Color.style.yaml"
+                -   class: "UIControl"
+                    name: "RightPart"
+                    input: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfFirstChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "RightBlock"
+                        input: false
+                        components:
+                            UIOpacityComponent:
+                                opacity: 1.000000
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                hCenterAnchor: 0.000000
+                            LinearLayout:
+                                orientation: "TopDown"
+                                spacing: 24.000000
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 148.000000
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIControl"
+                            name: "Block1"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                input: false
+                                classes: "bold t-caption white-wild-sand-50-text"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_ENABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/finalPosition\"))"]
+                            -   class: "UIControl"
+                                name: "RatingPositionHolder"
+                                input: false
+                                components:
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                    UIChildComponent0:
+                                        childType: "kControl"
+                                        condition: "not isTop100"
+                                        control: "RatingPositionIntValue"
+                                    UIChildComponent1:
+                                        childType: "kControl"
+                                        condition: "isTop100"
+                                        control: "RatingPositionIconValue"
+                        -   class: "UIControl"
+                            name: "Block2"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 4.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "RichContent"
+                                position: [0.000000, 100.000000]
+                                input: false
+                                components:
+                                    RichContent:
+                                        baseClasses: "bold t-caption white-wild-sand-50-text"
+                                        textControl: "~res:/UI/Screens3/Lobby/Story/Components/StoryRichTextTextControl.yaml"
+                                    RichContentAliases0:
+                                        aliases:
+                                        - ["percent", "<control class=\"\" control=\"~res:/UI/Screens3/Lobby/Common/FullScreenPopup/RatingBattles/RatingPercent.yaml\" args1=\"percentageBestPlayers=percentageBestPlayers\" />"]
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfChildrenSum"
+                                    FlowLayout:
+                                        alignment: "Center"
+                                        hSpacing: 3.000000
+                                bindings:
+                                - ["RichContent.text", "localize(\"ratingBattles/ratingSeasonCompleted/percentageBestPlayers\")"]
+                        -   class: "UIControl"
+                            name: "Block3"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                input: false
+                                classes: "bold t-caption white-wild-sand-50-text"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_ENABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/calibrationRating\"))"]
+                            -   class: "UIControl"
+                                name: "Value"
+                                position: [48.000000, 26.000000]
+                                input: false
+                                classes: "bold t-headline yellow-submarine-text not-localize"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_DISABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(rating.calibrationRating)"]
+                        -   class: "UIControl"
+                            name: "Block4"
+                            input: false
+                            components:
+                                Anchor:
+                                    hCenterAnchorEnabled: true
+                                LinearLayout:
+                                    orientation: "TopDown"
+                                    spacing: 8.000000
+                                SizePolicy:
+                                    horizontalPolicy: "FixedSize"
+                                    horizontalValue: 148.000000
+                                    verticalPolicy: "PercentOfChildrenSum"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml"
+                            children:
+                            -   class: "UIControl"
+                                name: "Title"
+                                input: false
+                                classes: "bold t-caption white-wild-sand-50-text"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_ENABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "PercentOfContent"
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/maxRating\"))"]
+                            -   class: "UIControl"
+                                name: "Value"
+                                input: false
+                                classes: "bold t-headline yellow-submarine-text not-localize"
+                                components:
+                                    UITextComponent:
+                                        multiline: "MULTILINE_DISABLED"
+                                    Anchor:
+                                        hCenterAnchorEnabled: true
+                                    SizePolicy:
+                                        horizontalPolicy: "FixedSize"
+                                        horizontalValue: 148.000000
+                                        verticalPolicy: "FixedSize"
+                                        verticalValue: 24.000000
+                                    StyleSheet:
+                                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                                bindings:
+                                - ["UITextComponent.text", "str1000Separated(rating.maxRating)"]
+        -   class: "UIControl"
+            name: "RewardsContent"
+            visible: false
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "FlagBg"
+                input: false
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_TO_RECT"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_flag-rb"
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                        vCenterAnchor: -60.000000
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 1024.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 400.000000
+            -   class: "UIScrollView"
+                name: "UIScrollView"
+                size: [32.000000, 32.000000]
+                autoUpdate: true
+                centerContent: true
+                components:
+                    UIOpacityComponent: {}
+                    ClipContent:
+                        top: false
+                        bottom: false
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                        vCenterAnchor: 0.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIScrollViewContainer"
+                    name: "scrollContainerControl"
+                    scrollDirection: "kHorizontal"
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UILayoutEventComponent:
+                            positionChangedEvent: "CHANGE_SCROLL_POSITION"
+                            positionChangedEventData: "_position.X"
+                    children:
+                    -   class: "UIControl"
+                        name: "Rewards"
+                        input: false
+                        components:
+                            Anchor:
+                                topAnchorEnabled: true
+                                topAnchor: 24.000000
+                            LinearLayout:
+                                spacing: 16.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfChildrenSum"
+                                verticalPolicy: "PercentOfMaxChild"
+                            UIRepeatComponent:
+                                control: "~res:/UI/Screens3/Lobby/Common/Resource/RewardBig.yaml"
+                                dataContainer: "rewards"
+                                args:
+                                    "attachId": "str(_index)"
+                                    "isClickable": "true"
+                                    "reward": "_item"
+                                eventActions:
+                                - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_item, str(_index)"]
+        -   class: "UIControl"
+            name: "Spacer2"
+            input: false
+            components:
+                SizePolicy:
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 80.000000
+    -   class: "UIControl"
+        name: "ScreenBottom"
+        position: [0.000000, 982.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                bottomAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfMaxChild"
+        bindings:
+        - ["Anchor.bottomAnchor", "anchorDistance"]
+        children:
+        -   class: "UIControl"
+            name: "ShowRewardsButton"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 1.000000
+                Anchor: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   prototype: "Button/Button"
+                name: "ButtonPositive"
+                position: [-60.000000, 0.000000]
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    UIDataParamsComponent:
+                        args:
+                            "size": "eButtonSize.NORMAL"
+                            "type": "eButtonType.POSITIVE"
+                            "enabled": "true"
+                            "caption": "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/RewardsButton\"))"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "RatingSeasonCompletedOnShowRewards", ""]
+        -   class: "UIControl"
+            name: "OkButton"
+            size: [32.000000, 32.000000]
+            visible: false
+            input: false
+            components:
+                UIOpacityComponent:
+                    opacity: 0.000000
+                Anchor: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   prototype: "Button/Button"
+                name: "ButtonPositive"
+                position: [-60.000000, 0.000000]
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    UIDataParamsComponent:
+                        args:
+                            "size": "eButtonSize.NORMAL"
+                            "type": "eButtonType.POSITIVE"
+                            "enabled": "true"
+                            "caption": "capitalize(localize(\"ratingBattles/ratingSeasonCompleted/OkButton\"))"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "CLOSE_NOTIFICATION", ""]
+-   class: "UIControl"
+    name: "Background"
+    pivot: [0.500000, 0.500000]
+    input: false
+    components:
+        Background:
+            drawType: "DRAW_SCALE_TO_RECT"
+            sprite: "~res:/Gfx/Lobby/backgrounds/bg_rating"
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 1364.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 768.000000
+        ScalePolicy:
+            horizontalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+            verticalFormula: "max(parentSize.X / size.X, parentSize.Y / size.Y)"
+    children:
+    -   class: "UIControl"
+        name: "TopGradient"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+            UIGradientComponent:
+                startColor: [0.000000, 0.000000, 0.000000, 0.750000]
+                finishColor: [0.000000, 0.000000, 0.000000, 0.000000]
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+                verticalValue: 50.000000
+    -   class: "UIParticles"
+        name: "Sparks"
+        position: [16.000000, 624.000000]
+        size: [32.000000, 32.000000]
+        pivot: [0.500000, 0.500000]
+        angle: 90.000000
+        input: false
+        effectPath: "~res:/3d/FX/UI/Default_KeyArt/sparks4.sc2"
+        autoStart: true
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            IgnoreLayout: {}
+    -   class: "UIParticles"
+        name: "Sparks2"
+        position: [16.000000, 624.000000]
+        size: [32.000000, 32.000000]
+        pivot: [0.500000, 0.500000]
+        angle: 90.000000
+        input: false
+        effectPath: "~res:/3d/FX/UI/Default_KeyArt/sparks1.sc2"
+        autoStart: true
+        components:
+            Anchor:
+                vCenterAnchorEnabled: true
+            IgnoreLayout: {}
+-   class: "UIControl"
+    name: "RatingPositionIntValue"
+    input: false
+    classes: "bold t-headline white-wild-sand-text not-localize"
+    components:
+        UITextComponent:
+            multiline: "MULTILINE_DISABLED"
+        Anchor:
+            hCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 148.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 24.000000
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+    bindings:
+    - ["UITextComponent.text", "str1000Separated(seasonInfo.ratingPosition)"]
+-   class: "UIControl"
+    name: "RatingPositionIconValue"
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        LinearLayout:
+            dynamicPadding: true
+            spacing: -2.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "FixedSize"
+            verticalValue: 24.000000
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Font.style.yaml"
+    children:
+    -   class: "UIControl"
+        name: "LaurelLeft"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_ALIGNED"
+                spriteModification: ["FLIP_HORIZONTAL"]
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["classes", "ratingPositionColor + \"-bg\""]
+        - ["Background.sprite", "when ratingPositionRange == eRatingPositionRange.Top5Percent -> \"~res:/Gfx/Lobby/icons/icon_laurel-rb_s\", \"~res:/Gfx/Lobby/icons/icon_laurel-rb-top_s\""]
+    -   class: "UIControl"
+        name: "PositionValue"
+        input: false
+        components:
+            UITextComponent:
+                fitting: "FITTING_REDUCE"
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["classes", "\"t-content-h4 bold not-localize\" + \" \" + ratingPositionColor + \"-text\""]
+        - ["UITextComponent.text", "seasonInfo.ratingPosition"]
+    -   class: "UIControl"
+        name: "LaurelRight"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_ALIGNED"
+            Anchor:
+                rightAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["visible", "ratingPositionRange != eRatingPositionRange.Common and ratingPositionRange != eRatingPositionRange.Top10Percent"]
+        - ["classes", "ratingPositionColor + \"-bg\""]
+        - ["Background.sprite", "when ratingPositionRange == eRatingPositionRange.Top5Percent -> \"~res:/Gfx/Lobby/icons/icon_laurel-rb_s\", \"~res:/Gfx/Lobby/icons/icon_laurel-rb-top_s\""]

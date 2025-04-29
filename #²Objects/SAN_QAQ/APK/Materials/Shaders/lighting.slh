@@ -1,0 +1,17 @@
+inline float getBlinnPhongSpecular(float NdotH, float glossiness)
+{
+	float glossPower = exp2(glossiness * 12.2877123795495);
+	float specularNorm = glossPower * 0.125 + 0.25;
+
+	return pow(NdotH, glossPower) * specularNorm;
+}
+
+inline float3 getBlinnPhongPointLight(float lightRadius, float4 colorFalloff, float3 dirToLight, float3 normal)
+{
+	float minColor = min(min(colorFalloff.x, colorFalloff.y), colorFalloff.z);
+	float disToLight = length(dirToLight) + 0.0001;
+	float attenuation = _PI_60 * (1.0 / pow(disToLight, colorFalloff.w));
+	float angleCosine = saturate(dot(normal, dirToLight) * (1.0 / disToLight) + step(minColor, -0.001) * 2.0);
+
+	return colorFalloff.xyz * ((-attenuation * smoothstep(lightRadius * 0.95, lightRadius, disToLight) + attenuation) * angleCosine);
+}

@@ -1,0 +1,6 @@
+Material:
+    Shader: ~res:/Materials.custom/shaders/shadow-gauss
+    RenderState:
+        blend: false
+    Passes:
+        2d:

@@ -1,0 +1,51 @@
+Header:
+    version: 127
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Blur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "BlurAndFade"
+    size: [200.000000, 100.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIInputEventComponent:
+            onTouchUpInside: "CLOSE_OVERLAY"
+    children:
+    -   prototype: "Blur/Blur"
+        name: "Blur"
+        components:
+            Background:
+                drawType: "DRAW_SCALE_TO_RECT"
+            UIOpacityComponent: {}
+            UIPostProcessTextureComponent0:
+                scale: 0.250000
+                needDepth: true
+                renderRequestingType: "ON_SIZE_CHANGED"
+            UIPostProcessTextureComponent1:
+                scale: 0.250000
+                renderRequestingType: "ON_SIZE_CHANGED"
+            UIPostProcessTextureComponent2:
+                scale: 0.250000
+                renderRequestingType: "ON_SIZE_CHANGED"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+    -   class: "UIControl"
+        name: "Fade"
+        input: false
+        classes: "black-bg"
+        components:
+            Background: {}
+            UIOpacityComponent:
+                opacity: 0.600000
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"

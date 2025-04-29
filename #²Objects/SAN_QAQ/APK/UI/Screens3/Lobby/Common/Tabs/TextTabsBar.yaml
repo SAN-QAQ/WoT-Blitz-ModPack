@@ -1,0 +1,188 @@
+Header:
+    version: 153
+Prototypes:
+-   class: "UIControl"
+    name: "TextTabsBar"
+    size: [800.000000, 64.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Common/Tabs/TextTabsBar.animation"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 64.000000
+        UIDataParamsComponent:
+            params:
+            - ["string", "badgeAttachId", "\"\"", "\"\""]
+            - ["bool", "zeroCounterVisible", "false", "false"]
+            - ["int", "activeTab", "0", "1"]
+            - ["vector<TabTextInfo>", "info", "null", "[ { \"isLocked\" = true; }; { \"counter\" = 5; \"isLocked\" = true; }; { \"isLocked\" = true; }; ]"]
+            - ["string", "attachID", "\"TAB_ATTACH_ID\"", "\"TAB_ATTACH_ID\""]
+            - ["bool", "animatedLabel", "false", "true"]
+            - ["int", "labelTab", "0", "1"]
+            - ["control", "labelControl", "null", "TestLabel"]
+            events:
+            - "ON_SELECT_TAB"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "tabsCount", "info.Size()"]
+            - ["int", "currentLabelTab", "labelTab"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/Tabs/TextTabsBar.actions"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "labelTab"
+            eventName: "TabLabelChanged"
+            eventData: "labelTab"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "activeTab"
+            eventName: "SelectChanged"
+            eventData: "_lastValue"
+        UIEventOnDataComponent2:
+            watchedDataExpression: "screenWidth"
+            eventName: "MoveSelectInPlace"
+        UIEventOnDataComponent3:
+            watchedDataExpression: "screenHeight"
+            eventName: "MoveSelectInPlace"
+    children:
+    -   class: "UIControl"
+        name: "Bg"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "8"
+            UIOpacityComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+    -   class: "UIScrollView"
+        name: "TabsScrollView"
+        input: false
+        autoUpdate: true
+        centerContent: true
+        components:
+            ClipContent:
+                enabled: true
+                top: false
+                bottom: false
+            Anchor:
+                bottomAnchorEnabled: true
+                bottomAnchor: -8.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "Formula"
+                verticalFormula: "maxChild + 16"
+        children:
+        -   class: "UIScrollViewContainer"
+            name: "scrollContainerControl"
+            components:
+                LinearLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+                UIAttachLayoutMasterComponent: {}
+                UILayoutEventComponent:
+                    positionChangedEvent: "MoveSelectInPlace"
+                    sizeChangedEvent: "MoveSelectInPlace"
+                UISwitchBarComponent:
+                    onSelectElement: "ON_SELECT_TAB"
+                    onSelectElementData: "when info[_selectedElement].isLocked -> activeTab, _selectedElement"
+                    selectionEventType: "TOUCH_UP"
+                    moveSelectionMode: "PreviousNext"
+                UIRepeatComponent:
+                    control: "~res:/UI/Screens3/Lobby/Common/Tabs/TextTab.yaml"
+                    dataContainer: "info"
+                    args:
+                        "badgeAttachId": "badgeAttachId + str(_index)"
+                        "zeroCounterVisible": "zeroCounterVisible"
+                        "isSelected": "_index == activeTab"
+                        "tabID": "_index"
+                        "tabInfo": "_item"
+                        "labelControl": "labelControl"
+                        "isLastTab": "tabsCount == (_index + 1)"
+                    elementNameExpression: "when empty(_item.autotestKey) -> \"tab\" + str(_index), _item.autotestKey"
+            bindings:
+            - ["UIAttachLayoutMasterComponent.attachId", "attachID"]
+            - ["UISwitchBarComponent.selectedElement", "activeTab"]
+    -   class: "UIControl"
+        name: "Selection"
+        input: false
+        classes: "orange-orange-peel-bg"
+        components:
+            Background: {}
+            UIOpacityComponent: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                verticalPolicy: "FixedSize"
+                verticalValue: 4.000000
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UIOpacityComponent.opacity", "when info[activeTab].isLocked -> 0.500000, 1"]
+Slots:
+-   class: "UIControl"
+    name: "TestLabel"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 60.000000
+        UIChildComponent0: {}
+    children:
+    -   class: "UIControl"
+        name: "GradientBg"
+        input: false
+        components:
+            Background:
+                drawType: "DRAW_FILL"
+            UIOpacityComponent:
+                opacity: 0.450000
+            UIGradientComponent:
+                startColor: [0.933333, 0.501961, 0.090196, 1.000000]
+                finishColor: [0.929412, 0.317647, 0.105882, 0.000000]
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "Name"
+        pivot: [0.500000, 0.500000]
+        selected: false
+        input: false
+        classes: "t-caps regular yellow-chalky-text"
+        components:
+            UIOpacityComponent:
+                ignoreParentOpacity: true
+            UITextComponent:
+                text: "Label"
+            Anchor:
+                hCenterAnchorEnabled: true
+                topAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            UIShadowHoleComponent: {}
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"

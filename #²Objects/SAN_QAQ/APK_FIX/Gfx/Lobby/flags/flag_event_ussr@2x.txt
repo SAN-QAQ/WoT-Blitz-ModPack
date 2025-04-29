@@ -1,0 +1,5 @@
+1
+Flag_Event@2x.packed.webp
+360 648
+1
+1024 3072 360 648 0 0 0 frame0

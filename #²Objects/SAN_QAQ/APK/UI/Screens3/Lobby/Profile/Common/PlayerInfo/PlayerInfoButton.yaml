@@ -1,0 +1,227 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "PlayerInfo"
+    size: [1200.000000, 192.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalMin: 800.000000
+            verticalPolicy: "PercentOfFirstChild"
+        UIDataParamsComponent:
+            params:
+            - ["eReportAvailability", "reportAvailabilityStatus", "eReportAvailability.Unavailable", "eReportAvailability.Unavailable"]
+            - ["bool", "showChangeAvatarButton", "false", "true"]
+            - ["bool", "showChangeNameButton", "false", "true"]
+            - ["bool", "showSendMessageButton", "false", "false"]
+            - ["bool", "showAddFriendButton", "false", "false"]
+            - ["bool", "showRemoveFriendButton", "false", "false"]
+            - ["bool", "showShowProfileButton", "false", "false"]
+            - ["bool", "showReportPlayerButton", "false", "false"]
+            - ["TutorialDataModel", "tutorialData", "null", "{ }"]
+            events:
+            - "CHANGE_AVATAR"
+            - "CHANGE_NAME"
+            - "SEND_MESSAGE"
+            - "ADD_FRIEND"
+            - "REMOVE_FRIEND"
+            - "OPEN_PROFILE"
+            - "SHOW_AVATAR_INFO"
+            - "OnClickReportsButton"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "isSelfProfile", "playerProfileType == ePlayerProfileType.SELF"]
+            - ["bool", "isFriendProfile", "playerProfileType == ePlayerProfileType.FRIEND"]
+            - ["string", "strChangeAvatar", "localize(\"profile/Button/ChangeAvatar\")"]
+            - ["string", "strChangeName", "localize(\"profile/Button/ChangeNickname\")"]
+            - ["string", "strSendMessage", "localize(\"profile/Button/Message\")"]
+            - ["string", "strAddFriend", "localize(\"profile/Button/AddToFriends\")"]
+            - ["string", "strRemoveFriend", "localize(\"profile/Button/RemoveFromFriends\")"]
+            - ["string", "strShowProfile", "localize(\"profile/Button/GoToProfile\")"]
+            - ["string", "strReportPlayer", "localize(\"Lobby/ReportPlayer/Title\")"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Profile/Common/PlayerInfo/PlayerInfo.actions"
+    children:
+    -   class: "UIControl"
+        name: "PlayerInfo"
+        size: [480.000000, 108.000000]
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "ActionButtons"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout:
+                    spacing: 8.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   prototype: "Button/Button"
+                name: "ChangeAvatar"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 197.000000
+                    UIDataParamsComponent:
+                        args:
+                            "locked": "false"
+                            "caption": "strChangeAvatar"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "showChangeAvatarButton"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "CHANGE_AVATAR", ""]
+                bindings:
+                - ["visible", "enabled"]
+            -   prototype: "Button/Button"
+                name: "ChangeName"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 197.000000
+                    UIDataParamsComponent:
+                        args:
+                            "tutorialData": "tutorialData"
+                            "locked": "false"
+                            "caption": "strChangeName"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "showChangeNameButton"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "CHANGE_NAME", ""]
+                    UILayerComponent: {}
+                bindings:
+                - ["visible", "enabled"]
+                - ["UILayerComponent.layer", "when tutorialData.currentHighlightControl == eTutorialHighlights.ChangeProfileNameButton -> 1, 0"]
+            -   prototype: "Button/Button"
+                name: "SendMessage"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 197.000000
+                    UIDataParamsComponent:
+                        args:
+                            "iconPath": "\"~res:/Gfx/Lobby/icons/icon_chat_s\""
+                            "locked": "false"
+                            "caption": "strSendMessage"
+                            "type": "eButtonType.POSITIVE"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "showSendMessageButton"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "SEND_MESSAGE", ""]
+                bindings:
+                - ["visible", "enabled"]
+            -   prototype: "Button/Button"
+                name: "AddFriend"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 197.000000
+                    UIDataParamsComponent:
+                        args:
+                            "iconPath": "\"~res:/Gfx/Lobby/icons/icon_person_add\""
+                            "locked": "false"
+                            "caption": "strAddFriend"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "showAddFriendButton"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ADD_FRIEND", ""]
+                bindings:
+                - ["visible", "enabled"]
+            -   prototype: "Button/Button"
+                name: "RemoveFriend"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 197.000000
+                    UIDataParamsComponent:
+                        args:
+                            "iconPath": "\"~res:/Gfx/Lobby/icons/icon_person_delete\""
+                            "locked": "false"
+                            "caption": "strRemoveFriend"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "showRemoveFriendButton"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "REMOVE_FRIEND", ""]
+                bindings:
+                - ["visible", "enabled"]
+            -   prototype: "Button/Button"
+                name: "ShowProfile"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 197.000000
+                    UIDataParamsComponent:
+                        args:
+                            "locked": "false"
+                            "caption": "strShowProfile"
+                            "type": "eButtonType.POSITIVE"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "enabled": "showShowProfileButton"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "OPEN_PROFILE", ""]
+                bindings:
+                - ["visible", "enabled"]
+            -   class: "UIControl"
+                name: "ReportIcon"
+                input: false
+                components:
+                    UIOpacityComponent: {}
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 48.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 48.000000
+                    UIAttachLayoutMasterComponent:
+                        attachId: "reportsIcon"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "sound": "eButtonSound.OPEN"
+                            "image": "\"~res:/Gfx/Lobby/icons/icon_attention_s\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "OnClickReportsButton", ""]
+                bindings:
+                - ["visible", "reportAvailabilityStatus != eReportAvailability.Unavailable"]
+                - ["UIOpacityComponent.opacity", "when reportAvailabilityStatus == eReportAvailability.Available -> 1, 0.500000"]
+            -   prototype: "Button/Button"
+                name: "ReportPlayer"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 197.000000
+                    UIDataParamsComponent:
+                        args:
+                            "caption": "strReportPlayer"
+                            "enabled": "showChangeAvatarButton"
+                            "locked": "false"
+                            "size": "eButtonSize.NORMAL"
+                            "sound": "eButtonSound.OPEN"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "REPORT_PLAYER", ""]
+                bindings:
+                - ["visible", "enabled"]

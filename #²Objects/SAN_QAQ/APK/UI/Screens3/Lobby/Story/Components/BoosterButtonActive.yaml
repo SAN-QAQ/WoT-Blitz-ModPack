@@ -1,0 +1,195 @@
+Header:
+    version: 157
+Prototypes:
+-   class: "UIControl"
+    name: "BoosterButtonActive"
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Story/Components/BoosterButtonActiveOnInit.animation"
+        SizePolicy:
+            horizontalPolicy: "PercentOfFirstChild"
+            verticalPolicy: "PercentOfFirstChild"
+        UIDataParamsComponent:
+            params:
+            - ["StoryStepViewModel", "stepView", "null", "{ }"]
+            - ["ResourceDetailed", "proxyIcon", "null", "{ \"type\" = ResourceType.stuff; }"]
+            - ["string", "image", "\"\"", "\"~res:/Gfx/Lobby/events/2021-halloween/event-2021-halloween_booster_1\""]
+            - ["bool", "priceInGold", "false", "false"]
+            - ["bool", "isTimeOver", "false", "false"]
+            events:
+            - "QUEST_BOOSTER_STEP_FINISHED"
+            - "SELECT_STEP(int id)"
+            - "SHOW_STEP_INFO(int id)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "saturation", "when isTimeOver -> 0.200000, 1.000000"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "isVictoryStep", "stepView.questProxy.name == \"prx_halloween2021_boost_win_quest\""]
+            - ["bool", "isMasterStep", "stepView.questProxy.name == \"prx_halloween2021_boost_master_quest\""]
+            - ["bool", "hasAttempts", "stepView.questProxy.quantity > 0"]
+            - ["ResourceDetailed", "price", "when not stepView.step.price.Empty() -> stepView.step.price[0], null"]
+            - ["ResourceDetailed", "goldPrice", "stepView.step.net.buyout"]
+            - ["bool", "isFinished", "stepView.step.isFinished"]
+            - ["bool", "isSelected", "stepView.isSelected"]
+            - ["bool", "isQuestValid", "not empty(stepView.questProxy.name)"]
+            - ["bool", "isQuestActive", "isQuestValid and hasAttempts"]
+            - ["bool", "showFx", "not stepView.step.isFinished and stepView.step.net.price.Empty() and not isTimeOver"]
+            - ["string", "description", "when isVictoryStep -> (when isTimeOver -> \"\", not isFinished -> \"HW21/BoosterButton/Active/Description/Victory\", not hasAttempts -> \"HW21/BoosterButton/Active/Description/Victory/NoAttemptsLeft\", \"HW21/BoosterButton/Active/Description/Victory/HasAttempts\"), isMasterStep -> (when isTimeOver -> \"\", not isFinished -> \"HW21/BoosterButton/Active/Description/Master\", not hasAttempts -> \"HW21/BoosterButton/Active/Description/Master/NoAttemptsLeft\", \"HW21/BoosterButton/Active/Description/Master/HasAttempts\"), \"\""]
+            - ["string", "remainingLabel", "when isVictoryStep -> \"HW21/BoosterButton/Active/Description/Victory/LeftLabel\", isMasterStep -> \"HW21/BoosterButton/Active/Description/Master/LeftLabel\", \"\""]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Story/Components/BoosterButtonActive.actions"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "isFinished"
+            ifExpression: "isFinished"
+            eventName: "QUEST_BOOSTER_STEP_FINISHED"
+        UIEventOnDataComponent1:
+            watchedDataExpression: "isTimeOver"
+            ifExpression: "isTimeOver"
+            eventName: "TIME_OVER"
+            eventData: "0.250000"
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Story/Components/BoosterButton.yaml"
+                args:
+                    "reward": "ImageWrapper"
+                    "description": "description"
+                    "label": "when isTimeOver -> TimeOverLabel, not isFinished -> Price, isQuestActive -> RemainingLabel, null"
+                    "proxyIcon": "proxyIcon"
+                    "bgColor": "when isFinished -> \"green-green-bg\", \"\""
+                    "hasInput": "not isFinished and not isTimeOver"
+                    "isSelected": "when isTimeOver -> false, not isFinished -> isSelected, false"
+                    "showIndicator": "isFinished and isQuestActive and not isTimeOver"
+                eventActions:
+                - ["PUSH", "PUSH", "_event.scale, _event.opacity, _event.time"]
+                - ["PULL", "PULL", "_event.time"]
+                - ["HOVER", "HOVER", "_event.brightness, _event.time"]
+                - ["CANCEL_HOVER", "CANCEL_HOVER", "_event.time"]
+                - ["SELECT", "SELECT", "_event.time"]
+                - ["CANCEL_SELECT", "CANCEL_SELECT", "_event.time"]
+                - ["ON_TOUCH", "ON_TOUCH", "stepView.step.id"]
+Slots:
+-   class: "UIControl"
+    name: "ImageWrapper"
+    pivot: [0.500000, 0.500000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfLastChild"
+            verticalPolicy: "PercentOfLastChild"
+        UIAttachLayoutMasterComponent: {}
+    bindings:
+    - ["UIAttachLayoutMasterComponent.attachId", "\"REWARD_INFO_POPUP_\" + str(stepView.step.id)"]
+    children:
+    -   class: "UIParticles"
+        name: "Fx"
+        scale: [2.800000, 2.800000]
+        pivot: [0.500000, 0.500000]
+        input: false
+        effectPath: "~res:/3d/FX/UI/BattlePass/GlowReward.sc2"
+        autoStart: true
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+        bindings:
+        - ["visible", "showFx"]
+    -   class: "UIControl"
+        name: "Image"
+        input: false
+        components:
+            UITextureComponent:
+                materialPath: "~res:/Materials.custom/2d.Textured.HSV.material"
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+        bindings:
+        - ["UITextureComponent.spritePath", "image"]
+        - ["UITextureComponent.materialParams", "\"saturation,\" + str(saturation)"]
+-   class: "UIControl"
+    name: "Price"
+    input: false
+    components:
+        Anchor:
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfFirstChild"
+            verticalPolicy: "PercentOfFirstChild"
+        UIChildComponent0:
+            condition: "not isNull(price) and not priceInGold"
+            prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/CurrencyAdapter.yaml"
+            args:
+                "currencySize": "eCurrencySize.BODY"
+                "resource": "price"
+        UIChildComponent1:
+            condition: "priceInGold"
+            prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/CurrencyAdapter.yaml"
+            args:
+                "currencySize": "eCurrencySize.BODY"
+                "resource": "goldPrice"
+-   class: "UIControl"
+    name: "RemainingLabel"
+    input: false
+    components:
+        Anchor:
+            vCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfFirstChild"
+            verticalPolicy: "PercentOfFirstChild"
+        UIChildComponent0:
+            condition: "hasAttempts"
+            prototypePath: "~res:/UI/Screens3/Common/RemainingLabel.yaml"
+            args:
+                "left": "stepView.questProxy.quantity"
+                "label": "remainingLabel"
+                "bgStyle": "\"grey-shark-70-bg\""
+                "hMaxSize": "168"
+-   class: "UIControl"
+    name: "TimeOverLabel"
+    input: false
+    components:
+        Anchor:
+            vCenterAnchorEnabled: true
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "LockIcon"
+        input: false
+        components:
+            Background:
+                sprite: "~res:/Gfx/Lobby/icons/icon_lock"
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+    -   class: "UIControl"
+        name: "Description"
+        input: false
+        classes: "t-body regular"
+        components:
+            UITextComponent:
+                text: "HW21/BoosterButton/Active/Locked"
+                fitting: "FITTING_POINTS"
+            Anchor:
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                horizontalMax: 144.000000
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"

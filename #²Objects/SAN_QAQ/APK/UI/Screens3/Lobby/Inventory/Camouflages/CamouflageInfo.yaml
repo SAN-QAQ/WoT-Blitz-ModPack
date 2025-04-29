@@ -1,0 +1,111 @@
+Header:
+    version: 151
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/RichText.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Info"
+    size: [500.000000, 144.000000]
+    input: false
+    components:
+        Anchor:
+            rightAnchorEnabled: true
+        LinearLayout:
+            padding: "16"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            horizontalValue: 95.000000
+            horizontalMax: 640.000000
+            verticalPolicy: "PercentOfLastChild"
+        UIDataParamsComponent:
+            params:
+            - ["eCamouflageKind", "slot", "eCamouflageKind.WINTER", "eCamouflageKind.WINTER"]
+            - ["eCamoInShopState", "state", "eCamoInShopState.INSTALL", "eCamoInShopState.UNLOCK_CLAN_LEVEL"]
+            - ["CamouflageLock", "camouflageLock", "null", "{ \"clanLevel\" = 3; }"]
+            - ["string", "description", "\"\"", "\"Bla bla bla\""]
+            - ["bool", "visible", "true", "true"]
+            - ["string", "name", "\"\"", "\"Camo\""]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["string", "formattedTags", "when state == eCamoInShopState.UNLOCK_CLAN and not (camouflageLock.clanTags.Size() == 1) -> FormatClanTags(camouflageLock.clanTags), \"\""]
+            - ["string", "lockDescription", "when state == eCamoInShopState.UNLOCK_BUNDLE and slot == eCamouflageKind.CUSTOM_SET -> \"#customSets:Shop/GetBundle\", state == eCamoInShopState.UNLOCK_BUNDLE and not (slot == eCamouflageKind.CUSTOM_SET) -> \"#camouflages:Shop/GetBundle\", state == eCamoInShopState.UNLOCK_PREMIUM and slot == eCamouflageKind.CUSTOM_SET -> \"#customSets:Shop/GetPremium\", state == eCamoInShopState.UNLOCK_PREMIUM and not (slot == eCamouflageKind.CUSTOM_SET) -> \"#camouflages:Shop/GetPremium\", state == eCamoInShopState.UNLOCK_QUEST and slot == eCamouflageKind.CUSTOM_SET -> \"#customSets:Shop/GetEvent\", state == eCamoInShopState.UNLOCK_QUEST and not (slot == eCamouflageKind.CUSTOM_SET) -> \"#camouflages:Shop/GetEvent\", state == eCamoInShopState.UNLOCK_STORY and slot == eCamouflageKind.CUSTOM_SET -> \"#customSets:Shop/GoToEvent\", state == eCamoInShopState.UNLOCK_STORY and not (slot == eCamouflageKind.CUSTOM_SET) -> \"#camouflages:Shop/GoToEvent\", state == eCamoInShopState.UNLOCK_CLAN_LEVEL and slot == eCamouflageKind.CUSTOM_SET -> localize(\"#customSets:Shop/GetClanSupply\", { \"level\" = camouflageLock.clanLevel; }), state == eCamoInShopState.UNLOCK_CLAN_LEVEL and not (slot == eCamouflageKind.CUSTOM_SET) -> localize(\"#camouflages:Shop/GetClanSupply\", { \"level\" = roman(camouflageLock.clanLevel); }), state == eCamoInShopState.UNLOCK_CLAN and slot == eCamouflageKind.CUSTOM_SET and camouflageLock.clanTags.Size() == 1 -> \"#customSets:Shop/GoToClan\", state == eCamoInShopState.UNLOCK_CLAN and not (slot == eCamouflageKind.CUSTOM_SET) and camouflageLock.clanTags.Size() == 1 -> \"#camouflages:Shop/GoToClan\", state == eCamoInShopState.UNLOCK_CLAN and not empty(formattedTags) and slot == eCamouflageKind.CUSTOM_SET -> localize(\"#customSets:Shop/GoToOneOfClans\", { \"listClanTag\" = formattedTags; }), state == eCamoInShopState.UNLOCK_CLAN and not empty(formattedTags) and not (slot == eCamouflageKind.CUSTOM_SET) -> localize(\"#camouflages:Shop/GoToOneOfClans\", { \"listClanTag\" = formattedTags; }), \"\""]
+    bindings:
+    - ["visible", "visible"]
+    children:
+    -   class: "UIControl"
+        name: "Background"
+        input: false
+        components:
+            Background: {}
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   prototype: "BlurModified/BlurModified"
+            name: "Blur"
+            components:
+                UIDataParamsComponent:
+                    args:
+                        "bgStyle": "\"black-50-bg\""
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+                padding: "16"
+                spacing: 4.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 300.000000
+                verticalPolicy: "PercentOfChildrenSum"
+        children:
+        -   class: "UIControl"
+            name: "Title"
+            input: false
+            classes: "t-subtitle bold color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    align: ["LEFT", "VCENTER"]
+                    useRtlAlign: "USE_BY_SYSTEM"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(name)"]
+        -   prototype: "RichText/RichText"
+            name: "Description"
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                UIDataParamsComponent:
+                    args:
+                        "baseFontSize": "\"t-body\""
+                        "baseFontStyle": "\"regular\""
+                        "baseFontColor": "\"white-wild-sand-50-text\""
+                        "key": "localize(description)"
+                        "resource1Model": "null"
+                        "resource2Model": "null"
+                        "resource3Model": "null"
+                        "resource4Model": "null"
+        -   prototype: "RichText/RichText"
+            name: "LockInfo"
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                UIDataParamsComponent:
+                    args:
+                        "baseFontSize": "\"t-body\""
+                        "baseFontStyle": "\"regular\""
+                        "baseFontColor": "\"white-wild-sand-50-text\""
+                        "key": "localize(lockDescription)"
+                        "linkKey": "\"\""
+                        "resource1Model": "null"
+                        "resource2Model": "null"
+                        "resource3Model": "null"
+                        "resource4Model": "null"
+                        "customKeyProperty": "\"\""
