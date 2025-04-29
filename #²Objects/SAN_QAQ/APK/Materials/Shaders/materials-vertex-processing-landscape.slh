@@ -1,0 +1,34 @@
+#if LANDSCAPE_USE_INSTANCING
+	float lodOffset = dot(input.data1, input.data4);
+	float edgeShiftAmount = exp2(lodOffset);
+	float2 absolutePos = input.data0.zw * fmod(input.data2.x, edgeShiftAmount) + input.data0.xy;
+	float2 relativePos = absolutePos * input.data3.z + input.data3.xy;
+
+	#if LANDSCAPE_LOD_MORPHING
+		float2 zeroLod = step(const1List2, relativePos);
+		float lodAdjust = 1.0 - min(zeroLod.x + zeroLod.y, 1.0);
+		float samplePixelOffset = input.data6.z * edgeShiftAmount * lodAdjust;
+
+		float4 heightmapSample = tex2Dlod(heightmap, relativePos + float2(samplePixelOffset, samplePixelOffset), (input.data6.x + lodOffset) * lodAdjust);
+
+		float height = dot(lerp(heightmapSample.zw, heightmapSample.xy, input.data2.y * input.data6.y + dot(input.data1, input.data5)), float2(0.0038910506, 0.99610895));
+	#else
+		float4 heightmapSample = tex2Dlod(heightmap, (1.0 / float2(heightmapTextureSize, heightmapTextureSize)) * 2.0 + relativePos, 0.0);
+
+		#if HEIGHTMAP_FLOAT_TEXTURE
+			float height = heightmapSample.r;
+		#else
+			float height = dot(heightmapSample, heightList);
+		#endif
+	#endif
+
+	float3 localPos = float3(relativePos - const05List2, height) * boundingBoxSize;
+#else
+	float3 localPos = input.localPos.xyz;
+#endif
+
+float3 camPos = cameraPosition;
+float3 worldPos = mul3Fast1(localPos, worldMatrix);
+float3 eyePos = mul3Fast1(localPos, worldViewMatrix);
+output.localPos = mul4Fast1(localPos, worldViewProjMatrix);
+output.projPos = output.localPos;

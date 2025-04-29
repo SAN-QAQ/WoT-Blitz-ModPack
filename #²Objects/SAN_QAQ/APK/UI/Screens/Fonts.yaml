@@ -1,0 +1,623 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens/FontsColors.yaml"
+StyleSheets:
+-   selectors:
+    - ".header0"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 30.000000
+        text-lineHeight: 38.000000
+        text-baseLine: 8.000000
+-   selectors:
+    - ".header1"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 25.000000
+        text-lineHeight: 31.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".header2"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 29.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".header3"
+    - ".header3.zh-Hans.not-localize"
+    - ".header3.zh-Hant.not-localize"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 21.000000
+        text-lineHeight: 26.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header4"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 19.000000
+        text-lineHeight: 24.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header5"
+    - ".header5.hi.not-localize"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 17.000000
+        text-lineHeight: 21.000000
+        text-baseLine: 4.000000
+-   selectors:
+    - ".text0"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        text-fontSize: 25.000000
+        text-lineHeight: 30.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".text1"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        text-fontSize: 21.000000
+        text-lineHeight: 26.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text2"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        text-fontSize: 19.000000
+        text-lineHeight: 23.000000
+        text-baseLine: 4.000000
+-   selectors:
+    - ".text2-small"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        text-fontSize: 17.000000
+        text-lineHeight: 21.000000
+        text-baseLine: 4.000000
+-   selectors:
+    - ".text3-small"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        text-fontSize: 14.000000
+        text-lineHeight: 17.000000
+        text-baseLine: 3.000000
+-   selectors:
+    - ".text-mono"
+    properties:
+        text-fontPath: "~res:/Fonts/arialmb.ttf"
+        text-fontSize: 17.000000
+        text-lineHeight: 21.000000
+        text-baseLine: 4.000000
+-   selectors:
+    - ".header0.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        text-baseLine: 10.000000
+-   selectors:
+    - ".header0.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        text-lineHeight: 39.000000
+-   selectors:
+    - ".header0.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-lineHeight: 36.000000
+-   selectors:
+    - ".header0.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-lineHeight: 39.000000
+        text-baseLine: 9.000000
+-   selectors:
+    - ".header0.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-lineHeight: 36.000000
+        text-baseLine: 7.000000
+-   selectors:
+    - ".header0.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 39.000000
+-   selectors:
+    - ".header0.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+-   selectors:
+    - ".header0.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+-   selectors:
+    - ".header1.pl"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 29.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".header1.fr"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 29.000000
+-   selectors:
+    - ".header1.it"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 29.000000
+-   selectors:
+    - ".header1.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        text-lineHeight: 32.000000
+        text-baseLine: 8.000000
+-   selectors:
+    - ".header1.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        text-lineHeight: 33.000000
+-   selectors:
+    - ".header1.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-lineHeight: 30.000000
+-   selectors:
+    - ".header1.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 27.000000
+        text-lineHeight: 35.000000
+        text-baseLine: 8.000000
+-   selectors:
+    - ".header1.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 28.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header1.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 33.000000
+        text-baseLine: 7.000000
+-   selectors:
+    - ".header1.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-lineHeight: 32.000000
+        text-baseLine: 7.000000
+-   selectors:
+    - ".header1.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header2.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        text-baseLine: 8.000000
+-   selectors:
+    - ".header2.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        text-lineHeight: 30.000000
+-   selectors:
+    - ".header2.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-lineHeight: 27.000000
+-   selectors:
+    - ".header2.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 25.000000
+        text-lineHeight: 32.000000
+        text-baseLine: 8.000000
+-   selectors:
+    - ".header2.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 21.000000
+        text-lineHeight: 25.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header2.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 30.000000
+-   selectors:
+    - ".header2.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+-   selectors:
+    - ".header2.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header3.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        text-baseLine: 6.000000
+-   selectors:
+    - ".header3.it"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 20.000000
+        text-lineHeight: 25.000000
+-   selectors:
+    - ".header3.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        text-fontSize: 20.000000
+-   selectors:
+    - ".header3.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-lineHeight: 25.000000
+-   selectors:
+    - ".header3.pl"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 20.000000
+        text-lineHeight: 25.000000
+-   selectors:
+    - ".header3.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 30.000000
+        text-baseLine: 8.000000
+-   selectors:
+    - ".header3.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 19.000000
+        text-lineHeight: 23.000000
+        text-baseLine: 4.000000
+-   selectors:
+    - ".header3.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 27.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header3.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-lineHeight: 27.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header3.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+-   selectors:
+    - ".header4.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+        text-lineHeight: 28.000000
+        text-baseLine: 8.000000
+-   selectors:
+    - ".header4.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        text-lineHeight: 25.000000
+-   selectors:
+    - ".header4.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-lineHeight: 23.000000
+-   selectors:
+    - ".header4.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 22.000000
+        text-lineHeight: 29.000000
+        text-baseLine: 7.000000
+-   selectors:
+    - ".header4.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 17.000000
+        text-lineHeight: 21.000000
+-   selectors:
+    - ".header4.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 25.000000
+-   selectors:
+    - ".header4.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+-   selectors:
+    - ".header4.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+        text-baseLine: 4.500000
+-   selectors:
+    - ".header5.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+-   selectors:
+    - ".header5.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+        text-lineHeight: 22.000000
+-   selectors:
+    - ".header5.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-lineHeight: 20.000000
+-   selectors:
+    - ".header5.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 19.000000
+        text-lineHeight: 25.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".header5.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 15.000000
+        text-lineHeight: 18.000000
+        text-baseLine: 3.000000
+-   selectors:
+    - ".header5.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 22.000000
+-   selectors:
+    - ".header5.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-lineHeight: 22.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".header5.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+        text-baseLine: 3.000000
+-   selectors:
+    - ".text0.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        text-lineHeight: 32.000000
+        text-baseLine: 9.000000
+-   selectors:
+    - ".text0.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        text-lineHeight: 33.000000
+-   selectors:
+    - ".text0.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+-   selectors:
+    - ".text0.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        text-fontSize: 27.000000
+        text-lineHeight: 33.000000
+        text-baseLine: 8.000000
+-   selectors:
+    - ".text0.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 28.000000
+-   selectors:
+    - ".text0.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 33.000000
+        text-baseLine: 7.000000
+-   selectors:
+    - ".text0.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-lineHeight: 32.000000
+        text-baseLine: 7.000000
+-   selectors:
+    - ".text0.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-Regular.ttf"
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text1.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        text-fontSize: 21.000000
+        text-lineHeight: 26.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".text1.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        text-lineHeight: 27.000000
+-   selectors:
+    - ".text1.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-lineHeight: 25.000000
+-   selectors:
+    - ".text1.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        text-fontSize: 23.000000
+        text-lineHeight: 28.000000
+        text-baseLine: 7.000000
+-   selectors:
+    - ".text1.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        text-fontSize: 19.000000
+        text-lineHeight: 23.000000
+-   selectors:
+    - ".text1.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 27.000000
+-   selectors:
+    - ".text1.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-lineHeight: 27.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".text1.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-Regular.ttf"
+-   selectors:
+    - ".text2.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        text-lineHeight: 24.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".text2.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        text-lineHeight: 25.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text2.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text2.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        text-fontSize: 22.000000
+        text-lineHeight: 27.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".text2.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        text-fontSize: 17.000000
+        text-lineHeight: 21.000000
+-   selectors:
+    - ".text2.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 25.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text2.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-lineHeight: 24.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text2.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-Regular.ttf"
+        text-baseLine: 3.000000
+-   selectors:
+    - ".text2-small.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        text-fontSize: 16.000000
+        text-lineHeight: 20.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text2-small.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        text-fontSize: 16.000000
+-   selectors:
+    - ".text2-small.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+        text-fontSize: 16.000000
+        text-lineHeight: 19.000000
+-   selectors:
+    - ".text2-small.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        text-fontSize: 19.000000
+        text-lineHeight: 23.000000
+        text-baseLine: 6.000000
+-   selectors:
+    - ".text2-small.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        text-fontSize: 15.000000
+        text-lineHeight: 19.000000
+-   selectors:
+    - ".text2-small.de"
+    - ".text2-small.es"
+    - ".text2-small.fi"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondC.ttf"
+        text-fontSize: 16.000000
+        text-lineHeight: 20.000000
+        text-baseLine: 4.000000
+-   selectors:
+    - ".text2-small.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-fontSize: 16.000000
+-   selectors:
+    - ".text2-small.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-fontSize: 16.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text2-small.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-Regular.ttf"
+        text-baseLine: 3.000000
+-   selectors:
+    - ".text3-small.ar"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Regular.ttf"
+        text-lineHeight: 18.000000
+        text-baseLine: 5.000000
+-   selectors:
+    - ".text3-small.ja"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Md.otf"
+        text-lineHeight: 18.000000
+-   selectors:
+    - ".text3-small.ko"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+-   selectors:
+    - ".text3-small.th"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Regular.ttf"
+        text-fontSize: 16.000000
+        text-lineHeight: 19.000000
+        text-baseLine: 4.000000
+-   selectors:
+    - ".text3-small.vi"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui.ttf"
+        text-fontSize: 12.000000
+        text-lineHeight: 15.000000
+-   selectors:
+    - ".text3-small.zh-Hans"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-lineHeight: 18.000000
+        text-baseLine: 3.000000
+-   selectors:
+    - ".text3-small.zh-Hant"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-lineHeight: 18.000000
+        text-baseLine: 3.000000
+-   selectors:
+    - ".text3-small.hi"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-Regular.ttf"
+        text-baseLine: 2.000000

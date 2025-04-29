@@ -1,0 +1,608 @@
+Header:
+    version: 155
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "ShopProductInfoContent"
+    size: [1300.000000, 800.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["int", "width", "0", "900"]
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["bool", "withAnimation", "true", "true"]
+            - ["ShopProduct", "product", "null", "{ }"]
+            - ["StuffResourceWithDescription", "chest", "null", "{ }"]
+            - ["bool", "arabicLocalization", "false", "false"]
+            - ["bool", "showProductLabels", "true", "false"]
+            events:
+            - "ON_MAIN_REWARD_CLICKED"
+            - "ON_REWARD_CLICKED(ResourceDetailed resource, string attachId)"
+        UIDataLocalVarsComponent:
+            data:
+            - ["bool", "debugMode", "false"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["bool", "fullMoneyBox", "not isNull(product.piggyBank) and product.piggyBank.current.quantity >= product.piggyBank.max.quantity"]
+            - ["string", "contentText", "when not isNull(chest) -> \"storage/Items/Contents\", \"hangar/subheader/bundleContents\""]
+            - ["int", "contentWidth", "when screenWidth > 1232 -> 562, 374"]
+        UIChildComponent0:
+            childType: "kControl"
+            condition: "not (product.noArt and isNull(chest))"
+            control: "ProductContent"
+        UIChildComponent1:
+            childType: "kControl"
+            control: "SimpleContent"
+Slots:
+-   class: "UIControl"
+    name: "ProductContent"
+    size: [655.000000, 388.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+            topAnchorEnabled: true
+        LinearLayout: {}
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "PercentOfParent"
+    bindings:
+    - ["SizePolicy.horizontalValue", "width"]
+    children:
+    -   class: "UIControl"
+        name: "LeftContent"
+        input: false
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "ImageWrapper"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    condition: "not isNull(chest) and (isNull(product) or product.contentUrl.empty() or product.noArt)"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Chests/ChestImageWrapper.yaml"
+                    args:
+                        "withAnimation": "withAnimation"
+                        "imageUrl": "when not chest.stuff.iconUrl.empty() -> chest.stuff.iconUrl, \"\""
+                        "image": "chest.stuff.icon"
+        -   class: "UIControl"
+            name: "TopLabels"
+            input: false
+            components:
+                Anchor:
+                    topAnchorEnabled: true
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 1.000000
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfChildrenSum"
+            children:
+            -   class: "UIControl"
+                name: "Label"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "PercentOfFirstChild"
+                    UIChildComponent0:
+                        condition: "not isNull(product.label) and showProductLabels"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProductLabel.yaml"
+                        args:
+                            "color": "product.label.color"
+                            "labelText": "product.label.text"
+                            "reversedAnimation": "arabicLocalization"
+        -   class: "UIControl"
+            name: "BottomLabes"
+            size: [32.000000, 32.000000]
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                    spacing: 1.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "PercentOfChildrenSum"
+            children:
+            -   class: "UIControl"
+                name: "Timer"
+                size: [32.000000, 32.000000]
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        condition: "product.isPromo and (product.promoExpiresAt - session.serverTime) <= 604800L and showProductLabels"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Timer.yaml"
+                        args:
+                            "serverTime": "session.serverTime"
+                            "time": "product.promoExpiresAt"
+                            "timerSize": "eTimerSize.Medium"
+                            "bgVisible": "true"
+            -   class: "UIControl"
+                name: "XTime"
+                input: false
+                components:
+                    Background: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfFirstChild"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 32.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["visible", "product.xTimed"]
+                children:
+                -   class: "UIControl"
+                    name: "RemainingLabel"
+                    input: false
+                    components:
+                        Anchor:
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfFirstChild"
+                            verticalPolicy: "PercentOfFirstChild"
+                        UIChildComponent0:
+                            condition: "product.xTimed and showProductLabels"
+                            prototypePath: "~res:/UI/Screens3/Common/RemainingLabel.yaml"
+                            args:
+                                "left": "product.availableTimes"
+                                "bgStyle": "\"\""
+                                "textStyle": "\"t-subtitle regular white-wild-sand-text\""
+                                roundCorner: "\"3\""
+            -   class: "UIControl"
+                name: "MainReward"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIAttachLayoutMasterComponent:
+                        attachId: "chestMainReward"
+                    UIChildComponent0:
+                        childType: "kPrototype"
+                        condition: "not isNull(chest) and not isNull(chest.chestInfo.resourceProgress)"
+                        prototypePath: "~res:/UI/Screens3/Lobby/Chests/ChestMainReward.yaml"
+                        args:
+                            "progress": "chest.chestInfo.resourceProgress"
+                        eventActions:
+                        - ["ON_MAIN_REWARD_CLICKED", "ON_MAIN_REWARD_CLICKED", ""]
+        -   class: "UIControl"
+            name: "DebugInfoHolder"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfFirstChild"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    condition: "app.constants.developerUI and debugMode"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProductDebugInfo.yaml"
+                    args:
+                        "product": "product"
+                    eventActions:
+                    - ["BUY_PRODUCT", "DEV_BUY_PRODUCT", "product.id"]
+                    - ["GO_TO_PRODUCT", "GO_TO_PRODUCT", "product.id"]
+        -   class: "UIControl"
+            name: "PurchasePending"
+            input: false
+            components:
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "product.pendingPurchase"
+                    control: "PurchasePending"
+    -   class: "UIControl"
+        name: "RightContent"
+        input: false
+        components:
+            Anchor:
+                topAnchorEnabled: true
+            LinearLayout:
+                orientation: "TopDown"
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "DescriptionHolder"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "PercentOfFirstChild"
+                UIChildComponent0:
+                    condition: "not isNull(chest) and product.noArt"
+                    prototypePath: "~res:/UI/Screens3/Lobby/Chests/ChestInfoDescription.yaml"
+                    args:
+                        "stuff": "chest"
+                UIChildComponent1:
+                    childType: "kControl"
+                    control: "ProductDescription"
+                StyleSheet: {}
+            bindings:
+            - ["SizePolicy.horizontalValue", "contentWidth"]
+        -   class: "UIControl"
+            name: "BundleContent"
+            input: false
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    verticalPolicy: "PercentOfParent"
+                UIChildComponent0:
+                    childType: "kControl"
+                    condition: "not isNull(product.piggyBank)"
+                    control: "PiggyBankContent"
+                UIChildComponent1:
+                    childType: "kControl"
+                    control: "StuffContent"
+            bindings:
+            - ["SizePolicy.horizontalValue", "contentWidth"]
+-   class: "UIControl"
+    name: "StuffList"
+    size: [400.000000, 216.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+            bottomAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfChildrenSum"
+        FlowLayout:
+            hSpacing: 8.000000
+            vPadding: "4; 0"
+            vSpacing: 8.000000
+        UILayoutEventComponent:
+            sizeChangedEvent: "StuffSizeChanged"
+            sizeChangedEventData: "int(_size.Y)"
+        UIRepeatComponent:
+            control: "~res:/UI/Screens3/Lobby/Chests/ChestContentItem.yaml"
+            dataContainer: "product.content"
+            args:
+                "ownedItem": "not isNull(_item.vehicle) and PlayerHasTank(session.playerTanks.tanks, _item.vehicle.info.tankDescriptor)"
+                "attachId": "str(product.id) + \"_\" + str(_index)"
+                "resource": "_item"
+            eventActions:
+            - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_event, str(product.id) + \"_\" + str(_index)"]
+-   class: "UIControl"
+    name: "ChestList"
+    size: [400.000000, 552.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+            bottomAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfChildrenSum"
+        FlowLayout:
+            hSpacing: 8.000000
+            vPadding: "4; 0"
+            vSpacing: 8.000000
+        UILayoutEventComponent:
+            sizeChangedEvent: "StuffSizeChanged"
+            sizeChangedEventData: "int(_size.Y)"
+        UIRepeatComponent:
+            control: "~res:/UI/Screens3/Lobby/Chests/ChestContentItem.yaml"
+            dataContainer: "chest.chestInfo.dropList"
+            args:
+                "ownedItem": "not isNull(_item.resource) and not isNull(_item.resource.vehicle) and PlayerHasTank(session.playerTanks.tanks, _item.resource.vehicle.info.tankDescriptor)"
+                "attachId": "product.name + \"_\" + str(_index)"
+                "max": "_item.max"
+                "min": "_item.min"
+                "resource": "_item.resource"
+            eventActions:
+            - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_event, product.name + \"_\" + str(_index)"]
+-   class: "UIControl"
+    name: "StuffContent"
+    size: [368.000000, 305.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "Text"
+        input: false
+        components:
+            LinearLayout:
+                useRtl: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfMaxChild"
+        children:
+        -   prototype: "BlurModified/BlurModified"
+            name: "Blur"
+            components:
+                UIDataParamsComponent:
+                    args:
+                        "roundCorner": "\"8\""
+        -   class: "UIControl"
+            name: "contentText"
+            input: false
+            classes: "t-caps bold color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                    align: ["LEFT", "VCENTER"]
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "capitalize(localize(contentText))"]
+    -   class: "UIControl"
+        name: "Spacer"
+        size: [32.000000, 32.000000]
+        input: false
+        components:
+            SizePolicy:
+                verticalPolicy: "FixedSize"
+                verticalValue: 8.000000
+    -   class: "UIControl"
+        name: "VerticalScrollView"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet: {}
+        children:
+        -   class: "UIScrollView"
+            name: "ScrollArea"
+            refreshStylesOnInteract: false
+            autoUpdate: true
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIScrollViewContainer"
+                name: "scrollContainerControl"
+                refreshStylesOnInteract: false
+                scrollDirection: "kVertical"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                children:
+                -   prototype: "BlurModified/BlurModified"
+                    name: "Blur"
+                    components:
+                        UIDataParamsComponent:
+                            args:
+                                "roundCorner": "\"8\""
+                -   class: "UIControl"
+                    name: "StuffList"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    refreshStylesOnInteract: false
+                    components:
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UIChildComponent0:
+                            childType: "kControl"
+                            condition: "not isNull(chest)"
+                            control: "ChestList"
+                        UIChildComponent1:
+                            childType: "kControl"
+                            control: "StuffList"
+        -   prototype: "VerticalScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: -56.000000
+                ScrollBarDelegate:
+                    delegate: "../ScrollArea"
+-   class: "UIControl"
+    name: "PiggyBankContent"
+    size: [487.000000, 32.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "TopDown"
+            spacing: 8.000000
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfChildrenSum"
+    children:
+    -   class: "UIControl"
+        name: "ProgressValue"
+        input: false
+        classes: "t-content-h2 bold white-wild-sand-text"
+        components:
+            UITextComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Font.style.yaml"
+        bindings:
+        - ["UITextComponent.text", "when fullMoneyBox -> localize(\"piggy_bank/offer/complete\"), shortStr(product.piggyBank.current.quantity)"]
+    -   class: "UIControl"
+        name: "ProgressWrapper"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 24.000000
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Lobby/Hangar/Offers/PRMP/PiggyBankProgress.yaml"
+                args:
+                    "state": "product.piggyBank"
+    -   class: "UIControl"
+        name: "Description"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIChildComponent0:
+                childType: "kPrototype"
+                prototypePath: "~res:/UI/Screens3/Lobby/Hangar/Offers/PRMP/PiggyBankDescription.yaml"
+                args:
+                    "piggyBank": "product.piggyBank"
+-   class: "UIControl"
+    name: "PurchasePending"
+    size: [300.000000, 300.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIChildComponent0:
+            prototypePath: "~res:/UI/Screens3/Common/Loaders/LoaderCircle.yaml"
+    bindings:
+    - ["visible", "product.pendingPurchase"]
+    children:
+    -   class: "UIControl"
+        name: "Anchor"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Hint"
+            input: false
+            classes: "t-caption regular color=white-wild-sand-text"
+            components:
+                UITextComponent:
+                    multiline: "MULTILINE_ENABLED"
+                Anchor:
+                    leftAnchorEnabled: true
+                    leftAnchor: 16.000000
+                    rightAnchorEnabled: true
+                    rightAnchor: 16.000000
+                    topAnchorEnabled: true
+                    topAnchor: 16.000000
+                SizePolicy:
+                    verticalPolicy: "PercentOfContent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml"
+            bindings:
+            - ["UITextComponent.text", "localize(when product.salePrice.resources.Empty() -> \"shop/FreeBundle/PurchaseProgress\", \"shop/Error/AlreadyOwned\")"]
+-   class: "UIControl"
+    name: "SimpleContent"
+    size: [655.000000, 388.000000]
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+            topAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            verticalPolicy: "PercentOfParent"
+        UIChildComponent0:
+            prototypePath: "~res:/UI/Screens3/Lobby/Shop/ShopProduct/SimpleContent/SimpleContentInfo.yaml"
+            args:
+                "arabicLocalization": "arabicLocalization"
+                "session": "session"
+                "product": "product"
+            eventActions:
+            - ["ON_REWARD_CLICKED", "ON_REWARD_CLICKED", "_event.resource, _event.attachId"]
+    bindings:
+    - ["SizePolicy.horizontalValue", "width"]
+-   class: "UIControl"
+    name: "ProductDescription"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfMaxChild"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   class: "UIControl"
+        name: "VerticalScrollView"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfMaxChild"
+                verticalPolicy: "PercentOfFirstChild"
+            StyleSheet: {}
+        children:
+        -   class: "UIScrollView"
+            name: "ScrollArea"
+            refreshStylesOnInteract: false
+            autoUpdate: true
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfMaxChild"
+                    verticalPolicy: "Formula"
+                    verticalFormula: "min(maxChild, 150)"
+                UILayoutEventComponent:
+                    sizeChangedEvent: "DescriptionSizeChanged"
+                    sizeChangedEventData: "int(_size.Y)"
+            children:
+            -   class: "UIScrollViewContainer"
+                name: "scrollContainerControl"
+                refreshStylesOnInteract: false
+                scrollDirection: "kVertical"
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIControl"
+                    name: "Description"
+                    input: false
+                    refreshStylesOnInteract: false
+                    components:
+                        ClipContent: {}
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            verticalPolicy: "PercentOfMaxChild"
+                        UIChildComponent0:
+                            prototypePath: "~res:/UI/Screens3/Lobby/Shop/RichTextWrappers/ShopRichText.yaml"
+                            args:
+                                "defaultStyle": "\"t-body regular white-wild-sand-50-text\""
+                                "text": "product.description"
+                    bindings:
+                    - ["SizePolicy.horizontalValue", "contentWidth"]
+        -   prototype: "VerticalScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: -56.000000
+                    topAnchorEnabled: true
+                    topAnchor: 8.000000
+                    bottomAnchorEnabled: true
+                ScrollBarDelegate:
+                    delegate: "../ScrollArea"

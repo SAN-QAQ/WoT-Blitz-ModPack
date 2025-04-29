@@ -1,0 +1,52 @@
+#if TILED_DECAL_MASK
+	float fullMask = tex2D(decalmask, input.texCoord0.xy).a;
+	float4 tileColor = tex2D(decaltexture, input.texCoord0.zw) * decalTileColor;
+
+	#if HARD_SKINNING
+		tileColor = lerp(tileColor, tex2D(decalTexture1, input.texCoord0.zw) * decalTileColor1, saturate(input.index));
+		tileColor = lerp(tileColor, tex2D(decalTexture2, input.texCoord0.zw) * decalTileColor2, saturate(input.index - 1.0));
+		tileColor = lerp(tileColor, tex2D(decalTexture3, input.texCoord0.zw) * decalTileColor3, saturate(input.index - 2.0));
+	#endif
+
+	#if !TILED_DECAL_ANIM_MASK
+		fullMask *= tileColor.a;
+	#endif
+
+	#if TILED_DECAL_ANIMATED_EMISSION || TILED_DECAL_SPREADING
+		float3 emission = const0List3;
+	#endif
+
+	#if TILED_DECAL_SPREADING
+		float spreading = 1.0;
+
+		#if TILED_DECAL_NOISE_SPREADING
+			spreading *= getSpreadNoise(input.texCoord0.zw);
+		#endif
+
+		#if TILED_DECAL_SPATIAL_SPREADING
+			spreading *= getSpreadSpace(input.displacePos);
+		#endif
+
+		fullMask *= spreading;
+		emission += lerp(emission, spreadingBorderColor, -abs(spreading * 2.0 - 1.0) * fullMask + fullMask);
+	#endif
+
+	output.color.rgb *= lerp(outColor.rgb, tileColor.rgb, fullMask);
+
+	#if TILED_DECAL_ANIMATED_EMISSION
+		float a = dot(tileColor.rgb, rgbMixList) * input.aniCamo.z;
+		float selector = saturate(a - input.aniCamo.x) - saturate(a - input.aniCamo.y);
+
+		#if TILED_DECAL_ANIM_MASK
+			fullMask *= tileColor.a;
+		#endif
+
+		emission += tileColor.rgb * (fullMask * selector * input.aniCamo.w);
+	#endif
+
+	#if TILED_DECAL_ANIMATED_EMISSION || TILED_DECAL_SPREADING
+		output.color.rgb += emission * 1.5;
+	#endif
+#else
+	output.color.rgb *= outColor.rgb;
+#endif

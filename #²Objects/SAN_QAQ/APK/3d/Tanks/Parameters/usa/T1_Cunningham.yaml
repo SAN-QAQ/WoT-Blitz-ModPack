@@ -1,0 +1,65 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/usa-T1"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/usa-T1"
+    blitzModelPath: "Tanks/USA/T1_Cunningham.sc2"
+    collisionMesh: "CollisionMeshes/usa-T1_Cunningham.sc2"
+    smokeEffectPath: "FX/Exhausts/hullback.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/usa/tractor"
+    engineSoundNPC: "tanks/npc/engine/usa/tractor"
+    chassisSoundPC: "tanks/pc/treads/tractor"
+    chassisSoundNPC: "tanks/npc/treads/tractor"
+treadParameters:
+    forceManualWidth: false
+    manualWidth: 1.356164
+    forceManualSpace: false
+    manualSpace: 0.978200
+    texturePath: "~res:/3d/Tanks/Common/images/GB_01_tread.tex"
+chassis:
+    textureScale: -1.340000
+mechanics: [{name: "LTCamo"}]
+collision:
+    hull:
+        points: [-0.000001, -0.008967, -0.674289]
+        bbox:
+            min: [-0.856832, -1.514800, -0.341838]
+            max: [0.856773, 1.800636, 0.896911]
+        averageThickness:
+            turret_01: 11.567774
+            turret_02: 11.380130
+    chassis:
+        points: [0.000000, 0.000000, 0.000000]
+        bbox:
+            min: [-0.889612, -1.886785, 0.000019]
+            max: [0.889553, 1.886901, 0.955823]
+    turret_01:
+        points: [0.000015, 0.660388, -1.511624]
+        bbox:
+            min: [-0.535509, -0.535258, -0.390396]
+            max: [0.538804, 0.655630, 0.587003]
+    gun_01:
+        points: [-0.003427, 0.179306, -1.717403]
+        bbox:
+            min: [-0.220107, -0.331303, -0.182370]
+            max: [0.220166, 0.352684, 0.170485]
+    turret_02:
+        points: [-0.009266, 0.698489, -1.510916]
+        bbox:
+            min: [-0.594389, -0.540399, -0.390396]
+            max: [0.572189, 0.637883, 0.598598]
+    gun_03:
+        points: [0.004208, 0.160462, -1.720344]
+        bbox:
+            min: [-0.206513, -0.353218, -0.180389]
+            max: [0.206573, 0.330768, 0.216825]
+    gun_05:
+        points: [0.001419, 0.160462, -1.720023]
+        bbox:
+            min: [-0.206513, -0.364862, -0.180389]
+            max: [0.206573, 1.157128, 0.216825]
+    gun_06:
+        points: [0.003747, 0.160462, -1.718702]
+        bbox:
+            min: [-0.206513, -0.364862, -0.180389]
+            max: [0.206573, 1.745148, 0.216825]

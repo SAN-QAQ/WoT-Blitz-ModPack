@@ -1,0 +1,47 @@
+action ON_PRESSED_TAB(eMenuType menuType)
+{
+	if(menuType != eMenuType.Squad and menuType != eMenuType.Community)
+	{
+		PlaySound(sound="GUI/buttons/open");
+	}
+	if(menuType == eMenuType.News)
+	{
+		Event("NEWS_PRESSED");
+	}
+	if(menuType == eMenuType.TanksTree)
+	{
+		Event("SHOW_TANKS_TREE");
+	}
+	if(menuType == eMenuType.TaskJournal)
+	{
+		Event("TASK_JOURNAL_PRESSED", ".", eTaskJournalTab.Unknown, "");
+	}
+	if(menuType == eMenuType.Storage)
+	{
+		Event("STORAGE_PRESSED");
+	}
+	if(menuType == eMenuType.Clans)
+	{
+		Event("CLANS_PRESSED");
+	}
+	if(menuType == eMenuType.Squad)
+	{
+		Event("SQUAD_INVITE_SHOW");
+	}
+	if(menuType == eMenuType.Tournaments)
+	{
+		Event("TOURNAMENTS_PRESSED");
+	}
+	if(menuType == eMenuType.TrainingRooms)
+	{
+		Event("TRAINING_PRESSED");
+	}
+	if(menuType == eMenuType.Community)
+	{
+		Event("COMMUNITY_SHOW");
+	}
+	if(menuType == eMenuType.Settings)
+	{
+		Event("SETTINGS_PRESSED");
+	}
+}

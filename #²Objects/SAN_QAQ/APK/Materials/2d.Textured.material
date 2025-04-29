@@ -1,0 +1,20 @@
+Material:
+    Shader: ~res:/Materials/Shaders/2d/2d
+    UniqueDefines: [ TEXTURED ]
+    RenderState:
+        depthFunc: CMP_LESS
+    Passes:
+        2d:
+    Presets:
+        Alpha8:
+            UniqueDefines: [ ALPHA8 ]
+            RenderState:
+                blend: true
+        Red8ToAlpha:
+            UniqueDefines: [ RED8_TO_ALPHA ]
+            RenderState:
+                blend: true
+        Grayscale:
+            UniqueDefines: [ GRAYSCALE ]
+            RenderState:
+                blend: true

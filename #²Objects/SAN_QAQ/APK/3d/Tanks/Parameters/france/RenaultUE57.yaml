@@ -1,0 +1,86 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/france-RenaultUE57"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/france-RenaultUE57"
+    blitzModelPath: "Tanks/France/RenaultUE57.sc2"
+    collisionMesh: "CollisionMeshes/france-RenaultUE57.sc2"
+    smokeEffectPath: "FX/Exhausts/hullback-down15.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/lt"
+    engineSoundNPC: "tanks/npc/engine/de/lt"
+    chassisSoundPC: "tanks/pc/treads/lt"
+    chassisSoundNPC: "tanks/npc/treads/lt"
+textureTransform: {}
+treadParameters:
+    forceManualWidth: true
+    manualWidth: 0.287670
+    forceManualSpace: false
+    manualSpace: 1.046713
+    texturePath: "~res:/3d/Tanks/Common/images/German_01_tread.tex"
+gunRecoil:
+    gun_02:
+        enabled: true
+        durationForward: 0.900000
+        durationBackward: 0.050000
+        distance: 0.600000
+maskSlice:
+    gun_02:
+        enabled: true
+        planePosition: [0.000239, 1.240906, -0.032044]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 2.200000
+hitMarks:
+    gun_02:
+        placementRestrictedZoneLength: 0.735
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAAAAAAAAAAAAAAQAAAAZUKj2yMvo8AQAAAAZUKj2yMvo8AAAAAAZUKj2yMvo8AQAAAAZUKj2yMvo8AQAAAAZUKj2yMvo8AQAAAAZUKj2yMvo8AAAAAAZUKj2yMvo8AQAAAAZUKj2yMvo8AAAAAAZUKj2yMvo8\f"
+    leftTrackChain: "w3kFv28Sg7oBAAAAcxK6vgAAAAAAAAAAhuOGvgAAAAAAAAAARJZZvgAAgK8BAAAAqBaCvQAAAAAAAAAAdkYnuwAAAAABAAAAYLALPgAAAAAAAAAAPA5yPgAAAAAAAAAAVeyfPqabRDsBAAAA+mTfPgAAAAAAAAAAAdsGPwAAAAABAAAArt4pP0g/yzsAAAAAPMFbP3wMljwBAAAAFTJhP0YysTwBAAAAmAGGP0v3rT0AAAAAFhKSP2Ex8j0AAAAA60arPzcyRj4BAAAAkbW2P2ifiD4BAAAAPs68P4Tuyz4BAAAAIlO6PxS3Bz8BAAAA/tKuP4vXIj8BAAAArOKbP8dSLj8BAAAALN2XPyfzLT8BAAAAKm+CP+b3KD8AAAAA0mprP3VKJj8AAAAAUPdRPwSdIz8AAAAAzoM4P5PvID8AAAAATBAfPyNCHj8AAAAAypwFPzT/Fz8BAAAA4Ar3PoIcFz8BAAAAjGulPtA5Fj8AAAAAEAllPmCMEz8AAAAAEHb+Pe/eED8AAAAAAGjLPH4xDj8AAAAAEMKYvQ6ECz8AAAAAtJ9vvmdNBz8BAAAAjP6LviwpBj8BAAAAkOW+vrx7Az8AAAAAlMzxvkvOAD8AAAAAzFkSv7RB/D4AAAAATs0rv9Lm9j4AAAAA0EBFv/GL8T4AAAAAcRCDv8P54j4BAAAAFhaGv50d4T4BAAAABi2Qv1QZ1j4BAAAAUG2av0QMpT4BAAAAUG2av69UST4BAAAAI5KQv9PD1j0BAAAAP7qOv9sxyT0AAAAACP5tv2Bghj0AAAAANs1Uv3OORD0AAAAAY5w7v0y4+DwAAAAAcRkLv28SgzoBAAAA\f"
+    rightTrackChain: "w3kFv28Sg7oBAAAAcxK6vgAAAAAAAAAAhuOGvgAAAAAAAAAARJZZvgAAgK8BAAAAqBaCvQAAAAAAAAAAdkYnuwAAAAABAAAAYLALPgAAAAAAAAAAPA5yPgAAAAAAAAAAVeyfPqabRDsBAAAA+mTfPgAAAAAAAAAAAdsGPwAAAAABAAAArt4pP0g/yzsAAAAAPMFbP3wMljwBAAAAFTJhP0YysTwBAAAAmAGGP0v3rT0AAAAAFhKSP2Ex8j0AAAAA60arPzcyRj4BAAAAkbW2P2ifiD4BAAAAPs68P4Tuyz4BAAAAIlO6PxS3Bz8BAAAA/tKuP4vXIj8BAAAArOKbP8dSLj8BAAAALN2XPyfzLT8BAAAAKm+CP+b3KD8AAAAA0mprP3VKJj8AAAAAUPdRPwSdIz8AAAAAzoM4P5PvID8AAAAATBAfPyNCHj8AAAAAypwFPzT/Fz8BAAAA4Ar3PoIcFz8BAAAAjGulPtA5Fj8AAAAAEAllPmCMEz8AAAAAEHb+Pe/eED8AAAAAAGjLPH4xDj8AAAAAEMKYvQ6ECz8AAAAAtJ9vvmdNBz8BAAAAjP6LviwpBj8BAAAAkOW+vrx7Az8AAAAAlMzxvkvOAD8AAAAAzFkSv7RB/D4AAAAATs0rv9Lm9j4AAAAA0EBFv/GL8T4AAAAAcRCDv8P54j4BAAAAFhaGv50d4T4BAAAABi2Qv1QZ1j4BAAAAUG2av0QMpT4BAAAAUG2av69UST4BAAAAI5KQv9PD1j0BAAAAP7qOv9sxyT0AAAAACP5tv2Bghj0AAAAANs1Uv3OORD0AAAAAY5w7v0y4+DwAAAAAcRkLv28SgzoBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: true
+        upperMin: 0.090534
+        upperFactor: 0.174672
+        frontFactor: 0.179487
+        backFactor: 0.139830
+        lengthPower: 0.500000
+        speed: 1.000000
+    trackLayingInfo:
+        bendingFactor: 1.000000
+        lengthPower: 1.400000
+        pointCountPower: 0.600000
+        pressurePower: 0.600000
+        primaryPower: 1.000000
+chassis:
+    textureScale:  -2.08 
+collision:
+    hull:
+        points: [-0.000219, 0.000315, -0.546500]
+        bbox: 
+            min: [-0.831926, -1.659806, -0.295209]
+            max: [0.834142, 1.367392, 0.929068]
+        averageThickness: 
+            turret_02: 6.622223
+    chassis:
+        points: [0.000000, -0.004441, -0.001877]
+        bbox: 
+            min: [-0.868207, -1.206461, -0.000000]
+            max: [0.868207, 1.466163, 0.677197]
+    turret_02:
+        points: [0.000014, 0.851344, -0.880823]
+        bbox: 
+            min: [-0.872405, -0.890911, -0.598211]
+            max: [0.873504, 0.239291, 0.797508]
+    gun_02:
+        points: [0.000288, 0.838702, -1.377102]
+        bbox: 
+            min: [-0.105198, -0.827180, -0.466142]
+            max: [0.105170, 2.476898, 0.073093]

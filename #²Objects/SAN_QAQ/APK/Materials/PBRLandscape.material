@@ -1,0 +1,17 @@
+Material:
+    Layers: [ OpaqueRenderLayer ]
+    Shader: ~res:/Materials/Shaders/Landscape/tilemask
+    UniqueDefines: [ LANDSCAPE_PBR, LANDSCAPE_RELAXMAP, LANDSCAPE_HEIGHT_BLEND_ALLOWED ]
+    RenderState:
+        depthTest: true
+        depthWrite: true
+        depthFunc: CMP_LESS
+        cullMode: FACE_BACK
+    Passes:
+        ReflectionRefraction:
+        Forward:
+        DepthOnly:
+            enabled: true
+            IgnoreDefines: [ USE_SHADOW_MAP, VERTEX_FOG ]
+        ShadowMap:
+            enabled: false

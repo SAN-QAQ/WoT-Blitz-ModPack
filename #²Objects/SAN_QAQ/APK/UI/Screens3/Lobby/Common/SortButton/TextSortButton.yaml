@@ -1,0 +1,142 @@
+Header:
+    version: 160
+Prototypes:
+-   class: "UIControl"
+    name: "TextSortButton"
+    size: [48.000000, 48.000000]
+    input: true
+    classes: "sort-table-button button-choose-sound"
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIInputEventComponent:
+            onTouchUpInside: "ON_CLICK_SORT_BUTTON"
+            onHoverSet: "HoverAnim"
+            onHoverSetData: "true"
+            onHoverRemoved: "HoverAnim"
+            onHoverRemovedData: "false"
+        UIDataParamsComponent:
+            params:
+            - ["string", "text", "\"\"", "\"text\""]
+            - ["bool", "inverseSort", "true", "true"]
+            - ["bool", "isSelected", "false", "false"]
+            events:
+            - "ON_CLICK_SORT_BUTTON"
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "hoverOpacity", "0.500000"]
+            - ["bool", "isHovered", "false"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/SortButton/TextSortButton.actions"
+        UIDataOnEventComponent0:
+            eventName: "HOVER_START"
+            modelFieldExpression: "isHovered"
+            dataExpression: "true"
+        UIDataOnEventComponent1:
+            eventName: "HOVER_END"
+            modelFieldExpression: "isHovered"
+            dataExpression: "false"
+        Sound: {}
+        StyleSheet:
+            styles: "~res:/UI/Screens3/ButtonSound.style.yaml;~res:/UI/Screens3/Lobby/Common/SortButton/IconSortButton.style.yaml"
+    bindings:
+    - ["selected", "isSelected"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        position: [0.000000, 0.000000]
+        size: [48.000000, 48.000000]
+        pivot: [0.500000, 0.500000]
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needDepth: true
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "8"
+            UIOpacityComponent: {}
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                bottomAnchorEnabled: true
+        children:
+        -   class: "UIControl"
+            name: "sortDirImageUp"
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_triangle_8"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    topAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 8.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 5.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["visible", "isSelected and inverseSort"]
+        -   class: "UIControl"
+            name: "Text"
+            input: false
+            classes: "t-caption regular color=white-wild-sand-text"
+            components:
+                UIOpacityComponent: {}
+                UITextComponent:
+                    colorInheritType: "COLOR_IGNORE_PARENT"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfContent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 24.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["UIOpacityComponent.opacity", "when isSelected -> 1, hoverOpacity"]
+            - ["UITextComponent.text", "localize(text)"]
+        -   class: "UIControl"
+            name: "sortDirImageDown"
+            input: false
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_triangle_8"
+                    spriteModification: ["FLIP_VERTICAL"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 8.000000
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 5.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["visible", "isSelected and not inverseSort"]

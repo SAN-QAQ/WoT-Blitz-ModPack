@@ -1,0 +1,447 @@
+Header:
+    version: 155
+Prototypes:
+-   class: "UIControl"
+    name: "Header"
+    size: [800.000000, 128.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Clan/Profile/ClanProfileHeaderInit.animation"
+        UIOpacityComponent: {}
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "FixedSize"
+            verticalValue: 120.000000
+        UIDataParamsComponent:
+            params:
+            - ["bool", "isChina", "false", "false"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["ClanProfileViewModel", "model", "null", "{ }"]
+            - ["int", "notificationsCount", "0", "0"]
+        UIDataLocalVarsComponent:
+            data:
+            - ["vector<string>", "emptyVector", "[ ]"]
+            - ["string", "tooltipIconPath", "\"~res:/Gfx/Lobby/icons/icon_info_xs\""]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["Clan", "clan", "model.clanInfo.clan"]
+    children:
+    -   class: "UIControl"
+        name: "Content"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                needDepth: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIRoundedCornersComponent:
+                radius: "4"
+            Anchor:
+                hCenterAnchorEnabled: true
+            LinearLayout:
+                spacing: 16.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                horizontalValue: 80.000000
+                horizontalMin: 800.000000
+                horizontalMax: 1080.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "Logo"
+            components:
+                Background:
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_clan_emblem"
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 124.000000
+                    verticalPolicy: "PercentOfContent"
+                UIInputEventComponent:
+                    onTouchUpInside: "ON_SHOW_INFO"
+            children:
+            -   class: "UIControl"
+                name: "Img"
+                input: false
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_PROPORTIONAL_ONE"
+                    UIUrlImageComponent: {}
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                        vCenterAnchor: -5.000000
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        verticalPolicy: "FixedSize"
+                bindings:
+                - ["UIUrlImageComponent.imageUrl", "when not isNull(clan) -> clan.emblem.url, \"\""]
+        -   class: "UIControl"
+            name: "TextInfo"
+            position: [192.000000, 0.000000]
+            input: false
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                    dynamicPadding: true
+                    spacing: 4.000000
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+            children:
+            -   class: "UIControl"
+                name: "InputArea"
+                classes: "button-open-sound"
+                components:
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                    IgnoreLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        horizontalValue: 80.000000
+                        verticalPolicy: "PercentOfParent"
+                        verticalValue: 80.000000
+                    UIInputEventComponent:
+                        onTouchUpInside: "ON_SHOW_INFO"
+                    Sound: {}
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/ButtonSound.style.yaml"
+            -   class: "UIControl"
+                name: "ClanMotto"
+                input: false
+                classes: "t-caption regular color=white-wild-sand-50-text"
+                components:
+                    UITextComponent:
+                        fitting: "FITTING_POINTS"
+                        align: ["LEFT", "VCENTER"]
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfContent"
+                bindings:
+                - ["UITextComponent.text", "when not isNull(clan) -> clan.motto, \"\""]
+            -   class: "UIControl"
+                name: "ClanName"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Clan/Common/ClanNameWithTag.yaml"
+                        args:
+                            "tag": "when not isNull(clan) -> clan.tag, \"\""
+                            "name": "when not isNull(clan) -> clan.name, \"\""
+                children:
+                -   class: "UIControl"
+                    name: "TooltipIcon"
+                    pivot: [0.500000, 0.500000]
+                    classes: "button-open-sound hoverable touchable-self"
+                    components:
+                        UITextureComponent: {}
+                        Anchor:
+                            rightAnchorEnabled: true
+                            rightAnchor: -32.000000
+                            vCenterAnchorEnabled: true
+                            bottomAnchorEnabled: false
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 24.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 24.000000
+                        UIInputEventComponent:
+                            onTouchUpInside: "ON_SHOW_INFO"
+                        Sound: {}
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/ButtonSound.style.yaml;~res:/UI/Screens3/Common/Hover.style.yaml;~res:/UI/Screens3/Common/Touch.style.yaml"
+                    bindings:
+                    - ["UITextureComponent.spritePath", "tooltipIconPath"]
+                    children:
+                    -   class: "UIControl"
+                        name: "Hover"
+                        input: false
+                        classes: "white-wild-sand-10-bg hover"
+                        components:
+                            Background:
+                                drawType: "DRAW_FILL"
+                            UIOpacityComponent: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfParent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Common/Hover.style.yaml"
+            -   class: "UIControl"
+                name: "Languages"
+                input: false
+                components:
+                    ClipContent: {}
+                    Anchor: {}
+                    LinearLayout: {}
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "parent-100"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Clan/Search/ClanLanguage.yaml"
+                        dataContainer: "when not isNull(clan) -> clan.languages, emptyVector"
+                        args:
+                            "isFirst": "_index == 0"
+                            "langCode": "_item"
+                bindings:
+                - ["visible", "not isChina"]
+            -   class: "UIControl"
+                name: "ClanDescription"
+                input: false
+                classes: "t-body regular color=white-wild-sand-text"
+                components:
+                    UITextComponent:
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        multiline: "MULTILINE_ENABLED"
+                        fitting: "FITTING_POINTS"
+                        align: ["LEFT", "TOP"]
+                    SizePolicy:
+                        horizontalPolicy: "Formula"
+                        horizontalFormula: "parentRest - 8"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 20.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                bindings:
+                - ["visible", "not isNull(clan) and clan.description != \"\""]
+                - ["UITextComponent.text", "when isNull(clan) -> \"\", isChina -> localize(\"Clans/Goals/Info/Text\") + \": \" + localize(str(clan.goal, eClanGoals, \"LocalizationKey\")), clan.description"]
+            -   class: "UIControl"
+                name: "ClanChinaID"
+                input: false
+                components:
+                    LinearLayout:
+                        spacing: 4.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfChildrenSum"
+                        verticalPolicy: "PercentOfMaxChild"
+                bindings:
+                - ["visible", "isChina"]
+                children:
+                -   class: "UIControl"
+                    name: "Text"
+                    input: false
+                    classes: "t-body bold color=white-wild-sand-text"
+                    components:
+                        UITextComponent:
+                            text: "Clans/Profile/ID"
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                            multiline: "MULTILINE_ENABLED"
+                            fitting: "FITTING_POINTS"
+                            align: ["LEFT", "TOP"]
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                -   class: "UIControl"
+                    name: "Value"
+                    input: false
+                    classes: "t-body regular color=white-wild-sand-text"
+                    components:
+                        UITextComponent:
+                            colorInheritType: "COLOR_IGNORE_PARENT"
+                            multiline: "MULTILINE_ENABLED"
+                            fitting: "FITTING_POINTS"
+                            align: ["LEFT", "TOP"]
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                    bindings:
+                    - ["UITextComponent.text", "when not isNull(clan) -> str(clan.clanId), \"\""]
+        -   class: "UIControl"
+            name: "ActionsWrapper"
+            input: false
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: false
+                    vCenterAnchorEnabled: true
+                LinearLayout:
+                    orientation: "LeftToRight"
+                    spacing: 4.000000
+                    dynamicSpacing: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfChildrenSum"
+                    verticalPolicy: "PercentOfMaxChild"
+            children:
+            -   class: "UIControl"
+                name: "AboutSupplyInfo"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIVirtualActionEventComponent0:
+                        virtualKeyAction: "Extra2"
+                        keyDownEvent: "SHOW_SUPPLY_INFO"
+                        shouldBeFocused: false
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                        args:
+                            "isCapitalize": "true"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "caption": "\"Clans/Profile/Header/AboutSupplyButton\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "SHOW_SUPPLY_INFO", ""]
+                bindings:
+                - ["visible", "model.isSelfClan and model.selectedTab == eClanProfileTab.Supply"]
+            -   class: "UIControl"
+                name: "ButtonJoin"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                        args:
+                            "isCapitalize": "true"
+                            "caption": "when model.isInviteFromThisClanForMeExists or (not isNull(clan) and model.isAutoJoinPossible) -> \"Clans/Profile/Header/JoinClanButton\", \"Clans/Profile/Header/SendApplicationButton\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_JOIN_PRESSED", ""]
+                bindings:
+                - ["visible", "not model.isSelfClan and model.clanInfo.accountClanRole == eClanRole.None and not model.isInviteRequestToThisClanWasSent and model.myInviteState == eClanLoadingState.Loaded and isNull(session.clanInfo.clan)"]
+            -   class: "UIControl"
+                name: "JoinRequestSent"
+                input: false
+                components:
+                    UIOpacityComponent:
+                        opacity: 0.500000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                        args:
+                            "isCapitalize": "true"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "inputDisabled": "true"
+                            "caption": "\"Clans/Profile/Header/ApplicationWasSent\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_JOIN_PRESSED", ""]
+                bindings:
+                - ["visible", "not model.isSelfClan and model.clanInfo.accountClanRole == eClanRole.None and model.isInviteRequestToThisClanWasSent and model.myInviteState == eClanLoadingState.Loaded and isNull(session.clanInfo.clan)"]
+            -   class: "UIControl"
+                name: "ButtonRecruting"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+                        args:
+                            "isCapitalize": "true"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "caption": "\"Clans/Profile/Header/RecruitmentButton\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_RECRUTING_PRESSED", ""]
+                bindings:
+                - ["visible", "model.isSelfClan and model.clanInfo.accountClanRole == eClanRole.Commander and model.selectedTab == eClanProfileTab.Members"]
+            -   class: "UIControl"
+                name: "ButtonEdit"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIAttachLayoutMasterComponent:
+                        attachId: "CLAN_EDIT_BUTTON"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "imageSize": "32"
+                            "isBgVisible": "false"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "image": "\"~res:/Gfx/Lobby/icons/icon_edit.psd\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_EDIT_PRESSED", ""]
+                bindings:
+                - ["visible", "model.isSelfClan and model.clanInfo.accountClanRole == eClanRole.Commander and model.selectedTab == eClanProfileTab.Summary"]
+            -   class: "UIControl"
+                name: "ButtonSearch"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "imageSize": "32"
+                            "isBgVisible": "false"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "image": "\"~res:/Gfx/Lobby/icons/icon_search_s\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_SEARCH_PRESSED", ""]
+                bindings:
+                - ["visible", "model.isSelfClan and model.selectedTab == eClanProfileTab.Summary"]
+            -   class: "UIControl"
+                name: "ButtonNotifications"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIVirtualActionEventComponent0:
+                        virtualKeyAction: "Extra1"
+                        keyDownEvent: "ON_NOTIFICATIONS_PRESSED"
+                        shouldBeFocused: false
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "imageSize": "32"
+                            "isBgVisible": "false"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "image": "\"~res:/Gfx/Lobby/icons/icon_news_n.psd\""
+                            "badgeType": "eBadgeType.Digit"
+                            "badgeValue": "str(notificationsCount)"
+                            "isBadgeVisible": "notificationsCount > 0"
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_NOTIFICATIONS_PRESSED", ""]
+                bindings:
+                - ["visible", "model.isSelfClan and model.selectedTab == eClanProfileTab.Summary"]
+            -   class: "UIControl"
+                name: "ButtonExit"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UIChildComponent0:
+                        prototypePath: "~res:/UI/Screens3/Lobby/Common/IconButton.yaml"
+                        args:
+                            "imageSize": "32"
+                            "isBgVisible": "false"
+                            "type": "eButtonType.OPTIONAL_LIGHT"
+                            "image": "\"~res:/Gfx/Lobby/icons/icon_exit_s\""
+                        eventActions:
+                        - ["ON_CLICK_BUTTON", "ON_EXIT_PRESSED", ""]
+                bindings:
+                - ["visible", "model.isSelfClan and model.clanInfo.accountClanRole != eClanRole.Commander and model.selectedTab == eClanProfileTab.Summary"]

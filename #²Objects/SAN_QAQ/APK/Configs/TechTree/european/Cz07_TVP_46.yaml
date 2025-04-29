@@ -1,0 +1,23 @@
+modules:
+    "#vehicle:Cz02_T50":
+        position: [4, 2]
+    "#vehicleGun:_88mm_vz_41N":
+        position: [1, 1]
+    "#vehicleGun:_100mm_vz_44S":
+        position: [3, 1]
+    "#vehicleGun:_105mm_vz_39N":
+        position: [4, 1]
+    "#vehicleTurret:Turret_1_Cz07_TVP_46":
+        position: [1, 2]
+    "#vehicleTurret:Turret_2_Cz07_TVP_46":
+        position: [2, 1]
+    "#vehicleEngine:Skoda_V16_diesel_600":
+        position: [1, 3]
+    "#vehicleEngine:Skoda_V16_diesel_660":
+        position: [2, 3]
+    "#vehicleEngine:Skoda_16_ADH_140_A":
+        position: [3, 3]
+    "#vehicleChassis:Chassis_Cz07_TVP_46":
+        position: [1, 4]
+    "#vehicleChassis:Chassis_Cz07_TVP_46_2":
+        position: [2, 4]

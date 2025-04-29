@@ -1,0 +1,50 @@
+Header:
+    version: "92"
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/TreeArrows/ArrowLine.yaml"
+- "~res:/UI/Screens3/Lobby/Common/TreeArrows/Arrow.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Lines"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 216.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 96.000000
+    children:
+    -   prototype: "ArrowLine/Line"
+        name: "RightHLine"
+        components:
+            Anchor:
+                rightAnchorEnabled: true
+                rightAnchor: 0.500000
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalValue: 19.500000
+    -   prototype: "ArrowLine/Line"
+        name: "BottomVLine"
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+            SizePolicy:
+                verticalPolicy: "FixedSize"
+                verticalValue: 16.000000
+    -   prototype: "ArrowLine/Line"
+        name: "LeftHLine"
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: -0.500000
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalValue: 13.500000
+    -   prototype: "Arrow/Arrow"
+        name: "LeftCenterArrow"
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 13.000000
+                vCenterAnchorEnabled: true

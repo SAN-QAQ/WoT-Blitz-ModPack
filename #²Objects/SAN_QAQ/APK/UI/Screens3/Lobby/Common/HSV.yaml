@@ -1,0 +1,10 @@
+Header:
+    version: "28"
+Prototypes:
+-   class: "UIControl"
+    name: "HSV"
+    input: false
+    components:
+        UITextureComponent:
+            materialPath: "~res:/Materials.custom/2d.Textured.HSV.material"
+            materialParams: "hue,0;saturation,1;value,0"

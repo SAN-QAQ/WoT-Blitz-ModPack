@@ -1,0 +1,4 @@
+Material:
+    Passes:
+        CubemapMipmapCopy:
+            Shader: ~res:/Materials/Shaders/Utilities/cubemap-mipmap-copy

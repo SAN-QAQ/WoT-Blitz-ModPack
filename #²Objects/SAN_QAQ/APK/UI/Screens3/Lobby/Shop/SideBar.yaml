@@ -1,0 +1,236 @@
+Header:
+    version: 153
+Prototypes:
+-   class: "UIControl"
+    name: "SideBar"
+    size: [88.000000, 870.000000]
+    input: false
+    components:
+        UIAnimationComponent:
+            animations: "_INIT,~res:/UI/Screens3/Lobby/Shop/SideBarInitialization.animation"
+        LinearLayout:
+            orientation: "LeftToRight"
+        SizePolicy:
+            horizontalPolicy: "PercentOfChildrenSum"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent:
+            params:
+            - ["bool", "enabled", "true", "true"]
+            - ["ShopData", "shop", "null", "{ }"]
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            events:
+            - "BACK_EVENT"
+            - "ON_SECTION_SELECTED"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "currentAnchor", "0"]
+            - ["int", "itemH", "72"]
+            - ["int", "currentSection", "0"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["int", "tempAnchor", "currentSection * itemH"]
+            - ["bool", "canOpenAdChest", "lobby.advertising.adsSupported and session.serverConfig.advertising.shopChest.enabled and lobby.advertising.shopChest.total > 0 and lobby.advertising.shopChest.current >= lobby.advertising.shopChest.total"]
+            - ["bool", "chestAdAvailable", "session.serverConfig.advertising.shopChest.enabled and not lobby.shopBadges.ignoreAdChestState and lobby.advertising.adsSupported and lobby.advertising.shopChestAdAvailable and session.stats.shopChestAds.nextViewTime <= session.serverTime and session.stats.shopChestAds.remainingAds > 0"]
+            - ["bool", "canOpenAdPremium", "lobby.advertising.adsSupported and session.serverConfig.advertising.shopPremium.enabled and lobby.advertising.shopPremium.total > 0 and lobby.advertising.shopPremium.current >= lobby.advertising.shopPremium.total"]
+            - ["bool", "premiumAdAvailable", "session.serverConfig.advertising.shopPremium.enabled and not lobby.shopBadges.ignoreAdPremiumState and lobby.advertising.adsSupported and lobby.advertising.shopPremiumAdAvailable and session.stats.shopPremiumAds.nextViewTime <= session.serverTime and session.stats.shopPremiumAds.remainingAds > 0"]
+            - ["bool", "hangarGoldAdAvailable", "session.serverConfig.advertising.hangar.enabled and not lobby.shopBadges.ignoreAdGoldState and lobby.advertising.adsSupported and lobby.advertising.hangarAdAvailable and session.stats.hangarAds.nextViewTime <= session.serverTime and session.stats.hangarAds.remainingAds > 0"]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Shop/SideBar.actions"
+        UIDataOnEventComponent0:
+            eventName: "CURRENT_SECTION_CHANGED"
+            modelFieldExpression: "currentSection"
+            dataExpression: "_event"
+        UIEventOnDataComponent0:
+            watchedDataExpression: "tempAnchor"
+            eventName: "AnimateCurrentAnchor"
+    children:
+    -   class: "UIControl"
+        name: "Bg"
+        input: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            IgnoreLayout: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+    -   class: "UIControl"
+        name: "SafeAreaInsetLeft"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfFirstChild"
+                verticalPolicy: "PercentOfParent"
+            UIChildComponent0:
+                childType: "kPrototype"
+                prototypePath: "~res:/UI/Screens3/Lobby/Common/Sidebar/SideBarSafeArea.yaml"
+    -   class: "UIScrollView"
+        name: "Menu"
+        autoUpdate: true
+        centerContent: true
+        components:
+            ClipContent:
+                enabled: true
+                left: false
+                right: false
+                top: true
+                bottom: true
+            SizePolicy:
+                horizontalPolicy: "FixedSize"
+                horizontalValue: 88.000000
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIScrollViewContainer"
+            name: "scrollContainerControl"
+            scrollDirection: "kVertical"
+            components:
+                LinearLayout:
+                    orientation: "TopDown"
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfChildrenSum"
+                UILayoutEventComponent:
+                    positionChangedEvent: "UpdateFadeVisibility"
+                    positionChangedEventData: "min(max(_size.Y - _parentSize.Y + _position.Y, 0.000000) / 72.000000, 1.000000)"
+                    sizeChangedEvent: "UpdateFadeVisibility"
+                    sizeChangedEventData: "min(max(_size.Y - _parentSize.Y + _position.Y, 0.000000) / 72.000000, 1.000000)"
+            children:
+            -   class: "UIControl"
+                name: "list"
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    LinearLayout:
+                        orientation: "TopDown"
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfMaxChild"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UIRepeatComponent:
+                        control: "~res:/UI/Screens3/Lobby/Shop/SideBarItem.yaml"
+                        dataContainer: "shop.sections"
+                        args:
+                            "hangarGoldAdAvailable": "hangarGoldAdAvailable"
+                            "index": "_index"
+                            "section": "_item"
+                            "badges": "lobby.shopBadges"
+                            "enabled": "not (_index == currentSection) and enabled"
+                            "chestAdAvailable": "chestAdAvailable"
+                            "canOpenAdChest": "canOpenAdChest"
+                            "canOpenAdPremium": "canOpenAdPremium"
+                            "premiumAdAvailable": "premiumAdAvailable"
+                        eventActions:
+                        - ["ON_SECTION_SELECTED", "ON_SECTION_SELECTED", "_index"]
+                    UIIdentifierComponent:
+                        id: "shop_tabs_container"
+                children:
+                -   class: "UIControl"
+                    name: "LayoutOptimization"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                    children:
+                    -   class: "UIControl"
+                        name: "indicator"
+                        input: false
+                        components:
+                            UIOpacityComponent: {}
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                topAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 88.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 72.000000
+                            UIChildComponent0:
+                                childType: "kPrototype"
+                                prototypePath: "~res:/UI/Screens3/Lobby/Common/Sidebar/SidebarItem/SideBarSelector.yaml"
+                        bindings:
+                        - ["Anchor.topAnchor", "currentAnchor"]
+            -   class: "UIControl"
+                name: "BottomControl"
+                input: false
+                components:
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfContent"
+        -   class: "UIControl"
+            name: "BottomFade"
+            input: true
+            components:
+                UIOpacityComponent: {}
+                Anchor:
+                    rightAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 32.000000
+                UIInputEventComponent:
+                    onTouchUpInside: "SCROLL_TO_BOTTOM"
+            children:
+            -   class: "UIControl"
+                name: "Bg"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "grey-shark-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_TO_RECT"
+                        sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                    Anchor:
+                        bottomAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 72.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+            -   class: "UIControl"
+                name: "Icon"
+                size: [32.000000, 32.000000]
+                input: false
+                classes: "white-wild-sand-50-bg"
+                components:
+                    Background:
+                        drawType: "DRAW_SCALE_PROPORTIONAL"
+                        sprite: "~res:/Gfx/Lobby/icons/icon_chevron_l"
+                        spriteModification: ["FLIP_VERTICAL"]
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 4.000000
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 24.000000
+                        verticalPolicy: "FixedSize"
+                        verticalValue: 24.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"

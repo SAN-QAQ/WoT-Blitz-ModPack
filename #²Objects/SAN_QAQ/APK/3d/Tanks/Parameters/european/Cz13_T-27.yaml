@@ -1,0 +1,125 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/european-Cz13_T_27"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/european-Cz13_T_27"
+    blitzModelPath: "Tanks/European/Cz13_T_27.sc2"
+    collisionMesh: "CollisionMeshes/european-Cz13_T-27.sc2"
+    smokeEffectPath: "FX/Exhausts/cent.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/mt"
+    engineSoundNPC: "tanks/npc/engine/de/mt"
+    chassisSoundPC: "tanks/pc/treads/mt"
+    chassisSoundNPC: "tanks/npc/treads/mt"
+textureTransform:
+    gun_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.360000, 1.360000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    gun_01_mask:
+        shear: [0.000000, 0.000000]
+        scale: [1.360000, 1.360000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    hull:
+        shear: [0.000000, 0.000000]
+        scale: [1.360000, 1.360000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+    turret_01:
+        shear: [0.000000, 0.000000]
+        scale: [1.360000, 1.360000]
+        rotation: 0.000000
+        offset: [0.000000, 0.000000]
+        enabled: true
+treadParameters:
+    forceManualWidth: false
+    manualWidth: 1.445205
+    forceManualSpace: false
+    manualSpace: 1.001038
+    texturePath: "~res:/3d/Tanks/Common/images/German_01_tread.tex"
+gunRecoil:
+    gun_01:
+        enabled: true
+        durationForward: 1.000000
+        durationBackward: 0.050000
+        distance: 0.400000
+maskSlice:
+    gun_01:
+        enabled: false
+        planePosition: [0.000556, 2.649235, -0.014579]
+        planeNormal: [0.000000, 1.000000, 0.000000]
+        planeAxis: [0.000000, 1.000000, 0.000000]
+        frustumConeBaseRadius: 0.200000
+        frustumConeAngleDegrees: 5.000000
+        planeSliceMode: 1
+        frustumConeSliceMode: 0
+markerPosition:
+    markerHeight: 3.375751
+hitMarks: {}
+suspension:
+    enabled: true
+    wheelsReactionSpeed: 1.000000
+    chunkPrototypeExtending: 0.100000
+    wheels: "AAAAAI8Qyz2PEMs9AQAAAI8Qyz2PEMs9AAAAAI8Qyz2PEMs9AQAAAI8Qyz2PEMs9AAAAAI8Qyz2PEMs9AQAAAI8Qyz2PEMs9AAAAAI8Qyz2PEMs9AQAAAI8Qyz2PEMs9AAAAAI8Qyz2PEMs9AQAAAI8Qyz2PEMs9AAAAAI8Qyz2PEMs9\f"
+    leftTrackChain: "k+cOwKJa3TkBAAAA0yWWv85x3TkBAAAA4FqhvbqJ3TkBAAAAMkKCP7Kh3TkBAAAAJF4GQFm53TkBAAAAEr8SQCvX6DwBAAAAJV4YQNHNkD0AAAAAfOYgQPhpKj4AAAAA1G4pQIQ2hj4AAAAALPcxQAs4tz4AAAAAP2FEQEUTCz8BAAAAfgNIQN/dIj8BAAAAf5RKQGTJSj8BAAAAX/xHQL48cj8BAAAAzHtAQLzVhz8BAAAAxeA2QB7ZjD8BAAAAKmAsQBeAjD8AAAAAkN8hQBAnjD8AAAAA9V4XQAnOiz8AAAAAWt4MQAJ1iz8AAAAAwF0CQPwbiz8AAAAAT5HTP2zXiD8BAAAAhEzDPyyfiD8BAAAA4LfFP+cQij8AAAAAq7awP+C3iT8AAAAAdrWbP9leiT8AAAAAQLSGP9IFiT8AAAAAFmZjP8usiD8AAAAAcq8QPxtihT8BAAAACdXhPhEJhT8BAAAAsL3KPrehhz8AAAAAsHFtPrBIhz8AAAAAANCKPanvhj8AAAAAQEPFvaKWhj8AAAAAqFWFvps9hj8AAAAA76AKv/Lygj8BAAAAWk0mv1xYgj8BAAAAFLJAv4YyhT8AAAAAfLRqv4DZhD8AAAAAdFuKv3mAhD8AAAAAqlyfv3InhD8AAAAA3l20v2vOgz8AAAAAfBvOv8W/fz8BAAAA/P3dv7INfz8BAAAAfmHzv1bDgj8AAAAAWTEEwE9qgj8AAAAA9bEOwEgRgj8AAAAAjzIZwEK4gT8AAAAAKbMjwDtfgT8AAAAAxTMuwDQGgT8AAAAAX7Q4wC2tgD8AAAAAjkRDwKJTgD8BAAAA8PlOwLS5cz8BAAAA+bRXwAuLTj8BAAAAK1lawPidID8BAAAAJKFXwFP95j4BAAAAmQ9PwDxkoD4BAAAASRpFwKCphT4AAAAA+iQ7wAfeVT4AAAAAqi8xwM5oID4AAAAAWjonwCzn1T0AAAAAqbgZwNTBKjwBAAAA\f"
+    rightTrackChain: "k+cOwKJa3TkBAAAA0yWWv85x3TkBAAAA4FqhvbqJ3TkBAAAAMkKCP7Kh3TkBAAAAJF4GQFm53TkBAAAAEr8SQCvX6DwBAAAAJV4YQNHNkD0AAAAAfOYgQPhpKj4AAAAA1G4pQIQ2hj4AAAAALPcxQAs4tz4AAAAAP2FEQEUTCz8BAAAAfgNIQN/dIj8BAAAAf5RKQGTJSj8BAAAAX/xHQL48cj8BAAAAzHtAQLzVhz8BAAAAxeA2QB7ZjD8BAAAAKmAsQBeAjD8AAAAAkN8hQBAnjD8AAAAA9V4XQAnOiz8AAAAAWt4MQAJ1iz8AAAAAwF0CQPwbiz8AAAAAT5HTP2zXiD8BAAAAhEzDPyyfiD8BAAAA4LfFP+cQij8AAAAAq7awP+C3iT8AAAAAdrWbP9leiT8AAAAAQLSGP9IFiT8AAAAAFmZjP8usiD8AAAAAcq8QPxtihT8BAAAACdXhPhEJhT8BAAAAsL3KPrehhz8AAAAAsHFtPrBIhz8AAAAAANCKPanvhj8AAAAAQEPFvaKWhj8AAAAAqFWFvps9hj8AAAAA76AKv/Lygj8BAAAAWk0mv1xYgj8BAAAAFLJAv4YyhT8AAAAAfLRqv4DZhD8AAAAAdFuKv3mAhD8AAAAAqlyfv3InhD8AAAAA3l20v2vOgz8AAAAAfBvOv8W/fz8BAAAA/P3dv7INfz8BAAAAfmHzv1bDgj8AAAAAWTEEwE9qgj8AAAAA9bEOwEgRgj8AAAAAjzIZwEK4gT8AAAAAKbMjwDtfgT8AAAAAxTMuwDQGgT8AAAAAX7Q4wC2tgD8AAAAAjkRDwKJTgD8BAAAA8PlOwLS5cz8BAAAA+bRXwAuLTj8BAAAAK1lawPidID8BAAAAJKFXwFP95j4BAAAAmQ9PwDxkoD4BAAAASRpFwKCphT4AAAAA+iQ7wAfeVT4AAAAAqi8xwM5oID4AAAAAWjonwCzn1T0AAAAAqbgZwNTBKjwBAAAA\f"
+    trackBendingInfo:
+        frontDriveWheel: false
+        upperMin: 0.090534
+        upperFactor: 0.165938
+        frontFactor: 0.435897
+        backFactor: 0.343220
+        lengthPower: 0.500000
+        speed: 1.000000
+    trackLayingInfo:
+        bendingFactor: 1.000000
+        lengthPower: 1.400000
+        pointCountPower: 0.600000
+        pressurePower: 0.600000
+        primaryPower: 1.000000
+chassis:
+    textureScale:  -0.780000 
+detachedTurret:
+    cylinderPos: [0.000000, 0.000000, -0.063383]
+    cylinderXYScale: 1.161970
+    turret_01:
+        shouldClipGun: false
+        clippingPlaneZPos: 1.575894
+        textureScaleFactor: 0.612674
+armorScale:
+    hull:
+        pushNormalsScale: true
+        armorScale: [0.0155, 0.0155, 0.0155]
+    turret_01:
+        pushNormalsScale: true
+        armorScale: [0.0211, 0.0634, 0.0211]
+    gun_01:
+        pushNormalsScale: true
+        armorScale: [0.0338, 0.0338, 0.0352]
+collision:
+    hull:
+        points: [0.001163, -0.001850, 0.001036]
+        bbox: 
+            min: [-1.500777, -3.410375, 0.451376]
+            max: [1.504860, 3.186196, 1.584622]
+        averageThickness: 
+            turret_01: 80.559425
+    chassis:
+        points: [0.000000, 0.000097, 0.000050]
+        bbox: 
+            min: [-1.537414, -3.411655, 0.000600]
+            max: [1.537414, 3.165471, 1.100299]
+    turret_01:
+        points: [0.001164, -0.591725, -1.571212]
+        bbox: 
+            min: [-1.311935, -1.830426, -0.397595]
+            max: [1.311560, 1.450429, 0.920117]
+    gun_01:
+        points: [0.000556, -1.852157, -1.922177]
+        bbox: 
+            min: [-0.452448, -0.750963, -0.305584]
+            max: [0.452300, 5.372319, 0.294710]

@@ -1,0 +1,37 @@
+float fogDis = length(eyePos);
+
+#if FOG_ATMOSPHERE
+	float fogAtmosphereFactory = saturate(dot(eyePos, toLightDir) * (1.0 / (fogDis * toLightDis + 0.0001)));
+	float3 fogAtmosphereColor = lerp(fogAtmosphereColorSky, fogAtmosphereColorSun, pow(fogAtmosphereFactory, fogAtmosphereScattering));
+	output.varFog.rgb = lerp(fogColor, fogAtmosphereColor, saturate(fogDis * (1.0 / fogAtmosphereDistance)));
+#else
+	output.varFog.rgb = fogColor;
+#endif
+
+#if FOG_LINEAR
+	output.varFog.a = smoothstep(fogStart, fogEnd, fogDis);
+#else
+	output.varFog.a = 1.0 - exp2((-fogDensity * fogDensity) * (fogDis * fogDis) * _LOG2_E);
+#endif
+
+#if USE_FOG_HALFSPACE
+	float3 viewDir = worldPos - camPos;
+
+	#if FOG_HALFSPACE_LINEAR
+		float fogA = step(camPos.z, fogHalfspaceHeight);
+		float fogB = worldPos.z - fogHalfspaceHeight;
+		float fogC = camPos.z - fogHalfspaceHeight;
+		float fogD = fogA * fogB;
+		float fogE = min(0.0, -fogD * 2.0 + fogB);
+		float fogHalfSpaceAmoung = 1.0 - exp2(fogHalfspaceDensity * length(viewDir) * (-fogE * fogE * (1.0 / abs(viewDir.z)) + (fogA * fogC + fogD)));
+	#else
+		float fogA = -fogHalfspaceFalloff * _LOG2_E;
+		float fogB = camPos.z - fogHalfspaceHeight;
+		float fogC = fogDis * (1.0 / viewDir.z);
+		float fogHalfSpaceAmoung = fogHalfspaceDensity * exp2(fogA * fogB) * (-exp2(fogB * viewDir.z) * fogC + fogC);
+	#endif
+
+	output.varFog.a += clamp(fogHalfSpaceAmoung, 0.0, fogHalfspaceLimit);
+#endif
+
+output.varFog.a = clamp(output.varFog.a, 0.0, fogLimit);

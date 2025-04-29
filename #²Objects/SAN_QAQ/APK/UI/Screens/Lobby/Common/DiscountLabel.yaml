@@ -1,0 +1,121 @@
+Header:
+    version: 160
+StyleSheets:
+-   selectors:
+    - ".discount-label.clan-supply"
+    properties:
+        sizePolicy-horizontalPolicy: "PercentOfChildrenSum"
+-   selectors:
+    - ".discount-label.clan-supply #Image"
+    properties:
+        bg-sprite: "~res:/Gfx/UI/LobbyCommon/DiscountClanSmall.txt"
+-   selectors:
+    - ".discount-label.clan-supply #Value"
+    properties:
+        sizePolicy-horizontalPolicy: "PercentOfContent"
+-   selectors:
+    - ".discount-label.action"
+    properties:
+        linearLayout-enabled: false
+        sizePolicy-horizontalPolicy: "PercentOfFirstChild"
+-   selectors:
+    - ".discount-label.action #Image"
+    properties:
+        anchor-hCenterAnchor: 2.000000
+        anchor-vCenterAnchor: -1.000000
+        bg-sprite: "~res:/Gfx/UI/LobbyCommon/DiscountSmall"
+-   selectors:
+    - ".discount-label.action #Value"
+    properties:
+        anchor-hCenterAnchor: 2.000000
+        anchor-vCenterAnchor: -3.000000
+        sizePolicy-horizontalPolicy: "PercentOfParent"
+-   selectors:
+    - ".discount-label.action.big #Image"
+    properties:
+        bg-sprite: "~res:/Gfx/UI/LobbyCommon/DiscountBig.txt"
+-   selectors:
+    - ".discount-label.action.big #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/WarHeliosCondCBold.ttf"
+        text-fontSize: 25.000000
+        text-lineHeight: 24.000000
+        text-baseLine: 2.000000
+-   selectors:
+    - ".discount-label.action.big.ar #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/BadiyaLT-Bold.ttf"
+-   selectors:
+    - ".discount-label.action.big.ja #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/IwaGGoPro-Bd.otf"
+-   selectors:
+    - ".discount-label.action.big.ko #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/CoreSans.ttf"
+-   selectors:
+    - ".discount-label.action.big.th #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/SirichanaLT-Bold.ttf"
+        text-fontSize: 36.000000
+        text-baseLine: 3.000000
+-   selectors:
+    - ".discount-label.action.big.vi #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/cinecav_x_ui_bold.ttf"
+        text-fontSize: 23.000000
+-   selectors:
+    - ".discount-label.action.big.zh-Hans #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+        text-fontSize: 23.000000
+-   selectors:
+    - ".discount-label.action.big.zh-Hant #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/XinGothic-TC-W6.otf"
+        text-fontSize: 23.000000
+-   selectors:
+    - ".discount-label.action.big.hi #Value"
+    properties:
+        text-fontPath: "~res:/Fonts/NotoSans-SemiBold.ttf"
+Prototypes:
+-   class: "UIControl"
+    customClass: "UIDiscountLabel"
+    name: "DiscountLabel"
+    input: false
+    classes: "discount-label type=action"
+    components:
+        Background: {}
+        LinearLayout:
+            orientation: "RightToLeft"
+            spacing: 5.000000
+        SizePolicy:
+            verticalPolicy: "PercentOfFirstChild"
+        StyleSheet:
+            styles: "~res:/UI/Screens/Lobby/Common/DiscountLabel.style.yaml;~res:/UI/Screens/Fonts.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Image"
+        input: false
+        components:
+            Background:
+                perPixelAccuracy: "PER_PIXEL_ACCURACY_ENABLED"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfContent"
+                verticalPolicy: "PercentOfContent"
+    -   class: "UIStaticText"
+        name: "Value"
+        classes: "text-color-premium header4"
+        components:
+            Background:
+                align: ["LEFT", "TOP"]
+            UITextComponent:
+                text: "-ERR%"
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                verticalPolicy: "PercentOfParent"

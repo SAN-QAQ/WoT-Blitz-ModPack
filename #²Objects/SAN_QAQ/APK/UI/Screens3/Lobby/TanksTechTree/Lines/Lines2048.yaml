@@ -1,0 +1,13 @@
+Header:
+    version: "92"
+Prototypes:
+-   class: "UIControl"
+    name: "Lines"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 216.000000
+            verticalPolicy: "FixedSize"
+            verticalValue: 96.000000

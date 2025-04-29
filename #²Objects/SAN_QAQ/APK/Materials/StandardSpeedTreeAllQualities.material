@@ -1,0 +1,5 @@
+MaterialTemplate:
+    ULTRA : "~res:/Materials/PBRSpeedTree.material"
+    HIGH : "~res:/Materials/SpeedTree.SphericalLit.material"
+    MEDIUM : "~res:/Materials/SpeedTree.SphericalLit.material"
+    LOW : "~res:/Materials/SpeedTree.SphericalLit.material"

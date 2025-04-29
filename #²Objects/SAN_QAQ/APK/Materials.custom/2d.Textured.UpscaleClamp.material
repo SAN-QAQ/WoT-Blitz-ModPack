@@ -1,0 +1,6 @@
+Material:
+    Shader: ~res:/Materials.custom/shaders/upscale-clamp
+    RenderState:
+        blend: true
+    Passes:
+        2d:

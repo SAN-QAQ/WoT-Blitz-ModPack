@@ -1,0 +1,61 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Dialog/TextDialog.yaml"
+- "~res:/UI/Screens3/Lobby/Common/ButtonNoBlur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "TwinkAccountDialog"
+    size: [1024.000000, 768.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        UIDataParamsComponent: {}
+    children:
+    -   prototype: "TextDialog/TextDialog"
+        name: "ChooseTextDialog"
+        components:
+            UIDataParamsComponent:
+                args:
+                    "contentControl": "control(\"~res:/UI/Screens3/Common/Settings/AccountManagement/SingleRealm/UseExistingAccountErrorDialogContent.yaml\", { }, [ ])"
+                    "acceptButtonControl": "ChangeServerButton"
+                    "headerImage": "\"~res:/Gfx/Lobby/icons/icon_dialog_attention\""
+                    "header": "\"\""
+                    "optionalButton": "\"Persona/UseExistingAccountError/ButtonCaption/Close\""
+                    "type": "eDialogType.CHOOSE"
+                eventActions:
+                - ["BACK_SHORTCUT", "", ""]
+                - ["START_CLOSING_ANIMATION", "", ""]
+                - ["ACCENT_CLICKED", "", ""]
+                - ["OPTIONAL_CLICKED", "CANCEL", ""]
+        children:
+        -   path: "DialogContent"
+            components:
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "when localize(\"LANGUAGE_CODE\") == \"th\" -> 500, 448"
+            children: []
+Slots:
+-   class: "UIControl"
+    name: "ChangeServerButton"
+    size: [200.000000, 48.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+    children:
+    -   prototype: "ButtonNoBlur/Button"
+        name: "ButtonPositive"
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+            UIDataParamsComponent:
+                args:
+                    "caption": "\"Persona/UseExistingAccountError/ButtonCaption/ChangeServer\""
+                    "size": "eButtonSize.NORMAL"
+                    "type": "eButtonType.POSITIVE"
+                eventActions:
+                - ["ON_CLICK_BUTTON", "ON_CHANGE_SERVER_CLICK", ""]

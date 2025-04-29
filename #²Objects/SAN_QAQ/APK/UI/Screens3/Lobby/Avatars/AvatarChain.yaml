@@ -1,0 +1,581 @@
+Header:
+    version: 140
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+- "~res:/UI/Screens3/Lobby/Common/ButtonNoBlur.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "AvatarChain"
+    size: [348.000000, 1000.000000]
+    input: false
+    classes: "grey-shark-90-bg"
+    components:
+        Background: {}
+        UIRoundedCornersComponent:
+            radius: "10"
+        LinearLayout:
+            orientation: "TopDown"
+        SizePolicy:
+            horizontalPolicy: "FixedSize"
+            horizontalValue: 348.000000
+            verticalPolicy: "Formula"
+            verticalFormula: "when parent == 0 -> childrenSum, min(childrenSum, parentRest)"
+        UIDataParamsComponent:
+            params:
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["AvatarChain", "chain", "null", "{ }"]
+        UIDataLocalVarsComponent:
+            data:
+            - ["float", "itemHeight", "72.000000"]
+            - ["float", "containerPositionOffsetY", "0.000000"]
+        UIDataLocalBindingsComponent:
+            data:
+            - ["eButtonType", "buttonType", "when chain.selectedIndex == chain.installedIndex -> eButtonType.OPTIONAL_LIGHT, eButtonType.POSITIVE"]
+            - ["bool", "isChain", "chain.avatars.Size() > 1"]
+            - ["AvatarModel", "selectedAvatar", "chain.avatars[chain.selectedIndex]"]
+            - ["bool", "isIconUrl", "selectedAvatar.resource.avatar.iconType == eAvatarIconType.URL"]
+            - ["bool", "isIconPath", "selectedAvatar.resource.avatar.iconType == eAvatarIconType.RESOURCE"]
+            - ["bool", "selectedHasProgress", "not isNull(selectedAvatar.questProgress)"]
+            - ["string", "obtainingText", "when isChain and selectedHasProgress -> selectedAvatar.questProgress.description, selectedAvatar.obtainingMethods"]
+            - ["bool", "isAvatarReceived", "selectedAvatar.resource.quantity > 0"]
+            - ["string", "mainButtonText", "when not isAvatarReceived -> \"\", chain.selectedIndex == chain.installedIndex -> \"#common:DialogButton/Remove\", \"#common:DialogButton/SetUp\""]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Avatars/Animations/AvatarChain.actions"
+        StyleSheet:
+            styles: "~res:/UI/Screens3/Color.style.yaml"
+    children:
+    -   class: "UIControl"
+        name: "Spacer1"
+        input: false
+        classes: "grey-shark-90-bg"
+        components:
+            Background: {}
+            UIOpacityComponent: {}
+            UIRoundedCornersComponent:
+                radius: "10;10;0;0"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 16.000000
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UIOpacityComponent.opacity", "when isChain -> 1.000000, 0.000000"]
+    -   class: "UIControl"
+        name: "Scroll"
+        input: false
+        components:
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "Formula"
+                verticalFormula: "when parent == 0 -> firstChild, min(firstChild, parentRest)"
+        children:
+        -   class: "UIScrollView"
+            name: "UIScrollView"
+            autoUpdate: true
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "Formula"
+                    verticalFormula: "when parent == 0 -> firstChild + 32, min(firstChild + 32, parent)"
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            children:
+            -   class: "UIScrollViewContainer"
+                name: "scrollContainerControl"
+                scrollDirection: "kVertical"
+                components:
+                    LinearLayout:
+                        orientation: "TopDown"
+                        padding: "12"
+                        spacing: 20.000000
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfChildrenSum"
+                    UILayoutEventComponent:
+                        positionChangedEvent: "ChainAvatarContainerUpdate"
+                        positionChangedEventData: "itemHeight, _parentSize.Y, _position.Y"
+                        sizeChangedEvent: "ChainAvatarContainerUpdate"
+                        sizeChangedEventData: "itemHeight, _parentSize.Y, _position.Y"
+                    StyleSheet:
+                        styles: "~res:/UI/Screens3/Color.style.yaml"
+                children:
+                -   class: "UIControl"
+                    name: "InputContainer"
+                    size: [32.000000, 32.000000]
+                    components:
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfParent"
+                -   class: "UIControl"
+                    name: "Header"
+                    input: false
+                    components:
+                        Anchor:
+                            leftAnchorEnabled: true
+                        LinearLayout:
+                            padding: "20"
+                            spacing: 16.000000
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfMaxChild"
+                    children:
+                    -   class: "UIControl"
+                        name: "HeaderRight"
+                        size: [32.000000, 32.000000]
+                        visible: true
+                        input: false
+                        components:
+                            Anchor: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfMaxChild"
+                                verticalPolicy: "PercentOfMaxChild"
+                        children:
+                        -   class: "UIControl"
+                            name: "Avatar"
+                            position: [20.000000, 24.000000]
+                            size: [70.000000, 80.000000]
+                            input: false
+                            components:
+                                Anchor:
+                                    enabled: true
+                                    hCenterAnchorEnabled: true
+                                    vCenterAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfMaxChild"
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIChildComponent0:
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Common/Resource/PlayerAvatar.yaml"
+                                    args:
+                                        "avatar": "selectedAvatar.resource.avatar"
+                                        "interactive": "false"
+                                        "size": "eAvatarSize.BIG"
+                                        "animated": "true"
+                    -   class: "UIControl"
+                        name: "HeaderLeft"
+                        size: [308.000000, 85.000000]
+                        components:
+                            Anchor: {}
+                            LinearLayout:
+                                orientation: "TopDown"
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfChildrenSum"
+                        children:
+                        -   class: "UIControl"
+                            name: "Grade"
+                            position: [99.000000, 0.000000]
+                            size: [171.259995, 20.000000]
+                            input: false
+                            components:
+                                Background:
+                                    drawType: "DRAW_ALIGNED"
+                                Anchor:
+                                    leftAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfMaxChild"
+                                    verticalPolicy: "PercentOfMaxChild"
+                                UIChildComponent0:
+                                    prototypePath: "~res:/UI/Screens3/Lobby/Common/GradesSmall.yaml"
+                                    args:
+                                        "grade": "selectedAvatar.resource.grade"
+                        -   class: "UIControl"
+                            name: "Spacer"
+                            size: [8.000000, 8.000000]
+                            input: false
+                        -   class: "UIControl"
+                            name: "Text"
+                            position: [0.000000, 30.000000]
+                            size: [32.000000, 32.000000]
+                            input: false
+                            classes: "regular t-subtitle white-wild-sand-text"
+                            components:
+                                UITextComponent:
+                                    multiline: "MULTILINE_ENABLED"
+                                    align: ["LEFT"]
+                                    useRtlAlign: "DONT_USE"
+                                Anchor:
+                                    enabled: true
+                                    leftAnchorEnabled: true
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfParent"
+                                    verticalPolicy: "PercentOfContent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                            bindings:
+                            - ["UITextComponent.text", "localize(selectedAvatar.resource.title)"]
+                        -   class: "UIControl"
+                            name: "TemporaryInfo"
+                            input: false
+                            classes: "t-body regular color=white-wild-sand-50-text"
+                            components:
+                                UITextComponent:
+                                    text: "storage/Items/TemporaryItem/Subheader"
+                                    colorInheritType: "COLOR_IGNORE_PARENT"
+                                    align: ["LEFT", "VCENTER"]
+                                SizePolicy:
+                                    horizontalPolicy: "PercentOfContent"
+                                    verticalPolicy: "PercentOfContent"
+                                StyleSheet:
+                                    styles: "~res:/UI/Screens3/Font.style.yaml;~res:/UI/Screens3/Color.style.yaml"
+                            bindings:
+                            - ["visible", "selectedAvatar.resource.lifetime > 0L"]
+                -   class: "UIControl"
+                    name: "DescriptionSection"
+                    input: false
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "Formula"
+                            horizontalFormula: "parent - 40"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    bindings:
+                    - ["visible", "selectedAvatar.resource.description != \"\""]
+                    children:
+                    -   class: "UIControl"
+                        name: "Title"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        classes: "bold t-caps white-wild-sand-text"
+                        components:
+                            UITextComponent:
+                                align: ["LEFT", "HCENTER"]
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfContent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "capitalize(localize(\"storage/Items/Description\"))"]
+                    -   class: "UIControl"
+                        name: "Text"
+                        position: [0.000000, 27.000000]
+                        size: [308.000000, 81.000000]
+                        input: false
+                        classes: "regular t-body white-wild-sand-70-text"
+                        components:
+                            UITextComponent:
+                                multiline: "MULTILINE_ENABLED"
+                                fitting: "FITTING_REDUCE"
+                                align: ["LEFT"]
+                                useRtlAlign: "DONT_USE"
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                verticalPolicy: "PercentOfContent"
+                            UIChildComponent0: {}
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "localize(selectedAvatar.resource.description)"]
+                -   class: "UIControl"
+                    name: "ObtainingSection"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 348.000000
+                            verticalPolicy: "PercentOfChildrenSum"
+                    bindings:
+                    - ["visible", "obtainingText != \"\""]
+                    children:
+                    -   class: "UIControl"
+                        name: "Title"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        classes: "bold t-caps white-wild-sand-text"
+                        components:
+                            UITextComponent:
+                                align: ["LEFT", "HCENTER"]
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 308.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 16.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "capitalize(localize(\"storage/Items/Obtainment\"))"]
+                    -   class: "UIControl"
+                        name: "Text"
+                        position: [0.000000, 27.000000]
+                        size: [308.000000, 81.000000]
+                        input: false
+                        classes: "regular t-body white-wild-sand-70-text"
+                        components:
+                            UITextComponent:
+                                multiline: "MULTILINE_ENABLED"
+                                fitting: "FITTING_REDUCE"
+                                align: ["LEFT"]
+                                useRtlAlign: "DONT_USE"
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                horizontalValue: 88.000000
+                                verticalPolicy: "PercentOfContent"
+                            UIChildComponent0: {}
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "localize(obtainingText)"]
+                -   class: "UIControl"
+                    name: "TimeSection"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                            spacing: 8.000000
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 348.000000
+                            verticalPolicy: "PercentOfChildrenSum"
+                    bindings:
+                    - ["visible", "selectedAvatar.resource.lifetime > 0L"]
+                    children:
+                    -   class: "UIControl"
+                        name: "Title"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        classes: "bold t-caps white-wild-sand-text"
+                        components:
+                            UITextComponent:
+                                align: ["LEFT", "HCENTER"]
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 308.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 16.000000
+                            StyleSheet:
+                                styles: "~res:/UI/Screens3/Color.style.yaml;~res:/UI/Screens3/Font.style.yaml"
+                        bindings:
+                        - ["UITextComponent.text", "capitalize(localize(\"storage/Items/TemporaryItem/Countdown\"))"]
+                    -   class: "UIControl"
+                        name: "TimerHolder"
+                        input: false
+                        components:
+                            Anchor:
+                                hCenterAnchorEnabled: true
+                                bottomAnchorEnabled: false
+                                bottomAnchor: 0.000000
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfParent"
+                                horizontalValue: 88.000000
+                                verticalPolicy: "PercentOfFirstChild"
+                            UIChildComponent0:
+                                childType: "kPrototype"
+                                prototypePath: "~res:/UI/Screens3/Lobby/Common/Timer.yaml"
+                                args:
+                                    "timerSize": "eTimerSize.Small"
+                                    "bgStyle": "\"black-70-bg\""
+                                    "serverTime": "session.serverTime"
+                                    "time": "selectedAvatar.expirationTime"
+                -   class: "UIControl"
+                    name: "Chain"
+                    input: false
+                    components:
+                        LinearLayout:
+                            orientation: "TopDown"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfParent"
+                            verticalPolicy: "PercentOfChildrenSum"
+                        UILayoutEventComponent:
+                            sizeChangedEvent: "ContainerPositionUpdate"
+                            sizeChangedEventData: "_position.Y"
+                        UIRepeatComponent:
+                            control: "~res:/UI/Screens3/Lobby/Avatars/AvatarsChainCell.yaml"
+                            dataContainer: "chain.avatars"
+                            args:
+                                "avatar": "_item"
+                                "isSelected": "chain.selectedIndex == _index"
+                                "isInstalled": "chain.installedIndex == _index"
+                                "receivedCount": "chain.receivedCount"
+                                "index": "_index"
+                            eventActions:
+                            - ["ON_RESOURCE_CLICKED", "ON_CHAIN_ITEM_SELECTED", "_index"]
+                            elementNameExpression: "\"chain_avatar_item_\" + str(_index)"
+                    bindings:
+                    - ["visible", "isChain"]
+        -   class: "UIControl"
+            name: "TopFader"
+            input: false
+            classes: "grey-shark-90-bg"
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_TO_RECT"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                    spriteModification: ["FLIP_VERTICAL"]
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    topAnchorEnabled: true
+                    topAnchor: -1.000000
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 20.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["visible", "isChain"]
+        -   class: "UIControl"
+            name: "BottomFader"
+            input: false
+            classes: "grey-shark-90-bg"
+            components:
+                Background:
+                    drawType: "DRAW_SCALE_TO_RECT"
+                    sprite: "~res:/Gfx/Lobby/backgrounds/bg_gradient_vertical_0-100"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                    bottomAnchor: -1.000000
+                IgnoreLayout: {}
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "FixedSize"
+                    verticalValue: 20.000000
+                StyleSheet:
+                    styles: "~res:/UI/Screens3/Color.style.yaml"
+            bindings:
+            - ["visible", "isChain"]
+        -   prototype: "VerticalScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: 4.000000
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                IgnoreLayout: {}
+                ScrollBarDelegate:
+                    delegate: "../UIScrollView"
+            children:
+            -   path: "slider"
+                visible: true
+                children: []
+    -   class: "UIControl"
+        name: "Spacer2"
+        input: false
+        classes: "grey-shark-90-bg"
+        components:
+            Background: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 12.000000
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["visible", "isAvatarReceived"]
+    -   class: "UIControl"
+        name: "Buttons"
+        size: [32.000000, 32.000000]
+        input: false
+        classes: "grey-shark-90-bg"
+        components:
+            Background: {}
+            LinearLayout:
+                orientation: "RightToLeft"
+                padding: "20"
+                spacing: 8.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfMaxChild"
+        bindings:
+        - ["visible", "isAvatarReceived"]
+        children:
+        -   prototype: "ButtonNoBlur/Button"
+            name: "InstallButton"
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                UIDataParamsComponent:
+                    args:
+                        "caption": "localize(mainButtonText)"
+                        "enabled": "true"
+                        "size": "eButtonSize.NORMAL"
+                        "type": "buttonType"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_INSTALL", ""]
+            children:
+            -   path: "TapArea"
+                components:
+                    UIInputEventComponent:
+                        onTouchUpInside: "BUTTON_CLICKED"
+                children: []
+            -   path: "TapArea/Content/CaptionWrapper/Caption"
+                components:
+                    UITextComponent: {}
+                bindings:
+                - ["UITextComponent.text", "caption"]
+        -   prototype: "ButtonNoBlur/Button"
+            name: "SprayingButton"
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                UIDataParamsComponent:
+                    args:
+                        "caption": "localize(\"#common:DialogButton/Exchange\")"
+                        "enabled": "selectedAvatar.sellable"
+                        "size": "eButtonSize.NORMAL"
+                        "type": "eButtonType.OPTIONAL_LIGHT"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "ON_EXCHANGE", ""]
+            bindings:
+            - ["visible", "enabled"]
+            children:
+            -   path: "TapArea"
+                components:
+                    UIInputEventComponent:
+                        onTouchUpInside: "BUTTON_CLICKED"
+                children: []
+            -   path: "TapArea/Content/CaptionWrapper/Caption"
+                components:
+                    UITextComponent: {}
+                bindings:
+                - ["UITextComponent.text", "caption"]
+    -   class: "UIControl"
+        name: "Spacer3"
+        size: [32.000000, 32.000000]
+        input: false
+        classes: "grey-shark-90-bg"
+        components:
+            Background: {}
+            UIOpacityComponent: {}
+            UIRoundedCornersComponent:
+                radius: "0;0;10;10"
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "FixedSize"
+                verticalValue: 16.000000
+            StyleSheet:
+                styles: "~res:/UI/Screens3/Color.style.yaml"
+        bindings:
+        - ["UIOpacityComponent.opacity", "when isChain -> 1.000000, 0.000000"]

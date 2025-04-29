@@ -1,0 +1,75 @@
+uniform sampler2D specularBRDF;
+uniform samplerCUBE diffuseIrradianceMap;
+uniform samplerCUBE specularReflectionMap;
+
+[auto][a] property float environmentRotation;
+[auto][a] property float2 mipmapLevel;
+
+inline float3 blendNormal(float3 n1, float3 n2)
+{
+	return normalize(float3(n1.xy + n2.xy, n1.z * n2.z));
+}
+
+inline float3 getPBR(float3 polygonN, float3 N, float3 V, float3 L, float3 H, float3 lightColor, float3 baseColor, float metallic, float roughness, float occlusion, float shadow, float3 emissive)
+{
+	float3 R = lerp(N, reflect(-V, N), saturate(-roughness * 1.35 + 1.0));
+	R += polygonN * saturate(dot(-polygonN, R));
+
+	float NdotL = saturate(dot(N, L));
+	float NdotV = saturate(dot(N, V));
+	float NdotH = saturate(dot(N, H));
+	float VdotH = saturate(dot(V, H));
+
+	float envTheta = environmentRotation * _PI_20;
+	float roughnessS = roughness * roughness;
+	float a = roughnessS * roughnessS;
+	float b = saturate(roughness * 0.25 + (roughnessS * 0.125 + 0.125));
+	float c = (NdotH * a - NdotH) * NdotH + 1.0;
+	float d = a * 0.25 * (1.0 / max((lerp(NdotL, 1.0, b) * lerp(NdotV, 1.0, b)) * (c * c), 0.0001));
+	float e = (VdotH * VdotH) * (roughness * 2.0) + 0.5;
+	float f = lerp(1.0, e, pow5Exp(NdotL)) * lerp(1.0, e, pow5Exp(NdotV));
+	float2 dfg = tex2D(specularBRDF, float2(NdotV, roughness)).xy;
+	float2 envRotTheta = float2(cos(envTheta), sin(envTheta));
+	float3 diffuseColor = lerp(baseColor, const0List3, metallic);
+	float3 f0 = lerp(float3(0.04, 0.04, 0.04), baseColor, metallic);
+	float3 light0 = lightColor * (NdotL * _INVERSE_PI);
+	float3 sI = f0 * dfg.x + dfg.yyy;
+	float3 sD = lerp(f0, const1List3, pow5Exp(VdotH));
+	float3 dI = -sI * diffuseColor + diffuseColor;
+	float3 dD = -sD * diffuseColor + diffuseColor;
+	float4 envN = float4(envRotTheta * N.x, envRotTheta * N.y);
+	float4 envR = float4(envRotTheta * R.x, envRotTheta * R.y);
+
+	float3 diffuseIBL = texCUBElod(diffuseIrradianceMap, float3(envN.x + envN.w, envN.z - envN.y, N.z), 0.0).rgb * dI;
+	float3 specularIBL = texCUBElod(specularReflectionMap, float3(envR.x + envR.w, envR.z - envR.y, R.z), log2(roughness) * 1.2 + (mipmapLevel.x - 5.0)).rgb * sI;
+	float3 diffuseDirect = light0 * dD * f;
+	float3 specularDirect = light0 * sD * d;
+	float3 result = const0List3;
+
+	#if VIEW_AMBIENT
+		result += diffuseIBL * occlusion;
+		result += specularIBL * occlusion;
+	#endif
+
+	#if VIEW_DIFFUSE
+		result += diffuseDirect * shadow;
+	#endif
+
+	#if VIEW_SPECULAR
+		result += specularDirect * shadow;
+	#endif
+
+	#if EMISSIVE_ALBEDO || EMISSIVE_COLOR || TILED_DECAL_EMISSIVE_ALBEDO || TILED_DECAL_EMISSIVE_COLOR || TILED_DECAL_SPREADING
+		result += emissive * 1.5;
+	#endif
+
+	return result;
+}
+
+inline float4 getPbrPointLight(float3 dirToLight, float lightRadius, float colorFalloff)
+{
+	float disToLight = length(dirToLight) + 0.0001;
+	float attenuation = _PI_60 * (1.0 / pow(disToLight, colorFalloff));
+
+	return float4(dirToLight * (1.0 / disToLight), -attenuation * smoothstep(lightRadius * 0.95, lightRadius, disToLight) + attenuation);
+}

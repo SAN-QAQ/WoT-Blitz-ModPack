@@ -1,0 +1,261 @@
+default:
+  ignore:
+    - '~res:/Gfx/UI/LobbyCommon/avatars/grades/avatar-grade-38.psd'
+    - '~res:/Gfx/UI/LobbyCommon/avatars/masks/avatar-details-38.psd'
+    - '~res:/Gfx/UI/LobbyCommon/avatars/masks/avatar-mask-38.psd'
+    - '~res:/UI/Screens/Battle/Styles/BattleEquipmentStyles.yaml'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_Lunar/'
+  images:
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/armour_piercing'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/battle_rage'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/camouflageNet'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/close_combat_master'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/deadly_accuracy'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/desperado'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/fast_capture_0'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/fast_capture_1'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/fire_fighting'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/lucky_shot'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/repair'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/skilled_ranging_1'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/skilled_ranging_2'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/skilled_ranging_3'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/skilled_ranging_4'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/sniper'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/stereoscope'
+    - '~res:/Gfx/UI/BattleScreenHUD/StatusEffectIcons/surrounded_by_enemy'
+    - '~res:/Gfx/UI/BattleScreenHUD/ModuleDamaged'
+    - '~res:/Gfx/UI/CommonUIElements/avatars/avatar-default-icon'
+    - '~res:/Gfx/Shared/boosters/booster_battle-xp'
+    - '~res:/Gfx/Shared/boosters/booster_credit'
+    - '~res:/Gfx/Shared/boosters/booster_crew-xp'
+    - '~res:/Gfx/Shared/boosters/booster_equipment'
+    - '~res:/Gfx/Shared/boosters/booster_free-xp'
+    - '~res:/Gfx/Shared/boosters/booster_gold'
+    - '~res:/Gfx/Shared/boosters/booster_2023_halloween'
+    - '~res:/Gfx/Shared/boosters/booster_2024_halloween'
+    - '~res:/Gfx/Shared/boosters/booster_skill_point'
+    - '~res:/Gfx/Shared/tank-supply/consumables/Polish-consumables/small/consumable_tungsten-tip_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/movable-armor/small/consumable_movable-armor_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/freeburner/small/consumable_freeburner_xs'
+  actions:
+    - '~res:/UI/Screens/Battle/ButtonPressFadeAnimation.actions'
+    - '~res:/UI/Screens/Battle/AtgmMarkerExplosionAnimation.animation'
+  styles:
+    - '~res:/UI/Styles/BattleRibbons.yaml'
+    - '~res:/UI/Screens/Battle/Styles/CritBadgeStyles.yaml'
+    - '~res:/UI/Screens/Battle/Styles/ShellStyles.yaml'
+    - '~res:/UI/Screens/FontsFs.yaml'
+  fonts:
+    - '~res:/Fonts/arialmb.ttf'
+    - '~res:/Fonts/WarHeliosCondC.ttf'
+    - '~res:/Fonts/WarHeliosCondCBold.ttf'
+    - '~res:/Fonts/HelveticaNeueWorld-55Roman.ttf'
+localization.vi: {}
+localization.zh-Hant:
+  fonts:
+    - '~res:/Fonts/XinGothic-TC-W6.otf'
+localization.zh-Hans:
+  fonts:
+    - '~res:/Fonts/XinGothic-SC-W6.ttf'
+localization.th: {}
+localization.tr: {}
+localization.ru: {}
+localization.pt: {}
+localization.pl: {}
+localization.ko: {}
+localization.ja: {}
+localization.it: {}
+localization.fr: {}
+localization.fi: {}
+localization.es: {}
+localization.en: {}
+localization.en_GB: {}
+localization.de: {}
+localization.cs: {}
+localization.ar: {}
+localization.hi:
+  fonts:
+    - '~res:/Fonts/NotoSans-Regular.ttf'
+    - '~res:/Fonts/NotoSans-SemiBold.ttf'
+localization.uk: {}
+input_mode.touch_screen_mode:
+  images:
+    - '~res:/Gfx/UI/BattleScreenHUD/Joypad'
+input_mode.gamepad_mode:
+  actions:
+    - '~res:/UI/Screens3/Common/NintendoSwitch/Scheme/SetFocusedControl.animation'
+    - '~res:/UI/Screens3/Common/NintendoSwitch/Scheme/ControlStates.actions'
+    - '~res:/UI/Screens3/Common/PointingArrow/PointingArrow.animation'
+  images:
+    - '~res:/Gfx/Shared/icons/nintendo-switch/icon_switch_a_m'
+    - '~res:/Gfx/Shared/icons/nintendo-switch/icon_switch_press_l_m'
+    - '~res:/Gfx/Shared/icons/nintendo-switch/icon_switch_press_r_m'
+    - '~res:/Gfx/Shared/icons/nintendo-switch/icon_switch_zl_m'
+    - '~res:/Gfx/Shared/icons/nintendo-switch/icon_switch_zr_m'
+    - '~res:/Gfx/Shared/controls/cursor/bg_circle-24px-2px'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_body_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_a_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_b_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_direction_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_down_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_left_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_minus_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_plus_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_r_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_right_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_top_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_x_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_y_m'
+    - '~res:/Gfx/Shared/backgrounds/nintendo-switch/bg_switch_control_zl_m'
+game_mode.2019_Halloween:
+  allow:
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/'
+  images:
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_curse_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_curse_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_hunters-mark_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_hunters-mark_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_lightning_1_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_lightning_1_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_lightning_2_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_lightning_2_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_moonwalk_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_moonwalk_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_pretend-dead_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_return-in-time_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_splash_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_splash_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_vortex_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_berserk_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_berserk_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_berserk_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_come-back-kit_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_come-back-kit_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_damage-boost_1_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_damage-boost_1_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_damage-boost_2_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_damage-boost_2_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_duplet_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_duplet_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_enemy-reload-time_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_engine-boost_1_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_engine-boost_2_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_ghost_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_ramming_1_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_ramming_2_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_reload-boost_1_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_reload-boost_1_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_reload-boost_2_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_reload-boost_2_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_fortune_1_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_fortune_1_s'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_fortune_1_xs'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_fortune_2_m'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_fortune_2_s'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2019_Halloween/provision_fortune_2_xs'
+game_mode.2020_Mad-games:
+  allow:
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/'
+  images:
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_forsage_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_hunters_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_dash_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_stealth_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_buff_1_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_buff_4_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_vampire-heal_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_ram_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_moonwalk_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_shield_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_buff_3_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_buff_2_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_victim_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_vampire_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/small/consumable_reflection_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_moonwalk_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_hunters_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_buff_1_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_forsage_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_victim_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_dash_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_vampire-heal_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_vampire_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_stealth_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_buff_3_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_buff_2_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_shield_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_ram_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_buff_4_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2020_Mad-games/normal/consumable_reflection_s'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2020_Mad-games/provision_revenge_s'
+    - '~res:/Gfx/Shared/tank-supply/provisions/2020_Mad-games/provision_revenge_xs'
+game_mode.2021_Lunar:
+  allow:
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_Lunar/'
+  images:
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_Lunar/normal/consumable_jump_s'
+game_mode.2021_BossMode:
+  allow:
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_moonwalk_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/'
+  images:
+    - '~res:/Gfx/Shared/HUD/bossmode/icon_role-boss_xs'
+    - '~res:/Gfx/Shared/HUD/bossmode/icon_role-healer_xs'
+    - '~res:/Gfx/Shared/HUD/bossmode/icon_role-killer_xs'
+    - '~res:/Gfx/Shared/HUD/bossmode/icon_role-kamikaze_xs'
+    - '~res:/Gfx/Shared/HUD/bossmode/icon_role-graviton_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2019_Halloween/consumable_moonwalk_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/small/consumable_energy-shield_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/small/consumable_poisoned-shells_xs'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_aura-of-healing_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_bang-boom_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_damage-resistance_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_energy-shield_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_enhanced-shot_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_gravity-shot_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_poisoned-shells_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/normal/consumable_scatter_s'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_aura-of-healing_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_bang-boom_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_damage-resistance_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_energy-shield_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_enhanced-shot_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_gravity-shot_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_poisoned-shells_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_scatter_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_shot-heailing_m'
+    - '~res:/Gfx/Shared/tank-supply/consumables/2021_BossMode/big/consumable_tanks-ttx-up_m'
+  fonts:
+    - '~res:/Fonts/HelveticaNeueWorld-75Bold.ttf'
+battle_hints:
+  allow:
+    - '~res:/Gfx/Battle/tips/notifications'
+  actions:
+    - '~res:/UI/Screens3/Battle/BattleHints/ArmorHighlight/RicochetAnimation.animation'
+  images:
+    - '~res:/Gfx/Battle/tips/notifications/ammo-change'
+    - '~res:/Gfx/Battle/tips/notifications/exit-sniper-mode'
+    - '~res:/Gfx/Battle/tips/notifications/light'
+    - '~res:/Gfx/Battle/tips/notifications/shield'
+    - '~res:/Gfx/Battle/tips/notifications/target'
+    - '~res:/Gfx/Battle/tips/notifications/team'
+    - '~res:/Gfx/Battle/tips/notifications/repair_kit'
+    - '~res:/Gfx/Battle/tips/notifications/tank-destroyed'
+battle_hints.tutor:
+  allow:
+    - '~res:/Gfx/Battle/tips/notificationsTutor'
+  actions:
+    - '~res:/UI/Screens3/Battle/BattleHints/VictoryHint/VictoryHintContentShow.animation'
+    - '~res:/UI/Screens3/Battle/BattleHints/VictoryHint/VictoryHintContentHide.animation'
+  images:
+    - '~res:/Gfx/Battle/tips/notificationsTutor/flag'
+    - '~res:/Gfx/Battle/tips/notificationsTutor/controls-touch'
+    - '~res:/Gfx/Battle/tips/notificationsTutor/icon_controls-keyboard'
+    - '~res:/Gfx/Battle/tips/notificationsTutor/icon_controls-click'
+    - '~res:/Gfx/Battle/tips/notificationsTutor/icon_controls-camera'

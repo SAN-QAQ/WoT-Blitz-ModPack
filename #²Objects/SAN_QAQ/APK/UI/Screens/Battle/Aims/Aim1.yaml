@@ -1,0 +1,488 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens/Battle/Shell.yaml"
+- "~res:/UI/Screens/Battle/UGN.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "LayoutProtector"
+    size: [300.000000, 300.000000]
+    input: false
+    components:
+        UIDynamicAtlasComponent:
+            atlasId: "AimAtlasId"
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "HitHighlight"
+        size: [800.000000, 600.000000]
+        visible: false
+        input: false
+        components:
+            UIDynamicAtlasFillComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "RecochetHighlight"
+        size: [800.000000, 600.000000]
+        visible: false
+        input: false
+        components:
+            UIDynamicAtlasFillComponent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+    -   class: "UIControl"
+        name: "TubeWrapper"
+        visible: false
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        children:
+        -   class: "UIControl"
+            name: "TubeLeftTop"
+            input: false
+            components:
+                UIDynamicAtlasImageComponent:
+                    imagePath: "~res:/Gfx/Battle/HUD/aim/tube.psd"
+                    drawType: "ScaleToRect"
+                Anchor:
+                    leftAnchorEnabled: true
+                    topAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "screenHeight/2"
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 50.000000
+        -   class: "UIControl"
+            name: "TubeLeftBottom"
+            input: false
+            components:
+                UIDynamicAtlasImageComponent:
+                    imagePath: "~res:/Gfx/Battle/HUD/aim/tube.psd"
+                    flip: ["FLIP_VERTICAL"]
+                    drawType: "ScaleToRect"
+                Anchor:
+                    leftAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "screenHeight/2"
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 50.000000
+        -   class: "UIControl"
+            name: "TubeRightTop"
+            input: false
+            components:
+                UIDynamicAtlasImageComponent:
+                    imagePath: "~res:/Gfx/Battle/HUD/aim/tube.psd"
+                    flip: ["FLIP_HORIZONTAL"]
+                    drawType: "ScaleToRect"
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "screenHeight/2"
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 50.000000
+        -   class: "UIControl"
+            name: "TubeRightBottom"
+            input: false
+            components:
+                UIDynamicAtlasImageComponent:
+                    imagePath: "~res:/Gfx/Battle/HUD/aim/tube.psd"
+                    flip: ["FLIP_HORIZONTAL", "FLIP_VERTICAL"]
+                    drawType: "ScaleToRect"
+                Anchor:
+                    rightAnchorEnabled: true
+                    bottomAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "Formula"
+                    horizontalFormula: "screenHeight/2"
+                    verticalPolicy: "PercentOfParent"
+                    verticalValue: 50.000000
+    -   class: "UIControl"
+        customClass: "UISightCursor"
+        name: "UISightCursor"
+        size: [300.000000, 300.000000]
+        input: false
+        classes: "sight ammo-type=shell aim-version=aim1"
+        components:
+            UIAnimationComponent:
+                animations: "SIGHT_CURSOR_SWITCH_AMMO_ANIM,~res:/UI/Screens/Battle/CursorFadeInOutAnimation.animation"
+            UIOpacityComponent:
+                opacity: 1.000000
+            UIDynamicAtlasImageComponent: {}
+            Anchor:
+                hCenterAnchorEnabled: true
+                vCenterAnchorEnabled: true
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+            StyleSheet:
+                styles: "~res:/UI/Screens/Battle/Aims/Aim.style.yaml"
+        children:
+        -   class: "UIControl"
+            name: "arcadeCursor"
+            size: [232.000000, 40.000000]
+            visible: true
+            input: false
+            classes: "arcade-sight"
+            components:
+                UIDynamicAtlasImageComponent: {}
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+        -   class: "UIControl"
+            name: "rotateControl"
+            size: [300.000000, 300.000000]
+            pivot: [0.500000, 0.500000]
+            input: false
+            components:
+                Anchor:
+                    enabled: true
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfParent"
+            children:
+            -   class: "UIControl"
+                name: "sightCursorZoom"
+                size: [220.000000, 60.000000]
+                visible: false
+                input: false
+                classes: "snipe-sight"
+                components:
+                    UIDynamicAtlasImageComponent: {}
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "FixedSize"
+                        horizontalValue: 232.000000
+                        verticalPolicy: "PercentOfMaxChild"
+                children:
+                -   class: "UIControl"
+                    name: "Decoration"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    classes: "decoration"
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        LinearLayout:
+                            orientation: "TopDown"
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfMaxChild"
+                            verticalPolicy: "PercentOfChildrenSum"
+                    children:
+                    -   class: "UIControl"
+                        name: "DecorateTop"
+                        size: [182.000000, 91.000000]
+                        input: false
+                        components:
+                            UIDynamicAtlasImageComponent:
+                                imagePath: "~res:/Gfx/Battle/HUD/aim/bg_aim-decoration.psd"
+                            Anchor:
+                                leftAnchorEnabled: true
+                    -   class: "UIControl"
+                        name: "DecorateBottom"
+                        size: [182.000000, 91.000000]
+                        input: false
+                        components:
+                            UIDynamicAtlasImageComponent:
+                                imagePath: "~res:/Gfx/Battle/HUD/aim/bg_aim-decoration.psd"
+                                flip: ["FLIP_VERTICAL"]
+                            Anchor:
+                                leftAnchorEnabled: true
+                -   class: "UIControl"
+                    name: "Camera"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    classes: "camera-aim"
+                    components:
+                        UIDynamicAtlasImageComponent: {}
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+            -   prototype: "UGN/UgnUvn"
+                name: "UgnLeft"
+                position: [48.000000, 0.000000]
+                pivot: [0.000000, 0.500000]
+                components:
+                    UIDynamicAtlasImageComponent:
+                        frame: 5
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                children:
+                -   path: "Glow"
+                    components:
+                        UIDynamicAtlasImageComponent:
+                            frame: 4
+            -   prototype: "UGN/UgnUvn"
+                name: "UgnRight"
+                position: [800.000000, 0.000000]
+                pivot: [1.000000, 0.500000]
+                components:
+                    UIDynamicAtlasImageComponent:
+                        frame: 7
+                    Anchor:
+                        vCenterAnchorEnabled: true
+                children:
+                -   path: "Glow"
+                    components:
+                        UIDynamicAtlasImageComponent:
+                            frame: 6
+            -   prototype: "UGN/UgnUvn"
+                name: "UvnTop"
+                position: [0.000000, 200.000000]
+                pivot: [0.500000, 1.000000]
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+            -   prototype: "UGN/UgnUvn"
+                name: "UvnBottom"
+                position: [0.000000, 452.277832]
+                pivot: [0.500000, 0.000000]
+                components:
+                    UIDynamicAtlasImageComponent:
+                        frame: 3
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                children:
+                -   path: "Glow"
+                    components:
+                        UIDynamicAtlasImageComponent:
+                            frame: 2
+            -   class: "UIControl"
+                name: "distanceContainer"
+                size: [84.000000, 20.000000]
+                input: false
+                classes: "cont rangefinder"
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    LinearLayout:
+                        padding: "8;0"
+                        spacing: 3.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens/Battle/Aims/Aim.style.yaml;~res:/UI/Screens/Battle/Aims/AimCont.style.yaml;~res:/UI/Screens3/FontAtlas.style.yaml"
+                children:
+                -   class: "UIControl"
+                    name: "atgm-bg"
+                    size: [32.000000, 32.000000]
+                    input: false
+                    components:
+                        UIDynamicAtlasImageComponent:
+                            flip: ["FLIP_HORIZONTAL"]
+                        Anchor:
+                            leftAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                        StyleSheet:
+                            styles: "~res:/UI/Screens/Battle/Aims/AimAtgmBg.style.yaml"
+                -   class: "UIControl"
+                    name: "distance"
+                    input: false
+                    components:
+                        UIDynamicAtlasTextComponent:
+                            text: "250"
+                            fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                            fontSize: 16.000000
+                            align: ["RIGHT", "VCENTER"]
+                            shadowOffset: [0.000000, -1.000000]
+                            availableCharacters: "0123456789.-"
+                            dynamic: true
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+                -   class: "UIControl"
+                    name: "m"
+                    input: false
+                    components:
+                        UIDynamicAtlasTextComponent:
+                            text: "#common:Shortening/Meter"
+                            fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                            fontSize: 16.000000
+                            align: ["LEFT", "VCENTER"]
+                            shadowOffset: [0.000000, -1.000000]
+                        SizePolicy:
+                            horizontalPolicy: "PercentOfContent"
+                            verticalPolicy: "PercentOfContent"
+            -   class: "UIControl"
+                name: "reloadAndFuelContainer"
+                size: [40.000000, 20.000000]
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                children:
+                -   class: "UIControl"
+                    name: "reloadTimeContainer"
+                    size: [40.000000, 20.000000]
+                    visible: true
+                    input: false
+                    classes: "cont state=loaded"
+                    components:
+                        Anchor:
+                            hCenterAnchorEnabled: true
+                            vCenterAnchorEnabled: true
+                        StyleSheet:
+                            styles: "~res:/UI/Screens/Battle/Aims/AimCont.style.yaml"
+                    children:
+                    -   class: "UIControl"
+                        name: "atgm-bg"
+                        size: [32.000000, 32.000000]
+                        input: false
+                        components:
+                            UIDynamicAtlasImageComponent: {}
+                            Anchor:
+                                rightAnchorEnabled: true
+                                rightAnchor: -7.000000
+                                vCenterAnchorEnabled: true
+                            IgnoreLayout: {}
+                            SizePolicy:
+                                horizontalPolicy: "PercentOfContent"
+                                verticalPolicy: "PercentOfContent"
+                            StyleSheet:
+                                styles: "~res:/UI/Screens/Battle/Aims/AimAtgmBg.style.yaml"
+                    -   class: "UIControl"
+                        name: "reloadTime"
+                        input: false
+                        components:
+                            UIDynamicAtlasTextComponent:
+                                text: "11.4"
+                                fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                                fontSize: 16.000000
+                                align: ["RIGHT", "VCENTER"]
+                                shadowOffset: [0.000000, -1.000000]
+                                availableCharacters: "0123456789."
+                                dynamic: true
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 40.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 20.000000
+                    -   class: "UIControl"
+                        name: "s"
+                        input: false
+                        components:
+                            Anchor:
+                                leftAnchorEnabled: true
+                                leftAnchor: 15.000000
+                                bottomAnchorEnabled: true
+                                bottomAnchor: -17.500000
+                            UIDynamicAtlasTextComponent:
+                                text: "#common:Shortening/Second"
+                                fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                                fontSize: 16.000000
+                                align: ["HCENTER", "VCENTER"]
+                                shadowOffset: [0.000000, -1.000000]
+                            SizePolicy:
+                                horizontalPolicy: "FixedSize"
+                                horizontalValue: 40.000000
+                                verticalPolicy: "FixedSize"
+                                verticalValue: 20.000000
+                -   class: "UIControl"
+                    name: "fuelIcon"
+                    size: [15.000000, 15.000000]
+                    input: false
+                    components:
+                        UIDynamicAtlasImageComponent:
+                            imagePath: "~res:/Gfx/Battle/HUD/aim/atgm/icon-fuel.png"
+                        Anchor:
+                            rightAnchorEnabled: true
+                            rightAnchor: -4.000000
+                            bottomAnchorEnabled: true
+                            bottomAnchor: -20.000000
+        -   class: "UIControl"
+            name: "Shells"
+            input: false
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+                RadialLayout:
+                    startingAngle: 225.000000
+                    stepAngle: 6.000000
+                    radius: 115.000000
+                    direction: "BOTH"
+                    rotateChildren: true
+                    rotateChildrenAngle: 180.000000
+            children:
+            -   prototype: "Shell/Shell"
+                name: "Shell"
+        -   class: "UIControl"
+            name: "DrumReload"
+            size: [73.000000, 41.000000]
+            input: false
+            components:
+                UIDynamicAtlasImageComponent:
+                    imagePath: "~res:/Gfx/Battle/HUD/aim/PumpDrumRecharge.psd"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    hCenterAnchor: -100.000000
+                    vCenterAnchorEnabled: true
+                    vCenterAnchor: 100.000000
+            children:
+            -   class: "UIControl"
+                name: "Text"
+                position: [2.000000, -3.000000]
+                size: [36.000000, 20.000000]
+                input: false
+                components:
+                    UIDynamicAtlasTextComponent:
+                        text: "11.4"
+                        fontPath: "~res:/Fonts/XinGothic-SC-W6.ttf"
+                        fontSize: 14.000000
+                        shadowColor: [0.000000, 0.000000, 0.000000, 1.000000]
+                        shadowOffset: [1.000000, 1.000000]
+                        availableCharacters: "0123456789."
+                        dynamic: true
+        -   class: "UIControl"
+            name: "AutoAimMode"
+            pivot: [0.500000, 0.500000]
+            visible: false
+            input: false
+            classes: "auto-aim"
+            components:
+                UIDynamicAtlasImageComponent:
+                    imagePath: "~res:/Gfx/Battle/HUD/aim/AimCursor.psd"
+                Anchor:
+                    hCenterAnchorEnabled: true
+                    vCenterAnchorEnabled: true
+    -   class: "UIControl"
+        name: "GunAim"
+        position: [150.000000, 150.000000]
+        size: [36.000000, 36.000000]
+        pivot: [0.500000, 0.500000]
+        input: false
+        components:
+            UIDynamicAtlasImageComponent:
+                imagePath: "~res:/Gfx/Shared/HUD/aim/custom1/aim_gun-marker.psd"
+    -   class: "UIControl"
+        name: "GunAimServer"
+        position: [150.000000, 150.000000]
+        size: [21.000000, 19.000000]
+        pivot: [0.500000, 0.000000]
+        visible: false
+        input: false
+        components:
+            UIDynamicAtlasImageComponent:
+                imagePath: "~res:/Gfx/Battle/HUD/aim/GunAimServer.psd"

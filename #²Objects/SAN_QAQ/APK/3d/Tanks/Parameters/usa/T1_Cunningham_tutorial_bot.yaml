@@ -1,0 +1,39 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/usa-T1"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/usa-T1"
+    blitzModelPath: "Tanks/USA/T1_Cunningham.sc2"
+    collisionMesh: "CollisionMeshes/usa-T1_Cunningham.sc2"
+    smokeEffectPath: "FX/Exhausts/hullback.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/usa/tractor"
+    engineSoundNPC: "tanks/npc/engine/usa/tractor"
+    chassisSoundPC: "tanks/pc/treads/tractor"
+    chassisSoundNPC: "tanks/npc/treads/tractor"
+    exclusionMask: "Camouflages/usa/CamouflageMasks/T1_Cunningham_CM.tex"
+chassis:
+    textureScale: -1.340000
+mechanics: [{name: "LTCamo"}]
+collision:
+    hull:
+        points: [-0.000001, 0.000154, -0.670809]
+        bbox:
+            min: [-0.856832, -1.514800, -0.341838]
+            max: [0.856773, 1.800636, 0.896911]
+        averageThickness:
+            turret_01: 11.567777
+    chassis:
+        points: [0.000030, 0.005446, 0.000001]
+        bbox:
+            min: [-0.889612, -1.886785, 0.000019]
+            max: [0.889553, 1.886901, 0.955823]
+    turret_01:
+        points: [0.000015, 0.687071, -1.508144]
+        bbox:
+            min: [-0.535509, -0.535258, -0.390396]
+            max: [0.538804, 0.655630, 0.587003]
+    gun_01:
+        points: [-0.001237, 0.179306, -1.718243]
+        bbox:
+            min: [-0.220107, -0.331303, -0.182370]
+            max: [0.220166, 0.352684, 0.170485]

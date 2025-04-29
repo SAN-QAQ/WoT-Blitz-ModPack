@@ -1,0 +1,280 @@
+#define _PI 3.141592653589793238
+#define _PI_05 1.570796326794896619
+#define _PI_20 6.283185307179586476
+#define _PI_25 7.853981633974483096
+#define _PI_40 12.56637061435917295
+#define _PI_60 18.84955592153875943
+#define _INVERSE_PI 0.318309886183790671
+#define _LOG2_E 1.442695040888963
+#define COMMON_INCLUDED 1
+#define const0List2 float2(0.0, 0.0)
+#define const0List3 float3(0.0, 0.0, 0.0)
+#define const0List4 float4(0.0, 0.0, 0.0, 0.0)
+#define const05List2 float2(0.5, 0.5)
+#define const05List3 float3(0.5, 0.5, 0.5)
+#define const05List4 float4(0.5, 0.5, 0.5, 0.5)
+#define const1List2 float2(1.0, 1.0)
+#define const1List3 float3(1.0, 1.0, 1.0)
+#define const1List4 float4(1.0, 1.0, 1.0, 1.0)
+#define const2List2 float2(2.0, 2.0)
+#define const2List3 float3(2.0, 2.0, 2.0)
+#define const2List4 float4(2.0, 2.0, 2.0, 2.0)
+#define const00001List2 float2(0.0001, 0.0001)
+#define const00001List3 float3(0.0001, 0.0001, 0.0001)
+#define const00001List4 float4(0.0001, 0.0001, 0.0001, 0.0001)
+#define lumCof float3(0.2627, 0.6781, 0.0592)
+#define rgbMixList float3(0.33333333, 0.33333333, 0.33333333)
+#define heightList float4(0.00022888532845, 0.00366216525521, 0.05859464408331, 0.93751430533303)
+
+#ensuredefined ALBEDO_TRANSFORM 0
+#ensuredefined ALLOW_POINT_LIGHTS 0
+#ensuredefined ALPHA8 0
+#ensuredefined ALPHABLEND 0
+#ensuredefined ALPHASTEPVALUE 0
+#ensuredefined ALPHATEST 0
+#ensuredefined ALPHATESTVALUE 0
+#ensuredefined ALPHA_EROSION 0
+#ensuredefined ALPHA_MASK 0
+#ensuredefined AMBIENT_ATTENUATION_BOX 0
+#ensuredefined BLEND_BY_ANGLE 0
+#ensuredefined BLEND_WITH_CONST_ALPHA 0
+#ensuredefined CLAMP 0
+#ensuredefined COLORBLIND_MODE 0
+#ensuredefined CURSOR 0
+#ensuredefined CUT_LEAF 0
+#ensuredefined DECAL_ALBEDO 0
+#ensuredefined DECAL_NORMAL 0
+#ensuredefined DECAL_TREAD 0
+#ensuredefined DEPTH_PREPASS_ENABLED 0
+#ensuredefined DEPTH_TARGET_IS_FRAMEBUFFER 0
+#ensuredefined DEVICE_TIER 0
+#ensuredefined DEVICE_TIER_LOW 0
+#ensuredefined DIELECTRIC 0
+#ensuredefined DIRT_COVERAGE 0
+#ensuredefined DISTANCE_ATTENUATION 0
+#ensuredefined DISTANCE_FADE_OUT 0
+#ensuredefined EMISSIVE_ALBEDO 0
+#ensuredefined EMISSIVE_COLOR 0
+#ensuredefined ENABLE_FOG 0
+#ensuredefined ENABLE_HIGH_QUALITY_FOG 0
+#ensuredefined ENVIRONMENT_MAPPING 0
+#ensuredefined ENVIRONMENT_MAPPING_NORMALMAP 0
+#ensuredefined FADE_OUT_WITH_TIME 0
+#ensuredefined FEATURE_ENABLED_ARM_COLOR_FETCH 0
+#ensuredefined FEATURE_ENABLED_ARM_DEPTH_STENCIL_FETCH 0
+#ensuredefined FEATURE_ENABLED_EXT_COLOR_FETCH 0
+#ensuredefined FEATURE_ENABLED_METAL_COLOR_FETCH 0
+#ensuredefined FLATALBEDO 0
+#ensuredefined FLATCOLOR 0
+#ensuredefined FLOWMAP 0
+#ensuredefined FOG_ATMOSPHERE 0
+#ensuredefined FOG_HALFSPACE 0
+#ensuredefined FOG_HALFSPACE_LINEAR 0
+#ensuredefined FOG_LINEAR 0
+#ensuredefined FORCED_SHADOW_DIRECTION 0
+#ensuredefined FORCE_2D_MODE 0
+#ensuredefined FORCE_POINT_LIGHTS_ENABLED 0
+#ensuredefined FRAME_BLEND 0
+#ensuredefined FRESNEL_TO_ALPHA 0
+#ensuredefined GRAYSCALE 0
+#ensuredefined HARD_SKINNING 0
+#ensuredefined HEIGHTMAP_FLOAT_TEXTURE 0
+#ensuredefined INSTANCED_CHAIN 0
+#ensuredefined LANDSCAPE_CURSOR 0
+#ensuredefined LANDSCAPE_HAS_METALLIC_AND_EMISSION 0
+#ensuredefined LANDSCAPE_HEIGHT_BLEND 0
+#ensuredefined LANDSCAPE_HEIGHT_BLEND_ALLOWED 0
+#ensuredefined LANDSCAPE_LOD_MORPHING 0
+#ensuredefined LANDSCAPE_MORPHING_COLOR 0
+#ensuredefined LANDSCAPE_PBR 0
+#ensuredefined LANDSCAPE_RELAXMAP 0
+#ensuredefined LANDSCAPE_SCALED_TILES_NON_PBR 0
+#ensuredefined LANDSCAPE_SEPARATE_LIGHTMAP_CHANNEL 0
+#ensuredefined LANDSCAPE_TOOL 0
+#ensuredefined LANDSCAPE_TOOL_MIX 0
+#ensuredefined LANDSCAPE_USE_INSTANCING 0
+#ensuredefined LANDSCAPE_USE_RELAXMAP 0
+#ensuredefined LOD_COLOR 0
+#ensuredefined LOD_TRANSITION 0
+#ensuredefined MATERIAL_DECAL 0
+#ensuredefined MATERIAL_DETAIL 0
+#ensuredefined MATERIAL_LIGHTMAP 0
+#ensuredefined MATERIAL_TEXTURE 0
+#ensuredefined NORMALIZED_BLINN_PHONG 0
+#ensuredefined PARTICLES_ALPHA_REMAP 0
+#ensuredefined PARTICLES_FLOWMAP 0
+#ensuredefined PARTICLES_FRESNEL_TO_ALPHA 0
+#ensuredefined PARTICLES_MASK 0
+#ensuredefined PARTICLES_NOISE 0
+#ensuredefined PARTICLES_NOISE_AFFECT_FLOW 0
+#ensuredefined PARTICLES_PERSPECTIVE_MAPPING 0
+#ensuredefined PARTICLES_THREE_POINT_GRADIENT 0
+#ensuredefined PARTICLES_VERTEX_ANIMATION 0
+#ensuredefined PARTICLES_VERTEX_ANIMATION_MASK 0
+#ensuredefined PASS_NAME 0
+#ensuredefined PBR_LIGHTMAP 0
+#ensuredefined PBR_POINT_LIGHT 0
+#ensuredefined PBR_SHADING 0
+#ensuredefined PBR_SPEEDTREE 0
+#ensuredefined PBR_TEXTURE_SET 0
+#ensuredefined PIXEL_LIT 0
+#ensuredefined POINT_LIGHTS_OVERRIDE_SHADOW 0
+#ensuredefined POINT_LIGHT_AFFECTS_UNLIT 0
+#ensuredefined PUSH_TO_NEAR_PLANE_HACK 0
+#ensuredefined REAL_REFLECTION 0
+#ensuredefined RED8_TO_ALPHA 0
+#ensuredefined SETUP_LIGHTMAP 0
+#ensuredefined SHADOW_CASCADES_BLEND 0
+#ensuredefined SHADOW_CASCADES_COUNT 0
+#ensuredefined SHADOW_PCF 0
+#ensuredefined SHADOW_RECEIVER 0
+#ensuredefined SIMPLE_BLINN_PHONG 0
+#ensuredefined SOFT_COASTLINE 0
+#ensuredefined SOFT_PARTICLES 0
+#ensuredefined SOFT_SKINNING 0
+#ensuredefined SPECULAR 0
+#ensuredefined SPEEDTREE_JOINT_TRANSFORM 0
+#ensuredefined SPEED_TREE_LEAF 0
+#ensuredefined SPHERICAL_HARMONICS_4 0
+#ensuredefined SPHERICAL_HARMONICS_9 0
+#ensuredefined SPHERICAL_LIT 0
+#ensuredefined TEST_OCCLUSION 0
+#ensuredefined TEXTURE0_ANIMATION_SHIFT 0
+#ensuredefined TEXTURE0_SHIFT_ENABLED 0
+#ensuredefined TEXTURED 0
+#ensuredefined TILED_DECAL_ANIMATED_EMISSION 0
+#ensuredefined TILED_DECAL_ANIM_MASK 0
+#ensuredefined TILED_DECAL_BLEND_NORMAL 0
+#ensuredefined TILED_DECAL_EMISSIVE_ALBEDO 0
+#ensuredefined TILED_DECAL_EMISSIVE_COLOR 0
+#ensuredefined TILED_DECAL_MASK 0
+#ensuredefined TILED_DECAL_NOISE_SPREADING 0
+#ensuredefined TILED_DECAL_OVERRIDE_ROUGHNESS_METALLIC 0
+#ensuredefined TILED_DECAL_SPATIAL_SPREADING 0
+#ensuredefined TILED_DECAL_TRANSFORM 0
+#ensuredefined USE_SHADOW_MAP 0
+#ensuredefined VEGETATION_BEND 0
+#ensuredefined VERTEX_COLOR 0
+#ensuredefined VERTEX_DISPLACEMENT 0
+#ensuredefined VERTEX_FOG 0
+#ensuredefined VERTEX_LIT 0
+#ensuredefined VERTEX_SHADER_TEXTURE_FETCH_SUPPORTED 0
+#ensuredefined VERTEX_VERTICAL_OFFSET 0
+#ensuredefined VIEW_ALBEDO 0
+#ensuredefined VIEW_ALL 0
+#ensuredefined VIEW_AMBIENT 0
+#ensuredefined VIEW_AMBIENTOCCLUSION 0
+#ensuredefined VIEW_DIFFUSE 0
+#ensuredefined VIEW_METALLIC 0
+#ensuredefined VIEW_NORMAL 0
+#ensuredefined VIEW_NORMAL_FINAL 0
+#ensuredefined VIEW_ROUGHNESS 0
+#ensuredefined VIEW_SPECULAR 0
+#ensuredefined WAVE_ANIMATION 0
+#ensuredefined WETNESS_MULTILEVEL 0
+#ensuredefined WETNESS_SIMPLIFIED 0
+#ensuredefined WIND_ANIMATION 0
+
+#if !VIEW_ALBEDO && !VIEW_AMBIENT && !VIEW_DIFFUSE && !VIEW_SPECULAR
+	#define VIEW_ALL 1
+	#define VIEW_ALBEDO 1
+	#define VIEW_AMBIENT 1
+	#define VIEW_DIFFUSE 1
+	#define VIEW_SPECULAR 1
+#endif
+
+#if ALLOW_POINT_LIGHTS
+	#if FORCE_POINT_LIGHTS_ENABLED || PIXEL_LIT || PBR_SHADING
+		#define MAX_POINT_LIGHTS 2
+	#else
+		#define MAX_POINT_LIGHTS 1
+	#endif
+#else
+	#define MAX_POINT_LIGHTS 0
+#endif
+
+#define DRAW_DEPTH_ONLY ((PASS_NAME == PASS_DEPTHONLY) || (PASS_NAME == PASS_SHADOWMAP))
+#define DRAW_WATER_DEFORMATION (PASS_NAME == PASS_WATERDEFORMATION)
+#define NEEDS_LOCAL_POSITION (AMBIENT_ATTENUATION_BOX || WETNESS_MULTILEVEL || (TILED_DECAL_MASK && TILED_DECAL_SPATIAL_SPREADING))
+#define RECEIVE_SHADOW (USE_SHADOW_MAP && SHADOW_RECEIVER)
+#define RETRIEVE_FRAG_COLOR_AVAILABLE (FEATURE_ENABLED_ARM_COLOR_FETCH || FEATURE_ENABLED_EXT_COLOR_FETCH || FEATURE_ENABLED_METAL_COLOR_FETCH)
+#define RETRIEVE_FRAG_DEPTH_AVAILABLE (DEPTH_PREPASS_ENABLED || FEATURE_ENABLED_ARM_DEPTH_STENCIL_FETCH || FEATURE_ENABLED_METAL_COLOR_FETCH)
+#define TILED_DECAL_SPREADING (TILED_DECAL_NOISE_SPREADING || TILED_DECAL_SPATIAL_SPREADING)
+#define USE_VERTEX_DISPLACEMENT (VERTEX_SHADER_TEXTURE_FETCH_SUPPORTED && VERTEX_DISPLACEMENT)
+#define USE_VERTEX_FOG (!DRAW_DEPTH_ONLY && ENABLE_FOG && VERTEX_FOG)
+#define USE_FOG_HALFSPACE (USE_VERTEX_FOG && FOG_HALFSPACE && ENABLE_HIGH_QUALITY_FOG)
+
+float DefaultFirstStatement()
+{
+	return 1.0;
+}
+
+inline int intMod(int a, int b)
+{
+	return a - (a / b) * b;
+}
+
+inline uint uintMod(uint a, uint b)
+{
+	return a - (a / b) * b;
+}
+
+inline float pow5Exp(float num)
+{
+	return exp2((-num * 5.55473 - 6.98316) * num);
+}
+
+inline float2 rotate(float2 vec, float2 theta)
+{
+	return float2(dot(vec, float2(theta.x, -theta.y)), dot(vec, theta.yx));
+}
+
+inline float3 unpackNormal(float2 normal)
+{
+	normal += normal - const1List2;
+
+	return float3(normal, sqrt(saturate(1.0 - dot(normal, normal))));
+}
+
+inline float3 mixNormal(float3 base, float3 detail)
+{
+	base = base * float3(const2List2, -2.0) - float3(const1List2, 0.0);
+	detail = detail * float3(-const2List2, 2.0) + float3(const1List2, -1.0);
+
+	return base * dot(base, detail) + detail * base.z;
+}
+
+inline float3 toLinear(float3 SRGB)
+{
+	return lerp(SRGB * 0.07739938080495, pow(SRGB * 0.9478672985782 + float3(0.0521327014218, 0.0521327014218, 0.0521327014218), 2.4), step(float3(0.04044823627711, 0.04044823627711, 0.04044823627711), SRGB));
+}
+
+inline float3 toSRGB(float3 Linear)
+{
+	return lerp(Linear * 12.92, pow(Linear, 0.41666666666666) * 1.055 - float3(0.055, 0.055, 0.055), step(float3(0.0031308, 0.0031308, 0.0031308), Linear));
+}
+
+inline float3 mul3Fast0(float3 vec, float4x4 mat)
+{
+	return mul(vec, float3x3(mat[0].xyz, mat[1].xyz, mat[2].xyz));
+}
+
+inline float3 mul3Fast1(float3 vec, float4x4 mat)
+{
+	return mat[0].xyz * vec.x + (mat[1].xyz * vec.y + (mat[2].xyz * vec.z + mat[3].xyz));
+}
+
+inline float4 mul4Fast0(float3 vec, float4x4 mat)
+{
+	return mat[0] * vec.x + mat[1] * vec.y + mat[2] * vec.z;
+}
+
+inline float4 mul4Fast1(float3 vec, float4x4 mat)
+{
+	return mat[0] * vec.x + (mat[1] * vec.y + (mat[2] * vec.z + mat[3]));
+}
+
+inline float4x4 vecToMat(float4 vecA, float4 vecB, float4 vecC)
+{
+	return float4x4(float4(vecA.x, vecB.x, vecC.x, 0.0), float4(vecA.y, vecB.y, vecC.y, 0.0), float4(vecA.z, vecB.z, vecC.z, 0.0), float4(vecA.w, vecB.w, vecC.w, 1.0));
+}

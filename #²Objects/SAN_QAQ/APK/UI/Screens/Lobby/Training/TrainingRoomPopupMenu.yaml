@@ -1,0 +1,85 @@
+Header:
+    version: "23"
+ImportedPackages:
+- "~res:/UI/Screens/Common.yaml"
+- "~res:/UI/Screens/Lobby/Training/Room.yaml"
+- "~res:/UI/Screens/Fonts.yaml"
+- "~res:/UI/Screens/Common/PopupMenu.yaml"
+Controls:
+-   class: "UIControl"
+    name: "background"
+    visible: true
+    components:
+        Background:
+            usePostProcessedSprite: true
+        UIPostProcessTextureComponent0:
+            materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+            needClearAlphaAfterRender: true
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent1:
+            materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        UIPostProcessTextureComponent2:
+            materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+            scale: 0.500000
+            useVirtualCoordinateSystem: true
+            minFilter: "Linear"
+            magFilter: "Linear"
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+    children:
+    -   prototype: "PopupMenu/PopupMenu"
+        name: "PopupMenu"
+        size: [400.000000, 180.000000]
+        pivot: [0.500000, 0.000000]
+        components:
+            LinearLayout:
+                orientation: "TopDown"
+            SizePolicy:
+                verticalPolicy: "PercentOfChildrenSum"
+            UIAttachLayoutSlaveComponent:
+                attachId: "TrainingRoomMenu"
+                masterAlign: "BottomCenter"
+                slaveAlign: "Pivot"
+            StyleSheet:
+                styles: "~res:/UI/Screens/Lobby/Training/TrainingRoomPopupMenu.yaml;~res:/UI/Screens/Lobby/Training/Styles/PrebattleRoomStyles.yaml"
+        children:
+        -   path: "Arrow"
+            components:
+                IgnoreLayout: {}
+                Anchor:
+                    hCenterAnchor: 0.000000
+        -   prototype: "PopupMenu/ActionsPopupButton"
+            name: "ResetCountButton"
+            position: [-62.000000, 38.000000]
+            components:
+                UIInputEventComponent:
+                    onTouchUpInside: "RESET_SCORE"
+            children:
+            -   path: "Text"
+                components:
+                    UITextComponent:
+                        text: "#training_rooms:RoomScreen/DropDown/Reset"
+        -   prototype: "PopupMenu/ActionsPopupButton"
+            name: "ChangeSpawnsButton"
+            position: [15.000000, 94.000000]
+            components:
+                UIInputEventComponent:
+                    onTouchUpInside: "CHANGE_SPAWNS"
+            children:
+            -   path: "Text"
+                components:
+                    UITextComponent:
+                        text: "#training_rooms:RoomScreen/DropDown/ChangeSpawns"
+            -   prototype: "PopupMenu/SeparateLine"
+                name: "SeparateLine"
+                position: [30.000000, 31.000000]

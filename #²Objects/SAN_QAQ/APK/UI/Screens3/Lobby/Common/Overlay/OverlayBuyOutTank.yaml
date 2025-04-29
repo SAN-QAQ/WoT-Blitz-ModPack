@@ -1,0 +1,202 @@
+Header:
+    version: 155
+ImportedPackages:
+- "~res:/UI/Screens3/Common/VerticalScrollBar.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "OverlayScreen"
+    size: [1200.000000, 900.000000]
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+        ModalInput: {}
+        UIInputEventComponent:
+            onTouchUpInside: "CLOSE_OVERLAY"
+        UIVirtualActionEventComponent0:
+            virtualKeyAction: "Escape"
+            keyDownEvent: "CLOSE_OVERLAY"
+        UIShortcutEventComponent:
+            shortcuts: "CLOSE_OVERLAY, Escape; CLOSE_OVERLAY, Back"
+        UIDataParamsComponent:
+            params:
+            - ["control", "popoverContent", "null", "null"]
+            - ["string", "closeButtonIcon", "\"\"", "\"\""]
+            - ["control", "titleContent", "null", "null"]
+            - ["control", "backContent", "null", "null"]
+            - ["bool", "scaleBg", "false", "false"]
+            - ["control", "footerContent", "null", "null"]
+            - ["control", "rightCornerContent", "null", "null"]
+            - ["control", "tabContent", "null", "null"]
+            - ["string", "playerName", "\"\"", "\"OverlayPlayerName\""]
+            - ["string", "clanTag", "\"\"", "\"OL_TAG\""]
+            - ["string", "title", "\"\"", "\"#Overlay Title\""]
+            - ["control", "content", "null", "null"]
+            - ["string", "customBgURL", "\"\"", "\"\""]
+            - ["vector<ResourceModel>", "headerCurrencies", "[ ]", "[ ]"]
+            - ["bool", "headerCurrenciesClickable", "false", "true"]
+            - ["bool", "hasCustomBg", "false", "false"]
+            - ["bool", "isFooterVisible", "true", "true"]
+            - ["bool", "forcedFullSize", "false", "false"]
+            - ["bool", "wasPushed", "true", "true"]
+            - ["bool", "isContentPressedToTop", "false", "false"]
+            - ["string", "imageFromClient", "\"\"", "\"\""]
+            - ["bool", "contentTopClipEnable", "true", "true"]
+            - ["bool", "hideHeader", "false", "false"]
+            events:
+            - "ON_STATS_ITEM_PRESSED"
+            - "CHANGE_SCROLL_POSITION"
+            - "OVERLAY_CLOSE_START"
+            - "BACK_EVENT"
+            - "OVERLAY_OPEN_FINISH"
+        UIDataLocalVarsComponent:
+            data:
+            - ["int", "tabBarH", "0"]
+            - ["int", "footerH", "0"]
+            - ["int", "contentH", "0"]
+        UIChildComponent0:
+            prototypePath: "~res:/UI/Screens3/Lobby/Common/Overlay/OverlayModifiedBasic.yaml"
+            args:
+                "headerCurrenciesClickable": "headerCurrenciesClickable"
+                "tabBarHeight": "tabBarH"
+                "contentHeight": "contentH"
+                "headerCurrencies": "headerCurrencies"
+                "footerHeight": "footerH"
+                "wasPushed": "wasPushed"
+                "forcedFullSize": "forcedFullSize"
+                "isFooterVisible": "isFooterVisible"
+                "hasCustomBg": "hasCustomBg"
+                "customBgURL": "customBgURL"
+                "content": "ContentArea"
+                "title": "title"
+                "clanTag": "clanTag"
+                "playerName": "playerName"
+                "tabContent": "TabBarHolder"
+                "rightCornerContent": "rightCornerContent"
+                "popoverContent": "PopoverContentArea"
+                "footerContent": "FooterContentArea"
+                "scaleBg": "scaleBg"
+                "backContent": "backContent"
+                "titleContent": "titleContent"
+                "closeButtonIcon": "closeButtonIcon"
+                "imageFromClient": "imageFromClient"
+                "hideHeader": "hideHeader"
+            eventActions:
+            - ["ON_STATS_ITEM_PRESSED", "ON_STATS_ITEM_PRESSED", "_event"]
+            - ["OVERLAY_OPEN_FINISH", "OVERLAY_OPEN_FINISH", ""]
+            - ["BACK_EVENT", "BACK_EVENT", ""]
+        UIActionComponent:
+            actionsPath: "~res:/UI/Screens3/Lobby/Common/Overlay/Overlay.actions"
+Slots:
+-   class: "UIControl"
+    name: "TabBarHolder"
+    size: [32.000000, 32.000000]
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfMaxChild"
+        UILayoutEventComponent:
+            sizeChangedEvent: "TabBarSizeChanged"
+            sizeChangedEventData: "_size.Y"
+        UIChildComponent0:
+            childType: "kControl"
+            condition: "not isNull(tabContent)"
+            control: "tabContent"
+-   class: "UIControl"
+    name: "FooterContentArea"
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "when parent < 1200 -> 800, 1040"
+            verticalPolicy: "PercentOfMaxChild"
+        UILayoutEventComponent:
+            sizeChangedEvent: "FooterSizeChanged"
+            sizeChangedEventData: "_size.Y"
+        UIChildComponent0:
+            childType: "kControl"
+            condition: "not isNull(footerContent)"
+            control: "footerContent"
+-   class: "UIControl"
+    name: "PopoverContentArea"
+    input: false
+    components:
+        Anchor:
+            hCenterAnchorEnabled: true
+        SizePolicy:
+            horizontalPolicy: "Formula"
+            horizontalFormula: "when parent < 1200 -> 800, 1040"
+            verticalPolicy: "PercentOfMaxChild"
+        UIChildComponent0:
+            childType: "kControl"
+            condition: "not isNull(popoverContent)"
+            control: "popoverContent"
+-   class: "UIControl"
+    name: "ContentArea"
+    input: false
+    components:
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIScrollView"
+        name: "ScrollArea"
+        autoUpdate: true
+        components:
+            ClipContent: {}
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfParent"
+        bindings:
+        - ["centerContent", "not isContentPressedToTop"]
+        - ["ClipContent.top", "contentTopClipEnable"]
+        children:
+        -   class: "UIScrollViewContainer"
+            name: "scrollContainerControl"
+            scrollDirection: "kVertical"
+            components:
+                SizePolicy:
+                    horizontalPolicy: "PercentOfParent"
+                    verticalPolicy: "PercentOfMaxChild"
+                UILayoutEventComponent:
+                    positionChangedEvent: "CHANGE_SCROLL_POSITION"
+                    positionChangedEventData: "_position.Y"
+            children:
+            -   class: "UIControl"
+                name: "ContentArea"
+                input: false
+                components:
+                    Anchor:
+                        hCenterAnchorEnabled: true
+                    SizePolicy:
+                        horizontalPolicy: "PercentOfParent"
+                        verticalPolicy: "PercentOfMaxChild"
+                    UILayoutEventComponent:
+                        sizeChangedEvent: "ContentSizeChanged"
+                        sizeChangedEventData: "_size.Y"
+                    UIChildComponent0:
+                        childType: "kControl"
+                        condition: "not isNull(content)"
+                        control: "content"
+                bindings:
+                - ["Anchor.topAnchorEnabled", "isContentPressedToTop"]
+                - ["Anchor.vCenterAnchorEnabled", "not isContentPressedToTop"]
+        -   prototype: "VerticalScrollBar/VerticalScrollBar"
+            name: "VerticalScrollBar"
+            visible: true
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    topAnchor: 16.000000
+                    bottomAnchorEnabled: true
+                IgnoreLayout: {}
+                ScrollBarDelegate:
+                    delegate: ".."
+            children:
+            -   path: "slider"
+                visible: true
+                children: []

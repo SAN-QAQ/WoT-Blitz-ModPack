@@ -1,0 +1,120 @@
+Header:
+    version: 134
+ImportedPackages:
+- "~res:/UI/Screens3/Lobby/Common/Button.yaml"
+- "~res:/UI/Screens3/Lobby/Common/Resource/Currencies.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Showcase"
+    size: [1633.000000, 768.000000]
+    input: false
+    components:
+        Background:
+            color: [0.000000, 0.000000, 0.000000, 0.800000]
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        LinearLayout:
+            orientation: "BottomUp"
+        UIDataParamsComponent:
+            params:
+            - ["ShowcaseFanfaresModel", "fanfaresModel", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["AccountDataModel", "account", "null", "{ }"]
+            events:
+            - "TO_HANGAR"
+            - "TO_TOP"
+    children:
+    -   class: "UIControl"
+        name: "Footer"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfParent"
+                verticalPolicy: "PercentOfFirstChild"
+            UIAttachLayoutMasterComponent:
+                attachId: "SHOWCASE_FOOTER"
+            UIChildComponent0:
+                prototypePath: "~res:/UI/Screens3/Common/Footer.yaml"
+                args:
+                    "content": "FooterContent"
+                    "leftPaddingStyle": "\"padding only-notch-padding\""
+                    "bgStyle": "\"black-50-bg\""
+Slots:
+-   class: "UIControl"
+    name: "FooterContent"
+    size: [960.000000, 48.000000]
+    input: false
+    components:
+        LinearLayout:
+            orientation: "RightToLeft"
+            spacing: 24.000000
+            dynamicSpacing: true
+        SizePolicy:
+            horizontalPolicy: "PercentOfParent"
+            verticalPolicy: "PercentOfParent"
+    children:
+    -   class: "UIControl"
+        name: "ToHangarButtonWrapper"
+        input: false
+        components:
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfChildrenSum"
+            UIAttachLayoutMasterComponent:
+                attachId: "GO_TO_TANK"
+            UILayerComponent: {}
+        bindings:
+        - ["UILayerComponent.layer", "when account.tutorialData.isTutorialActive -> 1, 0"]
+        children:
+        -   prototype: "Button/Button"
+            name: "ToHangarButton"
+            components:
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 172.000000
+                UIDataParamsComponent:
+                    args:
+                        "caption": "\"#hangar_showcase:ToTankButton\""
+                        "sound": "eButtonSound.CLOSE"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "TO_HANGAR", ""]
+    -   class: "UIControl"
+        name: "ToTopButton"
+        input: false
+        components:
+            LinearLayout:
+                spacing: 24.000000
+            SizePolicy:
+                horizontalPolicy: "PercentOfChildrenSum"
+                verticalPolicy: "PercentOfMaxChild"
+        bindings:
+        - ["visible", "not fanfaresModel.toTopPrice.resources.Empty()"]
+        children:
+        -   prototype: "Button/Button"
+            name: "ToTopButton"
+            components:
+                Anchor:
+                    hCenterAnchorEnabled: false
+                    vCenterAnchorEnabled: true
+                SizePolicy:
+                    horizontalPolicy: "FixedSize"
+                    horizontalValue: 188.000000
+                UIDataParamsComponent:
+                    args:
+                        "caption": "\"#modules_tech_tree:Top/Button\""
+                        "sound": "eButtonSound.OK"
+                        "type": "eButtonType.OPTIONAL_DARK"
+                    eventActions:
+                    - ["ON_CLICK_BUTTON", "TO_TOP", ""]
+        -   prototype: "Currencies/Resources"
+            name: "Resources"
+            components:
+                Anchor:
+                    vCenterAnchorEnabled: true
+                UIDataParamsComponent:
+                    args:
+                        "price": "fanfaresModel.toTopPrice"
+                        "canAfford": "CanAffordResources(fanfaresModel.toTopPrice, session.stats.resources, session.artefacts.artefactIds)"

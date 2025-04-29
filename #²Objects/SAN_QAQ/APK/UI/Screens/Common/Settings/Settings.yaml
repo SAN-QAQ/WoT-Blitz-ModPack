@@ -1,0 +1,408 @@
+Header:
+    version: 161
+ImportedPackages:
+- "~res:/UI/Screens/Lobby/LobbyHeader.yaml"
+- "~res:/UI/Screens/Common.yaml"
+- "~res:/UI/Screens/Common/Settings/SettingsCommon.yaml"
+- "~res:/UI/Screens/Common/MenuItem.yaml"
+- "~res:/UI/Screens3/Common/BlurModified.yaml"
+Prototypes:
+-   class: "UIControl"
+    name: "Settings"
+    size: [1024.000000, 768.000000]
+    classes: "bg=bg-lobby"
+    components:
+        Anchor:
+            leftAnchorEnabled: true
+            rightAnchorEnabled: true
+            topAnchorEnabled: true
+            bottomAnchorEnabled: true
+        UIDataParamsComponent:
+            params:
+            - ["LobbyDataModel", "lobby", "null", "{ }"]
+            - ["SessionDataModel", "session", "null", "{ }"]
+            - ["AppDataModel", "app", "null", "{ }"]
+            - ["AccountDataModel", "account", "null", "{ }"]
+            - ["PlayerOptionsView", "options", "null", "{ }"]
+        UIDataLocalVarsComponent:
+            data:
+            - ["string", "personalizedTabTitle", "\"#settings:Personalized\""]
+        StyleSheet:
+            styles: "~res:/UI/Screens/Common/Settings/Styles/Settings.style.yaml;~res:/UI/Screens3/Background.style.yaml"
+    children:
+    -   prototype: "BlurModified/BlurModified"
+        name: "ingameBackground"
+        input: false
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 0.000000
+                rightAnchorEnabled: true
+                rightAnchor: -1.000000
+                topAnchorEnabled: true
+                topAnchor: 0.000000
+                bottomAnchorEnabled: true
+                bottomAnchor: 0.000000
+    -   prototype: "LobbyHeader/Header"
+        name: "header"
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                leftAnchor: 0.000000
+                rightAnchorEnabled: true
+                rightAnchor: 0.000000
+                topAnchorEnabled: true
+                topAnchor: 0.000000
+        children:
+        -   class: "UIControl"
+            name: "resetButton"
+            position: [624.000000, 0.000000]
+            size: [400.000000, 80.000000]
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                UIAnchorSafeAreaComponent:
+                    rightSafeInset: "INSET"
+            children:
+            -   class: "UIControl"
+                name: "dropArrow"
+                position: [360.000000, 0.000000]
+                size: [40.000000, 80.000000]
+                input: false
+                components:
+                    Background:
+                        sprite: "~res:/Gfx/UI/CommonUIElements/IconArrowDropDownMenu"
+                    Anchor:
+                        rightAnchorEnabled: true
+                        rightAnchor: 0.000000
+                        topAnchorEnabled: true
+                        topAnchor: 0.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 0.000000
+            -   class: "UIStaticText"
+                name: "title"
+                size: [360.000000, 80.000000]
+                input: false
+                classes: "header3"
+                components:
+                    Background:
+                        align: ["LEFT", "TOP"]
+                    UITextComponent:
+                        text: "#settings:ResetButton"
+                        colorInheritType: "COLOR_IGNORE_PARENT"
+                        align: ["RIGHT", "VCENTER"]
+                        useRtlAlign: "DONT_USE"
+                    Anchor:
+                        leftAnchorEnabled: true
+                        leftAnchor: 0.000000
+                        rightAnchorEnabled: true
+                        rightAnchor: 40.000000
+                        topAnchorEnabled: true
+                        topAnchor: 0.000000
+                        bottomAnchorEnabled: true
+                        bottomAnchor: 0.000000
+                    StyleSheet:
+                        styles: "~res:/UI/Screens/Fonts.yaml"
+    -   class: "UIControl"
+        name: "Content"
+        size: [1024.000000, 688.000000]
+        components:
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                topAnchor: 80.000000
+                bottomAnchorEnabled: true
+        children:
+        -   class: "UIControl"
+            name: "Background"
+            input: false
+            classes: "screen-background"
+            components:
+                Background: {}
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    bottomAnchorEnabled: true
+        -   prototype: "MenuItem/MenuPane"
+            name: "Tabs"
+            position: [5.000000, 0.000000]
+            input: false
+            components:
+                Anchor:
+                    leftAnchor: 5.000000
+                    rightAnchor: 5.000000
+                    topAnchor: 1.000000
+                LinearLayout:
+                    padding: "0.000000"
+                    spacing: 2.000000
+                UISwitchBarComponent: {}
+            bindings:
+            - ["UISwitchBarComponent.selectedElement", "options.selectedTab"]
+            children:
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "Primary"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["UISwitchBarElementComponent.id", "\"PRIMARY\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/SettingsScreen/IconTabs_new"
+                            frame: 8
+                -   path: "Text"
+                    components:
+                        UITextComponent:
+                            text: "#settings:Primary"
+                -   class: "UIControl"
+                    name: "Badge"
+                    components:
+                        Background:
+                            drawType: "DRAW_SCALE_TO_RECT"
+                            sprite: "~res:/Gfx/UI/CommonUIElements/WhiteCircle"
+                            color: [1.000000, 0.000000, 0.000000, 1.000000]
+                        Anchor:
+                            rightAnchorEnabled: true
+                            rightAnchor: 7.000000
+                            topAnchorEnabled: true
+                            topAnchor: 7.000000
+                        IgnoreLayout: {}
+                        SizePolicy:
+                            horizontalPolicy: "FixedSize"
+                            horizontalValue: 16.000000
+                            verticalPolicy: "FixedSize"
+                            verticalValue: 16.000000
+                    bindings:
+                    - ["visible", "not account.tutorialData.isAccountLessonCompleted and app.sDlc.isGeneralPackLoaded and not account.tutorialData.isTutorialActive and options.selectedTab != \"PRIMARY\" and (not app.netease.neteaseAvailable or (options.phoneBindingIsAllowed and not options.phoneIsBound) or app.netease.hasNewMessages) and (not account.isKorea or (account.isKorea and (Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalEmail) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalGamecenter) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalGoogle) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalFacebook) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalLive) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalSteam) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalNetease) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalAppleLogin) or Contains(session.stats.accountAuthMethods, eAccountAuthMethods.kExternalNSwitch))))"]
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "Graphics"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["UISwitchBarElementComponent.id", "\"GRAPHICS\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/SettingsScreen/IconTabs_new"
+                            frame: 4
+                -   path: "Text"
+                    components:
+                        UITextComponent:
+                            text: "#settings:Graphics"
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "Controls"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["UISwitchBarElementComponent.id", "\"CONTROLS\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/SettingsScreen/IconTabs_new"
+                    bindings:
+                    - ["Background.frame", "int(options.inputMode)"]
+                -   path: "Text"
+                    components:
+                        UITextComponent:
+                            text: "#settings:Controls"
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "Markers"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["UISwitchBarElementComponent.id", "\"MARKERS\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/SettingsScreen/IconTabs_new"
+                            frame: 1
+                -   path: "Text"
+                    components:
+                        UITextComponent:
+                            text: "#settings:Markers"
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "Hud"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["UISwitchBarElementComponent.id", "\"HUD\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/SettingsScreen/IconTabs_new"
+                            frame: 7
+                -   path: "Text"
+                    components:
+                        UITextComponent:
+                            text: "#settings:HUD"
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "General"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["UISwitchBarElementComponent.id", "\"GENERAL\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/SettingsScreen/IconTabs_new"
+                -   path: "Text"
+                    components:
+                        UITextComponent:
+                            text: "#settings:Other"
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "Personalized"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["visible", "options.showPersonalizedTab"]
+                - ["UISwitchBarElementComponent.id", "\"PERSONALIZED\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/Lobby/icons/icon_settings_personalized"
+                -   path: "Text"
+                    components:
+                        UITextComponent: {}
+                    bindings:
+                    - ["UITextComponent.text", "capitalize(localize(personalizedTabTitle))"]
+            -   prototype: "SettingsCommon/ImageItem"
+                name: "DevOptions"
+                components:
+                    UISwitchBarElementComponent: {}
+                bindings:
+                - ["UISwitchBarElementComponent.id", "\"DEV_OPTIONS\""]
+                children:
+                -   path: "Icon"
+                    components:
+                        Background:
+                            sprite: "~res:/Gfx/UI/SettingsScreen/IconTabs_new"
+                            frame: 23
+                -   path: "Text"
+                    components:
+                        UITextComponent:
+                            text: "DEV OPTIONS"
+        -   class: "UIControl"
+            name: "TabsContent"
+            components:
+                ClipContent: {}
+                Anchor:
+                    leftAnchorEnabled: true
+                    rightAnchorEnabled: true
+                    topAnchorEnabled: true
+                    topAnchor: 76.000000
+                    bottomAnchorEnabled: true
+    -   class: "UIControl"
+        name: "resetPopUp"
+        visible: false
+        components:
+            Background:
+                usePostProcessedSprite: true
+            UIPostProcessTextureComponent0:
+                materialPath: "~res:/Materials.custom/2d.Textured.Blur.material"
+                needClearAlphaAfterRender: true
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent1:
+                materialPath: "~res:/Materials.custom/2d.Textured.HBlur.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            UIPostProcessTextureComponent2:
+                materialPath: "~res:/Materials.custom/2d.Textured.UpscaleClamp.material"
+                scale: 0.500000
+                useVirtualCoordinateSystem: true
+                minFilter: "Linear"
+                magFilter: "Linear"
+            Anchor:
+                leftAnchorEnabled: true
+                rightAnchorEnabled: true
+                topAnchorEnabled: true
+                bottomAnchorEnabled: true
+            UIAnchorSafeAreaComponent:
+                rightSafeInset: "INSET"
+        children:
+        -   prototype: "Common/PopUp"
+            name: "PopUp"
+            size: [340.000000, 150.000000]
+            input: false
+            components:
+                Anchor:
+                    rightAnchorEnabled: true
+                    rightAnchor: 10.000000
+                    topAnchorEnabled: true
+                    topAnchor: 75.000000
+            children:
+            -   class: "UIControl"
+                name: "resetAllPagesButton"
+                classes: "reset-button"
+                components:
+                    Background: {}
+                    Anchor:
+                        leftAnchorEnabled: true
+                        rightAnchorEnabled: true
+                        topAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                    StyleSheet:
+                        styles: "~res:/UI/Screens/Fonts.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                children:
+                -   class: "UIStaticText"
+                    name: "Text"
+                    classes: "header4 text-color-white"
+                    components:
+                        UITextComponent:
+                            text: "#settings:Dropdown/ResetAll"
+                        Anchor:
+                            leftAnchorEnabled: true
+                            rightAnchorEnabled: true
+                            topAnchorEnabled: true
+                            bottomAnchorEnabled: true
+                -   class: "UIControl"
+                    name: "whiteLine"
+                    size: [340.000000, 1.000000]
+                    components:
+                        Background:
+                            drawType: "DRAW_FILL"
+                            color: [0.188235, 0.254902, 0.298039, 0.298039]
+                        Anchor:
+                            leftAnchorEnabled: true
+                            rightAnchorEnabled: true
+                            bottomAnchorEnabled: true
+            -   class: "UIControl"
+                name: "resetCurrentPageButton"
+                classes: "reset-button"
+                components:
+                    Background: {}
+                    Anchor:
+                        leftAnchorEnabled: true
+                        rightAnchorEnabled: true
+                        vCenterAnchorEnabled: true
+                        bottomAnchorEnabled: true
+                    StyleSheet:
+                        styles: "~res:/UI/Screens/Fonts.yaml;~res:/UI/Screens/Common/Settings/Styles/SettingsCommon.style.yaml"
+                children:
+                -   class: "UIStaticText"
+                    name: "Text"
+                    classes: "header4 text-color-white"
+                    components:
+                        UITextComponent:
+                            text: "#settings:Dropdown/ResetScreen"
+                        Anchor:
+                            leftAnchorEnabled: true
+                            rightAnchorEnabled: true
+                            topAnchorEnabled: true
+                            bottomAnchorEnabled: true
+                        StyleSheet:
+                            styles: "~res:/UI/Screens/Fonts.yaml"

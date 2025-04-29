@@ -1,0 +1,45 @@
+resourcesPath:
+    smallIconPath: "~res:/Gfx/UI/BattleScreenHUD/SmallTankIcons/china-Renault_NC31"
+    bigIconPath: "~res:/Gfx/UI/BigTankIcons/china-Renault_NC31"
+    blitzModelPath: "Tanks/China/Renault_NC31.sc2"
+    collisionMesh: "CollisionMeshes/china-Ch06_Renault_NC31.sc2"
+    smokeEffectPath: "FX/Exhausts/right-up45.sc2"
+    fireEffectPathAlive: "FX/SmokeFire_tank_movement_new.sc2"
+    fireEffectPathDead: "FX/Fire_and_Smoke.sc2"
+    engineSoundPC: "tanks/pc/engine/de/tractor"
+    engineSoundNPC: "tanks/npc/engine/de/tractor"
+    chassisSoundPC: "tanks/pc/treads/tractor"
+    chassisSoundNPC: "tanks/npc/treads/tractor"
+treadParameters:
+    forceManualWidth: false
+    manualWidth: 1.200000
+    forceManualSpace: false
+    manualSpace: 1.000000
+    texturePath: "~res:/3d/Tanks/Common/images/France_01_tread.tex"
+chassis:
+    textureScale: -1.140000
+mechanics: [{name: "LTCamo"}]
+collision:
+    hull:
+        points: [-0.000695, 0.001000, -0.965477]
+        bbox: 
+            min: [-0.481167, -1.773006, -0.402357]
+            max: [0.481167, 2.117267, 0.790039]
+        averageThickness: 
+            turret_01: 21.521778
+            turret_02: 23.382727
+    chassis:
+        points: [0.000000, 0.004106, 0.000051]
+        bbox: 
+            min: [-0.897112, -2.165640, 0.000000]
+            max: [0.897112, 2.229140, 1.199271]
+    turret_01:
+        points: [0.002452, -0.582497, -1.619146]
+        bbox: 
+            min: [-0.540699, -0.530816, -0.454452]
+            max: [0.537560, 0.541336, 0.745856]
+    gun_01:
+        points: [0.002452, -1.014616, -1.858274]
+        bbox: 
+            min: [-0.140169, -0.328095, -0.146691]
+            max: [0.137031, 0.449236, 0.120267]
