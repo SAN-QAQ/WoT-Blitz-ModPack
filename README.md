@@ -27,7 +27,7 @@
 
 ### 🛠️使用方法
 #### 快速安装
-前往[**release**](https://github.com/SAN-QAQ/WoT-Blitz-ModPack/release)下载发布版本(如果遇到热更新可能需要手动安装修复包)和`data.zip`(可能没有)
+前往[**releases**](https://github.com/SAN-QAQ/WoT-Blitz-ModPack/releases)下载发布版本(如果遇到热更新可能需要手动安装修复包)和`data.zip`(可能没有)
 <details>
 <summary>什么是热更新?</summary>
 如果不需要下载新版本安装包，只需要进入游戏后下载资源的版本就是热更新
