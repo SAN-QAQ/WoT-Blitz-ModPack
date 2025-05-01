@@ -233,7 +233,7 @@ vertex_out vp_main(vertex_in input)
 			float NdotH = saturate(dot(N, H));
 			float VdotH = saturate(dot(V, H));
 
-			float3 fresnelOut = F_ShlickVec3(NdotV, metalFresnelReflectance);
+			float3 fresnelOut = fresnelVec3(NdotV, metalFresnelReflectance);
 			float Geo = 1.0 / (VdotH * VdotH + 0.0001);
 
 			output.diffuseVector = lightColor0 * (NdotL * _INVERSE_PI);

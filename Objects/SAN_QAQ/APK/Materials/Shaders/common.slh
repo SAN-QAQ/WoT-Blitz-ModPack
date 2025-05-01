@@ -209,19 +209,9 @@ float DefaultFirstStatement()
 	return 1.0;
 }
 
-inline int intMod(int a, int b)
-{
-	return a - (a / b) * b;
-}
-
-inline uint uintMod(uint a, uint b)
-{
-	return a - (a / b) * b;
-}
-
 inline float pow5Exp(float num)
 {
-	return exp2((-num * 5.55473 - 6.98316) * num);
+	return exp2(-num * (num * 5.55473 + 6.98316));
 }
 
 inline float2 rotate(float2 vec, float2 theta)
@@ -238,10 +228,10 @@ inline float3 unpackNormal(float2 normal)
 
 inline float3 mixNormal(float3 base, float3 detail)
 {
-	base = base * float3(const2List2, -2.0) - float3(const1List2, 0.0);
+	base = base * 2.0 + float3(-const1List2, 0.0);
 	detail = detail * float3(-const2List2, 2.0) + float3(const1List2, -1.0);
 
-	return base * dot(base, detail) + detail * base.z;
+	return base * dot(base.xy, detail.xy) + (base * detail.z - detail);
 }
 
 inline float3 toLinear(float3 SRGB)

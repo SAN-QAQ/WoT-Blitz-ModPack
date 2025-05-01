@@ -13,6 +13,11 @@
 [material][a] property float3 localBBoxMin = const0List3;
 [material][a] property float3 spreadingBorderColor = const1List3;
 
+inline int intMod(int a, int b)
+{
+	return a - (a / b) * b;
+}
+
 float getSpreadNoise(float2 texCoord)
 {
 	const float noiseSample = tex2D(perlinNoise, texCoord).a;

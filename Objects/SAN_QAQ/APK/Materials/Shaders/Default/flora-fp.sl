@@ -30,23 +30,41 @@
 
 fragment_in
 {
-	float4 projPos : POSITION0;
-	float3 worldPos : POSITION1;
-	float2 texCoord : TEXCOORD0;
+	float2 texCoord0 : TEXCOORD0;
 
-	#if USE_VERTEX_FOG
-		float4 varFog : TEXCOORD1;
-	#endif
+	#if DRAW_DEPTH_ONLY
+		float4 projPos : POSITION0;
 
-	#if !DRAW_DEPTH_ONLY
+		#if FLORA_LOD_TRANSITION
+			float3 worldPos : POSITION1;
+		#endif 
+	#else
+		#if RECEIVE_SHADOW || FLORA_LOD_TRANSITION
+			float4 projPos : POSITION0;
+		#endif
+
+		#if RECEIVE_SHADOW || FLORA_LOD_TRANSITION || FLORA_PBR_LIGHTING
+			float3 worldPos : POSITION1;
+		#endif
+
 		#if FLORA_LAYING
-			float3 vegetationTexCoord : TEXCOORD2; // .z - layingStrength
+			float3 texCoord1 : TEXCOORD1; // .z - layingStrength
 		#else
-			float2 vegetationTexCoord : TEXCOORD2;
+			float2 texCoord1 : TEXCOORD1;
+		#endif
+
+		#if USE_VERTEX_FOG
+			float4 varFog : TEXCOORD2;
 		#endif
 
 		#if FLORA_PBR_LIGHTING
-			#if FLORA_NORMAL_MAP
+			#if !FLORA_NORMAL_MAP
+				#if FLORA_ANIMATION && FLORA_FAKE_SHADOW
+					float2 animation : TEXCOORD3;
+				#endif
+
+				float4 normal : NORMAL; // .w - localHeight
+			#else
 				float4 tbnToWorld0 : TANGENTTOWORLD0; // .w - localHeight
 
 				#if FLORA_FAKE_SHADOW && FLORA_ANIMATION
@@ -55,12 +73,6 @@ fragment_in
 				#else
 					float3 tbnToWorld1 : TANGENTTOWORLD1;
 					float3 tbnToWorld2 : TANGENTTOWORLD2;
-				#endif
-			#else
-				float4 normal : NORMAL; // .w - localHeight
-
-				#if FLORA_ANIMATION && FLORA_FAKE_SHADOW
-					float2 animation : TEXCOORD3;
 				#endif
 			#endif
 		#endif
@@ -146,12 +158,10 @@ fragment_out fp_main(fragment_in input)
 {
 	fragment_out output;
 
-	float3 projPos = input.projPos.xyz * (1.0 / input.projPos.w);
-
 	#if FLORA_PBR_LIGHTING
-		float4 baseColor = tex2D(baseColorMap, input.texCoord);
+		float4 baseColor = tex2D(baseColorMap, input.texCoord0);
 	#else
-		float4 baseColor = tex2D(albedo, input.texCoord);
+		float4 baseColor = tex2D(albedo, input.texCoord0);
 	#endif
 
 	#if ALPHATEST || FLORA_LOD_TRANSITION
@@ -162,14 +172,15 @@ fragment_out fp_main(fragment_in input)
 		#endif
 
 		#if FLORA_LOD_TRANSITION
-			float toCamDis = length(input.worldPos.xy - cameraPosition.xy);
+			float toCamDis = length(cameraPosition.xy - input.worldPos.xy);
+			float2 xyNDC = input.projPos.xy * (1.0 / input.projPos.w);
 
 			#if FLORA_LOD_TRANSITION_NEAR
-				alpha *= getLodTransition(projPos.xy, smoothstep(floraLodTransitionNearRange.x, floraLodTransitionNearRange.y, toCamDis));
+				alpha *= getLodTransition(xyNDC, smoothstep(floraLodTransitionNearRange.x, floraLodTransitionNearRange.y, toCamDis));
 			#endif
 
 			#if FLORA_LOD_TRANSITION_FAR
-				alpha *= getLodTransition(projPos.xy, smoothstep(floraLodTransitionFarRange.x, floraLodTransitionFarRange.y, toCamDis) - 1.0);
+				alpha *= getLodTransition(xyNDC, smoothstep(floraLodTransitionFarRange.x, floraLodTransitionFarRange.y, toCamDis) - 1.0);
 			#endif
 		#endif
 
@@ -181,18 +192,14 @@ fragment_out fp_main(fragment_in input)
 	#endif
 
 	#if DRAW_DEPTH_ONLY
-		float depthColor = projPos.z * 0.5 + 0.5;
+		float depthColor = input.projPos.z * (1.0 / input.projPos.w) * 0.5 + 0.5;
 		output.color = float4(depthColor, depthColor, depthColor, depthColor);
 	#else
-		#if RECEIVE_SHADOW
-			float3 shadowInf = getShadow(input.worldPos, projPos.xy, 0.0);
-		#endif
-
 		#if FLORA_PBR_LIGHTING
-			float4 floraColor = tex2D(floraPbrColorMap, input.vegetationTexCoord.xy);
+			float4 floraColor = tex2D(floraPbrColorMap, input.texCoord1.xy);
 			baseColor.rgb *= floraColor.rgb;
 		#else
-			float4 floraColor = tex2D(floraColorMap, input.vegetationTexCoord.xy);
+			float4 floraColor = tex2D(floraColorMap, input.texCoord1.xy);
 			baseColor.rgb *= floraColor.rgb * floraColor.a;
 		#endif
 
@@ -203,14 +210,18 @@ fragment_out fp_main(fragment_in input)
 				float3 layingColorFactor = floraLayingColorFactor;
 			#endif
 
-			baseColor.rgb *= lerp(const1List3, layingColorFactor, input.vegetationTexCoord.z);
+			baseColor.rgb *= lerp(const1List3, layingColorFactor, input.texCoord1.z);
 		#endif
 
 		output.color = baseColor;
 
+		#if RECEIVE_SHADOW
+			float3 shadowInf = getShadow(input.worldPos, input.projPos.xy * (1.0 / input.projPos.w), 0.0);
+		#endif
+
 		#if FLORA_PBR_LIGHTING
 			#if FLORA_NORMAL_MAP
-				float3 baseNormal = unpackNormal(tex2D(baseNormalMap, input.texCoord).ga);
+				float3 baseNormal = unpackNormal(tex2D(baseNormalMap, input.texCoord0).ga);
 				baseNormal.xy *= floraNormalMapScale;
 
 				float3 N = normalize(float3(dot(baseNormal, input.tbnToWorld0.xyz), dot(baseNormal, input.tbnToWorld1.xyz), dot(baseNormal, input.tbnToWorld2.xyz)));
@@ -223,7 +234,7 @@ fragment_out fp_main(fragment_in input)
 			#include "vector-compute.slh"
 
 			float2 worldTexCoord = input.worldPos.xy * (1.0 / worldSize.xy) + const05List2;
-			worldTexCoord.y = -worldTexCoord.y - 1.0;
+			worldTexCoord.y = 1.0 - worldTexCoord.y;
 
 			#if FLORA_EDGE_MAP
 				float edgeFactor = tex2D(floraEdgeMap, worldTexCoord).r;
@@ -248,7 +259,7 @@ fragment_out fp_main(fragment_in input)
 			#endif
 
 			#if FLORA_FAKE_SHADOW
-				float2 fakeShadowTexCoord = input.texCoord * floraFakeShadowOffsetScale.zw + floraFakeShadowOffsetScale.xy;
+				float2 fakeShadowTexCoord = input.texCoord0 * floraFakeShadowOffsetScale.zw + floraFakeShadowOffsetScale.xy;
 
 				#if FLORA_ANIMATION
 					#if FLORA_NORMAL_MAP
@@ -260,13 +271,14 @@ fragment_out fp_main(fragment_in input)
 					fakeShadowTexCoord += animation * (floraFakeShadowAnimationFactor * localHeight);
 				#endif
 
-				float fakeShadowIntensity = -edgeFactor * floraFakeShadowIntensity + floraFakeShadowIntensity;
+				float fakeShadow = floraFakeShadowIntensity;
+				fakeShadow -= fakeShadow * edgeFactor;
 
 				#if FLORA_LAYING
-					fakeShadowIntensity -= fakeShadowIntensity * input.vegetationTexCoord.z;
+					fakeShadow -= fakeShadow * input.texCoord1.z;
 				#endif
 
-				occlusionShadow.y *= lerp(1.0, tex2D(floraFakeShadow, fakeShadowTexCoord).r, fakeShadowIntensity);
+				occlusionShadow.y *= lerp(1.0, tex2D(floraFakeShadow, fakeShadowTexCoord).r, fakeShadow);
 			#endif
 
 			baseColor.rgb = saturate(baseColor.rgb);

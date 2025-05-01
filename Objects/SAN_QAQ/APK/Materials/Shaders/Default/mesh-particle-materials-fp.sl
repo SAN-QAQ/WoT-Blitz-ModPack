@@ -198,12 +198,12 @@ fragment_out fp_main(fragment_in input)
 
 		#include "depth-diff.slh"
 
-		float scale = 1.0 - exp2((-depthDifferenceSlope * _LOG2_E) * (distanceDifference * distanceDifference));
+		float scale = exp2((-distanceDifference * distanceDifference) * (depthDifferenceSlope * _LOG2_E));
 
 		#if BLENDING == BLENDING_ADDITIVE
-			output.color *= scale;
+			output.color -= output.color * scale;
 		#else
-			output.color.a *= scale;
+			output.color.a -= output.color.a * scale;
 		#endif
 	#endif
 

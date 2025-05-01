@@ -13,7 +13,7 @@
 
 		float height = dot(lerp(heightmapSample.zw, heightmapSample.xy, input.data2.y * input.data6.y + dot(input.data1, input.data5)), float2(0.0038910506, 0.99610895));
 	#else
-		float4 heightmapSample = tex2Dlod(heightmap, (1.0 / float2(heightmapTextureSize, heightmapTextureSize)) * 2.0 + relativePos, 0.0);
+		float4 heightmapSample = tex2Dlod(heightmap, const05List2 * (1.0 / heightmapTextureSize) + relativePos, 0.0);
 
 		#if HEIGHTMAP_FLOAT_TEXTURE
 			float height = heightmapSample.r;

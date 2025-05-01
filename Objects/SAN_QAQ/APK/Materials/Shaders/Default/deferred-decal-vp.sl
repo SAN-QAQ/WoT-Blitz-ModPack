@@ -64,19 +64,6 @@ vertex_out vp_main(vertex_in input)
 	float3 localPos = input.localPos.xyz;
 	float4x4 worldMatrix = vecToMat(input.worldMatrix0, input.worldMatrix1, input.worldMatrix2);
 
-	#if DECAL_TREAD
-		localPos.y = lerp(localPos.y, localPos.y * input.parameters.z + input.parameters.w, localPos.x + 0.5);
-		float nearFadeDistance = treadsNearFadeDistance;
-		float farFadeDistance = treadsFarFadeDistance;
-	#else
-		float nearFadeDistance = input.parameters.y;
-		float farFadeDistance = input.parameters.z;
-	#endif
-
-	float3 worldPos = mul3Fast1(localPos, worldMatrix);
-	output.localPos = mul4Fast1(worldPos, viewProjMatrix);
-	output.projPos = output.localPos;
-
 	#if DRAW_FLORA_LAYING
 		float3 toCamDir = primaryCameraPosition - worldMatrix[3].xyz;
 	#else
@@ -86,13 +73,22 @@ vertex_out vp_main(vertex_in input)
 	float toCamDis = length(toCamDir);
 	toCamDir *= 1.0 / toCamDis;
 
-	float opacity = 1.0 - smoothstep(nearFadeDistance, farFadeDistance, toCamDis);
+	#if DECAL_TREAD
+		localPos.y = lerp(localPos.y, localPos.y * input.parameters.z + input.parameters.w, localPos.x + 0.5);
+		float opacity = 1.0 - smoothstep(treadsNearFadeDistance, treadsFarFadeDistance, toCamDis);
+	#else
+		float opacity = 1.0 - smoothstep(input.parameters.y, input.parameters.z, toCamDis);
+	#endif
 
 	#if FADE_OUT_WITH_TIME
 		opacity -= opacity * smoothstep(fadeOutTimeStartEnd.x, fadeOutTimeStartEnd.y, globalTime - input.parameters.x);
 	#else
 		opacity *= input.parameters.x;
 	#endif
+
+	float3 worldPos = mul3Fast1(localPos, worldMatrix);
+	output.localPos = mul4Fast1(worldPos, viewProjMatrix);
+	output.projPos = output.localPos;
 
 	#if DRAW_FLORA_LAYING
 		output.worldDirStrength = normalize(worldMatrix[2].xyz * 0.2 - worldMatrix[1].xyz) * (opacity * 0.5) + const05List3;
@@ -120,7 +116,7 @@ vertex_out vp_main(vertex_in input)
 			float3 toLightDir = -eyePos * lightPosition0.w + lightPosition0.xyz;
 			float toLightDis = length(toLightDir);
 			toLightDir *= 1.0 / toLightDis;
-	
+
 			#include "vp-fog-math.slh"
 		#endif
 	#endif

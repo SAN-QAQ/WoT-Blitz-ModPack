@@ -51,7 +51,7 @@ vertex_out
 		float3 flowData : TEXCOORD3;
 	#endif
 
-	float3 sphericalLightFactor : COLOR0;
+	float3 sphericalLightFactor : TEXCOORD4;
 };
 
 #if SPHERICAL_HARMONICS_4 || SPHERICAL_HARMONICS_9 

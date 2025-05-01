@@ -147,22 +147,22 @@ vertex_out vp_main(vertex_in input)
 		#endif
 
 		#if WATER_RENDER_OBJECT
-			float2 inTexCoord = float2(dot(localPos.xy, texCoordTransform0.xz), dot(localPos.xy, texCoordTransform0.yw));
+			float2 texCoord = float2(dot(localPos.xy, texCoordTransform0.xz), dot(localPos.xy, texCoordTransform0.yw));
 
 			#if WATER_DEFORMATION
-				float3 inNormal = normalize(float3(wave.zz - wave.xy, 0.05));
-				float3 inTangent = normalize(inNormal * dot(-inputTangent, inNormal) + inputTangent);
+				float3 normal = normalize(float3(wave.zz - wave.xy, 0.05));
+				float3 tangent = normalize(normal * dot(-inputTangent, normal) + inputTangent);
 			#else
-				float3 inNormal = float3(const0List2, 1.0);
-				float3 inTangent = inputTangent;
+				float3 normal = float3(const0List2, 1.0);
+				float3 tangent = inputTangent;
 			#endif
 		#else
-			float2 inTexCoord = input.texCoord0;
-			float3 inNormal = input.normal;
-			float3 inTangent = input.tangent;
+			float2 texCoord = input.texCoord0;
+			float3 normal = input.normal;
+			float3 tangent = input.tangent;
 		#endif
 
-		output.texCoord = float4(inTexCoord * normal0Scale + frac(normal0ShiftPerSecond * globalTime), float2(inTexCoord.x + inTexCoord.y, inTexCoord.y - inTexCoord.x) * normal1Scale + frac(normal1ShiftPerSecond * globalTime));
+		output.texCoord = float4(texCoord * normal0Scale + frac(normal0ShiftPerSecond * globalTime), float2(texCoord.x + texCoord.y, texCoord.y - texCoord.x) * normal1Scale + frac(normal1ShiftPerSecond * globalTime));
 
 		#if PIXEL_LIT
 			#if REAL_REFLECTION
@@ -170,8 +170,8 @@ vertex_out vp_main(vertex_in input)
 				output.waterProjPos = output.projPos.xyw;
 				output.waterProjPos.y *= projectionFlip;
 			#else
-				float3 n = normalize(mul3Fast0(inNormal, worldInvTransposeMatrix));
-				float3 t = normalize(mul3Fast0(inTangent, worldInvTransposeMatrix));
+				float3 n = normalize(mul3Fast0(normal, worldInvTransposeMatrix));
+				float3 t = normalize(mul3Fast0(tangent, worldInvTransposeMatrix));
 				float3 b = cross(n, t);
 
 				output.tbnToWorld0 = float3(t.x, b.x, n.x);
@@ -179,7 +179,7 @@ vertex_out vp_main(vertex_in input)
 				output.tbnToWorld2 = float3(t.z, b.z, n.z);
 			#endif
 		#else
-			output.reflectTexCoord = reflect(normalize(worldPos - camPos), normalize(mul3Fast0(inNormal, worldInvTransposeMatrix)));
+			output.reflectTexCoord = reflect(normalize(worldPos - camPos), normalize(mul3Fast0(normal, worldInvTransposeMatrix)));
 
 			#if WATER_TESSELLATION
 				output.decalTexCoord = const0List2;
