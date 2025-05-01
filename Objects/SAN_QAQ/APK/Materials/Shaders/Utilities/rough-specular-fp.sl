@@ -24,29 +24,25 @@ fragment_out fp_main(fragment_in input)
 
 	int face = int(renderTargetId);
 
+	float totalWeight = 0.0;
 	float linearRoughness = -(mipmapLevel.x + mipmapLevel.y) * 0.833333 + 2.5;
 	float width = float(1 << int(mipmapLevel.y));
-	float totalWeight = 0.0;
 	float3 N = normalize(faceNormals[face] + (input.texCoord.x * faceUs[face] + ((input.texCoord.x * faceUs[face] - faceUs[face])) + (input.texCoord.y * faceVs[face] + (input.texCoord.y * faceVs[face] - faceVs[face]))));
-	float3 LD = const0List3;
+	float3 landscapeDiffuse = const0List3;
 
 	for (int i = 0; i < 1024; i++)
 	{
-		float2 Y = D_Hammersley(i, 1024.0);
-		float3 H = I_GGX(Y, linearRoughness, N);
+		float3 H = I_GGX(D_Hammersley(i, 1024.0), linearRoughness, N);
 		float3 L = reflect(-N, H);
 
 		float NdotL = saturate(dot(N, L));
 		float NdotH = saturate(dot(N, H));
 
-		float P = D_GGX(NdotH, linearRoughness) * 0.25 + 0.0001;
-		float SA = width * width * (1.0 / ((P * 256.0 + 0.000025) * _PI_06));
-
 		totalWeight += NdotL;
-		LD += texCUBElod(cubemap, L, lerp(log2(SA) * 0.5, 0.0, float(linearRoughness == 0.0))).rgb * NdotL;
+		landscapeDiffuse += texCUBElod(cubemap, L, lerp(log2(1.0 / (D_GGX(NdotH, linearRoughness) * 1206.371578978480604 + 0.48301987048943071)) * 0.5 + log2(width), 0.0, float(linearRoughness == 0.0))).rgb * NdotL;
 	}
 
-	output.color = float4(LD * (1.0 / totalWeight), 1.0);
+	output.color = float4(landscapeDiffuse * (1.0 / totalWeight), 1.0);
 
 	return output;
 }

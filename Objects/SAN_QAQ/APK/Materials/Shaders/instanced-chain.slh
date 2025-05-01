@@ -3,6 +3,18 @@
 [material][a] property float2 chunkOffset = const0List2;
 [material][cp] property float4 chainPoints[32] : "bigarray";
 
+uint uintMod(uint a, uint b)
+{
+	return a - (a / b) * b;
+}
+
+inline float getModificationFactor(float2 a, float2 b)
+{
+	const float2 ab = float2(a.x * b.y, b.x * a.y);
+
+	return sign(ab.x - ab.y) * sqrt((-ab.y * 2.0 + ab.x) * ab.x + (ab.y * ab.y)) * (1.0 / dot(a, b));
+}
+
 #if NEED_CHAIN_TEXCOORD_OFFSETS
 	[material][ct] property float4 chainTexCoordOffsets[16] : "bigarray";
 
@@ -25,11 +37,4 @@ __forceinline float2 getChainPoint(uint index)
 	const uint componentOffset = uintMod(index, uint(2)) * uint(2);
 
 	return float2(chainPoints[arrayIndex][componentOffset], chainPoints[arrayIndex][componentOffset + 1]);
-}
-
-inline float getModificationFactor(float2 a, float2 b)
-{
-	const float2 ab = float2(a.x * b.y, b.x * a.y);
-
-	return sign(ab.x - ab.y) * sqrt((-ab.y * 2.0 + ab.x) * ab.x + (ab.y * ab.y)) * (1.0 / dot(a, b));
 }

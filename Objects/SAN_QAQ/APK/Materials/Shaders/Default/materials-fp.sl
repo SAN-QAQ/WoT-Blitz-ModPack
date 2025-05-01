@@ -48,7 +48,7 @@ fragment_in
 	#endif
 
 	#if BLEND_BY_ANGLE
-		float3 worldView : POSITION1;
+		float3 toWorldDir : POSITION1;
 	#endif
 
 	#if RECEIVE_SHADOW || HIGHLIGHT_WAVE_ANIM
@@ -305,7 +305,7 @@ fragment_out fp_main(fragment_in input)
 	#endif
 
 	#if BLEND_BY_ANGLE
-		float NdotV = abs(dot(input.worldNormalNdotL.xyz, input.worldView)) * (1.0 / (length(input.worldNormalNdotL.xyz) * length(input.worldView)));
+		float NdotV = abs(dot(input.worldNormalNdotL.xyz, input.toWorldDir)) * (1.0 / (length(input.worldNormalNdotL.xyz) * length(input.toWorldDir)));
 		output.color.a *= pow(saturate((lerp(NdotV, 1.0 - NdotV, angleBlendInversion) - angleBlendBounds.x) * (1.0 / (angleBlendBounds.y - angleBlendBounds.x))), angleBlendPower);
 	#endif
 

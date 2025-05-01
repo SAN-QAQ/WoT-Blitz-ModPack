@@ -76,9 +76,10 @@ vertex_out vp_main(vertex_in input)
 	float3 worldPos = float3(float2(input.texCoordChunkTypeZ.w * input.windWaveOffsetsX[chunkType], input.texCoordChunkTypeZ.w * input.windWaveOffsetsY[chunkType]) * 2.25 + (input.localPos.xy + input.tilePos.xy), input.localPos.z);
 
 	float densityScale;
+	float2 toCamDirScale;
 	float2 texCoord = pivotPos.xy * (1.0 / worldSize.xy) + const05List2;
 	float2 vegetationTexCoord = float2(texCoord.x, 1.0 - texCoord.y);
-	float4 vegetationHeight = tex2Dlod(heightmap, 1.0 / (float2(heightmapTextureSize, heightmapTextureSize) * 2.0) + texCoord, 0.0);
+	float4 vegetationHeight = tex2Dlod(heightmap, const05List2 * (1.0 / heightmapTextureSize) + texCoord, 0.0);
 	float4 vegetationColor = tex2Dlod(vegetationColorMap, vegetationTexCoord, 0.0);
 
 	#if HEIGHTMAP_FLOAT_TEXTURE
@@ -108,22 +109,22 @@ vertex_out vp_main(vertex_in input)
 	#endif
 
 	#if VEGETATION_BEND
-		float grassCameraScaleWidth = grassBendParams.z * viewportSize.y * (1.0 / viewportSize.x);
-
-		float3 toCamDir = worldPos - camPos;
+		float3 toCamDir = camPos - worldPos;
 		float toCamDirDot = dot(toCamDir, toCamDir);
 		float toCamDirProjLength = dot(toCamDir, normalize(cameraDirection));
-		float toCamDirRayDist = (-toCamDirProjLength * toCamDirProjLength + toCamDirDot) * grassCameraScaleWidth * (1.0 / (pow(toCamDirDot, grassBendParams.w) + grassBendParams.y));
-		float grassCameraScale = clamp(toCamDirRayDist, grassBendParams.x, 1.0);
+
+		toCamDirScale = viewportSize * float2(pow(toCamDirDot, grassBendParams.w) + grassBendParams.y, -grassBendParams.z);
+		toCamDirScale.y /= toCamDirScale.x;
+		toCamDirScale.x = clamp((toCamDirProjLength * toCamDirProjLength - toCamDirDot) * toCamDirScale.y, grassBendParams.x, 1.0);
 	#else
-		float grassCameraScale = 1.0;
+		toCamDirScale = const1List2;
 	#endif
 
 	#if FLORA_WAVE_ANIMATION
 		worldPos += getWaveAnim(worldPos) * input.localPos.z;
 	#endif
 
-	float finalScale = (densityScale * input.tilePos.z) * (lerp(1.0, grassCameraScale, grassBendWeight) * lerp(input.tilePos.w, 1.0, step(abs(input.localPos.w - input.switchLodIndex), 0.1)));
+	float finalScale = (densityScale * input.tilePos.z) * (lerp(1.0, toCamDirScale.x, grassBendWeight) * lerp(input.tilePos.w, 1.0, step(abs(input.switchLodIndex - input.localPos.w), 0.1)));
 	worldPos = lerp(pivotPos, worldPos, finalScale);
 
 	output.localPos = mul4Fast1(worldPos, viewProjMatrix);

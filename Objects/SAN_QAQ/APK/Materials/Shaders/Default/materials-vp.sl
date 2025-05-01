@@ -73,7 +73,7 @@ vertex_out
 	#endif
 
 	#if BLEND_BY_ANGLE
-		float3 worldView : POSITION1;
+		float3 toWorldDir : POSITION1;
 	#endif
 
 	#if RECEIVE_SHADOW || HIGHLIGHT_WAVE_ANIM
@@ -131,21 +131,23 @@ vertex_out vp_main(vertex_in input)
 		#include "vp-fog-math.slh"
 	#endif
 
-	#if BLEND_BY_ANGLE || RECEIVE_SHADOW || ENVIRONMENT_MAPPING
+	#if BLEND_BY_ANGLE || ENVIRONMENT_MAPPING || (DISTANCE_FADE_OUT && VERTEX_COLOR)
+		float3 toWorldDir = worldPos - camPos;
+	#endif
+
+	#if BLEND_BY_ANGLE || ENVIRONMENT_MAPPING || RECEIVE_SHADOW
 		float3 worldNormal = normalize(mul3Fast0(input.normal, worldInvTransposeMatrix));
 	#endif
 
-	float3 worldView = normalize(worldPos - camPos);
-
 	#if BLEND_BY_ANGLE
-		output.worldView = worldView;
+		output.toWorldDir = toWorldDir;
 	#endif
 
 	#if VERTEX_COLOR
 		output.vertexColor = input.color0;
 
 		#if DISTANCE_FADE_OUT
-			output.vertexColor.a -= output.vertexColor.a * smoothstep(distanceFadeNearFarSq.x, distanceFadeNearFarSq.y, dot(worldView, worldView));
+			output.vertexColor.a -= output.vertexColor.a * smoothstep(distanceFadeNearFarSq.x, distanceFadeNearFarSq.y, dot(toWorldDir, toWorldDir));
 		#endif
 	#endif
 
@@ -210,10 +212,10 @@ vertex_out vp_main(vertex_in input)
 		float NdotH = saturate(dot(N, H));
 		float VdotH = saturate(dot(V, H));
 
-		float3 fresnelOut = F_ShlickVec3(NdotV, reflectionMetalFresnelReflectance);
+		float3 fresnelOut = fresnelVec3(NdotV, reflectionMetalFresnelReflectance);
 
 		output.specularVector = float4(fresnelOut * (NdotL * reflectionSpecular) * (1.0 / (VdotH * VdotH + 0.0001)), NdotH);
-		output.reflectionVector = float4(reflect(worldView, worldNormal), dot(fresnelOut, rgbMixList * reflectionBrightenEnvMap));
+		output.reflectionVector = float4(reflect(normalize(toWorldDir), worldNormal), dot(fresnelOut, rgbMixList * reflectionBrightenEnvMap));
 	#endif
 
 	#if RECEIVE_SHADOW || HIGHLIGHT_WAVE_ANIM

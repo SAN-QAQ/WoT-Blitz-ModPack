@@ -1,9 +1,9 @@
-inline float F_Shlick(float NdotV, float Cspec)
+inline float fresnel(float XdotY, float Cspec)
 {
-	return lerp(Cspec, 1.0, pow5Exp(NdotV));
+	return lerp(Cspec, 1.0, pow5Exp(XdotY));
 }
 
-inline float3 F_ShlickVec3(float NdotV, float3 Cspec)
+inline float3 fresnelVec3(float XdotY, float3 Cspec)
 {
-	return lerp(Cspec, const1List3, pow5Exp(NdotV));
+	return lerp(Cspec, const1List3, pow5Exp(XdotY));
 }

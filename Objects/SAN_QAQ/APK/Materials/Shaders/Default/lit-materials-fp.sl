@@ -231,6 +231,13 @@ fragment_out fp_main(fragment_in input)
 	#if PIXEL_LIT
 		float3 N = tex2D(normalmap, input.texCoord0.xy).rgb;
 		N = mixNormal(N, N);
+
+		#if RECEIVE_SHADOW
+			float3 NShady = N;
+			NShady.xy *= shadowLitNormalScale;
+			NShady = normalize(NShady);
+		#endif
+
 		N.xy *= normalScale;
 		N = normalize(N);
 
@@ -269,14 +276,11 @@ fragment_out fp_main(fragment_in input)
 					specular += texCUBE(cubemap, samplingPos).rgb * cubemapIntensity * outColor.a;
 				#endif
 
-				specular *= F_ShlickVec3(NdotV, metalFresnelReflectance);
+				specular *= fresnelVec3(NdotV, metalFresnelReflectance);
 			#endif
 		#endif
 
 		#if RECEIVE_SHADOW
-			float3 NShady = N;
-			NShady.xy *= shadowLitNormalScale;
-			NShady = normalize(NShady);
 			float3 LShady = normalize(float3(input.tbnToWorld0.w, input.tbnToWorld1.w, input.tbnToWorld2.w));
 			float NdotLShady = saturate(1.0 - dot(NShady, LShady));
 			float3 worldNormal = float3(dot(input.tbnToWorld0.xyz, NShady), dot(input.tbnToWorld1.xyz, NShady), dot(input.tbnToWorld2.xyz, NShady));

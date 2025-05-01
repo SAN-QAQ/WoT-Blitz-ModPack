@@ -33,7 +33,7 @@ fragment_in
 		float3 flowData : TEXCOORD3;
 	#endif
 
-	float3 sphericalLightFactor : COLOR0;
+	float3 sphericalLightFactor : TEXCOORD3;
 };
 
 fragment_out

@@ -85,7 +85,7 @@ fragment_out fp_main(fragment_in input)
 			float NdotH = saturate(dot(N, H));
 
 			float3 diffuse = lightColor0 * (NdotL * _INVERSE_PI);
-			float3 specular = lightColor0 * ((getBlinnPhongSpecular(NdotH, inGlossiness * output.color.a) * F_Shlick(NdotV, dot(metalFresnelReflectance, rgbMixList))) * (inSpecularity * NdotL));
+			float3 specular = lightColor0 * ((getBlinnPhongSpecular(NdotH, inGlossiness * output.color.a) * fresnel(NdotV, dot(metalFresnelReflectance, rgbMixList))) * (inSpecularity * NdotL));
 
 			#if USE_SHADOW_MAP
 				float2 diffuseSpecularShadowTerm = -grassShadowDiffuseSpecMult * shadowInf.x + (grassShadowDiffuseSpecMult + shadowInf.xx);

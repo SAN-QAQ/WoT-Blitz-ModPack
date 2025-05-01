@@ -112,7 +112,7 @@ vertex_out vp_main(vertex_in input)
 	#endif
 
 	#if ENVIRONMENT_MAPPING
-		float3 worldView = normalize(worldPos - camPos);
+		float3 toWorldDir = normalize(worldPos - camPos);
 		float3 V = normalize(-eyePos);
 		float3 H = normalize(L + V);
 
@@ -120,10 +120,10 @@ vertex_out vp_main(vertex_in input)
 		float NdotH = saturate(dot(N, H));
 		float VdotH = saturate(dot(V, H));
 
-		float3 fresnelOut = F_ShlickVec3(NdotV, reflectionMetalFresnelReflectance);
+		float3 fresnelOut = fresnelVec3(NdotV, reflectionMetalFresnelReflectance);
 
 		output.specularVector = float4(fresnelOut * (NdotL * reflectionSpecular) * (1.0 / (VdotH * VdotH + 0.0001)), NdotH);
-		output.reflectionVector = float4(reflect(worldView, worldNormal), dot(fresnelOut, rgbMixList * reflectionBrightenEnvMap));
+		output.reflectionVector = float4(reflect(toWorldDir, worldNormal), dot(fresnelOut, rgbMixList * reflectionBrightenEnvMap));
 	#endif
 
 	#if RECEIVE_SHADOW
